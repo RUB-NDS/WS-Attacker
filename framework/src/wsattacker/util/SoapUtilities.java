@@ -110,14 +110,28 @@ public class SoapUtilities {
 	}
 	
 	/**
-	 * Converts a String to a DOM
-	 * Sometimes, you might prefer DOM to SOAPElement
+	 * Converts a String to a DOM.
+	 * Sometimes, you might prefer DOM to SOAPElement.
+	 * No namespace prefixes are used by default.
 	 * @param xmlString
 	 * @return
 	 * @throws SAXException
 	 */
 	public static Document stringToDom(String xmlString) throws SAXException {
+		return stringToDom(xmlString, false);
+	}
+	
+	/**
+	 * Converts a String to a DOM.
+	 * Sometimes, you might prefer DOM to SOAPElement.
+	 * @param xmlString
+	 * @param useNamespaces : Should the returned Document contain namespace prefixes?
+	 * @return
+	 * @throws SAXException
+	 */
+	public static Document stringToDom(String xmlString, boolean useNamespaces) throws SAXException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(useNamespaces);
 		StringReader reader = new StringReader(xmlString);
 		InputSource input = new InputSource(reader);
 		DocumentBuilder builder;

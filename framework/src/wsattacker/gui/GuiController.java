@@ -54,7 +54,7 @@ public class GuiController implements ControllerInterface {
 	TestSuite testSuite;
 	Preferences prefs;
 	Logger log;
-	GuiView view;
+	GuiView guiView;
 
 	private boolean abortAttacks;
 
@@ -80,8 +80,8 @@ public class GuiController implements ControllerInterface {
 		this.runThread = new Thread();
 
 		// create gui
-		this.view = new GuiView(this);
-		Thread viewThread = new Thread(this.view);
+		this.guiView = new GuiView(this);
+		Thread viewThread = new Thread(this.guiView);
 		viewThread.start();
 	}
 
@@ -368,7 +368,7 @@ public class GuiController implements ControllerInterface {
 
 		@Override
 		public void run() {
-			WsdlLoaderGUI wsdlGui = view.getWsdlLoader();
+			WsdlLoaderGUI wsdlGui = guiView.getWsdlLoader();
 
 			// disable fields
 			wsdlGui.getUriField().setEnabled(false);
@@ -505,7 +505,7 @@ public class GuiController implements ControllerInterface {
 
 		@Override
 		public void run() {
-			RequestResponseGUI gui = view.getTestRequest();
+			RequestResponseGUI gui = guiView.getTestRequest();
 			gui.getResponseContent().setText("Submitting Request...");
 			log.info("Submitting Request...");
 			try {
@@ -546,7 +546,13 @@ public class GuiController implements ControllerInterface {
 	// ==============================================
 	private void setEnabledTabs(boolean enabled, int... tabindex) {
 		for (int i : tabindex) {
-			view.getMainWindows().getTabs().setEnabledAt(i, enabled);
+			guiView.getMainWindows().getTabs().setEnabledAt(i, enabled);
 		}
+	}
+	
+	// Additional Getter
+
+	public GuiView getGuiView() {
+		return guiView;
 	}
 }

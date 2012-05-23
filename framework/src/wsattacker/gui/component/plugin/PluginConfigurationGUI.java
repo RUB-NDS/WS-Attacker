@@ -20,6 +20,7 @@
 package wsattacker.gui.component.plugin;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
@@ -52,6 +54,9 @@ import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 
+import sun.print.PSPrinterJob.PluginPrinter;
+
+import wsattacker.gui.GuiController;
 import wsattacker.gui.component.plugin.option.OptionBooleanGUI;
 import wsattacker.gui.component.plugin.option.OptionChoiceGUI;
 import wsattacker.gui.component.plugin.option.OptionFileGUI;
@@ -99,6 +104,7 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 
 	private Map<AbstractOption, AbstractOptionGUI> currentOptions = new HashMap<AbstractOption, AbstractOptionGUI>();
 	private AbstractPlugin currentPlugin = null;
+	private JScrollPane pluginOptionsPanelScrollBar;
 	private JScrollPane plugintreeScrollPane;
 	private PluginTree pluginTree;
 	private AbstractAction load;
@@ -108,7 +114,7 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 	private JFileChooser chooser;
 
 	private JLabel pluginName;
-	private JEditorPane pluginDescription;
+	private JTextPane pluginDescription;
 
 	private ControllerInterface controller;
 
@@ -127,27 +133,13 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 			this.setPreferredSize(new java.awt.Dimension(861, 300));
 			this.setLayout(thisLayout);
 			{
-				pluginDescription = new JEditorPane();
+//				pluginDescription = new JEditorPane("text/html","Description");
+				pluginDescription = new JTextPane();
 				pluginDescription.setEditable(false);
 				pluginDescription.setBackground(getBackground());
 			}
 			{
 				optionBox = Box.createVerticalBox();
-			}
-			{
-				pluginOptionsPanel = new JPanel();
-				BoxLayout pluginOptionsPanelLayout = new BoxLayout(
-						pluginOptionsPanel, javax.swing.BoxLayout.Y_AXIS);
-				pluginOptionsPanel.setLayout(pluginOptionsPanelLayout);
-				pluginOptionsPanel.add(pluginDescription);
-				pluginDescription.setPreferredSize(new java.awt.Dimension(159, 259));
-				pluginOptionsPanel.add(optionBox);
-
-				// just as a glue (Box.createHorizontalGlue() does not work)
-				JEditorPane filler = new JEditorPane();
-				filler.setBackground(getBackground());
-				filler.setEditable(false);
-				pluginOptionsPanel.add(filler);
 			}
 			{
 				chooser = new JFileChooser();
@@ -219,37 +211,36 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
 				.addComponent(pluginTableScrollPane, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
 				.addGroup(thisLayout.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
-				        .addComponent(getJScrollPane1(), 0, 254, Short.MAX_VALUE)
-				        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-				        .addGroup(thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				            .addComponent(allButton, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(noneButton, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(getSaveBotton(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(getLoadButton(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
-				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
-				        .addComponent(pluginName, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+				    .addGroup(thisLayout.createSequentialGroup()
+				        .addComponent(pluginName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-				        .addComponent(pluginOptionsPanel, 0, 265, Short.MAX_VALUE)))
-				.addContainerGap());
+				        .addComponent(getJScrollPane1x(), 0, 265, Short.MAX_VALUE))
+				    .addGroup(thisLayout.createSequentialGroup()
+				        .addComponent(getJScrollPane1(), 0, 254, Short.MAX_VALUE)
+				        .addGap(12)
+				        .addGroup(thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				            .addComponent(allButton, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(noneButton, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getSaveBotton(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getLoadButton(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+				.addContainerGap(12, 12));
 			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
 				.addComponent(pluginTableScrollPane, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
 				.addGroup(thisLayout.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
+				    .addGroup(thisLayout.createSequentialGroup()
 				        .addComponent(allButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 				        .addComponent(noneButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 				        .addComponent(getSaveBotton(), GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-				        .addComponent(getLoadButton(), GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-				        .addGap(15))
+				        .addComponent(getLoadButton(), GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
 				    .addComponent(getJScrollPane1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addGroup(thisLayout.createParallelGroup()
 				    .addComponent(pluginName, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 457, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(pluginOptionsPanel, GroupLayout.Alignment.LEADING, 0, 457, Short.MAX_VALUE))
-				.addContainerGap());
+				    .addComponent(getJScrollPane1x(), GroupLayout.Alignment.LEADING, 0, 457, Short.MAX_VALUE))
+				.addContainerGap(12, 12));
 			thisLayout.linkSize(SwingConstants.VERTICAL, new Component[] {noneButton, allButton});
 			thisLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {allButton, noneButton, getSaveBotton(), getLoadButton()});
 		} catch (Exception e) {
@@ -282,6 +273,7 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 					"Version:", currentPlugin.getVersion(),
 					"Max Points:",currentPlugin.getMaxPoints(),
 					currentPlugin.getDescription()));
+			pluginDescription.setSize(Integer.MAX_VALUE, 500);
 
 			// remove all components from view and logic container
 			optionBox.removeAll();
@@ -290,6 +282,8 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 					AbstractOptionGUI optionGUI = createOption(option);
 					currentOptions.put(option, optionGUI);
 					// getPluginOptionsPanel().add(optionGUI);
+					optionGUI.setPreferredSize(new Dimension(pluginOptionsPanel.getSize().width, optionGUI.getPreferredSize().height));
+					optionGUI.setSize(optionGUI.getPreferredSize());
 					optionBox.add(optionGUI);
 				} catch (Exception e) {
 					Logger.getLogger(getClass())
@@ -474,7 +468,7 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 		AbstractOption option = container.getByIndex(index);
 		AbstractOptionGUI optionGUI = createOption(option);
 		currentOptions.put(option, optionGUI);
-		optionBox.add(optionGUI);
+		optionBox.add(optionGUI, index);
 		optionBox.revalidate();
 	}
 
@@ -573,5 +567,28 @@ public class PluginConfigurationGUI extends javax.swing.JPanel implements
 			plugintreeScrollPane.setViewportView(getPluginTree());
 		}
 		return plugintreeScrollPane;
+	}
+	
+	private JScrollPane getJScrollPane1x() {
+		if(pluginOptionsPanelScrollBar == null) {
+			pluginOptionsPanelScrollBar = new JScrollPane();
+			{
+				pluginOptionsPanel = new JPanel();
+				pluginOptionsPanelScrollBar.setViewportView(pluginOptionsPanel);
+				pluginOptionsPanelScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				BoxLayout pluginOptionsPanelLayout = new BoxLayout(
+						pluginOptionsPanel, javax.swing.BoxLayout.Y_AXIS);
+				pluginOptionsPanel.setLayout(pluginOptionsPanelLayout);
+				pluginOptionsPanel.add(pluginDescription);
+				pluginOptionsPanel.add(optionBox);
+				
+				// just as a glue (Box.createHorizontalGlue() does not work)
+				JEditorPane filler = new JEditorPane();
+				filler.setBackground(getBackground());
+				filler.setEditable(false);
+				pluginOptionsPanel.add(filler);
+			}
+		}
+		return pluginOptionsPanelScrollBar;
 	}
 }

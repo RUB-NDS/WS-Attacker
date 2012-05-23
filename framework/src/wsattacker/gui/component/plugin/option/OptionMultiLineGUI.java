@@ -112,11 +112,9 @@ public class OptionMultiLineGUI extends AbstractOptionGUI {
 			.addComponent(nameScrollPane, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 			.addGap(18)
 			.addGroup(thisLayout.createParallelGroup()
-			    .addGroup(thisLayout.createSequentialGroup()
-			        .addComponent(valueScrollPane, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
-			    .addGroup(thisLayout.createSequentialGroup()
-			        .addComponent(descriptionScrollPane, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)))
-			.addContainerGap(12, Short.MAX_VALUE));
+			    .addComponent(valueScrollPane, GroupLayout.Alignment.LEADING, 0, 242, Short.MAX_VALUE)
+			    .addComponent(descriptionScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
+			.addContainerGap(12, 12));
 		value.addFocusListener(new FocusListener() {
 			
 			@Override
