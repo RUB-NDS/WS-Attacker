@@ -1,0 +1,13 @@
+4. July 2012
+
+Added XML Signature Wrapping Plugin:
+    - Technique for automatically attacking XML Signature protected Web Services
+    - Just set the endpoint and follow the instructions on the Plugin Config screen
+
+Framework Changes:
+    - Options Window is now Scrollable
+    - Some minor changes.
+
+Release Note:
+    - Now only one format (zip) available
+    - Source Code can be checked in GIT Repository
