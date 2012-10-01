@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd" xmlns:tns="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" autopagerMatchedRules="1">
+  <xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+  <xs:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+  <xs:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"/>
+  <xs:import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="http://www.w3.org/2003/05/soap-envelope/"/>
+  
+  <xs:element name="SignatureConfirmation" type="tns:SignatureConfirmationType"/>
+  <xs:complexType name="SignatureConfirmationType">
+	<xs:attribute ref="wsu:Id" use="optional"/>
+	<xs:attribute name="Value" type="xs:base64Binary" use="required"/>
+  </xs:complexType>
+
+  <xs:element name="EncryptedHeader" type="tns:EncryptedHeaderType"/>
+  <xs:complexType name="EncryptedHeaderType">
+	<xs:sequence>
+	  <xs:element ref="xenc:EncryptedData"/>
+	</xs:sequence>
+	<xs:attribute ref="wsu:Id" use="optional"/>
+	<xs:attribute ref="soap11:mustUnderstand" use="optional"/>
+	<xs:attribute ref="soap11:actor" use="optional"/>
+	<xs:attribute ref="soap12:mustUnderstand" use="optional"/>
+	<xs:attribute ref="soap12:role" use="optional"/>
+	<xs:attribute ref="soap12:relay" use="optional"/>
+  </xs:complexType>
+
+  <xs:element name="Salt" type="xs:base64Binary"/>
+  <xs:element name="Iteration" type="xs:unsignedInt"/>
+
+  <xs:attribute name="TokenType" type="xs:anyURI"/>
+</xs:schema>

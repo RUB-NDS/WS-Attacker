@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>WS-Attacker-Plugins</name>
+	<groupId>wsattacker.plugins</groupId>
+	<artifactId>wsattacker-plugins</artifactId>
+	<version>1.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>wsattacker.basis</groupId>
+		<artifactId>wsattacker-basis</artifactId>
+		<version>1.2-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>SoapAction_Spoofing</module>
+		<module>WS_Addressing_Spoofing</module>
+		<module>OptionsTesterPlugin</module>
+		<module>Signature_Wrapping</module>
+		<module>Denial_of_Service</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>wsattacker.framework</groupId>
+			<artifactId>wsattacker-framework</artifactId>
+			<version>1.2-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!--
+		Inlcude the Service Loader META-INF file so that
+		the plugin manager can find the plugin
+		-->
+		<resources>
+			<resource>
+				<directory>src/main/resources/META-INF/services</directory>
+				<targetPath>META-INF/services</targetPath>
+			</resource>
+		</resources>
+		<pluginManagement>
+			<plugins>
+				<!--
+					Use a Licence Header
+				-->
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<configuration>
+						<header>${basedir}/../../license_header.txt</header>
+					</configuration>
+				</plugin>
+				<!--
+				Placing the JAR in the runnable folder
+				-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<outputDirectory>${basedir}/../../runnable/plugins/</outputDirectory>
+					</configuration>
+				</plugin>
+				<!--
+					Copy required libraries to lib folder
+				-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${basedir}/../../runnable/lib</outputDirectory>
+								<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

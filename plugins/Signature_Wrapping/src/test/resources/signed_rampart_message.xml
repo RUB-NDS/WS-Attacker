@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    WS-Attacker - A Modular Web Services Penetration Testing Framework
+    Copyright (C) 2011  Christian Mainka
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+-->
+<soapenv:Envelope xmlns:axis="http://axis2" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header>
+    <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" soapenv:mustUnderstand="1">
+      <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="Signature-41">
+        <ds:SignedInfo>
+          <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+          <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+          <ds:Reference URI="#id-42">
+            <ds:Transforms>
+              <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </ds:Transforms>
+            <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+            <ds:DigestValue>JzIknZiUbgcGGZkK7dFEJyyCYtc=</ds:DigestValue>
+          </ds:Reference>
+          <ds:Reference URI="#Timestamp-40">
+            <ds:Transforms>
+              <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </ds:Transforms>
+            <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+            <ds:DigestValue>DR2hbPxwDLbl32PerxaswTMeNwc=</ds:DigestValue>
+          </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>
+Jt6Q3LUC2rlJbUOsB8KEiwyFTS+ZezIO9h4xp/3/ad+1rfkKiLd4SOu2nP3P6T9i8lq3spIRvB8y
++IQTxtMoDdL0qONot7efdu8u0mEhxq38wAU1HAE6yCyAPgVpW3Ahx2yiy4vlrt6wqTS44Z3PYzb6
+0sBK5xf8Br73kIt51Gc=
+</ds:SignatureValue>
+        <ds:KeyInfo Id="KeyId-AAEC9FCE245E7FC668132251407256141">
+          <wsse:SecurityTokenReference xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="STRId-AAEC9FCE245E7FC668132251407256142">
+            <wsse:KeyIdentifier EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3">MIICuDCCAiGgAwIBAgIBATANBgkqhkiG9w0BAQUFADB8MQswCQYDVQQGEwJERTEMMAoGA1UECAwDTlJXMQ8wDQYDVQQHDAZCb2NodW0xDDAKBgNVBAoMA1JVQjEQMA4GA1UECwwHWFNQUkVTUzEPMA0GA1UEAwwGVGVzdENBMR0wGwYJKoZIhvcNAQkBFg5UZXN0Q0FAeHNwcmVzczAeFw0xMTA4MDcxMjEyNDFaFw0xMjA4MDYxMjEyNDFaMEsxCzAJBgNVBAYTAkRFMQwwCgYDVQQIEwNOUlcxDDAKBgNVBAoTA1JVQjEQMA4GA1UECxMHWFNQUkVTUzEOMAwGA1UEAxMFQWxpY2UwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANbijRO99DtXzOvjdp4jnXyErO9kdVehGpEOpEWqOFILPD18GcEJzJTKW4cVtBYsmp7QqTVWrFi47dJJPz2fwoB9WGpBbm4ufLAUA4rqNx+pLlmF9Hfk8Is1fdbP0xZQXg5nbrb1ZSfcAxqmtbsGBdV9WKvHjomBHcqMrDMnrc33AgMBAAGjezB5MAkGA1UdEwQCMAAwLAYJYIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVkIENlcnRpZmljYXRlMB0GA1UdDgQWBBRrbsxJOAq7vP95fcrG2XsydeWp7zAfBgNVHSMEGDAWgBS9VS/73EZbsbTvp/6JnrV6scVelzANBgkqhkiG9w0BAQUFAAOBgQBh5nYPzkfCnt44FpR3GpxQtrROfqKIef04hfudeyNboLiH2dG/Bb8DDygl1iOZKQ5CPx5mpsKOIzGzraWrhhWZ+taAFqGnfjrTcDqL1LSsKEKkFSIJbR6GIIluZOCRs0OUYxsn5lSNubPJsUxiiW2YDMZlbKZX7a6siyPY+pUFjQ==</wsse:KeyIdentifier>
+          </wsse:SecurityTokenReference>
+        </ds:KeyInfo>
+      </ds:Signature>
+      <wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Timestamp-40">
+        <wsu:Created>2011-11-28T21:01:12.110Z</wsu:Created>
+        <wsu:Expires>2011-11-28T21:06:12.110Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+  </soapenv:Header>
+  <soapenv:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-42">
+    <axis:goodbyeName>
+      <!--Optional:-->
+      <axis:name>Hallo</axis:name>
+    </axis:goodbyeName>
+  </soapenv:Body>
+</soapenv:Envelope>

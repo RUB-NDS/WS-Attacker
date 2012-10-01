@@ -1,0 +1,7 @@
+dependency-reduced-pom.xml
+*.log
+nb-configuration.xml
+nbactions.xml
+runnable/*jar
+runnable/plugins/*jar
+runnable/lib/*jar
