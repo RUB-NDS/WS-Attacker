@@ -41,19 +41,19 @@ public class SchemaNullTest
   public void simpleTest() {
     SoapTestDocument soap = new SoapTestDocument();
     soap.getDummyPayloadBody();
-    
+
     SchemaAnalyzerInterface sa = new NullSchemaAnalyzer();
-    
+
     List<AnyElementPropertiesInterface> result = sa.findExpansionPoint(soap.getEnvelope());
-    
+
     List<Element> childElementList = DomUtilities.getAllChildElements(soap.getEnvelope(), true);
     childElementList.add(0, soap.getEnvelope());
     List<String> fastXPathList = DomUtilities.nodelistToFastXPathList(childElementList);
-    
+
 
     assertEquals(childElementList.size(), result.size());
     assertEquals(fastXPathList.size(), result.size());
-    
+
     List<String> contained = new ArrayList<String>();
     for(AnyElementPropertiesInterface any : result) {
       String fxp = DomUtilities.getFastXPath(any.getDocumentElement());
@@ -62,32 +62,32 @@ public class SchemaNullTest
       contained.add(fxp);
     }
   }
-  
+
 
   @Test
   public void filterTest() {
     SoapTestDocument soap = new SoapTestDocument();
     soap.getDummyPayloadBody();
-    
+
     SchemaAnalyzerInterface sa = new NullSchemaAnalyzer();
-    
+
     // Filter...
     List<QName> filterList = new ArrayList<QName>();
     filterList.add(new QName(soap.getBody().getNamespaceURI(), soap.getBody().getLocalName(), soap.getBody().getPrefix()));
     sa.setFilterList(filterList);
-    
+
     List<AnyElementPropertiesInterface> result = sa.findExpansionPoint(soap.getEnvelope());
-    
+
     List<Element> childElementList = new ArrayList<Element>();
     childElementList.add(soap.getEnvelope());
     childElementList.add(soap.getHeader());
-    
+
     List<String> fastXPathList = DomUtilities.nodelistToFastXPathList(childElementList);
-    
+
 
     assertEquals(childElementList.size(), result.size());
     assertEquals(fastXPathList.size(), result.size());
-    
+
     List<String> contained = new ArrayList<String>();
     for(AnyElementPropertiesInterface any : result) {
       String fxp = DomUtilities.getFastXPath(any.getDocumentElement());

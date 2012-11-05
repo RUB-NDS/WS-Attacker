@@ -26,6 +26,7 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import wsattacker.plugin.signatureWrapping.option.OptionPayload;
 import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
@@ -90,11 +91,11 @@ public class ReferenceElement implements ReferringElementInterface
       if (ref.startsWith("#")) {
 		    ref = ref.substring(1);
 	    } // remove #
-      List<Element> referenced;
+      List<? extends Node> referenced;
       // First Try: Search for @Id Attribute
       try
       {
-        referenced = DomUtilities.evaluateXPath(reference.getOwnerDocument(), "//*[@Id='" + ref + "']");
+        referenced = (List<Element>) DomUtilities.evaluateXPath(reference.getOwnerDocument(), "//*[@Id='" + ref + "']");
       }
       catch (XPathExpressionException e)
       {
@@ -108,12 +109,64 @@ public class ReferenceElement implements ReferringElementInterface
       // Third Try: Search for any Attribute with specified value
       if (referenced.isEmpty())
       {
-        referenced = DomUtilities.findElementByAttributeValue(reference.getOwnerDocument(), ref);
-      }      
-      if (referenced.size() != 1) {
-		    log.warn("There are " + referenced.size() + " possible References which macht the URI '" + ref + "'. This is invalid and must produce errors.");
-	    }
-      referencedElement = referenced.get(0);
+        referenced = DomUtilities.findAttributeByValue(reference.getOwnerDocument(), ref);
+      }
+
+	  if (referenced.size() == 1) {
+		  Node n = referenced.get(0);
+		  if (n.getNodeType() == Node.ELEMENT_NODE) {
+			  referencedElement = (Element) referenced.get(0);
+		  }
+		  else if (n.getNodeType() == Node.ATTRIBUTE_NODE) {
+			referencedElement = ((Attr) referenced.get(0)).getOwnerElement();
+		  }
+		  else {
+			  throw new NullPointerException("Don't know how to handle match:" + n.toString() + "(" + n.getClass().getName() + ")");
+		  }
+	  }
+	  else if (referenced.size() > 1) {
+		  try {
+			List<Attr> attrList = (List<Attr>) referenced;
+
+
+			log.warn("There are " + referenced.size()
+			  + " possible References which machtes the URI '"
+			  + ref
+			  + "' ("+DomUtilities.nodelistToFastXPathList(referenced)
+			  +"). This is invalid and must produce errors.");
+
+			// looking for exact matche AssertionID and prefer it
+			for (Attr attribute : attrList) {
+				if (attribute.getLocalName().toLowerCase().equals("assertionid")) {
+					referencedElement = attribute.getOwnerElement();
+				}
+			}
+			// looking for exact matche ID and prefer it
+			if (referencedElement == null) {
+				for (Attr attribute : attrList) {
+					if (attribute.getLocalName().toLowerCase().equals("id")) {
+						referencedElement = attribute.getOwnerElement();
+					}
+				}
+			}
+			// lookiung for substring matching id
+			if (referencedElement == null) {
+				for (Attr attribute : attrList) {
+					if (attribute.getLocalName().toLowerCase().contains("id")) {
+						referencedElement = attribute.getOwnerElement();
+					}
+				}
+			}
+		  }
+		  catch (ClassCastException e) {
+			  reference = (Element) referenced.get(0);
+		  }
+
+	  }
+	  else if (referenced.isEmpty()) {
+		  log.warn("Could not find any References which machtes the URI '" + ref + "'. No Signed Element found.");
+		  throw new NullPointerException("Could not de-reference signed element");
+	  }
 
       this.payload = new OptionPayload(this, "Reference Element:" + toString(), referencedElement, toString());
     }
@@ -171,7 +224,7 @@ public class ReferenceElement implements ReferringElementInterface
   {
     return Logger.getLogger(getClass());
   }
-  
+
   public String transformIDtoXPath() {
     Attr id = referencedElement.getAttributeNodeNS(NamespaceConstants.URI_NS_WSU, "Id");
     if (id == null) {
@@ -197,13 +250,13 @@ public class ReferenceElement implements ReferringElementInterface
       value = id.getValue();
     }
     return  "//*[@" + name + "='" + value + "']";
-    
+
   }
 
   @Override
   public String getXPath()
   {
-    if (workingXPath.isEmpty()) 
+    if (workingXPath.isEmpty())
     {
       workingXPath = transformIDtoXPath();
     }

@@ -27,6 +27,8 @@ import wsattacker.main.testsuite.TestSuite;
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.model.iface.Operation;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeSupport;
 import wsattacker.main.composition.ControllerInterface;
 
@@ -40,6 +42,15 @@ public class OperationComboBox extends JComboBox implements CurrentInterfaceObse
 
     public OperationComboBox() {
         super();
+		addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				if (controller != null && getSelectedIndex() >= 0) {
+					controller.setCurrentOperation(getSelectedIndex());
+				}
+			}
+		});
     }
 
     @Override

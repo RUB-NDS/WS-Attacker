@@ -18,22 +18,18 @@
  */
 package wsattacker.plugin.signatureWrapping.xpath.wrapping;
 
-import static wsattacker.plugin.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import wsattacker.plugin.signatureWrapping.option.OptionPayload;
 import wsattacker.plugin.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
+import static wsattacker.plugin.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
 import wsattacker.plugin.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.plugin.signatureWrapping.util.signature.XPathElement;
 import wsattacker.plugin.signatureWrapping.xpath.analysis.XPathAnalyser;
@@ -63,7 +59,7 @@ public class WrappingOracle
 
   /**
    * Constructor class.
-   * 
+   *
    * @param originalDocument
    * @param payloads
    * @param schemaAnalyser
@@ -90,7 +86,7 @@ public class WrappingOracle
 
   /**
    * Returns the i-th possible XSW message. The original document is not changed.
-   * 
+   *
    * @param index
    * @return XSW message
    * @throws InvalidWeaknessException
@@ -129,7 +125,7 @@ public class WrappingOracle
   }
 
   /**
-   * Private init methods. Analyzes the referenced elements 
+   * Private init methods. Analyzes the referenced elements
    * and estimates the number of possible XSW messages.
    */
   private void init()

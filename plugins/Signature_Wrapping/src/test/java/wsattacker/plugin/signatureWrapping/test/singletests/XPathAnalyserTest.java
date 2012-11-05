@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import wsattacker.plugin.signatureWrapping.xpath.analysis.XPathAnalyser;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessFactoryInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 
@@ -48,12 +48,12 @@ public class XPathAnalyserTest
     {
 
       @Override
-      public List<XPathWeakness> generate(AbsoluteLocationPath xpath,
+      public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
                                           Element signedElement,
                                           Element payloadElement,
                                           SchemaAnalyzerInterface schemaAnalyser)
       {
-        return new ArrayList<XPathWeakness>();
+        return new ArrayList<XPathWeaknessInterface>();
       }
     };
   }
@@ -112,12 +112,12 @@ public class XPathAnalyserTest
     xpath = "/Envelope[1[2]3]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isFastXPath());
-    
+
     // two many expressions
     xpath = "/Envelope[1][2][3]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isFastXPath());
-    
+
     xpath = "/Envelope[1][2]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isFastXPath());
@@ -139,23 +139,23 @@ public class XPathAnalyserTest
   {
     XPathAnalyser a;
     String xpath;
-    
+
     // True
     xpath = "/*[local-name()='e' and namespace-uri()='ns_e'][1]/*[local-name()=\"h\" and namespace-uri()=\"ns_h\"][@id='bla']";
     a = new XPathAnalyser(xpath, null, null, null);
     assertTrue(a.isPrefixfreeTransformedFastXPath());
-    
+
     // True / order independent
 
     xpath = "/*[1][local-name()='e' and namespace-uri()='ns_e']/*[@id='bla'][local-name()=\"h\" and namespace-uri()=\"ns_h\"]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertTrue(a.isPrefixfreeTransformedFastXPath());
-    
+
     // False with double slash
     xpath = "/*[local-name()='e' and namespace-uri()='ns_e'][1]//*[local-name()=\"h\" and namespace-uri()=\"ns_h\"][@id='bla']";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isPrefixfreeTransformedFastXPath());
-    
+
     // No Position Inde
     xpath = "/*[local-name()='e' and namespace-uri()='ns_e']/*[local-name()=\"h\" and namespace-uri()=\"ns_h\"][@id='bla']";
     a = new XPathAnalyser(xpath, null, null, null);
@@ -165,23 +165,23 @@ public class XPathAnalyserTest
     xpath = "/*[local-name()='e' and namespace-uri()='ns_e'][1]/*[local-name()=\"h\" and namespace-uri()=\"ns_h\"]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isPrefixfreeTransformedFastXPath());
-    
+
     // FastXPath
     xpath = "/Envelope[1]/Body[1]/function[1]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertFalse(a.isPrefixfreeTransformedFastXPath());
   }
-  
+
   @Test
   public void xspresXPaths()
   {
     XPathAnalyser a;
     String xpath;
-    
+
     xpath = "/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Body\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertTrue(a.isPrefixfreeTransformedFastXPath());
-    
+
     xpath = "/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Header\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Security\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"][1]/*[local-name()=\"Timestamp\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"][1]";
     a = new XPathAnalyser(xpath, null, null, null);
     assertTrue(a.isPrefixfreeTransformedFastXPath());

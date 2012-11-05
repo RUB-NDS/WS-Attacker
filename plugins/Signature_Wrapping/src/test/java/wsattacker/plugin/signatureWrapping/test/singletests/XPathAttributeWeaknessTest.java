@@ -51,26 +51,26 @@ public class XPathAttributeWeaknessTest
     Element signed = soap.getDummyPayloadBody();
     signed.setTextContent(orgContent);
     String id = soap.getDummyPayloadBodyWsuId();
-    
+
     Element payload = (Element) signed.cloneNode(true);
     payload.setTextContent(atkContent);
-    
+
     String xpath = DomUtilities.getFastXPath(signed).replaceAll("\\[1\\]", "") + "[@wsu:Id='"+id+"']";
     AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
     Step step = abs.getRelativeLocationPaths().get(2);
     XPathAttributeWeakness aw = new XPathAttributeWeakness(step, signed, payload);
-    
-    assertEquals(2*3*1, aw.getNumberOfPossibilites());
-    
+
+    assertEquals(2*3*1, aw.getNumberOfPossibilities());
+
     List<Element> bodyChilds;
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(1, bodyChilds.size());
-    
+
     aw.abuseWeakness(0, signed, payload);
-    
+
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(2, bodyChilds.size());
-    
+
     String xml = soap.toString();
     int orgPos = xml.indexOf(orgContent);
     int atkPos = xml.indexOf(atkContent);
@@ -88,26 +88,26 @@ public class XPathAttributeWeaknessTest
     Element signed = soap.getDummyPayloadBody();
     signed.setTextContent(orgContent);
     String id = soap.getDummyPayloadBodyWsuId();
-    
+
     Element payload = (Element) signed.cloneNode(true);
     payload.setTextContent(atkContent);
-    
+
     String xpath = DomUtilities.getFastXPath(signed).replaceAll("\\[1\\]", "") + "[@wsu:Id='"+id+"']";
     AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
     Step step = abs.getRelativeLocationPaths().get(2);
     XPathAttributeWeakness aw = new XPathAttributeWeakness(step, signed, payload);
-    
-    assertEquals(2*3*1, aw.getNumberOfPossibilites());
-    
+
+    assertEquals(2*3*1, aw.getNumberOfPossibilities());
+
     List<Element> bodyChilds;
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(1, bodyChilds.size());
-    
+
     aw.abuseWeakness(3, signed, payload);
-    
+
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(2, bodyChilds.size());
-    
+
     String xml = soap.toString();
     int orgPos = xml.indexOf(orgContent);
     int atkPos = xml.indexOf(atkContent);
@@ -127,27 +127,27 @@ public class XPathAttributeWeaknessTest
     soap.getDummyPayloadBody().appendChild(signed);
     signed.setTextContent(orgContent);
     String id = soap.getDummyPayloadBodyWsuId();
-    
+
     Element payload = (Element) signed.cloneNode(true);
     payload.setTextContent(atkContent);
-    
+
     String xpath = DomUtilities.getFastXPath(soap.getDummyPayloadBody()).replaceAll("\\[1\\]", "") + "[@wsu:Id='"+id+"']/" + signed.getNodeName();
     AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
     Step step = abs.getRelativeLocationPaths().get(2);
     XPathAttributeWeakness aw = new XPathAttributeWeakness(step, signed, payload);
-    
-    assertEquals(2*3*1, aw.getNumberOfPossibilites());
-    
+
+    assertEquals(2*3*1, aw.getNumberOfPossibilities());
+
     List<Element> bodyChilds;
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(1, bodyChilds.size());
-    
+
     aw.abuseWeakness(0, signed, payload);
     System.out.println(soap);
-    
+
     bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
     assertEquals(2, bodyChilds.size());
-    
+
     String xml = soap.toString();
     int orgPos = xml.indexOf(orgContent);
     int atkPos = xml.indexOf(atkContent);

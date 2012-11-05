@@ -22,20 +22,20 @@ import com.eviware.x.form.XFormFactory;
 import com.eviware.x.impl.swing.SwingFormFactory;
 import javax.swing.WindowConstants;
 import wsattacker.gui.component.MainWindow;
-import wsattacker.gui.component.attackoverview.AttackOverviewNB;
+import wsattacker.gui.component.attackoverview.AttackOverview_NB;
 import wsattacker.gui.component.expertview.ExpertView;
 import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.gui.component.pluginconfiguration.PluginConfigurationGUI;
-import wsattacker.gui.component.target.WsdlLoaderGUINB;
+import wsattacker.gui.component.target.WsdlLoaderGUI_NB;
 import wsattacker.gui.component.testrequest.RequestResponseGUI;
 import wsattacker.main.composition.ControllerInterface;
 
 public class GuiView implements Runnable {
 	ControllerInterface controller;
-	WsdlLoaderGUINB wsdlLoader;
+	WsdlLoaderGUI_NB wsdlLoader;
 	MainWindow mainWindow;
 	PluginConfigurationGUI pluginConfig;
-	AttackOverviewNB attack;
+	AttackOverview_NB attack;
 	RequestResponseGUI testRequest;
 
 	ExpertView expertView;
@@ -48,7 +48,7 @@ public class GuiView implements Runnable {
 		mainWindow = new MainWindow();
 
 		// WsdlLoader
-		wsdlLoader = new WsdlLoaderGUINB();
+		wsdlLoader = new WsdlLoaderGUI_NB();
 		wsdlLoader.setController(controller);
 
 		mainWindow.getTabs().add(wsdlLoader);
@@ -62,7 +62,7 @@ public class GuiView implements Runnable {
 		mainWindow.getTabs().add(pluginConfig);
 
 		// attack
-		attack = new AttackOverviewNB(controller);
+		attack = new AttackOverview_NB(controller);
 		mainWindow.getTabs().add(attack);
 
 		// log
@@ -81,7 +81,7 @@ public class GuiView implements Runnable {
 		XFormFactory.Factory.instance = new SwingFormFactory();
 	}
 
-	public WsdlLoaderGUINB getWsdlLoader() {
+	public WsdlLoaderGUI_NB getWsdlLoader() {
 		return wsdlLoader;
 	}
 
@@ -93,7 +93,7 @@ public class GuiView implements Runnable {
 		return testRequest;
 	}
 
-        public AttackOverviewNB getAttackOverview() {
+        public AttackOverview_NB getAttackOverview() {
                 return attack;
         }
 

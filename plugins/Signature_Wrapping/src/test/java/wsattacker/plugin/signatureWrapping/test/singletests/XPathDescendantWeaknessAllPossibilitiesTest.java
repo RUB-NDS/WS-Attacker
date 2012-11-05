@@ -131,7 +131,7 @@ public class XPathDescendantWeaknessAllPossibilitiesTest extends XPathDescendant
   {
     try
     {
-      for (int i = 0; i < getNumberOfPossibilites(); ++i)
+      for (int i = 0; i < getNumberOfPossibilities(); ++i)
         abuseWeakness(i, null, payloadElement);
     }
     catch (Exception e)

@@ -29,7 +29,7 @@ import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.plugin.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.plugin.signatureWrapping.util.signature.XPathElement;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
@@ -37,7 +37,7 @@ import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTool
 /**
  * NamespaceInection attack.
  */
-public class XPathNamespaceInjectionWeakness implements XPathWeakness
+public class XPathNamespaceInjectionWeakness implements XPathWeaknessInterface
 {
 
   int          numberOfSubtrees;
@@ -107,13 +107,13 @@ public class XPathNamespaceInjectionWeakness implements XPathWeakness
       node = node.getParentNode();
     }
 
-    if (getNumberOfPossibilites() == 0) {
+    if (getNumberOfPossibilities() == 0) {
 		throw new InvalidWeaknessException("XPath does not match any Elements.");
 	}
   }
 
   @Override
-  public int getNumberOfPossibilites()
+  public int getNumberOfPossibilities()
   {
     // 2 possibilites: before and after original Element
     return 2 * numberOfSubtrees * numberOfPossibleNamspacedeclarationPositions;
@@ -136,7 +136,7 @@ public class XPathNamespaceInjectionWeakness implements XPathWeakness
 
   /**
    * Performs a namespace injection attack.
-   * 
+   *
    * @param before
    *          : Should the payload be placed before or after the signed part?
    * @param elementIndex

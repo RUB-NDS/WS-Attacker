@@ -298,10 +298,10 @@ public class XPathDescendantWeaknessTest
 
     assertEquals("/soapenv:Envelope", xpw.getPreXPath());
     assertEquals("ns1:payloadBody/ns2:b", xpw.getPostXPath());
-    assertEquals(2 * 3 + 2 * 1 + 2 * 2, xpw.getNumberOfPossibilites()); // 3 in env, 1 in header, 2 in body
+    assertEquals(2 * 3 + 2 * 1 + 2 * 2, xpw.getNumberOfPossibilities()); // 3 in env, 1 in header, 2 in body
 
     // 2) Abuse the Weakness
-    for (int i = 0; i < xpw.getNumberOfPossibilites(); ++i)
+    for (int i = 0; i < xpw.getNumberOfPossibilities(); ++i)
     {
       Document copyDoc = DomUtilities.createNewDomFromNode(doc.getDocumentElement());
       Element copySigned = DomUtilities.findCorrespondingElement(copyDoc, signedElement);
@@ -317,7 +317,7 @@ public class XPathDescendantWeaknessTest
       String fastXPathPayloadPost = DomUtilities.getFastXPath(copyPayload);
       assertTrue(!fastXPathPayloadPost.isEmpty());
 
-      List<Element> matched = DomUtilities.evaluateXPath(copyDoc, xpath);
+      List<Element> matched = (List<Element>) DomUtilities.evaluateXPath(copyDoc, xpath);
       assertEquals(2, matched.size());
 
       if (matched.get(0) == copySigned)
@@ -360,10 +360,10 @@ public class XPathDescendantWeaknessTest
 
     assertEquals("", xpw.getPreXPath());
     assertEquals("ns1:payloadBody", xpw.getPostXPath());
-    assertEquals(2 * 3 + 2 * 1 + 2 * 2, xpw.getNumberOfPossibilites()); // 3 in env, 1 in header, 2 in body
+    assertEquals(2 * 3 + 2 * 1 + 2 * 2, xpw.getNumberOfPossibilities()); // 3 in env, 1 in header, 2 in body
 
     // 2) Abuse the Weakness
-    for (int i = 0; i < xpw.getNumberOfPossibilites(); ++i)
+    for (int i = 0; i < xpw.getNumberOfPossibilities(); ++i)
     {
       WeaknessLog.clean();
       Document copyDoc = DomUtilities.createNewDomFromNode(doc.getDocumentElement());
@@ -380,7 +380,7 @@ public class XPathDescendantWeaknessTest
       String fastXPathPayloadPost = DomUtilities.getFastXPath(copyPayload);
       assertTrue(!fastXPathPayloadPost.isEmpty());
 
-      List<Element> matched = DomUtilities.evaluateXPath(copyDoc, xpath);
+      List<Element> matched = (List<Element>) DomUtilities.evaluateXPath(copyDoc, xpath);
       assertEquals(String.format("\ni=%d\nXPath: %s\nDoc:\n%s\nLog:\n%s", i, xpath, DomUtilities.showOnlyImportant(copyDoc), WeaknessLog.representation()), 2, matched.size());
 
       if (matched.get(0) == copySigned)
@@ -441,12 +441,12 @@ public class XPathDescendantWeaknessTest
         descendantStep = descendantStep.getNextStep();
       XPathDescendantWeakness xpw = new XPathDescendantWeakness(descendantStep, doc, payloadElement, sa);
 
-      assertEquals((2 * 3 + 2 * 1 + 2 * 2) * 3, xpw.getNumberOfPossibilites()); // (3 in env, 1 in header, 2 in body) *
+      assertEquals((2 * 3 + 2 * 1 + 2 * 2) * 3, xpw.getNumberOfPossibilities()); // (3 in env, 1 in header, 2 in body) *
 // 3
 // for ID
 
       // 2) Abuse the Weakness
-      for (int i = 0; i < xpw.getNumberOfPossibilites(); ++i)
+      for (int i = 0; i < xpw.getNumberOfPossibilities(); ++i)
       {
         Document copyDoc = DomUtilities.createNewDomFromNode(doc.getDocumentElement());
         Element copySigned = DomUtilities.findCorrespondingElement(copyDoc, signedElement);
@@ -463,7 +463,7 @@ public class XPathDescendantWeaknessTest
         String fastXPathPayloadPost = DomUtilities.getFastXPath(copyPayload);
         assertTrue(!fastXPathPayloadPost.isEmpty());
 
-        List<Element> matched = DomUtilities.evaluateXPath(copyDoc, xpath);
+        List<Element> matched = (List<Element>) DomUtilities.evaluateXPath(copyDoc, xpath);
 
         if (matched.size() == 1)
         {
@@ -519,11 +519,11 @@ public class XPathDescendantWeaknessTest
     AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
     XPathDescendantWeakness xpw = new XPathDescendantWeakness(abs.getRelativeLocationPaths().get(0), doc, payloadElement, sa);
 
-    assertEquals((2 * 3 + 2 * 1 + 2 * 2) * 3, xpw.getNumberOfPossibilites()); // (3 in env, 1 in header, 2 in body)*3
+    assertEquals((2 * 3 + 2 * 1 + 2 * 2) * 3, xpw.getNumberOfPossibilities()); // (3 in env, 1 in header, 2 in body)*3
 // for attr
 
     // 2) Abuse the Weakness
-    for (int i = 0; i < xpw.getNumberOfPossibilites(); ++i)
+    for (int i = 0; i < xpw.getNumberOfPossibilities(); ++i)
     {
       Document copyDoc = DomUtilities.createNewDomFromNode(doc.getDocumentElement());
       Element copySigned = DomUtilities.findCorrespondingElement(copyDoc, signedElement);
@@ -539,7 +539,7 @@ public class XPathDescendantWeaknessTest
       String fastXPathPayloadPost = DomUtilities.getFastXPath(copyPayload);
       assertTrue(!fastXPathPayloadPost.isEmpty());
 
-      List<Element> matched = DomUtilities.evaluateXPath(copyDoc, xpath);
+      List<Element> matched = (List<Element>) DomUtilities.evaluateXPath(copyDoc, xpath);
 
       if (matched.size() == 1)
       {
@@ -565,9 +565,9 @@ public class XPathDescendantWeaknessTest
       fail(String.format("Matched '%d' Elements and not 1 or 2 Elements. FAIL", matched.size()));
     }
   }
-  
+
   @Test
-  public void withPreXPath() throws Exception 
+  public void withPreXPath() throws Exception
   {
     Document doc = DomUtilities.readDocument("src/test/resources/signed_rampart_message_soap_1.2.xml");
     SchemaAnalyzerInterface sa = new NullSchemaAnalyzer();
@@ -579,9 +579,9 @@ public class XPathDescendantWeaknessTest
     AbsoluteLocationPath abs = new AbsoluteLocationPath(ref.getXPath());
     System.out.println(ref.getXPath());
     XPathDescendantWeakness weakness = new XPathDescendantWeakness(abs.getRelativeLocationPaths().get(3), doc, option.getPayloadElement(), sa);
-    assertTrue(weakness.getNumberOfPossibilites() > 0);
-//    System.out.println(weakness.getNumberOfPossibilites());
-    
+    assertTrue(weakness.getNumberOfPossibilities() > 0);
+//    System.out.println(weakness.getNumberOfPossibilities());
+
 
     option = sm.getPayloads().get(0);
     option.parseValue(option.getValueAsString().replace("Know-How", "ATTACKER"));
@@ -589,8 +589,8 @@ public class XPathDescendantWeaknessTest
     ref.setXPath("/soap:Envelope"+ref.getXPath());
     abs = new AbsoluteLocationPath(ref.getXPath());
     weakness = new XPathDescendantWeakness(abs.getRelativeLocationPaths().get(1), doc, option.getPayloadElement(), sa);
-    assertTrue(weakness.getNumberOfPossibilites() > 0);
-    
+    assertTrue(weakness.getNumberOfPossibilities() > 0);
+
     WrappingOracle wrap = new WrappingOracle(doc, sm.getPayloads(), sa);
     assertTrue(wrap.maxPossibilities() > 0);
   }

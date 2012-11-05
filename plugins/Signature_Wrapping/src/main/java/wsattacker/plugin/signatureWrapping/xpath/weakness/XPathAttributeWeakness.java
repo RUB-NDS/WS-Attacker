@@ -23,7 +23,7 @@ import java.util.List;
 import org.w3c.dom.Element;
 
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
@@ -35,14 +35,14 @@ import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTool
  * Afterwards, the XPathAttributeWeaknessPostProcess is used to modify
  * the attribute values.
  */
-public class XPathAttributeWeakness implements XPathWeakness
+public class XPathAttributeWeakness implements XPathWeaknessInterface
 {
-  
-  private XPathWeakness postProcess;
+
+  private XPathWeaknessInterface postProcess;
   private Step step;
   private int matches;
-  
-  
+
+
   public XPathAttributeWeakness(Step step,
                                  Element signedElement,
                                  Element payloadElement) throws InvalidWeaknessException
@@ -53,12 +53,12 @@ public class XPathAttributeWeakness implements XPathWeakness
   }
 
   @Override
-  public int getNumberOfPossibilites()
+  public int getNumberOfPossibilities()
   {
     // *2 : Place Payload before and after Signed Element
     // *matches : If XPath matches multiple Elements
     // *postProcess.getNumberOfPossibilities() : self explaining
-    return 2 * matches * postProcess.getNumberOfPossibilites();
+    return 2 * matches * postProcess.getNumberOfPossibilities();
   }
 
   /**
@@ -75,8 +75,8 @@ public class XPathAttributeWeakness implements XPathWeakness
     index /= 2;
     int useMatch = index % matches;
     index /= matches;
-    int abuseIndex = index % postProcess.getNumberOfPossibilites();
-    
+    int abuseIndex = index % postProcess.getNumberOfPossibilities();
+
     List<Element> signedPostPartMatches = XPathWeaknessTools.getSignedPostPart(step, signedElement);
     if (useMatch > signedPostPartMatches.size()) {
 				  throw new InvalidWeaknessException("Could not find index " + useMatch  + " in attribute XPath matches.");

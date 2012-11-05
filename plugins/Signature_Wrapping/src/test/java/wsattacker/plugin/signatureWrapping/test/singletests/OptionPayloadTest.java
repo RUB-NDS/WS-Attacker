@@ -32,14 +32,14 @@ import wsattacker.plugin.signatureWrapping.test.util.SoapTestDocument;
 
 public class OptionPayloadTest
 {
-  
+
   private static Signer s;
-  
+
   @BeforeClass
   public static void setUpBeforeClass() {
     s = new Signer(null);
   }
-  
+
   @Test
   public void timestampTestInMilliseconds() throws Exception
   {
@@ -49,14 +49,14 @@ public class OptionPayloadTest
     Element t = soap.getTimestamp();
     assertFalse("Not Expired:\n"+ domToString(t), s.verifyTimestamp(t));
     assertFalse("Not Expired:\n"+ domToString(t), s.verifyTimestamp(doc));
-    
+
     OptionPayload o = new OptionPayload(null, "name", t, "timestampoption");
-    
+
     assertTrue("Not a Timestamp Element:\n"+ domToString(t), o.isTimestamp());
     Element p = o.getPayloadElement();
     assertTrue("Expired: "+ domToString(p), s.verifyTimestamp(p));
   }
-  
+
   @Test
   public void timestampTest() throws Exception
   {
@@ -66,9 +66,9 @@ public class OptionPayloadTest
     Element t = soap.getTimestamp();
     assertFalse("Not Expired:\n"+ domToString(t), s.verifyTimestamp(t));
     assertFalse("Not Expired:\n"+ domToString(t), s.verifyTimestamp(doc));
-    
+
     OptionPayload o = new OptionPayload(null, "name", t, "timestampoption");
-    
+
     assertTrue("Not a Timestamp Element:\n"+ domToString(t), o.isTimestamp());
     Element p = o.getPayloadElement();
     assertTrue("Expired: "+ domToString(p), s.verifyTimestamp(p));

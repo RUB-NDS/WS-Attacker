@@ -112,7 +112,7 @@ public class XPathAttributeWeaknessPostProcessTest
 
     XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
 
-    assertEquals(3, aw.getNumberOfPossibilites());
+    assertEquals(3, aw.getNumberOfPossibilities());
 
     Attr sa, pa;
 
@@ -124,7 +124,7 @@ public class XPathAttributeWeaknessPostProcessTest
     assertNotNull(pa);
     assertEquals(sa.getTextContent(), id);
     assertFalse(pa.getTextContent().isEmpty());
-    assertEquals(pa.getTextContent(), "attack" + id);
+    assertFalse(pa.getTextContent().equals(id));
     assertFalse(sa.getTextContent().equals(pa.getTextContent()));
 
     aw.abuseWeakness(2, signed, payload);
@@ -171,7 +171,7 @@ public class XPathAttributeWeaknessPostProcessTest
 
     XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
 
-    assertEquals(3, aw.getNumberOfPossibilites());
+    assertEquals(3, aw.getNumberOfPossibilities());
 
     Attr sa, pa;
 
@@ -183,7 +183,7 @@ public class XPathAttributeWeaknessPostProcessTest
     assertNotNull(pa);
     assertEquals(sa.getTextContent(), id);
     assertFalse(pa.getTextContent().isEmpty());
-    assertEquals(pa.getTextContent(), "attack" + id);
+    assertFalse(pa.getTextContent().equals(id));
     assertFalse(sa.getTextContent().equals(pa.getTextContent()));
 
     aw.abuseWeakness(2, signed, payload);
@@ -234,7 +234,7 @@ public class XPathAttributeWeaknessPostProcessTest
 
     XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
 
-    assertEquals(3, aw.getNumberOfPossibilites());
+    assertEquals(3, aw.getNumberOfPossibilities());
 
     Attr sa, pa;
 
@@ -246,7 +246,7 @@ public class XPathAttributeWeaknessPostProcessTest
     assertNotNull(pa);
     assertEquals(sa.getTextContent(), id);
     assertFalse(pa.getTextContent().isEmpty());
-    assertEquals(pa.getTextContent(), "attack" + id);
+    assertFalse(pa.getTextContent().equals(id));
     assertFalse(sa.getTextContent().equals(pa.getTextContent()));
 
     aw.abuseWeakness(2, signed, payload);

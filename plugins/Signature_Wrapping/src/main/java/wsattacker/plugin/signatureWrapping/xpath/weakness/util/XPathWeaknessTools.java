@@ -147,7 +147,7 @@ public class XPathWeaknessTools
     }
     return signedPostPart;
   }
-  
+
   /**
    * Evaluates the XPaths up to the Step step and returns a List of Elements
    * which contain the signedElement as a descendant-or-self.
@@ -158,35 +158,35 @@ public class XPathWeaknessTools
    */
   public static List<Element> getSignedPostPart(Step step, Element signedElement) throws InvalidWeaknessException {
 
-    // get extended PreXPath
-    String xpath = step.getPreXPath() + "/" + step.getStep();
-    List<Element> matchList;
-    try
-   {
-     matchList = DomUtilities.evaluateXPath(signedElement.getOwnerDocument(), xpath);
-   }
-   catch (XPathExpressionException e)
-   {
-     e.printStackTrace();
-     log.warn(e.getLocalizedMessage());
-     throw new InvalidWeaknessException(e);
-   }
-   if (matchList.isEmpty())
-   {
-     throw new InvalidWeaknessException("XPath does not match any Element");  
-   }
-   List<Element> haveSignedDecendant = new ArrayList<Element>();
-   for(Element match : matchList) {
-		if ( isAncestorOf(match, signedElement) >= 0) {
-				haveSignedDecendant.add(match);
-		}
-   }
-   return haveSignedDecendant;
+	  // get extended PreXPath
+	  String xpath = step.getPreXPath() + "/" + step.getStep();
+	  if (xpath.equals("/")) {
+		  throw new InvalidWeaknessException("Reached root of Document.");
+	  }
+	  List<Element> matchList;
+	  try {
+		  matchList = (List<Element>) DomUtilities.evaluateXPath(signedElement.getOwnerDocument(), xpath);
+	  } catch (XPathExpressionException e) {
+		  log.warn(e.getLocalizedMessage());
+		  throw new InvalidWeaknessException(e);
+	  }
+
+
+	  if (matchList.isEmpty()) {
+		  throw new InvalidWeaknessException("XPath does not match any Element");
+	  }
+	  List<Element> haveSignedDecendant = new ArrayList<Element>();
+	  for (Element match : matchList) {
+		  if (isAncestorOf(match, signedElement) >= 0) {
+			  haveSignedDecendant.add(match);
+		  }
+	  }
+	  return haveSignedDecendant;
   }
 
   /**
    * Checks if ancestor-Element is an ancestor of maybeChild Element
-   * 
+   *
    * @param the
    *          ancestor-Element
    * @param the
@@ -197,8 +197,9 @@ public class XPathWeaknessTools
   public static int isAncestorOf(Element ancestor,
                                  Element maybeChild)
   {
+	int ret = -1;
     if (ancestor == maybeChild) {
-		return 0;
+		ret = 0;
 	}
     Node parent = maybeChild.getParentNode();
 
@@ -210,8 +211,8 @@ public class XPathWeaknessTools
     }
 
     if (parent == ancestor) {
-		return i;
+		ret = i;
 	}
-    return -1;
+    return ret;
   }
 }

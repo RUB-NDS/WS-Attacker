@@ -22,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import wsattacker.gui.util.CenteredTableCellRenderer;
 import wsattacker.gui.util.ColoredPluginStateTableCellRenderer;
-import wsattacker.gui.util.VulnerableTableCellRenderer;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.PluginManagerListener;
 import wsattacker.main.plugin.PluginManager;
@@ -36,15 +35,16 @@ public class EnabledPluginTable extends JTable {
         getColumnModel().getColumn(1).setCellRenderer(new ColoredPluginStateTableCellRenderer());
         getColumnModel().getColumn(2).setCellRenderer(new CenteredTableCellRenderer());
         getColumnModel().getColumn(3).setCellRenderer(new CenteredTableCellRenderer());
-        getColumnModel().getColumn(4).setCellRenderer(new VulnerableTableCellRenderer());
+//        getColumnModel().getColumn(4).setCellRenderer(new VulnerableTableCellRenderer());
+		setComponentPopupMenu(new EnabledPluginTablePopup());
     }
 
     @SuppressWarnings("serial")
     public class AttackOverviewTableModel extends AbstractTableModel implements
             PluginManagerListener {
 
-        final private String[] columnNames = {"Name", "Status", "Current",
-            "Max", "Vulnerable?"};
+//        final private String[] columnNames = {"Name", "Status", "Current", "Max", "Vulnerable?"};
+        final private String[] columnNames = {"Name", "Status", "Rating", "Vulnerable?"};
         final PluginManager pluginManager;
 
         public AttackOverviewTableModel() {
@@ -74,17 +74,15 @@ public class EnabledPluginTable extends JTable {
 
         @Override
         public Object getValueAt(int row, int col) {
-            AbstractPlugin plugin = pluginManager.getActive(row);
+            final AbstractPlugin plugin = pluginManager.getActive(row);
             switch (col) {
                 case 0:
                     return plugin.getName();
                 case 1:
                     return plugin.getState();
                 case 2:
-                    return new Integer(plugin.getCurrentPoints());
+					return String.format("%d%%", 100*plugin.getCurrentPoints()/plugin.getMaxPoints());
                 case 3:
-                    return new Integer(plugin.getMaxPoints());
-                case 4:
                     return new Boolean(plugin.wasSuccessful());
             }
             return null;
@@ -108,7 +106,7 @@ public class EnabledPluginTable extends JTable {
             if (pluginManager.isActive(plugin)) {
                 int row = pluginManager.indexOfActive(plugin);
                 this.fireTableCellUpdated(row, 1);
-                this.fireTableCellUpdated(row, 4);
+                this.fireTableCellUpdated(row, 3);
             }
         }
 

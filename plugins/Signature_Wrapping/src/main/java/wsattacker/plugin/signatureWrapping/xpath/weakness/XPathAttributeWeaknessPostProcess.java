@@ -18,17 +18,17 @@
  */
 package wsattacker.plugin.signatureWrapping.xpath.weakness;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.SecureRandom;
+import java.util.*;
 
 import org.apache.log4j.Logger;
+import org.apache.ws.security.util.Base64;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
 import wsattacker.plugin.signatureWrapping.xpath.parts.predicate.OrExpression;
 import wsattacker.plugin.signatureWrapping.xpath.parts.predicate.Predicate;
@@ -36,13 +36,15 @@ import wsattacker.plugin.signatureWrapping.xpath.parts.predicate.concrete.Attrib
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.WeaknessLog;
 
 /**
- * XPathWeakness which adjusts the attribute values of the signed element and the payload element.
+ * XPathWeaknessInterface which adjusts the attribute values of the signed element and the payload element.
  */
-public class XPathAttributeWeaknessPostProcess implements XPathWeakness
+public class XPathAttributeWeaknessPostProcess implements XPathWeaknessInterface
 {
   private Step                         step;
   private static Logger                log = Logger.getLogger(XPathAttributeWeaknessPostProcess.class);
   private List<AttributeAndExpression> attributeAndList;
+
+  private static final SecureRandom secureRandom = new SecureRandom();
 
   public XPathAttributeWeaknessPostProcess(Step step)
                                                      throws InvalidWeaknessException
@@ -61,7 +63,7 @@ public class XPathAttributeWeaknessPostProcess implements XPathWeakness
   }
 
   @Override
-  public int getNumberOfPossibilites()
+  public int getNumberOfPossibilities()
   {
     // Basically, there are three possibilites:
     // 1) Payload and Signed Element have the same attribute value
@@ -87,7 +89,7 @@ public class XPathAttributeWeaknessPostProcess implements XPathWeakness
    * Adjusts the attribute of the affected elements.
    * There are three possibilities:
    * 1) Payload element gets new attribute value.
-   * 2) Palyoad element uses the same value as the signed element. 
+   * 2) Palyoad element uses the same value as the signed element.
    * 3) The attribute is removed from the payload element.
    * @param and
    * @param index
@@ -151,10 +153,12 @@ public class XPathAttributeWeaknessPostProcess implements XPathWeakness
       case 0:
 // Attr signedAttribute = getAttributeByQualifiedName(signedAttributeElement, and.getPrefix(), and.getLocalname());
         if (signedAttribute.getValue().equals(payloadAttribute.getValue())) {
-				  payloadAttribute.setNodeValue("attack" + and.getValue());
-		  } // TODO: Use random Value, maybe check for some
-// type,
-// e.g. Integer
+			int length = signedAttribute.getValue().length();
+			byte[] ran = new byte[length];
+			secureRandom.nextBytes(ran);
+			String newAttributeValue = Base64.encode(ran).substring(0, length);
+			payloadAttribute.setNodeValue(newAttributeValue);
+		  }
 
         WeaknessLog
             .append(String

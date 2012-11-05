@@ -19,7 +19,9 @@
 package wsattacker.main.composition.plugin;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -36,7 +38,7 @@ import wsattacker.main.testsuite.TestSuite;
 
 public abstract class AbstractPlugin implements
 		SuccessInterface, PluginOptionValueObserver, Comparable<AbstractPlugin>, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private int currentPoints;
@@ -47,7 +49,7 @@ public abstract class AbstractPlugin implements
 
 	/**
 	 * Creates a new Plugin, needs an OptionFactory for creating PluginOptions
-	 * 
+	 *
 	 * @param optionFactory
 	 */
 	public AbstractPlugin() {
@@ -58,23 +60,23 @@ public abstract class AbstractPlugin implements
 		state = PluginState.Not_Configured;
 		log = Logger.getLogger(getClass());
 	}
-	
+
 	public abstract void initializePlugin();
 
 	/**
 	 * returns the plugin name
-	 * 
+	 *
 	 * @return String
 	 */
 	public abstract String getName();
 
 	/**
 	 * returns a plugin description
-	 * 
+	 *
 	 * @return String
 	 */
 	public abstract String getDescription();
-	
+
 	/**
 	 * returns the plugin author
 	 * @return
@@ -85,10 +87,10 @@ public abstract class AbstractPlugin implements
 	 * returns the plugin version
 	 */
 	public abstract String getVersion();
-	
+
 	/**
 	 * Returns a container with all needed options
-	 * 
+	 *
 	 * @return PluginOptionContainer
 	 */
 	final public PluginOptionContainer getPluginOptions() {
@@ -99,17 +101,17 @@ public abstract class AbstractPlugin implements
 	 * @return the maximum number of possible points
 	 */
 	public abstract int getMaxPoints();
-	
+
 	/**
 	 * returns the currently reached number of points this will be used at the
 	 * end to calculate, how successful an attack was
-	 * 
+	 *
 	 * @return currently reached number of points
 	 */
 	final public int getCurrentPoints() {
 		return this.currentPoints;
 	}
-	
+
 	/**
 	 * Set the current points to the specified number
 	 * @param points
@@ -120,14 +122,14 @@ public abstract class AbstractPlugin implements
 			notifyCurrentPointsChanged(points);
 		}
 	}
-	
+
 	/**
 	 * Increase current points by one
 	 */
 	final protected void addOnePoint() {
 		setCurrentPoints(getCurrentPoints() + 1);
 	}
-	
+
 	/**
 	 * Returns the plugin state
 	 * @return the state
@@ -135,7 +137,7 @@ public abstract class AbstractPlugin implements
 	final public PluginState getState() {
 		return state;
 	}
-	
+
 	/**
 	 * Sets the plugin state
 	 */
@@ -146,7 +148,7 @@ public abstract class AbstractPlugin implements
 			notifyPluginStateChagend(state, oldState);
 		}
 	}
-	
+
 	/**
 	 * A wrapper function for easy logging using log4j
 	 * @param level
@@ -155,7 +157,7 @@ public abstract class AbstractPlugin implements
 	final protected Logger log() {
 		return log;
 	}
-	
+
 	/**
 	 * A wrapper function for easy making results
 	 * @param level
@@ -201,13 +203,13 @@ public abstract class AbstractPlugin implements
 
 	/***
 	 * returns whether the attack is running
-	 * 
+	 *
 	 * @return is the attack running? true/false
 	 */
 	final public boolean isRunning() {
 		return (state == PluginState.Running);
 	}
-	
+
 	/***
 	 * return whether the plugin is ready to run
 	 * or still need some configuration
@@ -216,7 +218,7 @@ public abstract class AbstractPlugin implements
 	final public boolean isReady() {
 		return (state == PluginState.Ready);
 	}
-	
+
 	/***
 	 * return whether the plugin is finished
 	 * @return boolean finished
@@ -224,7 +226,7 @@ public abstract class AbstractPlugin implements
 	final public boolean isFinished() {
 		return (state == PluginState.Finished);
 	}
-	
+
 	/***
 	 * return whether the plugin is finished
 	 * @return boolean finished
@@ -232,7 +234,7 @@ public abstract class AbstractPlugin implements
 	final public boolean isFailed() {
 		return (state == PluginState.Failed);
 	}
-	
+
 	/***
 	 * return whether the plugin is requested to abort by the user
 	 * @return boolean finished
@@ -240,7 +242,7 @@ public abstract class AbstractPlugin implements
 	final public boolean isAborting() {
 		return (state == PluginState.Aborting);
 	}
-	
+
 	/***
 	 * return whether the plugin is stopped by the user
 	 * @return boolean finished
@@ -248,10 +250,10 @@ public abstract class AbstractPlugin implements
 	final public boolean isStopped() {
 		return (state == PluginState.Stopped);
 	}
-	
+
 	/***
 	 * starts the Attack
-	 * 
+	 *
 	 * @return wasSuccessfull() or false, if plugin not ready
 	 */
 
@@ -281,7 +283,7 @@ public abstract class AbstractPlugin implements
 		}
 		return wasSuccessful();
 	}
-	
+
 	/***
 	 * Implement your Attack here
 	 * Note: Do not edit the request response pair
@@ -294,11 +296,11 @@ public abstract class AbstractPlugin implements
 	/***
 	 * This method will be called if a new project ist started
 	 * and will also be called first in startAttack()
-	 * 
+	 *
 	 * E.g. for simplest implementation: setCurrentPoints(0)
 	 */
 	public abstract void clean();
-	
+
 	/**
 	 * This method will be called to abort the attack
 	 * It sets the plugin state to "Aborting" so use
@@ -307,7 +309,7 @@ public abstract class AbstractPlugin implements
 	final public void abortAttack() {
 		setState(PluginState.Aborting);
 	}
-	
+
 	/**
 	 * Sets the plugin state to "Stopped";
 	 * Afterwards, stopHook() is called.
@@ -316,65 +318,69 @@ public abstract class AbstractPlugin implements
 		stopHook();
 		setState(PluginState.Stopped);
 	}
-	
+
 	/**
 	 * This method will be called after the attack thread is killed.
-	 * The plugin can try to clean up everything, what could not be 
+	 * The plugin can try to clean up everything, what could not be
 	 * finished in the abortHook().
 	 * The default implementation does nothing.
 	 */
 	protected void stopHook() {
-		
+
 	}
-	
+
 	/***
 	 * returns whether the attack was successful should return false if attack
 	 * is not finished your implementation must decide, how many points must be
 	 * reached for an successful attack
-	 * 
+	 *
 	 * @return true if finished and successful
 	 */
 	public abstract boolean wasSuccessful();
-	
+
+	public List<PluginFunctionInterface> getPluginFunctionList() {
+		return new ArrayList<PluginFunctionInterface>();
+	}
+
 	final public void addPluginObserver(PluginObserver o) {
 		observers.add(o);
 	}
-	
+
 	final public void removePluginObserver(PluginObserver o) {
 		observers.remove(o);
 	}
-	
+
 	private void notifyCurrentPointsChanged(int points) {
 		for(PluginObserver o : observers) {
 			o.currentPointsChanged(this, points);
 		}
 	}
-	
+
 	private void notifyPluginStateChagend(PluginState newState,  PluginState oldState) {
 		for(PluginObserver o : observers) {
 			o.pluginStateChanged(this, newState, oldState);
 		}
 	}
-	
+
 	/***
 	 * This method can be used to test, if a plugin is configured correctly
 	 * So you might change the Plugin.STATE from NOT_CONFIGURED to READY here,
-	 * depending on correctly set options (and of course you should change 
-	 * state back, if options are not correct) all user changes in options 
+	 * depending on correctly set options (and of course you should change
+	 * state back, if options are not correct) all user changes in options
 	 * will call this method
 	 */
 	@Override
 	public void optionValueChanged(AbstractOption option) {
-		
+
 	}
-	
+
 	/***
 	 * This method will be used to restore saved plugin configuration.
 	 * The current implementation will only work for very basic plugins:
-	 * 
+	 *
 	 * for each plugin option from $plugin
 	 * 		set the corresponding option to the same value
-	 * 
+	 *
 	 * You have to override this method if you use special options, e.g.
 	 * options which depend on the current wsdl or if your plugin uses dynamic
 	 * options (e.g. getPluginOptions() will not return every plugin option).
@@ -397,7 +403,7 @@ public abstract class AbstractPlugin implements
 			}
 		}
 	}
-	
+
 	public abstract String[] getCategory();
 
 	/***
@@ -409,7 +415,7 @@ public abstract class AbstractPlugin implements
 			return false;
 		return ((AbstractPlugin)o).getName().equals(this.getName());
 	}
-	
+
 //	/***
 //	 * As we override equals(...), we also have to override hashCode()
 //	 * TODO: Fix why this ends up in an error
@@ -418,7 +424,7 @@ public abstract class AbstractPlugin implements
 //	public int hashCode() {
 //		return getName().hashCode();
 //	}
-	
+
 	@Override
 	public int compareTo(AbstractPlugin p) {
 		return getName().compareTo(p.getName());

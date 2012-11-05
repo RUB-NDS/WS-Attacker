@@ -18,10 +18,12 @@
  */
 package wsattacker.gui.component.attackoverview.subcomponent;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import wsattacker.gui.util.CenteredTableCellRenderer;
@@ -36,10 +38,13 @@ import wsattacker.util.DateFormater;
 public class ResultTable extends JTable {
 	private static final long serialVersionUID = 1L;
 	ResultTableModel model;
-	
+	JTable table;
+
 	public ResultTable() {
+		table = this;
 		model = new ResultTableModel();
 		this.setModel(model);
+		this.setAutoscrolls(true);
 		this.getColumnModel().getColumn(0).setPreferredWidth(50);
 		this.getColumnModel().getColumn(1).setPreferredWidth(50);
 		this.getColumnModel().getColumn(2).setPreferredWidth(100);
@@ -49,24 +54,24 @@ public class ResultTable extends JTable {
 		this.getColumnModel().getColumn(2).setCellRenderer(new CenteredTableCellRenderer());
 		this.getColumnModel().getColumn(3).setCellRenderer(new MultiLineTableCellRenderer());
 	}
-	
+
 	public void filterSources(List<String> sources) {
 		model.filterSources(sources);
 	}
-	
+
 	public void setLevel(ResultLevel level) {
 		model.setLevel(level);
 	}
-	
+
 	public class ResultTableModel extends AbstractTableModel implements ResultObserver {
-		
+
 		private static final long serialVersionUID = 1L;
 		final private String[] columnNames = {"Time", "Level", "Source", "Content"};
 		Result global;
 		Result result;
 		ResultLevel level;
 		List<String> sources;
-		
+
 		public ResultTableModel() {
 			result = new Result();
 			global = Result.getGlobalResult();
@@ -75,7 +80,7 @@ public class ResultTable extends JTable {
 			global.setObserverLevel(this, level);
 			sources = new ArrayList<String>();
 		}
-		
+
 		public void setLevel(ResultLevel level) {
 			this.level = level;
 			result = global.filterOnly(level);
@@ -85,7 +90,7 @@ public class ResultTable extends JTable {
 			global.setObserverLevel(this, level);
 			this.fireTableDataChanged();
 		}
-		
+
 		public void filterSources(List<String> sources) {
 			this.sources = sources;
 			result = global.filterOnly(level);
@@ -95,17 +100,17 @@ public class ResultTable extends JTable {
 			global.setSources(this, sources);
 			this.fireTableDataChanged();
 		}
-		
+
 		@Override
 		public int getColumnCount() {
 			return columnNames.length;
 		}
-		
+
 		@Override
 		public String getColumnName(int num){
 			return this.columnNames[num];
 		}
-		
+
 		@Override
 		public boolean isCellEditable(int y, int x){
 			return false;
@@ -131,7 +136,7 @@ public class ResultTable extends JTable {
 			}
 			return null;
 		}
-		
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public Class getColumnClass(int c) {
@@ -143,14 +148,23 @@ public class ResultTable extends JTable {
 			result.add(log);
 			this.fireTableDataChanged();
 //			this.fireTableRowsInserted(getRowCount(), getRowCount()); // does not work for multiline cells
+
+
+//                SwingUtilities.invokeLater(new Runnable() {
+//
+//					@Override
+//                    public void run() {
+//                        table.scrollRectToVisible(table.getCellRect(table.getRowCount() - 1, 0, true));
+//                    }
+//                });
 		}
-		
+
 		@Override
 		public void logClear() {
 			result.clear();
 			this.fireTableRowsDeleted(0, getRowCount());
 		}
-		
+
 	}
 
 }

@@ -48,6 +48,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -62,7 +63,7 @@ public class DomUtilities
 
   /**
    * Returns a valid FastXPath that would match the given Node in its Document.
-   * 
+   *
    * @param node
    * @return FastXPath String
    */
@@ -99,7 +100,7 @@ public class DomUtilities
   /**
    * Returns the index of the Node within the current sub-tree. Mainly used for creating FastXPath expressions (
    * {@link #getFastXPath(Node)})
-   * 
+   *
    * @param ele
    * @return
    */
@@ -123,7 +124,7 @@ public class DomUtilities
   /**
    * Transforms a List<Node> to a List<String>. Each String in the List is a FastXPath that matches the corresponding
    * Node ( {@link #getFastXPath(Node)}.
-   * 
+   *
    * @param nodelist
    * @return
    */
@@ -137,7 +138,7 @@ public class DomUtilities
 
   /**
    * Takes a Document and evaluates an XPath expression on it. All matching Nodes are returned as a List.
-   * 
+   *
    * @param doc
    *          The Document.
    * @param path
@@ -145,7 +146,7 @@ public class DomUtilities
    * @return List<Node> that match the XPath.
    * @throws XPathExpressionException
    */
-  public static List<Element> evaluateXPath(Document doc,
+  public static List<? extends Node> evaluateXPath(Document doc,
                                             String path)
                                                         throws XPathExpressionException
   {
@@ -154,20 +155,24 @@ public class DomUtilities
     xpath.setNamespaceContext(new NamespaceResolver(doc));
     XPathExpression expr = xpath.compile(path);
     NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-    List<Element> nodelist = new ArrayList<Element>();
-    for (int i = 0; i < nodes.getLength(); ++i)
-      if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE)
-        nodelist.add((Element) nodes.item(i));
-      else
-        Logger.getLogger(DomUtilities.class).warn("Found Node : " + nodes.item(i).getNodeName() + " = " + nodes.item(i)
-            .getNodeValue() + " with XPATH " + path);
+    List<Node> nodelist = new ArrayList<Node>();
+    for (int i = 0; i < nodes.getLength(); ++i) {
+//		  if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+			  nodelist.add(nodes.item(i));
+//		  }
+//		  else {
+//			  Logger.getLogger(DomUtilities.class).warn("Found Node : " + nodes.item(i).getNodeName() + " = " + nodes.item(i)
+//				  .getNodeValue() + " with XPATH " + path);
+//		  }
+//			  System.out.format("### Name: %s Class: %s Type: %s\n", nodes.item(i), nodes.item(i).getClass(), nodes.item(i).getNodeType());
+	  }
     log.trace("Evaluated XPATH: " + path + " and found " + nodeListToString(nodelist));
     return nodelist;
   }
 
   /**
    * Finds an Element by its ID name. Looks for wsu:Id.
-   * 
+   *
    * @param doc
    * @param id
    *          : ID to search. Does not start with a Hash (#) Sign.
@@ -182,7 +187,7 @@ public class DomUtilities
 // from prefix
     try
     {
-      List<Element> result = evaluateXPath(doc, xpath);
+      List<Element> result = (List<Element>) evaluateXPath(doc, xpath);
       log.trace("### WSU IDs found ### \n" + nodelistToFastXPathList(result));
       return result;
     }
@@ -192,23 +197,23 @@ public class DomUtilities
       return new ArrayList<Element>();
     }
   }
-  
+
     /**
    * Finds an Element by its ID name. Looks for wsu:Id.
-   * 
+   *
    * @param doc
    * @param attributeValue
    *          : ID to search. Does not start with a Hash (#) Sign.
    * @return
    */
-  public static List<Element> findElementByAttributeValue(Document doc,
+  public static List<Attr> findAttributeByValue(Document doc,
                                                  String attributeValue)
   {
-    List<Element> returnedElements = new ArrayList<Element>();
-    String xpath = "//attribute::*[string()='" + attributeValue + "']/parent::node()";
+    List<Attr> returnedElements = new ArrayList<Attr>();
+    String xpath = "//attribute::*[string()='" + attributeValue + "']"; // for corresponding node: /parent::node()";
     try
     {
-      returnedElements = evaluateXPath(doc, xpath);
+      returnedElements = (List<Attr>) evaluateXPath(doc, xpath);
       log.trace("### Element with Attribute '"+attributeValue+"' ### \n" + nodelistToFastXPathList(returnedElements));
 
     }
@@ -218,12 +223,10 @@ public class DomUtilities
     }
     return returnedElements;
   }
-  
-  
 
   /**
    * Returns the first child Element of a given Node.
-   * 
+   *
    * @param node
    * @return Child Element.
    */
@@ -239,7 +242,7 @@ public class DomUtilities
 
   /**
    * Returns the next sibling element of a Node.
-   * 
+   *
    * @param node
    * @return Next Sibling
    */
@@ -255,7 +258,7 @@ public class DomUtilities
 
   /**
    * Finds child elements that matches a given prefix:localname.
-   * 
+   *
    * @param parent
    *          The parent Node
    * @param localname
@@ -273,7 +276,7 @@ public class DomUtilities
 
   /**
    * Finds child elements that matches a given prefix:localname.
-   * 
+   *
    * @param parent
    *          The parent Node
    * @param localname
@@ -321,7 +324,7 @@ public class DomUtilities
 
   /**
    * Get all child elements of Element ele as a List of Elements. Non recursive.
-   * 
+   *
    * @param ele
    * @return
    */
@@ -333,7 +336,7 @@ public class DomUtilities
   /**
    * Get all child elements of Element ele as a List of Elements. If recursive is true, even the child elements of all
    * childelements are fetched recursively.
-   * 
+   *
    * @param ele
    * @param recursive
    * @return
@@ -366,7 +369,7 @@ public class DomUtilities
 
   /**
    * Creates an empty Document
-   * 
+   *
    * @return
    */
   public static Document createDomDocument()
@@ -388,7 +391,7 @@ public class DomUtilities
   /**
    * Creates a new Docume1nt with the Node toClone as root Element Can be used to clone a Document with
    * createNewDomFromNode(rootToClone)
-   * 
+   *
    * @param toClone
    * @return
    */
@@ -433,7 +436,7 @@ public class DomUtilities
 
   /**
    * Reads an XML file and returns a Document.
-   * 
+   *
    * @param file
    * @return Document
    * @throws ParserConfigurationException
@@ -463,7 +466,7 @@ public class DomUtilities
 
   /**
    * Writes a Document to a file.
-   * 
+   *
    * @param doc
    * @param filename
    */
@@ -501,7 +504,7 @@ public class DomUtilities
 
   /**
    * Converts a String to a Document. Namespace awareness is on.
-   * 
+   *
    * @param xmlString
    * @return
    * @throws SAXException
@@ -537,7 +540,7 @@ public class DomUtilities
 
   /**
    * Converts a DOM to a String
-   * 
+   *
    * @param domDoc
    * @return
    */
@@ -554,7 +557,7 @@ public class DomUtilities
 
   /**
    * Converts a DOM Node to a String
-   * 
+   *
    * @param Node
    *          n
    * @return
@@ -640,7 +643,7 @@ public class DomUtilities
 
   /***
    * PrettyPrints a List<Node>
-   * 
+   *
    * @param list
    * @return
    */
@@ -662,7 +665,7 @@ public class DomUtilities
   /**
      * The Element element is not part of the Document doc. This Function returns the corresponding Element in doc. If it
      * does not exist yet, it will be created.
-     * 
+     *
      * @param doc
      * @param element
      * @return

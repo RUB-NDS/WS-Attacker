@@ -38,7 +38,7 @@ import org.apache.log4j.PatternLayout;
 import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.gui.component.testrequest.RequestResponseGUI;
 import wsattacker.gui.component.target.WsdlLoaderGUI;
-import wsattacker.gui.component.target.WsdlLoaderGUINB;
+import wsattacker.gui.component.target.WsdlLoaderGUI_NB;
 import wsattacker.main.Preferences;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.plugin.AbstractPlugin;
@@ -58,13 +58,13 @@ public class GuiController implements ControllerInterface {
 	GuiView guiView;
 
 	private boolean abortAttacks;
-        
+
 	Thread runThread;
 	PluginRunner runner;
 
 	// singleton
 	private GuiController() {
-            
+
 		abortAttacks = false;
 
 		// create a new test suite
@@ -86,7 +86,7 @@ public class GuiController implements ControllerInterface {
 		Thread viewThread = new Thread(this.guiView);
 		viewThread.start();
 	}
-        
+
 	// singleton
 	public static GuiController getInstance() {
 		return c;
@@ -389,7 +389,7 @@ public class GuiController implements ControllerInterface {
 
 		@Override
 		public void run() {
-			WsdlLoaderGUINB wsdlGui = guiView.getWsdlLoader();
+			WsdlLoaderGUI_NB wsdlGui = guiView.getWsdlLoader();
 
 			// disable fields
 			wsdlGui.getUriField().setEnabled(false);
@@ -570,7 +570,7 @@ public class GuiController implements ControllerInterface {
 			guiView.getMainWindows().getTabs().setEnabledAt(i, enabled);
 		}
 	}
-	
+
 	// Additional Getter
 
 	public GuiView getGuiView() {

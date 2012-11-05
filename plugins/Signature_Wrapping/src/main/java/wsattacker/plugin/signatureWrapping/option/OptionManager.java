@@ -33,6 +33,7 @@ import wsattacker.main.plugin.PluginOptionContainer;
 import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.main.plugin.option.OptionSimpleChoice;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
+import wsattacker.plugin.signatureWrapping.SignatureWrapping;
 import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.plugin.signatureWrapping.util.signature.SignatureManager;
 
@@ -42,7 +43,7 @@ import wsattacker.plugin.signatureWrapping.util.signature.SignatureManager;
 public class OptionManager implements CurrentRequestContentChangeObserver, PluginOptionValueObserver
 {
 
-  private AbstractPlugin      plugin;
+  private SignatureWrapping   plugin;
   private SignatureManager    signatureManager;
   private OptionSoapAction    optionSoapAction;
   private OptionSimpleBoolean optionMustContainString, optionNoSchema, abortOnFirstSuccess;
@@ -61,7 +62,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
    * @param plugin
    * @param signatureManager
    */
-  public OptionManager(AbstractPlugin plugin,
+  public OptionManager(SignatureWrapping plugin,
                        SignatureManager signatureManager)
   {
     this.plugin = plugin;
@@ -154,7 +155,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
     container.add(optionMustContainString);
     if (optionMustContainString.isOn())
     {
-      container.add(optionTheContainedString); 
+      container.add(optionTheContainedString);
     }
     if (optionChoice.getChoices().size() > 0)
     {
@@ -166,7 +167,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
     }
 
   }
-  
+
   /**
    * This function is only needed due to a GUI Bug in WS-Attacker which
    * does not allow to put an AbstractOption at a specific position.
@@ -193,7 +194,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
     log().info("Popped: " + result.toString());
     return result;
   }
-  
+
   /**
    * This function is only needed due to a GUI Bug in WS-Attacker which
    * does not allow to put an AbstractOption at a specific position.
@@ -209,7 +210,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
     for(int i=optionList.size()-1; i >= 0; --i)
       container.add(optionList.get(i));
   }
-  
+
   /**
    * Clear all options consecutively.
    */
@@ -283,6 +284,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
 	    container.add(1+container.indexOf(optionNoSchema), optionSchemaFiles);
 	  }
 	}
+	plugin.checkState();
 	working = false;
     }
   }

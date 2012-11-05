@@ -169,7 +169,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
       // Check if Element exists
       if (  DomUtilities.findChildren(start, localName, start.getNamespaceURI(), false).isEmpty())
       {
-        
+
         // Check if an identical ancestor element exists:
         boolean contained = false;
         Node up = start.getParentNode();
@@ -182,7 +182,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
           }
           up = up.getParentNode();
         }
-        
+
         // Create if not
         if (contained) {
           log.trace("\t\tAncestor with same name already exists -> *NOT* Created");
@@ -216,7 +216,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
   /**
    * Returns a List of al xs:any Elements in all known Schema files.
-   * 
+   *
    * @return
    */
   public List<Element> getXsAny()
@@ -225,7 +225,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
     List<Element> xsAny;
     try
     {
-      xsAny = DomUtilities
+      xsAny = (List<Element>) DomUtilities
           .evaluateXPath(getSchema(), "//*[local-name()=\"any\" and namespace-uri()=\"" + URI_NS_SCHEMA + "\"]");
     }
     catch (XPathExpressionException e)
@@ -238,7 +238,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
   /**
    * Returns the Schemas Complex Type of the xs:any up node E.g. xs:any -> soap:Header of the xs:any in the Header.
-   * 
+   *
    * @param xsAny
    * @return
    */
@@ -260,7 +260,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
   /**
    * Returns a StringPair of the targetNamespace of an Schema-Element.
-   * 
+   *
    * @param x
    *          Schema Element
    * @return String[2] with {prefix,targetNS}
@@ -307,7 +307,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
   /**
    * Schema Parser: ComplexType -> Schema-Element
-   * 
+   *
    * @param xsAnyComplexType
    * @return
    */
@@ -329,7 +329,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
     try
     {
-      types = DomUtilities
+      types = (List<Element>) DomUtilities
           .evaluateXPath(schema, "//*[local-name()=\"element\" and namespace-uri()=\"" + URI_NS_SCHEMA + "\" and @type=\"" + prefix + xsAnyComplexType
               .getAttribute("name") + "\"]");
     }
@@ -347,7 +347,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 
   /**
    * Schema Parser: Schema-Element -> Parent Elements
-   * 
+   *
    * @param xsElement
    * @return
    */
@@ -363,7 +363,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
     List<Element> parents;
     try
     {
-      parents = DomUtilities
+      parents = (List<Element>) DomUtilities
           .evaluateXPath(schema, "//*[local-name()=\"element\" and namespace-uri()=\"" + URI_NS_SCHEMA + "\" and @ref=\"" + prefix + elementName + "\"]");
     }
     catch (XPathExpressionException e)
@@ -382,7 +382,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
     List<Element> match;
     try
     {
-      match = DomUtilities.evaluateXPath(schema, xpath);
+      match = (List<Element>) DomUtilities.evaluateXPath(schema, xpath);
     }
     catch (XPathExpressionException e)
     {
@@ -402,7 +402,7 @@ public class SchemaAnalyzer implements SchemaAnalyzerInterface
 // System.out.println("XPATH to Eval:\n"+xpath+"\n");
     try
     {
-      match = DomUtilities.evaluateXPath(schema, xpath);
+      match = (List<Element>) DomUtilities.evaluateXPath(schema, xpath);
     }
     catch (XPathExpressionException e)
     {

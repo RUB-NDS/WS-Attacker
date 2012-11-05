@@ -36,7 +36,7 @@ import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.plugin.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.plugin.signatureWrapping.xpath.analysis.WrapperProperties;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
@@ -46,7 +46,7 @@ import wsattacker.plugin.signatureWrapping.xpath.weakness.util.XPathWeaknessTool
 /**
  * Can abuse the descendant-or-self XPath axis specifier.
  */
-public class XPathDescendantWeakness implements XPathWeakness
+public class XPathDescendantWeakness implements XPathWeaknessInterface
 {
 
   private static Logger           log = Logger.getLogger(XPathDescendantWeakness.class);
@@ -55,7 +55,7 @@ public class XPathDescendantWeakness implements XPathWeakness
   private int                     numberOfPossibilites, numberOfPostProcessPossibilites;
   private String                  preXPath, postXPath;
   private List<WrapperProperties> wrapperProperties;
-  private List<XPathWeakness>     postProcessList;
+  private List<XPathWeaknessInterface>     postProcessList;
 
   public XPathDescendantWeakness(Step descendantStep,
                                  Document doc,
@@ -79,7 +79,7 @@ public class XPathDescendantWeakness implements XPathWeakness
     {
       try
       {
-        matched = DomUtilities.evaluateXPath(doc, preXPath);
+        matched = (List<Element>) DomUtilities.evaluateXPath(doc, preXPath);
       }
       catch (XPathExpressionException e)
       {
@@ -122,10 +122,10 @@ public class XPathDescendantWeakness implements XPathWeakness
     // XPathAttributeWeakness
     // ///////////////////////
 
-    postProcessList = new ArrayList<XPathWeakness>();
+    postProcessList = new ArrayList<XPathWeaknessInterface>();
     for (Step cur = descendantStep; cur != null; cur = cur.getNextStep())
     {
-      XPathWeakness aw;
+      XPathWeaknessInterface aw;
       try
       {
         aw = new XPathAttributeWeaknessPostProcess(cur);
@@ -135,12 +135,12 @@ public class XPathDescendantWeakness implements XPathWeakness
         continue;
       }
       postProcessList.add(aw);
-      numberOfPostProcessPossibilites += aw.getNumberOfPossibilites();
+      numberOfPostProcessPossibilites += aw.getNumberOfPossibilities();
     }
   }
 
   @Override
-  public int getNumberOfPossibilites()
+  public int getNumberOfPossibilities()
   {
     return numberOfPostProcessPossibilites > 0 ? numberOfPossibilites * numberOfPostProcessPossibilites : numberOfPossibilites;
   }
@@ -155,7 +155,7 @@ public class XPathDescendantWeakness implements XPathWeakness
     return postXPath;
   }
 
-  public List<XPathWeakness> getPostProcessList()
+  public List<XPathWeaknessInterface> getPostProcessList()
   {
     return postProcessList;
   }
@@ -172,9 +172,9 @@ public class XPathDescendantWeakness implements XPathWeakness
                                                    throws InvalidWeaknessException
   {
     int originalindex = index;
-    if (index >= getNumberOfPossibilites())
+    if (index >= getNumberOfPossibilities())
     {
-      String warn = String.format("Index >= numberOfPossibilites (%d >= %d)", index, getNumberOfPossibilites());
+      String warn = String.format("Index >= numberOfPossibilites (%d >= %d)", index, getNumberOfPossibilities());
       log.warn(warn);
       throw new InvalidWeaknessException(warn);
     }
@@ -182,12 +182,12 @@ public class XPathDescendantWeakness implements XPathWeakness
     // detect postProcess to use
     int postProcessListIndex = -1;
     int postProcessAbuseIndex = 0;
-    for (XPathWeakness aw : postProcessList)
+    for (XPathWeaknessInterface aw : postProcessList)
     {
       ++postProcessListIndex;
-      if (index > numberOfPossibilites * aw.getNumberOfPossibilites())
+      if (index > numberOfPossibilites * aw.getNumberOfPossibilities())
       {
-        index -= numberOfPossibilites * aw.getNumberOfPossibilites();
+        index -= numberOfPossibilites * aw.getNumberOfPossibilities();
       }
       else
       {
@@ -244,11 +244,11 @@ public class XPathDescendantWeakness implements XPathWeakness
     // Get the Elements matched by the postXPath
     // as those are part of the hashed sub-tree
     // //////////////////////////////////////////
-    
+
     // Detection by PostXPath
 //    Element signedPostPart = XPathWeaknessTools.detectHashedPostTree(signedElement, postXPath);
-    
-    
+
+
     // with getSignedPostPart method by exteded PreXPath
     List<Element> signedPostPartList = XPathWeaknessTools.getSignedPostPart(step.getNextStep(), signedElement);
     // This should never happen
@@ -256,7 +256,7 @@ public class XPathDescendantWeakness implements XPathWeakness
 				  throw new InvalidWeaknessException();
 		  }
     Element signedPostPart = signedPostPartList.get(0);
-    
+
     if (signedPostPart.getParentNode() == null)
     {
       String warn = "Whole Document signed. No Wrapping Attack possible.";

@@ -46,7 +46,7 @@ public class XPathElement implements ReferringElementInterface
     matchedElements = new ArrayList<Element>();
     try
     {
-      matchedElements = DomUtilities.evaluateXPath(xpath.getOwnerDocument(), getExpression());
+      matchedElements = (List<Element>) DomUtilities.evaluateXPath(xpath.getOwnerDocument(), getExpression());
     }
     catch (XPathExpressionException e)
     {

@@ -31,7 +31,7 @@ import wsattacker.plugin.signatureWrapping.xpath.parts.AbsoluteLocationPath;
  */
 public interface XPathWeaknessFactoryInterface
 {
-  public List<XPathWeakness> generate(AbsoluteLocationPath xpath,
+  public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
                                       Element signedElement,
                                       Element payloadElement,
                                       SchemaAnalyzerInterface schemaAnalyser);

@@ -21,7 +21,7 @@ package wsattacker.plugin.signatureWrapping.xpath.analysis;
 import wsattacker.plugin.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.plugin.signatureWrapping.util.signature.ReferringElementInterface;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessFactoryInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
@@ -47,7 +47,7 @@ public class XPathAnalyser
   public static XPathWeaknessFactoryInterface xpathWeaknessFactory = new XPathWeaknessFactory();
 
   private AbsoluteLocationPath                xpath;
-  private List<XPathWeakness>                 weaknesses;
+  private List<XPathWeaknessInterface>                 weaknesses;
   int                                         maxPossibilites;
 
   /**
@@ -66,8 +66,8 @@ public class XPathAnalyser
     this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyzer);
     // calculate number of possibilities
     maxPossibilites = 0;
-    for (XPathWeakness w : weaknesses)
-      maxPossibilites += w.getNumberOfPossibilites();
+    for (XPathWeaknessInterface w : weaknesses)
+      maxPossibilites += w.getNumberOfPossibilities();
   }
   /**
    * String constructor should only be used for easy writing JUnit testes.
@@ -85,15 +85,15 @@ public class XPathAnalyser
     this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyser);
     // calculate number of possibilities
     maxPossibilites = 0;
-    for (XPathWeakness w : weaknesses)
-      maxPossibilites += w.getNumberOfPossibilites();
+    for (XPathWeaknessInterface w : weaknesses)
+      maxPossibilites += w.getNumberOfPossibilities();
 
   }
-  
+
   /**
    * @return A List of XPathWeaknesses.
    */
-  public List<XPathWeakness> getWeaknesses()
+  public List<XPathWeaknessInterface> getWeaknesses()
   {
     return weaknesses;
   }
@@ -116,7 +116,7 @@ public class XPathAnalyser
 
   /**
    * Applies an XPath weakness. Both Elements are part of the same Document, which will be modified.
-   * 
+   *
    * @param possibility
    *          : Index of the weakness to abuse.
    * @param signedElement
@@ -136,8 +136,8 @@ public class XPathAnalyser
     }
     for (int i = 0; i < weaknesses.size(); ++i)
     {
-      XPathWeakness w = weaknesses.get(i);
-      int num = w.getNumberOfPossibilites();
+      XPathWeaknessInterface w = weaknesses.get(i);
+      int num = w.getNumberOfPossibilities();
       if (possibility < num)
       {
         w.abuseWeakness(possibility, signedElement, payloadElement);
@@ -146,7 +146,7 @@ public class XPathAnalyser
       possibility -= num;
     }
   }
-  
+
   /**
    * Validates if the given XPath follows the FastXPath grammar.
    * These are known to be fast and only vulnerable to namespace injection.
@@ -168,7 +168,7 @@ public class XPathAnalyser
       if (step.getAxisSpecifier().getNodeName().getNodeName().isEmpty()) {
 		    return false;
 	    }
-      
+
       List<Predicate> predicates = step.getPredicates();
       if (predicates.isEmpty() || predicates.size() > 2) {
 		    return false;
@@ -216,7 +216,7 @@ public class XPathAnalyser
       if (!step.getAxisSpecifier().getNodeType().getNodeTypeName().equals("node")) {
 		    return false;
 	    }
-      
+
       List<Predicate> predicates = step.getPredicates();
       if (predicates.isEmpty() || predicates.size() > 3) {
 		    return false;
@@ -229,7 +229,7 @@ public class XPathAnalyser
         if (pred.getOrExpressions().size() != 1) {
 		      return false;
 	      }
-        if (pred.getOrExpressions().get(0).getAndExpressions().size() != 1) 
+        if (pred.getOrExpressions().get(0).getAndExpressions().size() != 1)
         {
           List<AndExpression> andExpressions = pred.getOrExpressions().get(0).getAndExpressions();
           if (andExpressions.size() > 2 || andExpressions.size() < 1) {

@@ -27,7 +27,7 @@ import wsattacker.plugin.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.plugin.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.plugin.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.plugin.signatureWrapping.util.signature.XPathElement;
-import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeakness;
+import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.plugin.signatureWrapping.xpath.interfaces.XPathWeaknessFactoryInterface;
 import wsattacker.plugin.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.plugin.signatureWrapping.xpath.parts.Step;
@@ -43,17 +43,27 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
 {
 
   @Override
-  public List<XPathWeakness> generate(AbsoluteLocationPath xpath,
+  public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
                                       Element signedElement,
                                       Element payloadElement,
                                       SchemaAnalyzerInterface schemaAnalyser)
   {
-    List<XPathWeakness> weaknesses = new ArrayList<XPathWeakness>();
+    List<XPathWeaknessInterface> weaknessList = new ArrayList<XPathWeaknessInterface>();
     List<Step> steps = xpath.getRelativeLocationPaths();
+	// CASE: ID-Reference + No manually set XPAth by user
     if (xpath.getReferringElement() instanceof ReferenceElement && xpath.getReferringElement().getXPath().equals(((ReferenceElement) xpath.getReferringElement()).transformIDtoXPath())) {
       try
       {
-        weaknesses.add(new XPathDescendantWeakness(steps.get(0), signedElement.getOwnerDocument(), payloadElement, schemaAnalyser));
+		// info: steps.get(0) is '//' due to transformIDtoXPath method
+		XPathWeaknessInterface weakness = new XPathDescendantWeakness(steps.get(0), signedElement.getOwnerDocument(), payloadElement, schemaAnalyser);
+		try {
+			XPathWeaknessInterface evelopedTransformation = new EnvelopedTransformationWeakness(weakness, signedElement);
+			weaknessList.add(evelopedTransformation);
+		}
+		catch (InvalidWeaknessException e) {
+		    weaknessList.add(weakness);
+		}
+
       }
       catch (InvalidWeaknessException e) {
         // Nothing to do
@@ -62,7 +72,7 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
       // Nothing else to do
       // could also be removed, as the for loop will do the same,
       // but could find additional weaknesses which are not usefull (e.g. XPathAttributeWeakness)
-      return weaknesses;
+      return weaknessList;
     }
     for (int i = 0; i < steps.size(); ++i)
     {
@@ -70,7 +80,7 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
       // XPathDescendantWeakness
       try
       {
-        weaknesses.add(new XPathDescendantWeakness(cur, signedElement.getOwnerDocument(), payloadElement, schemaAnalyser));
+        weaknessList.add(new XPathDescendantWeakness(cur, signedElement.getOwnerDocument(), payloadElement, schemaAnalyser));
       }
       catch (InvalidWeaknessException e) {
         // Nothing to do
@@ -78,7 +88,7 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
       // Add XPathAttribueWeakness
       try
       {
-        weaknesses.add(new XPathAttributeWeakness(cur, signedElement, payloadElement));
+        weaknessList.add(new XPathAttributeWeakness(cur, signedElement, payloadElement));
       }
       catch (InvalidWeaknessException e) {
         // Nothing to do
@@ -86,7 +96,7 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
       // Add XPathNamespaceInjectionWeakness
       try
       {
-        weaknesses.add(new XPathNamespaceInjectionWeakness((XPathElement) xpath.getReferringElement(), cur, signedElement, payloadElement));
+        weaknessList.add(new XPathNamespaceInjectionWeakness((XPathElement) xpath.getReferringElement(), cur, signedElement, payloadElement));
       }
       catch (InvalidWeaknessException e) {
         // Nothing to do
@@ -96,7 +106,18 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface
       }
 
     }
-    return weaknesses;
+	for(int i=0; i<weaknessList.size(); ++i) {
+		XPathWeaknessInterface weakness = weaknessList.get(i);
+		try {
+			XPathWeaknessInterface evelopedTransformation = new EnvelopedTransformationWeakness(weakness, signedElement);
+			weaknessList.add(i, evelopedTransformation);
+			weaknessList.remove(i+1);
+		}
+		catch (InvalidWeaknessException e) {
+		    // nothing to do
+		}
+	}
+    return weaknessList;
   }
 
 }

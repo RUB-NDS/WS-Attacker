@@ -84,7 +84,7 @@ public class SignatureManager {
     if (doc != null) {
       List<Element> signatureList = new ArrayList<Element>();
       try {
-        signatureList = DomUtilities.evaluateXPath(doc, "//*[local-name()='Signature' and namespace-uri()='" + NamespaceConstants.URI_NS_DS + "']");
+        signatureList = (List<Element>) DomUtilities.evaluateXPath(doc, "//*[local-name()='Signature' and namespace-uri()='" + NamespaceConstants.URI_NS_DS + "']");
       } catch (XPathExpressionException ex) {
         log().error("Could not find any ds:Signature Elements.");
       }

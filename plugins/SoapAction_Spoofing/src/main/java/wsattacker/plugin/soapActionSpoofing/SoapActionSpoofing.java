@@ -18,8 +18,15 @@
  */
 package wsattacker.plugin.soapActionSpoofing;
 
-import java.util.List;
-
+import com.eviware.soapui.impl.wsdl.WsdlInterface;
+import com.eviware.soapui.impl.wsdl.WsdlOperation;
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.WsdlSubmit;
+import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
+import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
+import com.eviware.soapui.model.iface.Operation;
+import com.eviware.soapui.model.iface.Request.SubmitException;
+import java.util.*;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
@@ -27,12 +34,10 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.xmlbeans.XmlException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.main.composition.plugin.option.AbstractOptionBoolean;
@@ -47,15 +52,6 @@ import wsattacker.plugin.soapActionSpoofing.option.OptionSoapAction;
 import wsattacker.util.SoapUtilities;
 import wsattacker.util.SortedUniqueList;
 
-import com.eviware.soapui.impl.wsdl.WsdlInterface;
-import com.eviware.soapui.impl.wsdl.WsdlOperation;
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
-import com.eviware.soapui.model.iface.Operation;
-import com.eviware.soapui.model.iface.Request.SubmitException;
-
 public class SoapActionSpoofing extends AbstractPlugin {
 	private static final long serialVersionUID = 1L;
 	private AbstractOptionBoolean automaticOption;
@@ -63,7 +59,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 	private AbstractOptionVarchar actionOption;
 	private transient WsdlRequest originalRequest, attackRequest; // for loading a config, only options are important
 	private String originalAction;
-	
+
 	@Override
 	public void initializePlugin() {
 		automaticOption = new OptionSimpleBoolean("Automatic", true,
@@ -108,7 +104,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 
 	@Override
 	public void attackImplementationHook(RequestResponsePair original) {
-		
+		// TODO: Add support for <wsa:action> SOAPAction Spoofing
 		// save needed pointers
 		originalRequest = original.getWsdlRequest();
 		originalAction = originalRequest.getOperation().getAction();
@@ -116,7 +112,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 		// create an attack request
 		originalRequest.copyTo(attackRequest, true, true);
 
-		
+
 		// detect first body child
 		Node originalChild;
 		try {
@@ -127,7 +123,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 			setState(PluginState.Failed);
 			return;
 		}
-		
+
 		// get attacking action
 		if (automaticOption.isOn()) {
 			info("Automatic Mode");
@@ -230,7 +226,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 						"Got 2/3 Points");
 				setCurrentPoints(2);
 			} else {
-				important("The server accepts the SOAPAction Header " + soapAction + " and executes the corresponding operation.\n" + 
+				important("The server accepts the SOAPAction Header " + soapAction + " and executes the corresponding operation.\n" +
 						"Got 3/3 Points");
 				setCurrentPoints(3);
 			}
@@ -240,7 +236,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 			request.getOperation().setAction(originalAction);
 		}
 	}
-	
+
 	@Override
 	public void clean() {
 		setCurrentPoints(0);
@@ -306,7 +302,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 		}
 		checkState();
 	}
-	
+
 	@Override
 	public String[] getCategory() {
 		return new String[] {"Spoofing Attacks"};
@@ -341,7 +337,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 		ret.remove(request.getOperation().getAction());
 		return ret;
 	}
-	
+
 	/**
 	 * Gets the first child of the SOAP Body from an XML String.
 	 * This Version uses XPath.
@@ -350,7 +346,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 	 * @throws SAXException
 	 */
 	public Node getBodyChildWithXPath(String xmlContent) throws SAXException {
-		
+
 //		final String SEARCH = "/*[namespace::'http://www.w3.org/2003/05/soap-envelope']";
 		String SEARCH = "/Envelope/Body/*[1]";
 		Document doc = SoapUtilities.stringToDom(xmlContent);
@@ -363,7 +359,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 		}
 		return node;
 	}
-	
+
 	/**
 	 * Gets the first child of the SOAP Body from an XML String.
 	 * This does exactly the same as getBodyChildWithXPath but it
@@ -384,7 +380,7 @@ public class SoapActionSpoofing extends AbstractPlugin {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void restoreConfiguration(AbstractPlugin plugin) {
 		if (plugin instanceof SoapActionSpoofing) {

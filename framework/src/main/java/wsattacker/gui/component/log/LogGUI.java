@@ -22,7 +22,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
+import javax.swing.text.DefaultCaret;
 import org.apache.log4j.Layout;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
@@ -37,18 +37,20 @@ public class LogGUI extends JScrollPane {
         super();
         setName("Log");
         this.content = new JTextArea();
+
         this.content.setEditable(false);
         setViewportView(content);
         this.layout = new PatternLayout("%d{ABSOLUTE} %-5p [%c{1}] %m%n");
-        this.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-            @Override
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            }
-        });
+//        this.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+//            @Override
+//            public void adjustmentValueChanged(AdjustmentEvent e) {
+//                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+//            }
+//        });
     }
 
     public void appendLog(LoggingEvent loggingEvent) {
         content.append(layout.format(loggingEvent));
+		content.setCaretPosition(content.getDocument().getLength());
     }
 }
