@@ -1,0 +1,10 @@
+wsattacker.plugin.dos.HashCollisionDJBX31A
+wsattacker.plugin.dos.HashCollisionDJBX33A
+wsattacker.plugin.dos.HashCollisionDJBX33X
+wsattacker.plugin.dos.CoerciveParsing
+wsattacker.plugin.dos.XmlEntityExpansion
+wsattacker.plugin.dos.XmlExternalEntity
+wsattacker.plugin.dos.SoapArrayAttack
+wsattacker.plugin.dos.XmlOverlongNames
+wsattacker.plugin.dos.XmlAttributeCount
+wsattacker.plugin.dos.XmlElementCount

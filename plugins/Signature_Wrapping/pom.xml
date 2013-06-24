@@ -1,76 +1,72 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>wsattacker.plugin.signatureWrapping</groupId>
-	<artifactId>Signature_Wrapping</artifactId>
-	<version>1.1-SNAPSHOT</version>
-	<name>WS-Attacker-Plugin_Signature_Wrapping</name>
-	<inceptionYear>2011</inceptionYear>
+    <groupId>wsattacker.plugin.signatureWrapping</groupId>
+    <artifactId>Signature_Wrapping</artifactId>
+    <version>1.4-SNAPSHOT</version>
+    <name>WS-Attacker-Plugin_Signature_Wrapping</name>
+    <inceptionYear>2011</inceptionYear>
 
-	<developers>
-		<developer>
-			<id>cmainka</id>
-			<name>Christian Mainka</name>
-			<email>Christian.Mainka@rub.de</email>
-			<url>http://www.nds.rub.de/chair/people/cmainka/</url>
-			<organization>NDS</organization>
-			<organizationUrl>http://www.nds.rub.de</organizationUrl>
-			<roles>
-				<role>Architect</role>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>cmainka</id>
+            <name>Christian Mainka</name>
+            <email>Christian.Mainka@rub.de</email>
+            <url>http://www.nds.rub.de/chair/people/cmainka/</url>
+            <organization>NDS</organization>
+            <organizationUrl>http://www.nds.rub.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
-	<parent>
-		<groupId>wsattacker.plugins</groupId>
-		<artifactId>wsattacker-plugins</artifactId>
-		<version>1.2-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>wsattacker.plugins</groupId>
+        <artifactId>wsattacker-plugins</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
 
-	<!-- For WsuURIDereferencer: XMLSignatureInput, ApacheOctetStreamData, ApacheNodeSetData -->
+    <!-- For WsuURIDereferencer: XMLSignatureInput, ApacheOctetStreamData, ApacheNodeSetData -->
 
-	<dependencies>
-		<dependency>
-			<groupId>com.sun.xml.security</groupId>
-			<artifactId>xml-security-impl</artifactId>
-			<version>1.0</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>wsattacker.lib.signatureWrapping</groupId>
+            <artifactId>Signature_Wrapping_Library</artifactId>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<resources>
-			<!-- We need the service file -->
-			<resource>
-				<directory>${basedir}/src/main/resources/META-INF/services</directory>
-				<targetPath>META-INF/services</targetPath>
-			</resource>
-			<!-- Add XML Schema files -->
-			<resource>
-				<directory>${basedir}/src/main/resources/XML Schema</directory>
-				<targetPath>XML Schema</targetPath>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.7.2</version>
-			</plugin>
-			<!--
-				Use a Licence Header
-			-->
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<properties>
-						<owner>Christian Mainka</owner>
-					</properties>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+            </plugin>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+            <!--
+                Copy required libraries to lib folder
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

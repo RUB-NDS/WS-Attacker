@@ -1,4 +1,6 @@
 dependency-reduced-pom.xml
+*.swp
+*.swo
 *.log
 nb-configuration.xml
 nbactions.xml

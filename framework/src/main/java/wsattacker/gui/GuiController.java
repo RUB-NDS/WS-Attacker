@@ -1,20 +1,20 @@
 /**
- * WS-Attacker - A Modular Web Services Penetration Testing Framework
- * Copyright (C) 2010 Christian Mainka
+ * WS-Attacker - A Modular Web Services Penetration Testing Framework Copyright
+ * (C) 2010 Christian Mainka
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.gui;
 
@@ -24,6 +24,7 @@ import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.model.iface.Request.SubmitException;
+import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import wsattacker.exception.NotSupportedException;
 import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.gui.component.testrequest.RequestResponseGUI;
 import wsattacker.gui.component.target.WsdlLoaderGUI;
@@ -405,9 +407,15 @@ public class GuiController implements ControllerInterface {
 				wsdlGui.getServiceComboBox().setEnabled(true);
 				wsdlGui.getOperationComboBox().setEnabled(true);
 				wsdlGui.getNewRequestButtom().setEnabled(true);
-			} catch (Exception e) {
+			} catch (SoapUIException e) {
+				log.error("SoapUIException while loading WSDL: " + e.getMessage());
 				e.printStackTrace();
+			} catch (NotSupportedException e) {
+				log.error("NotSupportedException while loading WSDL: " + e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
 				log.error("Wsdl File could not be loaded: " + e.getMessage());
+				e.printStackTrace();
 			} finally {
 				// re-enable fields
 				wsdlGui.getUriField().setEnabled(true);

@@ -27,7 +27,7 @@
 	<parent>
 		<groupId>wsattacker.plugins</groupId>
 		<artifactId>wsattacker-plugins</artifactId>
-		<version>1.2-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -39,6 +39,7 @@
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<configuration>
+					<header>${basedir}/../../license_header.txt</header>
 					<properties>
 						<owner>Christian Mainka</owner>
 					</properties>

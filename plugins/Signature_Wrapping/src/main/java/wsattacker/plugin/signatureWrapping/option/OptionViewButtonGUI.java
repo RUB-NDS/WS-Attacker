@@ -1,20 +1,20 @@
 /**
- * WS-Attacker - A Modular Web Services Penetration Testing Framework
- * Copyright (C) 2011 Christian Mainka
+ * WS-Attacker - A Modular Web Services Penetration Testing Framework Copyright
+ * (C) 2011 Christian Mainka
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.plugin.signatureWrapping.option;
 
@@ -45,11 +45,11 @@ import wsattacker.gui.util.XmlTextPane;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.plugin.signatureWrapping.SignatureWrapping;
-import wsattacker.plugin.signatureWrapping.schema.SchemaAnalyzerInterface;
-import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
-import wsattacker.plugin.signatureWrapping.util.signature.SignatureManager;
-import wsattacker.plugin.signatureWrapping.xpath.weakness.util.WeaknessLog;
-import wsattacker.plugin.signatureWrapping.xpath.wrapping.WrappingOracle;
+import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
+import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
+import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
+import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
@@ -343,7 +343,7 @@ public class OptionViewButtonGUI extends AbstractOptionGUI
     }
     return maxPossibilitiesLabel;
   }
-  
+
   private void showPossibility(int value) throws Exception {
     String message = DomUtilities.domToString(wrappingOracle.getPossibility(value - 1));
     getXml().setText(message);

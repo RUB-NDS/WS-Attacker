@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>WS-Attacker-Plugin_Denial_of_Service</name>
+    <groupId>wsattacker.plugin.dos</groupId>
+    <artifactId>Denial_of_Service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <inceptionYear>2012</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>afalkenberg</id>
+            <name>Andreas Falkenberg</name>
+            <email>Andreas.Falkenberg@rub.de</email>
+            <url>http://www.nds.rub.de/chair/people/</url>
+            <organization>NDS</organization>
+            <organizationUrl>http://www.nds.rub.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>wsattacker.plugins</groupId>
+        <artifactId>wsattacker-plugins</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.0</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <!-- We need the service file -->
+            <resource>
+                <directory>${basedir}/src/main/resources/META-INF/services</directory>
+                <targetPath>META-INF/services</targetPath>
+            </resource>
+
+
+            <!-- Add Image files -->
+            <resource>
+                <directory>${basedir}/src/main/resources/IMG</directory>
+                <targetPath>IMG</targetPath>
+            </resource>
+
+            <!-- Add html files -->
+            <resource>
+                <directory>${basedir}/src/main/resources/HTML</directory>
+                <targetPath>HTML</targetPath>
+            </resource>
+
+            <!-- Add collsion files files -->
+            <resource>
+                <directory>${basedir}/src/main/resources/DJBX33XCollisions</directory>
+                <targetPath>DJBX33XCollisions</targetPath>
+            </resource>
+
+            <!-- Add testRequests -->
+            <resource>
+                <directory>${basedir}/src/test/resources/TestRequests</directory>
+                <targetPath>TestRequests</targetPath>
+            </resource>
+
+            <!-- Add TestWsdls -->
+            <resource>
+                <directory>${basedir}/src/test/resources/TestWsdls</directory>
+                <targetPath>TestWsdls</targetPath>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+            </plugin>
+            <!--
+                Clean
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>global-groovy.log</include>
+                                <include>soapui-errors.log</include>
+                                <include>soapui.log</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Andreas Falkenberg</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+            <!--
+                Copy required libraries to lib folder
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

@@ -1,20 +1,20 @@
 /**
- * WS-Attacker - A Modular Web Services Penetration Testing Framework
- * Copyright (C) 2010 Christian Mainka
+ * WS-Attacker - A Modular Web Services Penetration Testing Framework Copyright
+ * (C) 2010 Christian Mainka
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.gui.component.expertview;
 
@@ -63,7 +63,7 @@ public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObs
 		serviceBuilder = new WsdlInterfacePanelBuilder();
 		operationBuilder = new WsdlOperationPanelBuilder();
 		requestBuilder = new WsdlRequestPanelBuilder();
-		
+
 		// returned component
 		panel = new JPanel();
 		GridBagLayout panelLayout = new GridBagLayout();
@@ -80,7 +80,7 @@ public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObs
 		testSuite.getCurrentOperation().addCurrentOperationObserver(this);
 		testSuite.getCurrentRequest().addCurrentRequestObserver(this);
 	}
-	
+
 	public Component getView() {
 		return panel;
 	}
@@ -91,7 +91,7 @@ public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObs
 		if(requestPanel != null && SwingUtilities.isDescendingFrom(requestPanel, panel)) {
 			panel.remove(requestPanel);
 		}
-		requestPanel = requestBuilder.buildOverviewPanel(newRequest);
+		requestPanel = requestBuilder.buildOverviewPanel(newRequest); // TODO: This causes an Error with JDK7
 //		panel.add(requestPanel,panel.getComponentCount()>1?2:panel.getComponentCount());
 		panel.add(requestPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 	}

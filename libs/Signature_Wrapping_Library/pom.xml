@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>wsattacker.lib.signatureWrapping</groupId>
+    <artifactId>Signature_Wrapping_Library</artifactId>
+    <version>1.4-SNAPSHOT</version>
+    <name>WS-Attacker-Library_Signature_Wrapping</name>
+    <inceptionYear>2013</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>cmainka</id>
+            <name>Christian Mainka</name>
+            <email>Christian.Mainka@rub.de</email>
+            <url>http://www.nds.rub.de/chair/people/cmainka/</url>
+            <organization>NDS</organization>
+            <organizationUrl>http://www.nds.rub.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>wsattacker.lib</groupId>
+        <artifactId>wsattacker-libraries</artifactId>
+        <version>1.3-SNAPSHOT</version>
+    </parent>
+
+    <!-- For WsuURIDereferencer: XMLSignatureInput, ApacheOctetStreamData, ApacheNodeSetData -->
+
+    <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.security</groupId>
+            <artifactId>wss4j</artifactId>
+            <version>1.6.10</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <!-- Add XML Schema files -->
+            <resource>
+                <directory>${basedir}/src/main/resources/XML Schema</directory>
+                <targetPath>XML Schema</targetPath>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+            </plugin>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

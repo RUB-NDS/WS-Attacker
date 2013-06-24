@@ -1,20 +1,20 @@
 /**
- * WS-Attacker - A Modular Web Services Penetration Testing Framework
- * Copyright (C) 2011 Christian Mainka
+ * WS-Attacker - A Modular Web Services Penetration Testing Framework Copyright
+ * (C) 2011 Christian Mainka
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.plugin.signatureWrapping.option;
 
@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import wsattacker.library.signatureWrapping.option.Payload;
 
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.PluginOptionValueObserver;
@@ -34,8 +35,8 @@ import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.main.plugin.option.OptionSimpleChoice;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
 import wsattacker.plugin.signatureWrapping.SignatureWrapping;
-import wsattacker.plugin.signatureWrapping.util.dom.DomUtilities;
-import wsattacker.plugin.signatureWrapping.util.signature.SignatureManager;
+import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 
 /**
  * This class takes care on the options for the WS-Attacker XSW Plugin.
@@ -52,29 +53,51 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
   private OptionSimpleChoice  optionChoice;
   private OptionViewButton    optionView;
 
-  private List<OptionPayload> payloadList;
+  private List<OptionPayload> optionPayloadList;
   private OptionPayload       currentOptionPayload = null;
 
   private boolean             working              = false;
+
+  private static final OptionManager instance = new OptionManager();
+
+  public static OptionManager getInstance() {
+	  return instance;
+  }
+
+	public SignatureWrapping getPlugin() {
+		return plugin;
+	}
+
+	public void setPlugin(SignatureWrapping plugin) {
+		if (this.plugin != null) {
+			this.plugin.getPluginOptions().removePluginValueContainerObserver(this);
+		}
+		this.plugin = plugin;
+		this.plugin.getPluginOptions().addPluginValueContainerObserver(this);
+	}
+
+	public SignatureManager getSignatureManager() {
+		return signatureManager;
+	}
+
+	public void setSignatureManager(SignatureManager signatureManager) {
+		this.signatureManager = signatureManager;
+	}
 
   /**
    * Initialization method.
    * @param plugin
    * @param signatureManager
    */
-  public OptionManager(SignatureWrapping plugin,
-                       SignatureManager signatureManager)
+  private OptionManager()
   {
-    this.plugin = plugin;
-    this.signatureManager = signatureManager;
     this.optionSoapAction = new OptionSoapAction("Change\nAction?", "Allows to change the SoapAction Header.");
     this.optionSchemaFiles = new OptionSchemaFiles();
     this.optionMustContainString = new OptionSimpleBoolean("Search?", false, "SOAP Response must contain a specific String.");
     this.abortOnFirstSuccess = new OptionSimpleBoolean("Abort?", true, "Abort after first successful attack message.");
     this.optionTheContainedString = new OptionSimpleVarchar("Contains", "Search for this String...", 200);
     this.optionNoSchema = new OptionSimpleBoolean("Schema?", false, "Turn on, to not use any XML Schema.");
-    this.payloadList = new ArrayList<OptionPayload>();
-    plugin.getPluginOptions().addPluginValueContainerObserver(this);
+    this.optionPayloadList = new ArrayList<OptionPayload>();
     this.optionView = new OptionViewButton();
   }
 
@@ -100,15 +123,18 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
 	}
 	catch (SAXException e)
 	{
-	  signatureManager.setDocument(null);
+	  			getSignatureManager().setDocument(null);
 	  working = false;
 	  return;
 	}
-	signatureManager.setDocument(domDoc);
-	payloadList = signatureManager.getPayloads();
+			getSignatureManager().setDocument(domDoc);
+	for(Payload payload : getSignatureManager().getPayloads()) {
+		optionPayloadList.add(new OptionPayload(payload));
+	}
 	List<String> choiceList = new ArrayList<String>();
-	for (int i = 1; i <= payloadList.size(); ++i)
+	for (int i = 1; i <= optionPayloadList.size(); ++i) {
 	  choiceList.add("Payload #" + i);
+	}
 	log().info("Adding Choices: " + choiceList.toString());
 	optionChoice = new OptionSimpleChoice("Show", choiceList, 0);
 	working = false;
@@ -120,14 +146,14 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
    * If no curent request is available, the SignatureManager must be notified.
    */
   @Override
-  public void noCurrentRequestontent()
+  public void noCurrentRequestcontent()
   {
     if (working) {
 		  return;
 	  }
     working = true;
     log().trace("No Current Message");
-    signatureManager.setDocument(null);
+    	getSignatureManager().setDocument(null);
     clearOptions();
     working = false;
   }
@@ -147,7 +173,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
   {
     clearOptions();
     log().info("Adding SoapAction, SchemaFiles and MustContainString");
-    PluginOptionContainer container = plugin.getPluginOptions();
+    PluginOptionContainer container = getPlugin().getPluginOptions();
     container.add(optionSoapAction);
     container.add(abortOnFirstSuccess);
     container.add(optionNoSchema);
@@ -179,7 +205,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
    */
   public List<AbstractOption> popOptionsUpTo(AbstractOption needle) {
     List<AbstractOption> result = new ArrayList<AbstractOption>();
-    PluginOptionContainer container = plugin.getPluginOptions();
+    PluginOptionContainer container = getPlugin().getPluginOptions();
     if (!container.contains(needle)) {
 		  return result;
 	  }
@@ -206,7 +232,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
    */
   public void putOptions(List<AbstractOption> optionList) {
     log().info("Put: " + optionList.toString());
-    PluginOptionContainer container = plugin.getPluginOptions();
+    PluginOptionContainer container = getPlugin().getPluginOptions();
     for(int i=optionList.size()-1; i >= 0; --i)
       container.add(optionList.get(i));
   }
@@ -217,7 +243,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
   public void clearOptions()
   {
     log().info("Clearing Options..");
-    PluginOptionContainer container = plugin.getPluginOptions();
+    PluginOptionContainer container = getPlugin().getPluginOptions();
     while (container.size() > 0)
       container.remove(container.getByIndex(0));
   }
@@ -232,10 +258,10 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
     log().info("Option Value Changed!");
     if (!working) {
 	working = true;
-	PluginOptionContainer container = plugin.getPluginOptions();
-	if (option == optionChoice && optionChoice.getChoice() < payloadList.size())
+	PluginOptionContainer container = getPlugin().getPluginOptions();
+	if (option == optionChoice && optionChoice.getChoice() < optionPayloadList.size())
 	{
-	  OptionPayload newOptionPayload = payloadList.get(optionChoice.getChoice());
+	  OptionPayload newOptionPayload = optionPayloadList.get(optionChoice.getChoice());
 	  if (newOptionPayload == currentOptionPayload)
 	  {
 	    log().info("New OptionPayload == Current OptionPayload -> Skipping");
@@ -246,7 +272,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
 	    log().info("Removing old OptionPayload");
 	    container.remove(currentOptionPayload);
 	  }
-	  log().info("Adding new payload" + payloadList.get(optionChoice.getChoice()).getName());
+	  log().info("Adding new payload" + optionPayloadList.get(optionChoice.getChoice()).getName());
 	  currentOptionPayload = newOptionPayload;
 	  container.add(newOptionPayload);
 	}
@@ -284,7 +310,7 @@ public class OptionManager implements CurrentRequestContentChangeObserver, Plugi
 	    container.add(1+container.indexOf(optionNoSchema), optionSchemaFiles);
 	  }
 	}
-	plugin.checkState();
+			getPlugin().checkState();
 	working = false;
     }
   }

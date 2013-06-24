@@ -5,7 +5,7 @@
     <name>WS-Attacker-Framework</name>
     <groupId>wsattacker.framework</groupId>
     <artifactId>wsattacker-framework</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <inceptionYear>2010</inceptionYear>
 
@@ -27,7 +27,7 @@
     <parent>
         <groupId>wsattacker.basis</groupId>
         <artifactId>wsattacker-basis</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
 
     <repositories>
@@ -35,17 +35,27 @@
             <id>eviware</id>
             <url>http://www.eviware.com/repository/maven2/</url>
         </repository>
+        <!--
+        This Seems to be down, so we use it as a local dependency.
         <repository>
             <id>ESSI-Lab repository</id>
             <url>http://ulisse.pin.unifi.it:8081/nexus/content/groups/open.repos</url>
+            <name>ESSI-Lab repository</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
+        -->
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>eviware</groupId>
             <artifactId>maven-soapui-plugin</artifactId>
-            <version>3.5.1</version>
+            <version>4.5.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -58,6 +68,8 @@
             <groupId>it.cnr.imaa.essi</groupId>
             <artifactId>lablib-checkboxtree</artifactId>
             <version>3.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../external-libs/lablib-checkboxtree-3.3.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.jdesktop</groupId>
@@ -67,6 +79,7 @@
     </dependencies>
 
     <build>
+        <finalName>WS-Attacker-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -80,6 +93,27 @@
                             <mainClass>wsattacker.MainGUI</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <!--
+                Clean
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>global-groovy.log</include>
+                                <include>soapui-errors.log</include>
+                                <include>soapui.log</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
             <plugin>
@@ -134,21 +168,21 @@
 
                             Remove Signatures as we extract all used JAR files
 
-    <filters>
-     <filter>
-      <artifact>*:*</artifact>
-      <excludes>
-       <exclude>META-INF/*.SF</exclude>
-       <exclude>META-INF/*.DSA</exclude>
-       <exclude>META-INF/*.RSA</exclude>
-       <exclude>META-INF/*.INF</exclude>
-      </excludes>
-     </filter>
-    </filters>
-      </configuration>
-     </execution>
-    </executions>
-   </plugin>-->
-		</plugins>
-	</build>
+             <filters>
+              <filter>
+               <artifact>*:*</artifact>
+               <excludes>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+                <exclude>META-INF/*.INF</exclude>
+               </excludes>
+              </filter>
+             </filters>
+               </configuration>
+              </execution>
+             </executions>
+            </plugin>-->
+        </plugins>
+    </build>
 </project>

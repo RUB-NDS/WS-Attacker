@@ -1,20 +1,20 @@
 /**
- * WS-Attacker - A Modular Web Services Penetration Testing Framework
- * Copyright (C) 2010 Christian Mainka
+ * WS-Attacker - A Modular Web Services Penetration Testing Framework Copyright
+ * (C) 2010 Christian Mainka
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.main.testsuite;
 
@@ -43,18 +43,18 @@ import com.eviware.soapui.support.SoapUIException;
 public class TestSuite  {
 	private static TestSuite instance = new TestSuite();
 	Logger log;
-	
+
 	WsdlProject project;
 	CurrentInterface currentInterface;
 	CurrentOperation currentOperation;
 	CurrentRequest currentRequest;
-	
+
 	List<WsdlChangeObserver> wsdlChangeObserver = new ArrayList<WsdlChangeObserver>();
 
 	public static TestSuite getInstance() {
 		return instance;
 	}
-	
+
 	private TestSuite() {
 		log = Logger.getLogger(getClass());
 		this.project = createEmptyProject();
@@ -62,7 +62,7 @@ public class TestSuite  {
 		currentOperation = new CurrentOperation(this);
 		currentRequest = new CurrentRequest(this);
 	}
-	
+
 	// projects are needed for soapui but not for ws-attacker, since we have our own projects
 	private WsdlProject createEmptyProject() {
 		WsdlProject project = null;
@@ -81,7 +81,7 @@ public class TestSuite  {
 		}
 		return project;
 	}
-	
+
 	public WsdlProject getProject() {
 		return project;
 	}
@@ -101,21 +101,21 @@ public class TestSuite  {
 	public CurrentRequest getCurrentRequest() {
 		return currentRequest;
 	}
-	
+
 	public void addCurrentWsdlChangeObserver(WsdlChangeObserver o) {
 		wsdlChangeObserver.add(o);
 	}
-	
+
 	public void removeCurrentWsdlChangeObserver(WsdlChangeObserver o) {
 		wsdlChangeObserver.remove(o);
 	}
-	
+
 	public void notifyCurrentWsdlChangeObservers() {
 		for(WsdlChangeObserver o : wsdlChangeObserver) {
 			o.wsdlChanged(this);
 		}
 	}
-	
+
 	public void setWsdl(String url) throws SoapUIException, NotSupportedException, Exception {
 		assert(this.project != null);
 		if( url.length() > 0 )
@@ -131,7 +131,7 @@ public class TestSuite  {
 			}
 		}
 	}
-	
+
 	private void importWsdl(String url) throws SoapUIException
 	{
 		WsdlProject project = createEmptyProject();
@@ -139,6 +139,6 @@ public class TestSuite  {
 		setProject(project);
 		notifyCurrentWsdlChangeObservers();
 		log.info("Successfully loaded wsdl");
-		
+
 	}
 }
