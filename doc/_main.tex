@@ -1,0 +1,133 @@
+% vim: spelllang=en
+\documentclass[a4paper,12pt,english,parskip=half,english]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[]{babel}
+% hyphenation
+\hyphenation{SoapUI Abstract-Option Abstract-Plugin SOAP-Action name-space name-spaces theo-reti-cally Content-Element}
+
+\usepackage{subfiles}
+
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{}
+
+% graphics
+\usepackage{float}
+\usepackage{xcolor}
+% \usepackage{tikz}
+% \usetikzlibrary{trees,positioning,shapes,shadows,arrows,snakes,mindmap}
+
+% Math stuff
+\usepackage{amsmath,amssymb,amsthm,wasysym}
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\C}{\ensuremath{\mathcal{C}}}
+\newcommand{\D}{\ensuremath{\mathcal{D}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\F}{\ensuremath{\mathcal{F}}}
+\renewcommand{\L}{\ensuremath{\mathcal{L}}}
+\newcommand{\M}{\ensuremath{\mathcal{M}}}
+\newcommand{\N}{\ensuremath{\mathcal{N}}}
+\renewcommand{\O}{\ensuremath{\mathcal{O}}}
+\renewcommand{\P}{\ensuremath{\mathcal{P}}}
+\newcommand{\R}{\ensuremath{\mathcal{R}}}
+\renewcommand{\S}{\ensuremath{\mathcal{S}}}
+\newcommand{\V}{\ensuremath{\mathcal{V}}}
+\newcommand{\W}{\ensuremath{\mathcal{W}}}
+\newcommand{\Z}{\ensuremath{\mathcal{Z}}}
+
+% AF custom userpackeges
+\usepackage{enumitem}
+\usepackage{lscape}
+
+% zeilenabstand
+% \usepackage[onehalfspacing]{setspace}
+\usepackage{setspace}
+
+% section auf neuer seite beginnen
+\newcommand{\mysection}{}
+\let\mysection=\section
+\renewcommand{\section}{\pagebreak[4]\mysection}
+
+% compact list
+\usepackage[pointedenum]{paralist}
+\renewenvironment{itemize}{\begin{compactitem}}{\end{compactitem}}
+\renewenvironment{enumerate}{\begin{compactenum}}{\end{compactenum}}
+\renewenvironment{description}{\begin{compactdesc}}{\end{compactdesc}}
+\setdefaultitem{\textbullet}{\normalfont\bfseries \textendash}{\textasteriskcentered}{\textperiodcentered}
+\setdefaultitem{$\triangleright$}{$\to$}{\textbullet}{\normalfont\bfseries \textendash}
+
+% quotation
+\usepackage[babel]{csquotes}
+
+% Use Listing
+\usepackage{listings}
+\lstset{language=xml,
+  numbers=left,
+  breaklines=true,
+  prebreak=\mbox{\ {$\curvearrowright$}},
+  lineskip=-0.1ex,
+  frame=tlRB,
+  showspaces=false,
+    captionpos=b,
+}
+
+% bibtex
+\usepackage[numbers,round]{natbib}
+\usepackage[english]{isodate}
+
+% header and footer
+\usepackage[headsepline,footsepline]{scrpage2}
+\usepackage{lastpage}
+\clearscrheadfoot
+\pagestyle{scrheadings}
+%\automark[chapter]{section}
+\automark[subsection]{section}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}%
+\renewcommand{\subsectionmark}[1]{\markright{\subsectionmarkformat #1}}
+
+% Header
+\newcommand{\myihead}{\rightmark}
+\newcommand{\myohead}{\leftmark}
+\ihead[]{\myihead}
+\ohead[]{\myohead}
+%Fusszeile
+\newcommand{\myifoot}{}
+\newcommand{\myofoot}{\pagemark / \pageref{LastPage}}
+\ifoot[]{\myifoot}
+\ofoot[]{\myofoot}
+
+\subject{Web Security Attacker Framework}
+\title{WS-Attacker}
+\subtitle{Documentation}
+\author{Christian Mainka \and Juraj Somorovsky \and Andreas Falkenberg}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    \input{abstract}
+\end{abstract}
+
+\tableofcontents
+
+\input{usage}
+\input{xsw}
+\input{dosUsage}
+
+\appendix
+\addcontentsline{toc}{section}{Appendix}
+\section*{Appendix}
+\ohead[]{Appendix}
+\ihead[]{}
+\let\section\subsection
+% \selectbiblanguage{english}
+\bibliography{literature}
+\bibliographystyle{unsrtnat}
+
+\end{document}

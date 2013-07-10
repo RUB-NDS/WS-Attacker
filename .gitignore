@@ -9,3 +9,17 @@ runnable/plugins/*jar
 runnable/lib/*jar
 framework/target/
 plugins/*/target
+doc/*._aux
+doc/*._log
+doc/*.aux
+doc/*.bbl
+doc/*.blg
+doc/*.fdb_latexmk
+doc/*.fls
+doc/*.lof
+doc/*.log
+doc/*.out
+doc/*.pdf
+doc/*.synctex.gz
+doc/*.tex.project.vim
+doc/*.toc

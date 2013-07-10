@@ -1,0 +1,69 @@
+=============
+24. Juni 2013
+=============
+
+New XML-Denial-of-Service Plugin (by Andreas Falkenberg):
+    - Various Attack Techniques
+        -Coercive Parsing
+        -Hash Collision Attack (DJBX31A, DJBX33A, DJBX33X)
+        -SOAP Array Attack
+        -XML Attribute Count Attack
+        -XML Element Count Attack
+        -XML Entity Expansion Attack
+        -XML External Entity Attack
+        -XML Overlong Element Names
+    - After the attack is finished, right click on the Plugin in the "Attack
+      Overview" to see more details!
+
+General:
+    - Splitted Signature Wrapping Plugin into a "Plugin" and its "Library Functions"
+        - Library is independent of Main WS-Attacker Framework
+
+Signature Wrapping Plugin improved:
+    - Now it is possible to right click on the Plugin in the "Attack Overview"
+      to slide through all XSW possibilities
+
+Signature Wrapping Library improved:
+    - Improved compatibility when Signatures sign Signatures (Usefull e.g. for
+      SAML Responses which sign SAML Assertions)
+    - New and better XML Schema Analyzer
+
+New Signature Faking Library (by Juraj Somorovsky):
+    - Creates a new Signature Value for a given XML Signature by using a newly
+      created Fake Certificate
+    - Yet only available as a Library (No WS-Attacker Plugin available)
+
+Framework Changes:
+    - Very small GUI improvements
+    - lalib-checkboxtree library now added locally because of Maven repository
+      changes
+
+=================
+05. November 2012
+=================
+
+Signature Wrapping Plugin improved:
+    - SAML over SOAP Working
+    - XSW-IDs now randomly chosen instead of prepending the string "atk-"
+    - It is now possible to analyse responses. To do this, right-click on the XSW plugin in the Attack-Overview Button after the attack is finished.
+
+Framework Changes:
+    - Some GUI Elements have been recreated using Netbeans Form Designer (Matisse)
+    - Support for plugin functions -> See XSW response analysis
+    - Libraries are now used in a "lib" folder instead of repacking it into the JAR
+
+============
+4. July 2012
+============
+
+Added XML Signature Wrapping Plugin:
+    - Technique for automatically attacking XML Signature protected Web Services
+    - Just set the endpoint and follow the instructions on the Plugin Config screen
+
+Framework Changes:
+    - Options Window is now Scrollable
+    - Some minor changes.
+
+Release Note:
+    - Now only one format (zip) available
+    - Source Code can be checked in GIT Repository
