@@ -24,12 +24,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
@@ -65,7 +66,8 @@ public class XPathNamespaceInjectionWeaknessTest {
 
         payloadList.get(0).setValue(payloadList.get(0).getValue().replace(orgContent, atkContent));
 
-        WrappingOracle wo = new WrappingOracle(doc, payloadList, new SchemaAnalyzer());
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.NULL);
+        WrappingOracle wo = new WrappingOracle(doc, payloadList, sa);
 
         assertEquals(9 * 2 * 3, wo.maxPossibilities());
 

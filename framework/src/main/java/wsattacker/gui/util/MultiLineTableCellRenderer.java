@@ -18,12 +18,10 @@
  */
 package wsattacker.gui.util;
 
-import javax.swing.*;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.*;
-
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 

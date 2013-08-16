@@ -25,10 +25,10 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
  */
 public class AxisName implements XPathPartInterface {
 
-    public final static String[] AxisName
+    public final static String[] AXISNAME
       = {"ancestor", "ancestor-or-self", "attribute", "child", "descendant", "descendant-or-self", "following", "following-sibling", "namespace", "parent", "preceding", "preceding-sibling", "self"};
 
-    private String axisName;
+    private final String axisName;
 
     public AxisName(String axisName) {
         this.axisName = axisName;
@@ -45,13 +45,13 @@ public class AxisName implements XPathPartInterface {
 
     @Override
     public String toFullString() {
+        String result = axisName;
         if (axisName.isEmpty()) {
-            return "child";
+            result = "child";
+        } else if (axisName.equals("@")) {
+            result = "attribute";
         }
-        if (axisName.equals("@")) {
-            return "attribute";
-        }
-        return axisName;
+        return result;
     }
 
     @Override
@@ -63,5 +63,12 @@ public class AxisName implements XPathPartInterface {
             return ((AxisName) o).toFullString().equals(toFullString());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (this.axisName != null ? this.axisName.hashCode() : 0);
+        return hash;
     }
 }

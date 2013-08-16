@@ -18,9 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackThreads;
 
-import java.awt.EventQueue;
-
-import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberProbesRunnable;
 
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;

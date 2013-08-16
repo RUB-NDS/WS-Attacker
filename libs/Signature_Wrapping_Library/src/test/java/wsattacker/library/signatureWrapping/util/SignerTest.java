@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_WSU;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSU;
 

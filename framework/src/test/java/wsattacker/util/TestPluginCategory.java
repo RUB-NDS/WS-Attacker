@@ -21,16 +21,12 @@ package wsattacker.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import wsattacker.gui.util.PluginCategory;
-import wsattacker.main.plugin.NullPlugin;
 import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.util.Category;
+import wsattacker.main.plugin.NullPlugin;
 
 public class TestPluginCategory {
 	private static Category<String, AbstractPlugin> root, c1, c2, c3, c4, child, subchild; 

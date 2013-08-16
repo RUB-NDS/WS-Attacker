@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,7 +45,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -70,7 +68,6 @@ public class SoapUtilities {
 		try {
 			bytes = soapString.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 			log.fatal("### Error - this should never happen: " + e.getMessage());
 			bytes = "".getBytes();
 		}
@@ -88,7 +85,6 @@ public class SoapUtilities {
 			// create new SOAPMessage with null header and xml content
 			sm = MessageFactory.newInstance(protocol).createMessage(null, new ByteArrayInputStream(bytes));
 		} catch (IOException e) {
-			e.printStackTrace();
 			log.fatal("### Error - this should never happen: " + e.getMessage());
 			sm = MessageFactory.newInstance().createMessage(); // return new empty message
 		}
@@ -138,7 +134,6 @@ public class SoapUtilities {
 			builder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			log.fatal("### Error - this should never happen: " + e.getMessage());
-			e.printStackTrace();
 			return null;
 		}
 		Document dom;
@@ -146,7 +141,6 @@ public class SoapUtilities {
 			dom = builder.parse(input);
 		} catch (IOException e) {
 			log.fatal("### Error - this should never happen: " + e.getMessage());
-			e.printStackTrace();
 			return null;
 		}
 		return dom;
@@ -166,13 +160,10 @@ public class SoapUtilities {
 			transformer.transform(new DOMSource(domDoc), new StreamResult(output));
 		} catch (TransformerConfigurationException e) {
 			log.fatal("### Error - Misconfigured Transformer Configuration, this should never happen: " + e.getMessage());
-			e.printStackTrace();
 		} catch (TransformerFactoryConfigurationError e) {
 			log.fatal("### Error - Misconfigured Transformer Factory, this should never happen: " + e.getMessage());
-			e.printStackTrace();
 		} catch (TransformerException e) {
 			log.fatal("### Error - Illegal Input, this should never happen: " + e.getMessage());
-			e.printStackTrace();
 		}
 	    return output.toString();
 	}

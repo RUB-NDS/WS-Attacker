@@ -3,15 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>WS-Attacker-Plugins</name>
-    <groupId>wsattacker.plugins</groupId>
+    <groupId>wsattacker.plugin</groupId>
     <artifactId>wsattacker-plugins</artifactId>
-    <version>1.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>wsattacker.basis</groupId>
         <artifactId>wsattacker-basis</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <modules>
@@ -20,6 +19,7 @@
         <module>OptionsTesterPlugin</module>
         <module>Signature_Wrapping</module>
         <module>Denial_of_Service</module>
+        <module>XML_Encryption_Attack</module>
     </modules>
 
     <repositories>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>wsattacker.framework</groupId>
             <artifactId>wsattacker-framework</artifactId>
-            <version>1.3-SNAPSHOT</version>
+            <version>1.4-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>

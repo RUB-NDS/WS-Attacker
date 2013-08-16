@@ -26,18 +26,17 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class ReferenceElement implements ReferringElementInterface {
 
-    private static String uriXPATHFILTER2 = "http://www.w3.org/2002/06/xmldsig-filter2";
-
-    private Element reference, referencedElement;
+    private static final String URI_XPATHFILTER2 = "http://www.w3.org/2002/06/xmldsig-filter2";
+    private final Element reference;
+    private Element referencedElement;
     private Payload payload;
-    private List<XPathElement> xpaths;
+    private final List<XPathElement> xpaths = new ArrayList<XPathElement>();
     private String workingXPath;
-
-    public static Logger log = Logger.getLogger(ReferenceElement.class);
+    public final static Logger LOG = Logger.getLogger(ReferenceElement.class);
 
     public ReferenceElement(Element reference) {
         this.reference = reference;
@@ -46,103 +45,9 @@ public class ReferenceElement implements ReferringElementInterface {
 
         // get referenced element
         if (getURI().isEmpty()) {
-            log().trace("URI is empty => Searching XPath Transformations");
-            // Searching for XPath Elements
-            xpaths = new ArrayList<XPathElement>();
-            List<Element> transforms = DomUtilities.findChildren(reference, "Transforms", XMLSignature.XMLNS);
-            if (1 == transforms.size()) {
-                // we have some transformations
-                List<Element> transform = DomUtilities.findChildren(transforms.get(0), "Transform", XMLSignature.XMLNS);
-                log().trace("Found Transforms child element: " + transforms + " whith child elements: " + transform);
-                for (Element t : transform) {
-                    if (t.getAttribute("Algorithm").equals(uriXPATHFILTER2)) {
-                        List<Element> xpaths = DomUtilities.findChildren(t, "XPath", null);
-                        log().trace("Element " + t.getNodeName() + " has the XPathFilter2 Algorithm and child elements: " + xpaths);
-                        for (Element xpath : xpaths) {
-                            this.xpaths.add(new XPathElement(xpath));
-                        }
-                        break; // No further XPathFilter2 allowed
-                    } else {
-                        log().trace("Element + " + t.getNodeName() + " has NO XPathFilter2 Algorithm!");
-                    }
-                }
-            } else {
-                log().warn("Found " + transforms.size() + " Transforms. This is invalid.");
-            }
+            searchForXPaths(reference);
         } else {
-            // URI is not Empty, so no XPaths exist
-
-            String ref = getURI();
-            if (ref.startsWith("#")) {
-                ref = ref.substring(1);
-            } // remove #
-            List<? extends Node> referenced;
-            // First Try: Search for @Id Attribute
-            try {
-                referenced = (List<Element>) DomUtilities.evaluateXPath(reference.getOwnerDocument(), "//*[@Id='" + ref + "']");
-            } catch (XPathExpressionException e) {
-                referenced = new ArrayList<Element>();
-            }
-            // Second Try: Search for @wsu:Id Attribute
-            if (referenced.isEmpty()) {
-                referenced = DomUtilities.findElementByWsuId(reference.getOwnerDocument(), ref);
-            }
-            // Third Try: Search for any Attribute with specified value
-            if (referenced.isEmpty()) {
-                referenced = DomUtilities.findAttributeByValue(reference.getOwnerDocument(), ref);
-            }
-
-            if (referenced.size() == 1) {
-                Node n = referenced.get(0);
-                if (n.getNodeType() == Node.ELEMENT_NODE) {
-                    referencedElement = (Element) referenced.get(0);
-                } else if (n.getNodeType() == Node.ATTRIBUTE_NODE) {
-                    referencedElement = ((Attr) referenced.get(0)).getOwnerElement();
-                } else {
-                    throw new NullPointerException("Don't know how to handle match:" + n.toString() + "(" + n.getClass().getName() + ")");
-                }
-            } else if (referenced.size() > 1) {
-                try {
-                    List<Attr> attrList = (List<Attr>) referenced;
-
-                    log.warn("There are " + referenced.size()
-                      + " possible References which machtes the URI '"
-                      + ref
-                      + "' (" + DomUtilities.nodelistToFastXPathList(referenced)
-                      + "). This is invalid and must produce errors.");
-
-                    // looking for exact matche AssertionID and prefer it
-                    for (Attr attribute : attrList) {
-                        if (attribute.getLocalName().toLowerCase().equals("assertionid")) {
-                            referencedElement = attribute.getOwnerElement();
-                        }
-                    }
-                    // looking for exact matche ID and prefer it
-                    if (referencedElement == null) {
-                        for (Attr attribute : attrList) {
-                            if (attribute.getLocalName().toLowerCase().equals("id")) {
-                                referencedElement = attribute.getOwnerElement();
-                            }
-                        }
-                    }
-                    // lookiung for substring matching id
-                    if (referencedElement == null) {
-                        for (Attr attribute : attrList) {
-                            if (attribute.getLocalName().toLowerCase().contains("id")) {
-                                referencedElement = attribute.getOwnerElement();
-                            }
-                        }
-                    }
-                } catch (ClassCastException e) {
-                    reference = (Element) referenced.get(0);
-                }
-
-            } else if (referenced.isEmpty()) {
-                log.warn("Could not find any References which machtes the URI '" + ref + "'. No Signed Element found.");
-                throw new NullPointerException("Could not de-reference signed element");
-            }
-
-            this.payload = new Payload(this, "Reference Element:" + toString(), referencedElement, toString());
+            handleURI(reference);
         }
     }
 
@@ -173,16 +78,20 @@ public class ReferenceElement implements ReferringElementInterface {
 
     @Override
     public boolean equals(Object o) {
+        boolean result = false;
         if (o instanceof ReferenceElement) {
             ReferenceElement ref = (ReferenceElement) o;
-            return ref.getURI().equals(getURI()) && ref.getXPaths().equals(getXPaths());
+            result = ref.getURI().equals(getURI()) && ref.getXPaths().equals(getXPaths());
         }
-        return false;
+        return result;
     }
 
     @Override
-    public String toString() {
-        return "URI=\"" + getURI() + "\"";
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (getURI() != null ? getURI().hashCode() : 0);
+        hash = 29 * hash + (getXPaths() != null ? getXPaths().hashCode() : 0);
+        return hash;
     }
 
     private Logger log() {
@@ -201,8 +110,8 @@ public class ReferenceElement implements ReferringElementInterface {
                 }
             }
         }
-        String name = "";
-        String value = "";
+        String name;
+        String value;
         if (id.getPrefix() != null) {
             name = id.getPrefix() + ":" + id.getLocalName();
             value = id.getValue();
@@ -210,8 +119,7 @@ public class ReferenceElement implements ReferringElementInterface {
             name = id.getLocalName();
             value = id.getValue();
         }
-        return "//*[@" + name + "='" + value + "']";
-
+        return String.format("//*[@%s='%s']", name, value);
     }
 
     @Override
@@ -225,5 +133,111 @@ public class ReferenceElement implements ReferringElementInterface {
     @Override
     public void setXPath(String workingXPath) {
         this.workingXPath = workingXPath;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("URI=\"%s\"", getURI());
+    }
+
+    private void searchForXPaths(Element reference) {
+        log().trace("URI is empty => Searching XPath Transformations");
+        // Searching for XPath Elements
+        List<Element> transforms = DomUtilities.findChildren(reference, "Transforms", XMLSignature.XMLNS);
+        if (1 == transforms.size()) {
+            // we have some transformations
+            List<Element> transform = DomUtilities.findChildren(transforms.get(0), "Transform", XMLSignature.XMLNS);
+            log().trace(String.format("Found Transforms child element >> %s << whith child elements >> %s <<", transforms, transform));
+            for (Element t : transform) {
+                if (t.getAttribute("Algorithm").equals(URI_XPATHFILTER2)) {
+                    List<Element> xpathElements = DomUtilities.findChildren(t, "XPath", null);
+                    log().trace(String.format("Element >> %s << has the XPathFilter2 Algorithm and child elements >> %s <<", t.getNodeName(), xpathElements));
+                    for (Element xpath : xpathElements) {
+                        this.xpaths.add(new XPathElement(xpath));
+                    }
+                    break; // No further XPathFilter2 allowed
+                } else {
+                    log().trace(String.format("Element >> %s << has NO XPathFilter2 Algorithm!", t.getNodeName()));
+                }
+            }
+        } else {
+            log().warn(String.format("Found >> %d << Transforms. This is invalid.", transforms.size()));
+        }
+    }
+
+    private void handleURI(Element reference) throws NullPointerException {
+        // URI is not Empty, so no XPaths exist
+        String ref = getURI();
+        if (ref.charAt(0) == '#') {
+            ref = ref.substring(1);
+        } // remove #
+        List<? extends Node> referenced;
+        // First Try: Search for @Id Attribute
+        try {
+            referenced = (List<Element>) DomUtilities.evaluateXPath(reference.getOwnerDocument(), String.format("//*[@Id='%s']", ref));
+        } catch (XPathExpressionException e) {
+            referenced = new ArrayList<Element>();
+        }
+        // Second Try: Search for @wsu:Id Attribute
+        if (referenced.isEmpty()) {
+            referenced = DomUtilities.findElementByWsuId(reference.getOwnerDocument(), ref);
+        }
+        // Third Try: Search for any Attribute with specified value
+        if (referenced.isEmpty()) {
+            referenced = DomUtilities.findAttributeByValue(reference.getOwnerDocument(), ref);
+        }
+
+        if (referenced.size() == 1) {
+            Node n = referenced.get(0);
+            if (n.getNodeType() == Node.ELEMENT_NODE) {
+                referencedElement = (Element) referenced.get(0);
+            } else if (n.getNodeType() == Node.ATTRIBUTE_NODE) {
+                referencedElement = ((Attr) referenced.get(0)).getOwnerElement();
+            } else {
+                throw new NullPointerException("Don't know how to handle match:" + n.toString() + "(" + n.getClass().getName() + ")");
+            }
+        } else if (referenced.size() > 1) {
+            try {
+                List<Attr> attrList = (List<Attr>) referenced;
+
+                LOG.warn("There are " + referenced.size()
+                  + " possible References which machtes the URI '"
+                  + ref
+                  + "' (" + DomUtilities.nodelistToFastXPathList(referenced)
+                  + "). This is invalid and must produce errors.");
+
+                // looking for exact matche AssertionID and prefer it
+                for (Attr attribute : attrList) {
+                    if (attribute.getLocalName().toLowerCase().equals("assertionid")) {
+                        referencedElement = attribute.getOwnerElement();
+                    }
+                }
+                // looking for exact matche ID and prefer it
+                if (referencedElement == null) {
+                    for (Attr attribute : attrList) {
+                        if (attribute.getLocalName().toLowerCase().equals("id")) {
+                            referencedElement = attribute.getOwnerElement();
+                        }
+                    }
+                }
+                // lookiung for substring matching id
+                if (referencedElement == null) {
+                    for (Attr attribute : attrList) {
+                        if (attribute.getLocalName().toLowerCase().contains("id")) {
+                            referencedElement = attribute.getOwnerElement();
+                        }
+                    }
+                }
+            } catch (ClassCastException e) {
+//                reference = (Element) referenced.get(0);
+                throw new IllegalStateException("This should never happen", e);
+            }
+
+        } else if (referenced.isEmpty()) {
+            LOG.warn(String.format("Could not find any References which machtes the URI >> %s <<. No Signed Element found.", ref));
+            throw new NullPointerException("Could not de-reference signed element");
+        }
+
+        this.payload = new Payload(this, referencedElement);
     }
 }

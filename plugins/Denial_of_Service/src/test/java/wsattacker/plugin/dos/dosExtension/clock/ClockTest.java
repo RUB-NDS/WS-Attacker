@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.clock;
 
-import wsattacker.plugin.dos.dosExtension.clock.Clock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;

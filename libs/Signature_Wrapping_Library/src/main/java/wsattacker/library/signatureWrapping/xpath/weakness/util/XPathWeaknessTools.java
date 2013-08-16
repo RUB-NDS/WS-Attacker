@@ -25,20 +25,21 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import wsattacker.library.signatureWrapping.util.dom.NamespaceResolver;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
+import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 
 /**
  * Collecion of usefull helper methods for creating XSW messages.
  */
-public class XPathWeaknessTools {
+public final class XPathWeaknessTools {
 
-    private static Logger log = Logger.getLogger(XPathWeaknessTools.class);
+    private final static Logger LOG = Logger.getLogger(XPathWeaknessTools.class);
 
     /**
      * Returns a clone of the signedPostPart Element but instead of the
@@ -106,14 +107,16 @@ public class XPathWeaknessTools {
       String postXPath) {
         Element signedPostPart = signedElement;
         Node signedPostPartParent = (Element) signedPostPart.getParentNode();
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath xpath = factory.newXPath();
-        xpath.setNamespaceContext(new NamespaceResolver(signedElement.getOwnerDocument()));
+        final XPathFactory factory = XPathFactory.newInstance();
+        final XPath xpath = factory.newXPath();
+        final Document ownerDocument = signedElement.getOwnerDocument();
+        final NamespaceResolver nsr = new NamespaceResolver(ownerDocument);
+        xpath.setNamespaceContext(nsr);
         XPathExpression expr = null;
         try {
             expr = xpath.compile(postXPath);
         } catch (XPathExpressionException e1) {
-            log.warn("No valid PostXPath: " + postXPath);
+            LOG.warn("No valid PostXPath: " + postXPath);
             return null;
         }
         NodeList nodes;
@@ -124,8 +127,8 @@ public class XPathWeaknessTools {
                 continue;
             }
             if (nodes.getLength() == 1) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Matched with postXPath from Element: " + signedPostPart.getNodeName());
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Matched with postXPath from Element: " + signedPostPart.getNodeName());
                 }
                 break;
             }
@@ -157,7 +160,7 @@ public class XPathWeaknessTools {
         try {
             matchList = (List<Element>) DomUtilities.evaluateXPath(signedElement.getOwnerDocument(), xpath);
         } catch (XPathExpressionException e) {
-            log.warn(e.getLocalizedMessage());
+            LOG.warn(e.getLocalizedMessage());
             throw new InvalidWeaknessException(e);
         }
 

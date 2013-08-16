@@ -19,43 +19,55 @@
 package wsattacker.main.composition;
 
 import java.io.File;
-
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.plugin.PluginManager;
 import wsattacker.main.testsuite.TestSuite;
 
 /**
  * The controller interface
+ *
  * @author Christian Mainka
  *
  */
 public interface ControllerInterface {
+
 	public PluginManager getPluginManager();
 
 	public void reloadPlugins();
 
 	public void setPluginActive(String pluginName, boolean active);
+
 	public void setPluginActive(int index, boolean active);
+
 	public void setAllPluginActive(boolean active);
 
-	public boolean setOptionValue(AbstractPlugin plugin, String optionName, String optionValue);
+	public void setOptionValue(AbstractPlugin plugin, String optionName, String optionValue);
 
 	public void startActivePlugins();
+
 	public void stopActivePlugins();
+
 	public void cleanPlugins();
 
 	public TestSuite getTestSuite();
 
 	public void setWsdl(String uri);
+
 	public boolean setCurrentService(int index);
+
 	public boolean setCurrentService(String name);
+
 	public boolean setCurrentOperation(String operationString);
+
 	public boolean setCurrentOperation(int index);
+
 	public void resetRequestContent();
+
 	public void setRequestContent(String content);
-	
+
 	public void doTestRequest();
-	
+
 	public void savePluginConfiguration(File file);
+
 	public void loadPluginConfiguration(File file);
 }

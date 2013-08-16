@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_SAML20;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_SAML20P;

@@ -19,11 +19,12 @@
 package wsattacker.main.composition.plugin;
 
 import java.awt.Window;
-import javax.swing.JDialog;
 
 public interface PluginFunctionInterface {
 
 	public String getName();
+
 	public boolean isEnabled();
+
 	public Window getGuiWindow();
 }

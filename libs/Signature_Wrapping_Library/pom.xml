@@ -3,9 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>wsattacker.lib.signatureWrapping</groupId>
     <artifactId>Signature_Wrapping_Library</artifactId>
-    <version>1.4-SNAPSHOT</version>
     <name>WS-Attacker-Library_Signature_Wrapping</name>
     <inceptionYear>2013</inceptionYear>
 
@@ -25,18 +23,23 @@
     </developers>
 
     <parent>
-        <groupId>wsattacker.lib</groupId>
+        <groupId>wsattacker.library</groupId>
         <artifactId>wsattacker-libraries</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <!-- For WsuURIDereferencer: XMLSignatureInput, ApacheOctetStreamData, ApacheNodeSetData -->
 
     <dependencies>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>wsattacker.library</groupId>
+            <artifactId>XML_Utilities_Library</artifactId>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>wsattacker.library</groupId>
+            <artifactId>Schema_Analyzer_Library</artifactId>
+            <version>1.4-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -61,11 +64,6 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7.2</version>
-            </plugin>
             <!--
                 Use a Licence Header
             -->

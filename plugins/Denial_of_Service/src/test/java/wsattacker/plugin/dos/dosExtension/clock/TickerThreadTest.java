@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.clock;
 
-import wsattacker.plugin.dos.dosExtension.clock.TickerThread;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

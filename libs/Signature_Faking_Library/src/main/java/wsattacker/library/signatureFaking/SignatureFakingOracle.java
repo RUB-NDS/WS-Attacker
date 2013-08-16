@@ -45,8 +45,8 @@ import org.xml.sax.SAXException;
 import wsattacker.library.signatureFaking.exceptions.CertificateHandlerException;
 import wsattacker.library.signatureFaking.exceptions.SignatureFakingException;
 import wsattacker.library.signatureFaking.helper.CertificateHandler;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * Creates faked signatures by issuing a new certificate and resigning
@@ -67,12 +67,13 @@ public class SignatureFakingOracle {
     /**
      * Creates SignatureWrappingOracle, parses the document and searches
      * for all the SignatureValue and KeyInfo elements
-     * 
+     *
      * @param documentString
-     * @throws SignatureFakingException 
+     *
+     * @throws SignatureFakingException
      */
     public SignatureFakingOracle(final String documentString) throws
-            SignatureFakingException {
+      SignatureFakingException {
         Security.addProvider(new BouncyCastleProvider());
         signatureValueElements = new LinkedList<Node>();
         keyInfoElements = new LinkedList<Node>();
@@ -81,11 +82,11 @@ public class SignatureFakingOracle {
         try {
             doc = DomUtilities.stringToDom(documentString);
             crawlSignatureElements();
-            log.debug("found " + signatureValueElements.size() + 
-                    " SignatureValue elements");
+            log.debug("found " + signatureValueElements.size()
+              + " SignatureValue elements");
             crawlKeyInfoElements();
-            log.debug("found " + keyInfoElements.size() + 
-                    " KeyInfo elements containing X509 certificates");
+            log.debug("found " + keyInfoElements.size()
+              + " KeyInfo elements containing X509 certificates");
         } catch (SAXException e) {
             throw new SignatureFakingException(e);
         }
@@ -93,8 +94,8 @@ public class SignatureFakingOracle {
 
     /**
      * Creates fake signatures
-     * 
-     * @throws SignatureFakingException 
+     *
+     * @throws SignatureFakingException
      */
     public void fakeSignatures() throws SignatureFakingException {
         try {
@@ -108,25 +109,24 @@ public class SignatureFakingOracle {
         }
     }
 
-    
     public void fakeSignature(int i) throws CertificateHandlerException,
-            SignatureFakingException {
-        if(signatureValueElements.size() != certHandlers.size()) {
+      SignatureFakingException {
+        if (signatureValueElements.size() != certHandlers.size()) {
             createFakedCertificates();
         }
         String signature = signatureValueElements.get(i).getTextContent();
         CertificateHandler ch = certHandlers.get(i);
         byte[] newSignature = resignValue(Base64.
-                decodeBase64(signature), ch);
+          decodeBase64(signature), ch);
         signatureValueElements.get(i).setTextContent(
-                new String(Base64.encodeBase64(newSignature)));
+          new String(Base64.encodeBase64(newSignature)));
         appendCertificate(keyInfoElements.get(i),
-                ch.getFakedCertificateString());
+          ch.getFakedCertificateString());
     }
 
     private void createFakedCertificates() throws
-            CertificateHandlerException {
-               for (String cert : certificates) {
+      CertificateHandlerException {
+        for (String cert : certificates) {
             CertificateHandler ch = new CertificateHandler(cert);
             ch.createFakedCertificate();
             certHandlers.add(ch);
@@ -136,7 +136,7 @@ public class SignatureFakingOracle {
     /**
      *
      * @return True if the signature contains public key information (X509
-     * certificate in the KeyInfo element)
+     *         certificate in the KeyInfo element)
      */
     public boolean certificateProvided() {
         if (certificates.size() > 0) {
@@ -159,8 +159,8 @@ public class SignatureFakingOracle {
      */
     private void crawlKeyInfoElements() {
         for (Node ki : keyInfoElements) {
-            List<Element> l = DomUtilities.findChildren(ki, "X509Certificate", 
-                    NamespaceConstants.URI_NS_DS, true);
+            List<Element> l = DomUtilities.findChildren(ki, "X509Certificate",
+              NamespaceConstants.URI_NS_DS, true);
             if (l.size() > 0) {
                 Node x509cert = l.get(0);
                 if (x509cert != null && x509cert.getLocalName().equals("X509Certificate")) {
@@ -181,12 +181,12 @@ public class SignatureFakingOracle {
                 if (current.getNodeType() == Node.ELEMENT_NODE) {
                     if (current.getLocalName().equals("SignedInfo")) {
                         Element signatureMethod = DomUtilities.findChildren(
-                                current, "SignatureMethod", NamespaceConstants.URI_NS_DS,
-                                false).get(0);
+                          current, "SignatureMethod", NamespaceConstants.URI_NS_DS,
+                          false).get(0);
                         if (signatureMethod != null
-                                && (!isSignatureMethodSupported(signatureMethod))) {
+                          && (!isSignatureMethodSupported(signatureMethod))) {
                             throw new SignatureFakingException("Signature "
-                                    + "Algorithm not yet supported");
+                              + "Algorithm not yet supported");
                         }
                     } else if (current.getLocalName().equals("SignatureValue")) {
                         signatureValueElements.add(current);
@@ -213,24 +213,24 @@ public class SignatureFakingOracle {
     private void appendCertificate(Node keyInfo, String certificate) {
         keyInfo.setTextContent("");
         String prefix = keyInfo.getPrefix();
-        if(prefix == null ) {
+        if (prefix == null) {
             prefix = "";
         } else {
             prefix = prefix + ":";
         }
         Node data = keyInfo.getOwnerDocument().createElementNS(
-                NamespaceConstants.URI_NS_DS,  prefix + "X509Data");
+          NamespaceConstants.URI_NS_DS, prefix + "X509Data");
         keyInfo.appendChild(data);
         Node cert = keyInfo.getOwnerDocument().createElementNS(
-                NamespaceConstants.URI_NS_DS, prefix + "X509Certificate");
+          NamespaceConstants.URI_NS_DS, prefix + "X509Certificate");
         data.appendChild(cert);
         cert.setTextContent(certificate);
-        log.debug("Appending Certificate \r\n" + certificate + "\r\nto the" +
-                prefix + "X509Certificate element");
+        log.debug("Appending Certificate \r\n" + certificate + "\r\nto the"
+          + prefix + "X509Certificate element");
     }
 
     private byte[] resignValue(byte[] signatureValue, CertificateHandler ch)
-            throws SignatureFakingException {
+      throws SignatureFakingException {
         PrivateKey privKey = ch.getFakedKeyPair().getPrivate();
         PublicKey pubKey = ch.getOriginalPublicKey();
         String alg = ch.getFakedCertificate().getSigAlgName();

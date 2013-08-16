@@ -21,51 +21,57 @@ package wsattacker.main.plugin.option;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 
 public class OptionLimitedInteger extends AbstractOptionInteger {
+
 	private static final long serialVersionUID = 1L;
-	private int min,max;
-	
+	public static final String PROP_MIN = "min";
+	public static final String PROP_MAX = "max";
+	private int min = 0, max = 10;
+
 	public OptionLimitedInteger(String name, int value, int min, int max) {
 		super(name, value);
 		this.min = min;
 		this.max = max;
 	}
-	
+
 	public OptionLimitedInteger(String name, int value, String description, int min, int max) {
 		super(name, value, description);
 		this.min = min;
 		this.max = max;
 	}
 
-	public int getMax() {
-		return this.max;
-	}
-
-	public void setMax(int max) {
-		this.max = max;
-	}
-
-	public int getMin() {
-		return this.min;
-	}
-
-	public void setMin(int min) {
-		this.min = min;
-	}
-	
 	@Override
 	public boolean isValid(String value) {
 		try {
 			int i = Integer.parseInt(value);
 			return isValid(i);
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			return false;
 		}
 	}
 
 	@Override
 	public boolean isValid(int value) {
-		return (value >= this.min) && (value <= this.max);
+		return (value >= this.getMin()) && (value <= this.getMax());
 	}
 
+	public int getMin() {
+		return min;
+	}
+
+	public void setMin(int min) {
+		int oldMin = this.min;
+		this.min = min;
+		firePropertyChange(PROP_MIN, oldMin, min);
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		int oldMax = this.max;
+		this.max = max;
+		firePropertyChange(PROP_MAX, oldMax, max);
+	}
 }

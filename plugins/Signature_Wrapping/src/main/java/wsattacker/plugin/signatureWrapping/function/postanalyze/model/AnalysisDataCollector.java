@@ -23,7 +23,6 @@
 package wsattacker.plugin.signatureWrapping.function.postanalyze.model;
 
 import java.util.*;
-import org.w3c.dom.Document;
 
 /**
  *

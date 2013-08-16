@@ -22,7 +22,7 @@ import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 
-public class RandomIdGenerator {
+public final class RandomIdGenerator {
 
     private RandomIdGenerator() {
     }

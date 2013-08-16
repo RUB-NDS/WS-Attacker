@@ -23,18 +23,20 @@ import wsattacker.library.signatureWrapping.xpath.parts.predicate.AndExpression;
 
 public class AttributeAndExpression extends AndExpression {
 
-    private static final String attribute = "attribute::";
+    private static final String ATTRIBUTE = "attribute::";
 
-    private String prefix = "", localname = "", value = "";
+    private String prefix = "", localname = "";
+    private String value = "";
 
     public AttributeAndExpression(String expression) throws InvalidTypeException {
         super(expression);
 
         String tmp = "";
-        if (expression.startsWith("@")) {
+//        if (expression.startsWith("@")) {
+        if (expression.charAt(0) == '@') {
             tmp = expression.substring(1).trim();
-        } else if (expression.startsWith(attribute)) {
-            tmp = expression.substring(attribute.length()).trim();
+        } else if (expression.startsWith(ATTRIBUTE)) {
+            tmp = expression.substring(ATTRIBUTE.length()).trim();
         } else {
             throw new InvalidTypeException();
         }

@@ -26,7 +26,8 @@ import wsattacker.library.signatureWrapping.xpath.parts.Step;
  */
 public class NodeName implements XPathPartInterface {
 
-    private String nodeName, prefix, localname;
+    private final String nodeName;
+    private String prefix, localname;
 
     public NodeName(String nodeName) {
         this.nodeName = nodeName;
@@ -72,5 +73,12 @@ public class NodeName implements XPathPartInterface {
             return o.equals(toString());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 73 * hash + (this.nodeName != null ? this.nodeName.hashCode() : 0);
+        return hash;
     }
 }

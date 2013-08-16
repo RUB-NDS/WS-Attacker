@@ -25,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
+import java.util.logging.*;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.xml.crypto.dsig.DigestMethod;
@@ -45,23 +46,24 @@ import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.crypto.dsig.spec.XPathFilter2ParameterSpec;
 import javax.xml.crypto.dsig.spec.XPathType;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.apache.ws.security.message.token.Timestamp;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.evaluateXPath;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.findChildren;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.getFirstChildElement;
-import wsattacker.library.signatureWrapping.util.dom.NamespaceResolver;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.evaluateXPath;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.findChildren;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.getFirstChildElement;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_DS;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_WSSE;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSSE_1_0;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSU;
+import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 
 /**
  * Main Signature Class Is able to sign and verify a Document by XPath and ID
@@ -232,10 +234,14 @@ public class Signer {
 
         // dsc.setDefaultNamespacePrefix("ds");
         dsc.putNamespacePrefix(URI_NS_DS, PREFIX_NS_DS);
-        // dsc.setIdAttributeNS(firstBodyChild, uriWSU, "Id");
-// dsc.setIdAttributeNS(body, URI_NS_WSU, "Id");
-//    dsc.setURIDereferencer(new WsuURIDereferencer());
-        dsc.setURIDereferencer(dsc.getURIDereferencer());
+
+        // Fix due to Java 7 update, URIDereferencer does no longer work
+        // dsc.setURIDereferencer(dsc.getURIDereferencer());
+        markWsuIdAttributes(doc);
+//        for (String id : idListToSign) {
+//            Element signed = DomUtilities.findElementByWsuId(doc, id.substring(1)).get(0);
+//            signed.setIdAttributeNS(URI_NS_WSU, "Id", true);
+//        }
 
         // Create the XMLSignature, but don't sign it yet.
         XMLSignature xmlSignature = fac.newXMLSignature(si, ki);
@@ -325,8 +331,8 @@ public class Signer {
 
         // keypair
         DOMValidateContext valContext = new DOMValidateContext(new KeyValueKeySelector(), signature);
-//    valContext.setURIDereferencer(new WsuURIDereferencer());
-        valContext.setURIDereferencer(valContext.getURIDereferencer());
+//        valContext.setURIDereferencer(valContext.getURIDereferencer());
+        markWsuIdAttributes(doc);
 
         XMLSignatureFactory fac = XMLSignatureFactory.getInstance();
         XMLSignature xmlSignature = fac.unmarshalXMLSignature(valContext);
@@ -360,5 +366,17 @@ public class Signer {
         // Policy is OK, now validating
         LOG.info("    ==> Signature is " + (allvalid ? "VALID" : "invalid"));
         return xmlSignature.validate(valContext);
+    }
+
+    private void markWsuIdAttributes(Document doc) {
+        final String xpath = "//attribute::*[local-name()='Id' and namespace-uri()='" + URI_NS_WSU + "']/parent::node()";
+        try {
+            List<Element> matchList = (List<Element>) DomUtilities.evaluateXPath(doc, xpath);
+            for (Element match : matchList) {
+                match.setIdAttributeNS(URI_NS_WSU, "Id", true);
+            }
+        } catch (XPathExpressionException ex) {
+            java.util.logging.Logger.getLogger(Signer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

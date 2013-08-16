@@ -18,29 +18,28 @@
  */
 package wsattacker.main.testsuite;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-import org.apache.xmlbeans.XmlException;
-
-import wsattacker.exception.NotSupportedException;
-import wsattacker.main.composition.testsuite.WsdlChangeObserver;
-
 import com.eviware.soapui.impl.WsdlInterfaceFactory;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.WsdlProjectFactory;
 import com.eviware.soapui.support.SoapUIException;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.log4j.Logger;
+import org.apache.xmlbeans.XmlException;
+import wsattacker.main.composition.testsuite.WsdlChangeObserver;
 
 /**
- * TestSuite for WS-Attacker
- * Provides methods for loading a WSDL and selection operations
+ * TestSuite for WS-Attacker Provides methods for loading a WSDL and selection
+ * operations
+ *
  * @author Christian Mainka
  *
  */
-public class TestSuite  {
+public class TestSuite {
+
 	private static TestSuite instance = new TestSuite();
 	Logger log;
 
@@ -69,15 +68,15 @@ public class TestSuite  {
 		WsdlProjectFactory fac = new WsdlProjectFactory();
 		try {
 			project = fac.createNew();
-		} catch (XmlException e) {
+		}
+		catch (XmlException e) {
 			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
-			e.printStackTrace();
-		} catch (SoapUIException e) {
+		}
+		catch (SoapUIException e) {
 			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
-			e.printStackTrace();
 		}
 		return project;
 	}
@@ -111,31 +110,30 @@ public class TestSuite  {
 	}
 
 	public void notifyCurrentWsdlChangeObservers() {
-		for(WsdlChangeObserver o : wsdlChangeObserver) {
+		for (WsdlChangeObserver o : wsdlChangeObserver) {
 			o.wsdlChanged(this);
 		}
 	}
 
-	public void setWsdl(String url) throws SoapUIException, NotSupportedException, Exception {
-		assert(this.project != null);
-		if( url.length() > 0 )
-		{
+	public void setWsdl(String url) throws SoapUIException, UnsupportedOperationException, MalformedURLException {
+		assert (this.project != null);
+		if (url.length() > 0) {
 			// convert string to uri
-			if( new File( url ).exists() )
-				url = new File( url ).toURI().toURL().toString();
+			if (new File(url).exists()) {
+				url = new File(url).toURI().toURL().toString();
+			}
 
-			if( url.toUpperCase().endsWith( "WADL" ) )
-				throw new NotSupportedException("WADL not yet supported");
-			else {
+			if (url.toUpperCase().endsWith("WADL")) {
+				throw new UnsupportedOperationException("WADL not yet supported");
+			} else {
 				importWsdl(url);
 			}
 		}
 	}
 
-	private void importWsdl(String url) throws SoapUIException
-	{
+	private void importWsdl(String url) throws SoapUIException {
 		WsdlProject project = createEmptyProject();
-		WsdlInterfaceFactory.importWsdl( project, url, false ); // import wsdl
+		WsdlInterfaceFactory.importWsdl(project, url, false); // import wsdl
 		setProject(project);
 		notifyCurrentWsdlChangeObservers();
 		log.info("Successfully loaded wsdl");

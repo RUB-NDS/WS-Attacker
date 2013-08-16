@@ -19,9 +19,9 @@
 package wsattacker.library.signatureWrapping.xpath.analysis;
 
 import java.util.*;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathWeaknessFactoryInterface;
@@ -44,9 +44,8 @@ import wsattacker.library.signatureWrapping.xpath.weakness.XPathWeaknessFactory;
 public class XPathAnalyser {
 
     public static XPathWeaknessFactoryInterface xpathWeaknessFactory = new XPathWeaknessFactory();
-
-    private AbsoluteLocationPath xpath;
-    private List<XPathWeaknessInterface> weaknesses;
+    private final AbsoluteLocationPath xpath;
+    private final List<XPathWeaknessInterface> weaknesses;
     int maxPossibilites;
 
     /**
@@ -61,7 +60,7 @@ public class XPathAnalyser {
     public XPathAnalyser(ReferringElementInterface ref,
       SignedElement signedElement,
       PayloadElement payloadElement,
-      SchemaAnalyzerInterface schemaAnalyzer) {
+      SchemaAnalyzer schemaAnalyzer) {
         this.xpath = new AbsoluteLocationPath(ref);
         this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyzer);
         // calculate number of possibilities
@@ -82,7 +81,7 @@ public class XPathAnalyser {
     public XPathAnalyser(String xpath,
       SignedElement signedElement,
       PayloadElement payloadElement,
-      SchemaAnalyzerInterface schemaAnalyser) {
+      SchemaAnalyzer schemaAnalyser) {
         this.xpath = new AbsoluteLocationPath(xpath);
         this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyser);
         // calculate number of possibilities

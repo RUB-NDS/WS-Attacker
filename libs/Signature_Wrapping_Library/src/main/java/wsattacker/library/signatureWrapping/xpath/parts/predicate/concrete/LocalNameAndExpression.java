@@ -19,9 +19,9 @@
 package wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete;
 
 import wsattacker.library.signatureWrapping.util.exception.InvalidTypeException;
-import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.FunctionAndExpression;
+import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.AbstractFunctionAndExpression;
 
-public class LocalNameAndExpression extends FunctionAndExpression {
+public class LocalNameAndExpression extends AbstractFunctionAndExpression {
 
     public LocalNameAndExpression(String expression)
       throws InvalidTypeException {

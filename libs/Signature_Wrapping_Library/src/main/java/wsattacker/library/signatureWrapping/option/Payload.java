@@ -18,6 +18,8 @@
  */
 package wsattacker.library.signatureWrapping.option;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.text.ParseException;
 import java.util.*;
 import org.apache.log4j.Logger;
@@ -25,10 +27,10 @@ import org.apache.ws.security.WSConstants;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
 import wsattacker.library.signatureWrapping.util.timestamp.TimestampUpdateHelper;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * The Payload class hold gives a connection between the signed element
@@ -36,19 +38,25 @@ import wsattacker.library.signatureWrapping.util.timestamp.TimestampUpdateHelper
  */
 public class Payload {
 
-    private static Logger log = Logger.getLogger(Payload.class);
-    private static final long serialVersionUID = 1L;
+    public static final String PROP_TIMESTAMP = "timestamp";
+    public static final String PROP_WRAPONLY = "wrapOnly";
+    public static final String PROP_PAYLOADELEMENT = "payloadElement";
+    public static final String PROP_SIGNEDELEMENT = "signedElement";
+    public static final String PROP_REFERRINGELEMENT = "referringElement";
+    private static final Logger LOG = Logger.getLogger(Payload.class);
+    private static final long serialVersionUID = 2L;
     private static final String ASSERTION = "Assertion";
     private static final String CONDITIONS = "Conditions";
     private static final String NOTBEFORE = "NotBefore";
     private static final String NOTONORAFTER = "NotOnOrAfter";
-
-    private String name, description;
-//	private String value;
-    private boolean isTimestamp, wrapOnly;
-//	private Document originalDocument;
-    private Element payloadElement, signedElement;
+    private boolean timestamp = false, wrapOnly = false;
+    private Element payloadElement;
+    private Element signedElement;
     private ReferringElementInterface referringElement;
+    private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+
+    public Payload() {
+    }
 
     /**
      * Constructor for the Payload.
@@ -60,25 +68,9 @@ public class Payload {
      *                         XPath).
      * @param description      . Description of the option.
      */
-    public Payload(ReferringElementInterface referringElement,
-      String name,
-      Element signedElement,
-      String description) {
-        this.name = name;
-        this.description = description;
-        this.referringElement = referringElement;
-        this.signedElement = signedElement;
-//		this.value = DomUtilities.domToString(signedElement);
-        this.payloadElement = (Element) signedElement.cloneNode(true);
-        this.isTimestamp = detectTimestamp();
-        this.wrapOnly = false;
-
-//		try {
-//			this.originalDocument = DomUtilities.stringToDom(value);
-//		} catch (SAXException ex) {
-//			java.util.logging.Logger.getLogger(Payload.class.getName()).log(Level.SEVERE, null, ex);
-//		}
-//		this.originalDocument.normalizeDocument();
+    public Payload(ReferringElementInterface referringElement, Element signedElement) {
+        setReferringElement(referringElement);
+        setSignedElement(signedElement);
     }
 
     /**
@@ -112,7 +104,7 @@ public class Payload {
 //		}
         Element retr = payloadElement;
         // If it is a timestamp, we need to create a valid one!
-        if (isTimestamp) {
+        if (timestamp) {
 //			Element timestamp = (Element) originalDocument.getDocumentElement().cloneNode(true);
             Element timestamp = (Element) signedElement.cloneNode(true);
             if (timestamp.getLocalName().equals(WSConstants.TIMESTAMP_TOKEN_LN)) {
@@ -134,12 +126,12 @@ public class Payload {
                 }
                 if (createdElement == null) {
                     String warning = "Could not find Created Element in Timestamp";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
                 if (expiresElement == null) {
                     String warning = "Could not find Expires Element in Timestamp";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
                 TimestampUpdateHelper helper;
@@ -147,7 +139,7 @@ public class Payload {
                     helper = new TimestampUpdateHelper(createdElement.getTextContent(), expiresElement.getTextContent());
                 } catch (ParseException ex) {
                     String warning = "Timestampformat could not be handled";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
                 createdElement.setTextContent(helper.getStart());
@@ -159,12 +151,12 @@ public class Payload {
                 List<Element> conditionElementList = DomUtilities.findChildren(timestamp, CONDITIONS, null);
                 if (conditionElementList.isEmpty()) {
                     String warning = "Could not find the Element <" + CONDITIONS + "/>";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
                 if (conditionElementList.size() > 1) {
                     String warning = "There are " + conditionElementList.size() + " <" + CONDITIONS + "/> Elements";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
 
@@ -173,14 +165,14 @@ public class Payload {
                 Attr notBefore = conditionElement.getAttributeNode(NOTBEFORE);
                 if (notBefore == null) {
                     String warning = "Could not find '" + NOTBEFORE + "' Attribute";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
 
                 Attr notOnOrAfter = conditionElement.getAttributeNode(NOTONORAFTER);
                 if (notOnOrAfter == null) {
                     String warning = "Could not find '" + NOTONORAFTER + "' Attribute";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
 
@@ -189,7 +181,7 @@ public class Payload {
                     helper = new TimestampUpdateHelper(notBefore.getTextContent(), notOnOrAfter.getTextContent());
                 } catch (ParseException ex) {
                     String warning = "Timestampformat could not be handled";
-                    log.warn(warning);
+                    LOG.warn(warning);
                     throw new InvalidPayloadException(warning);
                 }
                 notBefore.setTextContent(helper.getStart());
@@ -224,17 +216,41 @@ public class Payload {
      * @return
      */
     public boolean isTimestamp() {
-        return isTimestamp;
+        return timestamp;
     }
 
     /**
      * Set if the signed element is a Timestamp element.
      *
-     * @param isTimestamp
+     * @param timestamp
      */
-    public void setTimestamp(boolean isTimestamp) {
-        log().trace(getName() + " setTimestamp = " + isTimestamp);
-        this.isTimestamp = isTimestamp;
+    public void setTimestamp(boolean timestamp) {
+        log().trace("Payload.setTimestamp() setTimestamp = " + timestamp);
+        boolean oldTimestamp = this.timestamp;
+        this.timestamp = timestamp;
+        propertyChangeSupport.firePropertyChange(PROP_TIMESTAMP, oldTimestamp, timestamp);
+    }
+
+    public void setPayloadElement(Element payloadElement) {
+        org.w3c.dom.Element oldPayloadElement = this.payloadElement;
+        this.payloadElement = payloadElement;
+        propertyChangeSupport.firePropertyChange(PROP_PAYLOADELEMENT, oldPayloadElement, payloadElement);
+    }
+
+    public void setSignedElement(Element signedElement) {
+        org.w3c.dom.Element oldSignedElement = this.signedElement;
+        this.signedElement = signedElement;
+        propertyChangeSupport.firePropertyChange(PROP_SIGNEDELEMENT, oldSignedElement, signedElement);
+        if (signedElement != null) {
+            setPayloadElement((Element) signedElement.cloneNode(true));
+            setTimestamp(detectTimestamp());
+        }
+    }
+
+    public void setReferringElement(ReferringElementInterface referringElement) {
+        wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface oldReferringElement = this.referringElement;
+        this.referringElement = referringElement;
+        propertyChangeSupport.firePropertyChange(PROP_REFERRINGELEMENT, oldReferringElement, referringElement);
     }
 
     private Logger log() {
@@ -247,7 +263,7 @@ public class Payload {
             try {
                 DomUtilities.stringToDom(value);
             } catch (Exception e) {
-                log().error(getName() + ": " + "Error: " + e.getLocalizedMessage());
+                log().error("Payload.isValid() Error: " + e.getLocalizedMessage());
                 isValid = false;
             }
         }
@@ -260,14 +276,7 @@ public class Payload {
     public void setValue(String value) throws IllegalArgumentException {
         if (isValid(value)) {
             try {
-                payloadElement = DomUtilities.stringToDom(value).getDocumentElement();
-//				Document newPayloadDoc = DomUtilities.stringToDom(value);
-//				newPayloadDoc.normalizeDocument();
-//				if (!originalDocument.isEqualNode(newPayloadDoc)) {
-//					this.payloadElement = newPayloadDoc.getDocumentElement();
-//				} else {
-//					this.payloadElement = null;
-//				}
+                setPayloadElement(DomUtilities.stringToDom(value).getDocumentElement());
             } catch (Exception e) {
                 throw new IllegalArgumentException(e);
             }
@@ -288,14 +297,6 @@ public class Payload {
         return isT;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public String getValue() {
 //		return value;
         return DomUtilities.domToString(payloadElement);
@@ -306,6 +307,59 @@ public class Payload {
     }
 
     public void setWrapOnly(boolean wrapOnly) {
+        boolean oldWrapOnly = this.wrapOnly;
         this.wrapOnly = wrapOnly;
+        propertyChangeSupport.firePropertyChange(PROP_WRAPONLY, oldWrapOnly, wrapOnly);
+    }
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param propertyName
+     * @param listener
+     */
+    public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(final PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param propertyName
+     * @param listener
+     */
+    public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Payload{");
+        sb.append("signedElement=").append(signedElement);
+        sb.append(", payloadElement=").append(payloadElement);
+        sb.append(", referringElement=").append(referringElement);
+        sb.append(", timestamp=").append(timestamp);
+        sb.append(", wrapOnly=").append(wrapOnly);
+        sb.append('}');
+        return sb.toString();
     }
 }

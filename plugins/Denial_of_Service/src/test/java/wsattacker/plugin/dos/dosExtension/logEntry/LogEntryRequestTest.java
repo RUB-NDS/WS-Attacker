@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.logEntry;
 
-import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryRequest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

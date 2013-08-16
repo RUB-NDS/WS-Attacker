@@ -19,9 +19,9 @@
 package wsattacker.plugin.signatureWrapping.function.postanalyze;
 
 import java.awt.Window;
-import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDialog;
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.plugin.signatureWrapping.SignatureWrapping;
+import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDialog;
 
 public class SignatureWrappingAnalyzeFunction implements PluginFunctionInterface {
 

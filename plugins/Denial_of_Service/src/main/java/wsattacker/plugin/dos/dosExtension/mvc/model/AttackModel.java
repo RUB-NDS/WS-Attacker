@@ -25,14 +25,10 @@ import wsattacker.plugin.dos.dosExtension.clock.Clock;
 import wsattacker.plugin.dos.dosExtension.clock.TickerThread;
 import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryInterval;
 import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryRequest;
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,11 +37,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
@@ -53,9 +47,7 @@ import org.jfree.chart.ChartPanel;
 
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
-import wsattacker.main.composition.testsuite.RequestResponsePair;
 import wsattacker.main.plugin.PluginOptionContainer;
 import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.main.plugin.result.Result;
@@ -63,10 +55,7 @@ import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 
-import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberRequestsRunnable;
-import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberThreadsRunnable;
 import wsattacker.plugin.dos.dosExtension.attackThreads.PerformAttackThread;
-import wsattacker.plugin.dos.dosExtension.attackThreads.RepeatTestprobeRequestThread;
 
 import wsattacker.plugin.dos.dosExtension.chart.ChartObject;
 import wsattacker.plugin.dos.dosExtension.desktop.OpenURI;

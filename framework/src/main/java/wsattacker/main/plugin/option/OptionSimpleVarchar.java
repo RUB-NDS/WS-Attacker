@@ -21,9 +21,11 @@ package wsattacker.main.plugin.option;
 import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
 
 public class OptionSimpleVarchar extends AbstractOptionVarchar {
+
 	private static final long serialVersionUID = 1L;
-	int maxLength;
-	
+	public static final String PROP_MAXLENGTH = "maxLength";
+	private int maxLength;
+
 	public OptionSimpleVarchar(String name, String value) {
 		super(name, value, 0);
 		this.maxLength = 0;
@@ -40,7 +42,7 @@ public class OptionSimpleVarchar extends AbstractOptionVarchar {
 	}
 
 	public OptionSimpleVarchar(String name, String value, String description,
-			int maxLength) {
+		int maxLength) {
 		super(name, value, description, maxLength);
 		this.maxLength = maxLength;
 	}
@@ -50,16 +52,22 @@ public class OptionSimpleVarchar extends AbstractOptionVarchar {
 		return this.maxLength;
 	}
 
-	public void setMaxLength(int max) {
-		this.maxLength = max;
+	@Override
+	public boolean isValid(String value) {
+		boolean result = true;
+		if (value.contains(System.getProperty("line.separator"))) {
+			result = false;
+		}
+		if ((this.maxLength > 0) && (value.length() > this.maxLength)) {
+			result = false;
+		}
+		return result;
 	}
 
 	@Override
-	public boolean isValid(String value) {
-		if (value.contains(System.getProperty("line.separator")))
-			return false;
-		if ( (this.maxLength > 0) && (value.length() > this.maxLength) )
-			return false;
-		return true;
+	public void setMaxLength(int maxLength) {
+		int oldMaxLength = this.maxLength;
+		this.maxLength = maxLength;
+		firePropertyChange(PROP_MAXLENGTH, oldMaxLength, maxLength);
 	}
 }

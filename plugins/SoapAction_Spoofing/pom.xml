@@ -1,51 +1,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<name>WS-Attacker-Plugin_SoapAction_Spoofing</name>
-	<groupId>wsattacker.plugin.soapActionSpoofing</groupId>
-	<artifactId>SoapAction_Spoofing</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<inceptionYear>2010</inceptionYear>
+    <name>WS-Attacker-Plugin_SoapAction_Spoofing</name>
+    <artifactId>SoapAction_Spoofing</artifactId>
+    <packaging>jar</packaging>
+    <inceptionYear>2010</inceptionYear>
 
-	<developers>
-		<developer>
-			<id>cmainka</id>
-			<name>Christian Mainka</name>
-			<email>Christian.Mainka@rub.de</email>
-			<url>http://www.nds.rub.de/chair/people/cmainka/</url>
-			<organization>NDS</organization>
-			<organizationUrl>http://www.nds.rub.de</organizationUrl>
-			<roles>
-				<role>Architect</role>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>cmainka</id>
+            <name>Christian Mainka</name>
+            <email>Christian.Mainka@rub.de</email>
+            <url>http://www.nds.rub.de/chair/people/cmainka/</url>
+            <organization>NDS</organization>
+            <organizationUrl>http://www.nds.rub.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
-	<parent>
-		<groupId>wsattacker.plugins</groupId>
-		<artifactId>wsattacker-plugins</artifactId>
-		<version>1.4-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>wsattacker.plugin</groupId>
+        <artifactId>wsattacker-plugins</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
 
-	<build>
-		<plugins>
-			<!--
-				Use a Licence Header
-			-->
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>${basedir}/../../license_header.txt</header>
-					<properties>
-						<owner>Christian Mainka</owner>
-					</properties>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

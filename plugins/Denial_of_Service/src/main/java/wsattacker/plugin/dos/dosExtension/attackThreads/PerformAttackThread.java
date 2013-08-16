@@ -26,7 +26,6 @@ import wsattacker.plugin.dos.dosExtension.attackRunnables.AutoFinalizeAttackRunn
 import wsattacker.plugin.dos.dosExtension.attackRunnables.NetworktestResultRunnable;
 
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateAttackStateRunnable;
-import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberRequestsRunnable;
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberThreadsRunnable;
 
 

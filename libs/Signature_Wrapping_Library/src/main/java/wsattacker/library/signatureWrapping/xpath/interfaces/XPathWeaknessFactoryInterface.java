@@ -19,9 +19,9 @@
 package wsattacker.library.signatureWrapping.xpath.interfaces;
 
 import java.util.*;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 
 /**
@@ -33,5 +33,5 @@ public interface XPathWeaknessFactoryInterface {
     public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
       SignedElement signedElement,
       PayloadElement payloadElement,
-      SchemaAnalyzerInterface schemaAnalyser);
+      SchemaAnalyzer schemaAnalyser);
 }

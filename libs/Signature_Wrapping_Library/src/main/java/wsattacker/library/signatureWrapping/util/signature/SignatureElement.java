@@ -22,11 +22,11 @@ import java.util.*;
 import javax.xml.crypto.dsig.XMLSignature;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class SignatureElement {
 
-    private Element signature;
+    private final Element signature;
     private List<ReferenceElement> references;
 
     public SignatureElement(Element signature) {
@@ -65,6 +65,13 @@ public class SignatureElement {
             return sig.getReferences().equals(getReferences());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.references != null ? this.references.hashCode() : 0);
+        return hash;
     }
 
 }

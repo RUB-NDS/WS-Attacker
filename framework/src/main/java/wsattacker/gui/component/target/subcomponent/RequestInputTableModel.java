@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
 import wsattacker.main.composition.testsuite.CurrentRequestObserver;
-import wsattacker.main.testsuite.TestSuite;
 import wsattacker.util.SoapUtilities;
 
 /**
@@ -41,7 +40,7 @@ import wsattacker.util.SoapUtilities;
 public class RequestInputTableModel extends AbstractTableModel implements CurrentRequestContentChangeObserver, CurrentRequestObserver {
 
     private static final long serialVersionUID = 1L;
-    public static final String PROP_CONTROLLER = "PROP_CONTROLLER";
+    public static final String PROP_CONTROLLER = "controller";
     private final String[] columnNames = {"Name", "Parents", "Value"};
     private List<SOAPElement> list;
     private ControllerInterface controller;

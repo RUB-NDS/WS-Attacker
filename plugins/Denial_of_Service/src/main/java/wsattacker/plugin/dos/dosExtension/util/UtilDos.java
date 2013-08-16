@@ -31,7 +31,6 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import wsattacker.plugin.dos.CoerciveParsing;
-import wsattacker.plugin.dos.HashCollisionDJBX31A;
 import wsattacker.util.SoapUtilities;
 
 /**

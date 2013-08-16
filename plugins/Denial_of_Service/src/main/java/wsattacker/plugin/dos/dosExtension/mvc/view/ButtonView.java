@@ -18,8 +18,8 @@
  */
 package wsattacker.plugin.dos.dosExtension.mvc.view;
 
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import javax.swing.JButton;
+import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
  * Sorgt für die Darstellung der Daten auf Bildschirm wie im HTML Format...

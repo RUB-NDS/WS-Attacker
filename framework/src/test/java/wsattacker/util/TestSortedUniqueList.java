@@ -19,14 +19,11 @@
 package wsattacker.util;
 
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import wsattacker.main.plugin.NullPlugin;
 import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.util.SortedUniqueList;
+import wsattacker.main.plugin.NullPlugin;
 
 public class TestSortedUniqueList {
 

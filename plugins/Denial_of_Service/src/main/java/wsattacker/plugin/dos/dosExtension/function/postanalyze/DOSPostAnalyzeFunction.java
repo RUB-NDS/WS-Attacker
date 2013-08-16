@@ -20,10 +20,7 @@ package wsattacker.plugin.dos.dosExtension.function.postanalyze;
 
 //import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDialog;
 import java.awt.Window;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 

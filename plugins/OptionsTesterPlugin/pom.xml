@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-    
-	<name>WS-Attacker-Plugin_Options_Tester</name>
-	<groupId>wsattacker.plugin.optionsTester</groupId>
-	<artifactId>Options_Tester</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<inceptionYear>2012</inceptionYear>
-    
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>WS-Attacker-Plugin_Options_Tester</name>
+    <artifactId>Options_Tester</artifactId>
+    <inceptionYear>2012</inceptionYear>
+
     <developers>
         <developer>
             <id>cmainka</id>
@@ -23,28 +21,28 @@
             </roles>
         </developer>
     </developers>
-    
-	<parent>
-		<groupId>wsattacker.plugins</groupId>
-		<artifactId>wsattacker-plugins</artifactId>
-		<version>1.4-SNAPSHOT</version>
-	</parent>
 
-	<build>
-		<plugins>
-			<!--
-				Use a Licence Header
-			-->
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>${basedir}/../../license_header.txt</header>
-					<properties>
-						<owner>Christian Mainka</owner>
-					</properties>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <parent>
+        <groupId>wsattacker.plugin</groupId>
+        <artifactId>wsattacker-plugins</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <build>
+        <plugins>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

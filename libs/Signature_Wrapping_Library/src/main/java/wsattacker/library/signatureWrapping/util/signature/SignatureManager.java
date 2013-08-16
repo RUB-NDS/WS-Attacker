@@ -25,7 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadOrderingHelper;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * This class defines which parts of an XML Document is signed. For this
@@ -35,7 +35,7 @@ import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
 public class SignatureManager {
 
     private Document doc;
-    private List<SignatureElement> sigList;
+    private final List<SignatureElement> sigList;
 
     public SignatureManager() {
         sigList = new ArrayList<SignatureElement>();

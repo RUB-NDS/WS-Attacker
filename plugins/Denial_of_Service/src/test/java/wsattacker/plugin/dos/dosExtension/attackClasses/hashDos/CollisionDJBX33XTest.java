@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX33X;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

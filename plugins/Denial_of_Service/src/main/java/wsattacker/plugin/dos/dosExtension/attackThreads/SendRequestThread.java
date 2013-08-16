@@ -18,17 +18,8 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackThreads;
 
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
-import com.eviware.soapui.model.iface.Request;
 import java.awt.EventQueue;
 import java.util.EmptyStackException;
-import java.util.Map;
-import javax.xml.soap.SOAPException;
-import org.apache.xmlbeans.XmlException;
-import org.w3c.dom.Node;
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;
@@ -37,7 +28,6 @@ import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberNetworktes
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberProbesRunnable;
 
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberRequestsRunnable;
-import wsattacker.plugin.dos.dosExtension.util.UtilDos;
 
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;

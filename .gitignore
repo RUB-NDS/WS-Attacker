@@ -9,6 +9,7 @@ runnable/plugins/*jar
 runnable/lib/*jar
 framework/target/
 plugins/*/target
+libs/*/target
 doc/*._aux
 doc/*._log
 doc/*.aux

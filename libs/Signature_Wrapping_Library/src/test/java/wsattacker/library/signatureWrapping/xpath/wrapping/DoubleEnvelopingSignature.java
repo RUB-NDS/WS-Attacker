@@ -30,11 +30,11 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerFactory;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
@@ -103,8 +103,8 @@ public class DoubleEnvelopingSignature {
         assertTrue(inner.hasPayload());
 //		inner.setWrapOnly(true);
 
-//		SchemaAnalyzerInterface schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.SAML20);
-        SchemaAnalyzerInterface schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.MINIMAL);
+//		SchemaAnalyzer schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.SAML20);
+        SchemaAnalyzer schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.MINIMAL);
 
         WrappingOracle wrappingOracle = new WrappingOracle(doc, payloadList, schemaAnalyzer);
         int max = wrappingOracle.maxPossibilities();

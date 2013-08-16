@@ -24,7 +24,7 @@ import java.util.*;
  * Simple logging class.
  * Each XPathWeakness can append a simple String to the log.
  */
-public class WeaknessLog {
+public final class WeaknessLog {
 
     private static List<String> log = new ArrayList<String>();
 

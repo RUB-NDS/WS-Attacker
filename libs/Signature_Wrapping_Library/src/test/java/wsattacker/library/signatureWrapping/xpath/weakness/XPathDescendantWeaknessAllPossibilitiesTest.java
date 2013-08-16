@@ -29,12 +29,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
@@ -44,12 +43,11 @@ public class XPathDescendantWeaknessAllPossibilitiesTest extends XPathDescendant
 
     private static Step descendantStep;
     private static Element payloadElement, signedElement;
-    private static SchemaAnalyzerInterface schemaAnalyser;
-
-    private List<String> callList;
+    private static SchemaAnalyzer schemaAnalyzer;
+    private final List<String> callList;
 
     public XPathDescendantWeaknessAllPossibilitiesTest() throws InvalidWeaknessException {
-        super(descendantStep, new SignedElement(signedElement, null), new PayloadElement(payloadElement, null), schemaAnalyser);
+        super(descendantStep, new SignedElement(signedElement, null), new PayloadElement(payloadElement, null), schemaAnalyzer);
         callList = new ArrayList<String>();
     }
 
@@ -58,8 +56,7 @@ public class XPathDescendantWeaknessAllPossibilitiesTest extends XPathDescendant
       throws Exception {
         SoapTestDocument soap = new SoapTestDocument();
 
-        schemaAnalyser = new SchemaAnalyzer();
-        schemaAnalyser.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         // get signed element
         signedElement = soap.getDummyPayloadBody();
         String id = soap.getDummyPayloadBodyWsuId();
@@ -136,5 +133,4 @@ public class XPathDescendantWeaknessAllPossibilitiesTest extends XPathDescendant
         }
         assertEquals((2 * 3 + 2 * 1 + 2 * 2) * (3 + 3), callList.size());
     }
-
 }

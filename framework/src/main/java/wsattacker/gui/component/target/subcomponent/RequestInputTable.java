@@ -21,10 +21,7 @@ package wsattacker.gui.component.target.subcomponent;
 
 
 import javax.swing.JTable;
-
 import wsattacker.gui.util.MultiLineTableCellRenderer;
-import wsattacker.main.composition.ControllerInterface;
-import java.beans.PropertyChangeSupport;
 
 public class RequestInputTable extends JTable {
 	private static final long serialVersionUID = 1L;

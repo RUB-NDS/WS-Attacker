@@ -19,20 +19,41 @@
 package wsattacker.main.composition.plugin.option;
 
 import java.util.List;
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionChoiceGUI_NB;
 
 /**
  * WS-Attacker will represent this as a drop-down list.
  */
 public abstract class AbstractOptionChoice extends AbstractOption {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 2L;
+
 	protected AbstractOptionChoice(String name, String description) {
 		super(name, description);
 	}
-	
+
 	public abstract List<String> getChoices();
+
+	public abstract void setChoices(List<String> choicesList);
+
+	public abstract void setSelectedAsString(String value);
+
+	public abstract String getSelectedAsString();
+
+	@Override
+	public String getValueAsString() {
+		return getSelectedAsString();
+	}
+
+	public abstract void setSelectedIndex(int index);
+
+	public abstract int getSelectedIndex();
+
 	public abstract boolean isValid(int choice);
-	public abstract boolean setChoice(String value);
-	public abstract boolean setChoice(int index);
-	public abstract int getChoice();
+
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionChoiceGUI_NB(this);
+	}
 }

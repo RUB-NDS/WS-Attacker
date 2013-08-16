@@ -23,11 +23,11 @@ import javax.xml.namespace.QName;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
@@ -43,11 +43,11 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
  */
 public class WrappingOracle {
 
-    private SchemaAnalyzerInterface schemaAnalyser;
-    private Document originalDocument;
+    private final SchemaAnalyzer schemaAnalyser;
+    private final Document originalDocument;
     private List<Payload> payloadList;
-    private List<QName> filterList;
-    private List<XPathAnalyser> analyserList;
+    private final List<QName> filterList;
+    private final List<XPathAnalyser> analyserList;
     int maxPossibilites;
     // statistics
     private int countSignedElements;
@@ -55,7 +55,7 @@ public class WrappingOracle {
     private int countElementsReferedByXPath;
     private int countElementsReferedByFastXPath;
     private int countElementsReferedByPrefixfreeTransformedFastXPath;
-    public static Logger log = Logger.getLogger(WrappingOracle.class);
+    public final static Logger LOG = Logger.getLogger(WrappingOracle.class);
 
     /**
      * Constructor class.
@@ -66,7 +66,7 @@ public class WrappingOracle {
      */
     public WrappingOracle(Document originalDocument,
       List<Payload> payloads,
-      SchemaAnalyzerInterface schemaAnalyser) {
+      SchemaAnalyzer schemaAnalyser) {
         this.originalDocument = originalDocument;
         this.payloadList = payloads;
         this.schemaAnalyser = schemaAnalyser;
@@ -96,7 +96,7 @@ public class WrappingOracle {
       throws InvalidWeaknessException {
         WeaknessLog.clean();
         Document attackDocument = DomUtilities.createNewDomFromNode(originalDocument.getDocumentElement());
-        log.info("Creating Wrapping Possibility " + index + " of (" + maxPossibilites + "-1)");
+        LOG.info("Creating Wrapping Possibility " + index + " of (" + maxPossibilites + "-1)");
 
         for (int i = 0; i < payloadList.size(); ++i) {
 
@@ -111,7 +111,7 @@ public class WrappingOracle {
             try {
                 payloadElement = (Element) attackDocument.importNode(payload.getPayloadElement(), true);
             } catch (Exception e) {
-                log.warn("Could not get Payload Element for " + signedElement.getNodeName() + " / Skipping.");
+                LOG.warn("Could not get Payload Element for " + signedElement.getNodeName() + " / Skipping.");
                 continue;
             }
 
@@ -154,7 +154,7 @@ public class WrappingOracle {
                 try {
                     payloadElement = payload.getPayloadElement();
                 } catch (InvalidPayloadException e) {
-                    log.warn("Could not get Payload Element for " + payload.getSignedElement().getNodeName() + " / Skipping.");
+                    LOG.warn("Could not get Payload Element for " + payload.getSignedElement().getNodeName() + " / Skipping.");
                     continue;
                 }
                 // We must be carefull: The refferringElement commonly points to the original Document
@@ -181,7 +181,7 @@ public class WrappingOracle {
                     usedPayloads.add(payload);
                 }
             } else {
-                log.info("No payload for " + payload.getSignedElement().getNodeName() + " detected / Skipping.");
+                LOG.info("No payload for " + payload.getSignedElement().getNodeName() + " detected / Skipping.");
             }
         }
         this.payloadList = usedPayloads;

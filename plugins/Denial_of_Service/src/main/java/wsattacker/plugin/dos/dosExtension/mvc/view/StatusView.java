@@ -18,8 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.mvc.view;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.swing.JLabel;
 

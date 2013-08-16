@@ -33,15 +33,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerImpl;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerFactory;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
@@ -49,13 +49,13 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 
 public class WrappingOracleTest {
 
-    public static SchemaAnalyzerInterface schemaAnalyser;
+    public static SchemaAnalyzer schemaAnalyser;
     public static Logger log;
 
     @BeforeClass
     public static void setUpBeforeClass()
       throws Exception {
-        schemaAnalyser = new SchemaAnalyzer();
+        schemaAnalyser = new SchemaAnalyzerImpl();
         // Logger
         log = Logger.getLogger(WrappingOracle.class);
         Logger.getLogger("wsattacker.plugin.signaturewrapping.util.signature").setLevel(Level.WARN);
@@ -64,7 +64,7 @@ public class WrappingOracleTest {
         Logger.getLogger(WrappingOracle.class).setLevel(Level.WARN);
 // Logger.getLogger("wsattacker.plugin.signaturewrapping.util.wrapping").setLevel(Level.TRACE);
 
-// log.setLevel(Level.ALL);
+// LOG.setLevel(Level.ALL);
         Logger.getLogger("wsattacker.plugin.signatureWrapping.schema.SchemaAnalyser").setLevel(Level.ALL);
 
         // Load Schema Files

@@ -19,7 +19,6 @@
 package wsattacker.main.plugin.option;
 
 import java.io.File;
-
 import wsattacker.main.composition.plugin.option.AbstractOptionFile;
 
 public class OptionSimpleFile extends AbstractOptionFile {

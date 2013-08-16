@@ -61,27 +61,25 @@ public class GenericDosPluginTest {
      * errors
      */
     public void testInitializePlugin(AbstractDosPlugin instance) {
-        System.out.println(" - check for manadatory PluginOptions");
         instance.initializePlugin();
         PluginOptionContainer pluginOptions = instance.getPluginOptions();
-        assertNotNull(pluginOptions.getByName("Param 1"));
-        assertNotNull(pluginOptions.getByName("Param 2"));
-        assertNotNull(pluginOptions.getByName("Param 3"));
-        assertNotNull(pluginOptions.getByName("Param 4"));
-        assertNotNull(pluginOptions.getByName("Param 5"));
-        assertNotNull(pluginOptions.getByName("Param 6.0"));
-        assertNotNull(pluginOptions.getByName("Param 6.1"));
-        assertNotNull(pluginOptions.getByName("Param 7.0"));
-        assertNotNull(pluginOptions.getByName("Param 7.1"));
-        assertNotNull(pluginOptions.getByName("Param 7.2"));
-        assertNotNull(pluginOptions.getByName("Message"));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.NUMBER_OF_PARALLEL_THREADS));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.NUMBER_OF_REQUESTS_PER_THREAD));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.DELAY_BETWEEN_ATTACK_REQUESTS));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.DELAY_BETWEEN_CONTINUOUS_TESTPROBE_REQUES));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.SERVER_RECOVERY_TIME));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.AUTO_STOP));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.AUTO_STOP_TIME));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.NETWORK_STABILITY_TEST));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.NETWORK_STABILITY_TEST_DELAY_BETWEEN_TEST));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.NETWORK_STABILITY_TEST_NUMBER_OF_REQUESTS));
+        assertNotNull(pluginOptions.getByName(AbstractDosPlugin.MESSAGE));
     }
 
     /**
      * Test of getName method, of class TestDosAttack.
      */
     public void testGetName(AbstractDosPlugin instance) {
-        System.out.println(" - getName");
         String result = instance.getName();
         assertTrue(result.length() > 0);
     }
@@ -90,7 +88,6 @@ public class GenericDosPluginTest {
      * Test of getDescription method, of class TestDosAttack.
      */
     public void testGetDescription(AbstractDosPlugin instance) {
-        System.out.println(" - getDescription");
         String result = instance.getDescription();
         assertTrue(result.length() > 0);
     }
@@ -99,7 +96,6 @@ public class GenericDosPluginTest {
      * Test of getCountermeasures method, of class TestDosAttack.
      */
     public void testGetCountermeasures(AbstractDosPlugin instance) {
-        System.out.println(" - getCountermeasures");
         String result = instance.getCountermeasures();
         assertTrue(result.length() > 0);
     }
@@ -108,7 +104,6 @@ public class GenericDosPluginTest {
      * Test of getAuthor method, of class TestDosAttack.
      */
     public void testGetAuthor(AbstractDosPlugin instance) {
-        System.out.println(" - getAuthor");
         String result = instance.getAuthor();
         assertTrue(result.length() > 0);
     }
@@ -117,7 +112,6 @@ public class GenericDosPluginTest {
      * Test of getVersion method, of class TestDosAttack.
      */
     public void testGetVersion(AbstractDosPlugin instance) {
-        System.out.println(" - getVersion");
         String result = instance.getVersion();
         assertTrue(result.length() > 0);
     }
@@ -126,10 +120,8 @@ public class GenericDosPluginTest {
      * Test of createTamperedRequest method, of class TestDosAttack.
      */
     public void testCreateTamperedRequest(AbstractDosPlugin instance) {
-        System.out.println(" - createTamperedRequest");
         SoapTestRequest s = new SoapTestRequest();
         WsdlRequest w = s.getWsdlRequest();
-        System.out.println(w.getEndpoint());
         RequestResponsePairTest requestResponsePairTest = new RequestResponsePairTest();
         requestResponsePairTest.setWsdlRequest(w);
         instance.setOriginalRequestResponsePair(requestResponsePairTest);

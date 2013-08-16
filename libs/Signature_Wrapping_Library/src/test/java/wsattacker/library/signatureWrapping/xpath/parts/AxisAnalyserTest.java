@@ -38,7 +38,7 @@ import wsattacker.library.signatureWrapping.xpath.parts.predicate.Predicate;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.AttributeAndExpression;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.LocalNameAndExpression;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.PositionAndExpression;
-import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.FunctionAndExpression;
+import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.AbstractFunctionAndExpression;
 import static wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools.nextString;
 
 public class AxisAnalyserTest {
@@ -412,7 +412,7 @@ public class AxisAnalyserTest {
 
     @Test
     public void functionAndExpressionBadPositionTest() throws InvalidTypeException {
-        FunctionAndExpression and;
+        AbstractFunctionAndExpression and;
 
         and = new LocalNameAndExpression("local-name()='test'");
         assertEquals("local-name()", and.getFunctionName());

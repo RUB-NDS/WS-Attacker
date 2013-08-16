@@ -25,10 +25,10 @@ package wsattacker.library.signatureWrapping.util.signature.weakness;
 import java.util.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 
-public class SignatureManipulationHelper {
+public final class SignatureManipulationHelper {
 
     public static void doubleSignature(Document msg, int whichToDouble, int whichToReplace) {
         List<Element> signatures = DomUtilities.findChildren(msg, "Signature", NamespaceConstants.URI_NS_DS, true);

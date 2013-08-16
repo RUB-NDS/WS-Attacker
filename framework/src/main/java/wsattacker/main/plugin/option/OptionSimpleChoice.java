@@ -18,23 +18,33 @@
  */
 package wsattacker.main.plugin.option;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
 import wsattacker.main.composition.plugin.option.AbstractOptionChoice;
 
 public class OptionSimpleChoice extends AbstractOptionChoice {
+
 	private static final long serialVersionUID = 1L;
-	List<String> choices;
-	int selected;
-	
+	public static final String PROP_CHOICES = "choices";
+	public static final String PROP_SELECTEDINDEX = "selectedIndex";
+	public static final String PROP_SELECTEDASSTRING = "selectedAsString";
+	private List<String> choices;
+	private int selected;
+
+	public OptionSimpleChoice(String name, String description) {
+		this(name, new ArrayList<String>(), 0);
+		choices.add("No hoices available");
+	}
+
 	public OptionSimpleChoice(String name, List<String> choices, int selected) {
 		this(name, choices, selected, "");
 	}
-	
+
 	public OptionSimpleChoice(String name, List<String> choices, int selected, String description) {
 		super(name, description);
 		this.choices = choices;
-		if((selected >= 0) && (selected < choices.size())) {
+		if ((selected >= 0) && (selected < choices.size())) {
 			this.selected = selected;
 		}
 	}
@@ -50,43 +60,50 @@ public class OptionSimpleChoice extends AbstractOptionChoice {
 	}
 
 	@Override
-	public boolean parseValue(String value) {
+	public void parseValue(String value) {
 		if (isValid(value)) {
-			setChoice(choices.indexOf(value));
-			return true;
+			setSelectedIndex(choices.indexOf(value));
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
 		}
-		return false;
 	}
 
 	@Override
-	public String getValueAsString() {
+	public String getSelectedAsString() {
 		return choices.get(selected);
 	}
 
 	@Override
 	public List<String> getChoices() {
-		return choices;
+		return Collections.unmodifiableList(choices);
 	}
 
 	@Override
-	public boolean setChoice(String value) {
-		return parseValue(value);
+	public void setSelectedAsString(String value) {
+		parseValue(value);
 	}
 
 	@Override
-	public boolean setChoice(int index) {
-		if(isValid(index)) {
-			selected = index;
-			notifyValueChanged();
-			return true;
+	public void setSelectedIndex(int index) {
+		if (isValid(index)) {
+			int oldSelected = this.selected;
+			String oldString = getValueAsString();
+			this.selected = index;
+			String newString = getValueAsString();
+			firePropertyChange(PROP_SELECTEDINDEX, oldSelected, selected);
+			firePropertyChange(PROP_SELECTEDASSTRING, oldString, newString);
 		}
-		return false;
 	}
 
 	@Override
-	public int getChoice() {
+	public int getSelectedIndex() {
 		return selected;
 	}
 
-
+	@Override
+	public void setChoices(List<String> choices) {
+		java.util.List<java.lang.String> oldChoices = this.choices;
+		this.choices = choices;
+		firePropertyChange(PROP_CHOICES, oldChoices, choices);
+	}
 }

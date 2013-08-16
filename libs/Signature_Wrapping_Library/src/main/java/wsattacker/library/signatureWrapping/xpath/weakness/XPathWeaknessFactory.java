@@ -19,9 +19,9 @@
 package wsattacker.library.signatureWrapping.xpath.weakness;
 
 import java.util.*;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.library.signatureWrapping.util.signature.XPathElement;
@@ -43,7 +43,7 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface {
     public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
       SignedElement signedElement,
       PayloadElement payloadElement,
-      SchemaAnalyzerInterface schemaAnalyser) {
+      SchemaAnalyzer schemaAnalyser) {
         List<XPathWeaknessInterface> weaknessList = new ArrayList<XPathWeaknessInterface>();
         List<Step> steps = xpath.getRelativeLocationPaths();
         // CASE: ID-Reference + No manually set XPAth by user
@@ -103,5 +103,4 @@ public class XPathWeaknessFactory implements XPathWeaknessFactoryInterface {
         }
         return weaknessList;
     }
-
 }

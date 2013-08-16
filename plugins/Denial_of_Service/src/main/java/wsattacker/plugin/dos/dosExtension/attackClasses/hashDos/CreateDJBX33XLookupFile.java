@@ -18,8 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
-import java.util.*;
-
 /**
  * Run this file to create a new file with colliding attributenames of DJBX33X
  * Output file with colliding attributenames will be placed in rootfolder of this project

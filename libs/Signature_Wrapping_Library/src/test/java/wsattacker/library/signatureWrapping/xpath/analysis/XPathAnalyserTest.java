@@ -24,9 +24,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathWeaknessFactoryInterface;
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
@@ -39,12 +39,11 @@ public class XPathAnalyserTest {
     public static void setUpBeforeClass() {
         save = XPathAnalyser.xpathWeaknessFactory;
         XPathAnalyser.xpathWeaknessFactory = new XPathWeaknessFactoryInterface() {
-
             @Override
             public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
               SignedElement signedElement,
               PayloadElement payloadElement,
-              SchemaAnalyzerInterface schemaAnalyser) {
+              SchemaAnalyzer schemaAnalyser) {
                 return new ArrayList<XPathWeaknessInterface>();
             }
         };

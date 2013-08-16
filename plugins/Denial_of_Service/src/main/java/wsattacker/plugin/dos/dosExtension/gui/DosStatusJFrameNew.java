@@ -25,9 +25,7 @@ import wsattacker.plugin.dos.dosExtension.mvc.controller.FinalizeController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.StartController;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import wsattacker.plugin.dos.dosExtension.mvc.view.AttackListener;
-import wsattacker.plugin.dos.dosExtension.mvc.view.ButtonView;
 import wsattacker.plugin.dos.dosExtension.mvc.view.ProgressBarView;
-import wsattacker.plugin.dos.dosExtension.mvc.view.StatusView;
 
 /**
  * JFrame for attack status

@@ -23,37 +23,35 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class XPathElement implements ReferringElementInterface {
 
-    private Element xpathElement;
-    private List<Payload> payloads;
-    private List<Element> matchedElements;
+    private static final String FILTER = "Filter";
+    private final Element xpathElement;
+    private final List<Payload> payloads;
+    private final List<Element> matchedElements;
     private String workingXPath;
 
     public XPathElement(Element xpath) {
         this.xpathElement = xpath;
         this.workingXPath = "";
         payloads = new ArrayList<Payload>();
-        log().trace("Searching matched Elements for " + toString());
+        log().trace(String.format("Searching matched Elements for %s", DomUtilities.getFastXPath(xpath)));
         // Get the matched Elements by this XPath
         matchedElements = new ArrayList<Element>();
         try {
-            matchedElements = (List<Element>) DomUtilities.evaluateXPath(xpath.getOwnerDocument(), getExpression());
+            matchedElements.addAll((List<Element>) DomUtilities.evaluateXPath(xpath.getOwnerDocument(), getExpression()));
         } catch (XPathExpressionException e) {
+            throw new IllegalStateException(String.format("Could not evaluate XPath >> %s <<", getExpression()), e);
         }
 
-        log().trace("Found: " + matchedElements);
+        log().trace(String.format("Found: %s", matchedElements));
         // Add an Payload for each match
         int anz = matchedElements.size();
         for (int i = 0; i < anz; ++i) {
             Element signedElement = matchedElements.get(i);
-            String addtionalInfo = "";
-            if (anz > 1) {
-                addtionalInfo = " #" + i;
-            }
-            Payload o = new Payload(this, "XPath: " + getExpression() + addtionalInfo, signedElement, getExpression());
+            Payload o = new Payload(this, signedElement);
             payloads.add(o);
         }
     }
@@ -89,7 +87,7 @@ public class XPathElement implements ReferringElementInterface {
     }
 
     public String getFilter() {
-        return xpathElement.getAttribute("Filter");
+        return xpathElement.getAttribute(FILTER);
     }
 
     public List<Element> getReferencedElements() {
@@ -98,16 +96,30 @@ public class XPathElement implements ReferringElementInterface {
 
     @Override
     public boolean equals(Object o) {
+        boolean result = false;
         if (o instanceof XPathElement) {
             XPathElement xpe = (XPathElement) o;
-            return xpe.getFilter().equals(getFilter()) && xpe.getExpression().equals(getExpression());
+            result = xpe.getFilter().equals(getFilter()) && xpe.getExpression().equals(getExpression());
         }
-        return false;
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + (getFilter() != null ? getFilter().hashCode() : 0);
+        hash = 53 * hash + (getExpression() != null ? getExpression().hashCode() : 0);
+        return hash;
     }
 
     @Override
     public String toString() {
-        return "xpath=\"" + getExpression() + "\"";
+        StringBuilder sb = new StringBuilder();
+        sb.append("XPathElement{xpathElement=").append(DomUtilities.getFastXPath(xpathElement));
+        sb.append(", matchedElements=").append(matchedElements);
+        sb.append(", workingXPath=").append(workingXPath);
+        sb.append('}').toString();
+        return sb.toString();
     }
 
     private Logger log() {

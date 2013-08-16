@@ -36,8 +36,8 @@ public class OrExpression implements XPathPartInterface, ExpressionInterface {
      */
     public static AndExpressionFactoryInterface andFactory = new AndExpressionFactory();
 
-    private String expression;
-    private List<AndExpression> andExpressions;
+    private final String expression;
+    private final List<AndExpression> andExpressions;
 
     public OrExpression(String expression) {
         this.expression = expression;
@@ -73,6 +73,13 @@ public class OrExpression implements XPathPartInterface, ExpressionInterface {
             return expression.equals(((ExpressionInterface) o).getExpression());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + (this.expression != null ? this.expression.hashCode() : 0);
+        return hash;
     }
 
     private void eval() {

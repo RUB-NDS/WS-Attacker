@@ -19,7 +19,6 @@
 package wsattacker.gui.util;
 
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;

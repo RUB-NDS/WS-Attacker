@@ -19,7 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.clock;
 
 import java.awt.EventQueue;
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**

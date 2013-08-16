@@ -26,8 +26,8 @@ import org.w3c.dom.Element;
  */
 public class SignedElement {
 
-    private Element signedElement;
-    private Element refferringElement;
+    private final Element signedElement;
+    private final Element refferringElement;
 
     public SignedElement(Element signedElement, Element refferingElement) {
         this.signedElement = signedElement;

@@ -19,28 +19,27 @@
 package wsattacker.main.plugin;
 
 import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.main.composition.testsuite.RequestResponsePair;
 
 public class NullPlugin extends AbstractPlugin {
+
 	private static final long serialVersionUID = 1L;
 	private String name, description;
 	private int maxPoints;
-	
+
 	public NullPlugin(String name) {
-		this(name,"",0);
+		this(name, "", 0);
 	}
-	
+
 	public NullPlugin(String name, String description, int maxPoints) {
 		this.name = name;
 		this.description = description;
 		this.maxPoints = maxPoints;
 	}
-	
+
 	@Override
 	public void initializePlugin() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -61,25 +60,17 @@ public class NullPlugin extends AbstractPlugin {
 	@Override
 	protected void attackImplementationHook(RequestResponsePair request) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void clean() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean wasSuccessful() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void optionValueChanged(AbstractOption option) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -94,12 +85,10 @@ public class NullPlugin extends AbstractPlugin {
 
 	@Override
 	public String[] getCategory() {
-		return new String[] {"Test"};
+		return new String[]{"Test"};
 	}
-	
 //	@Override
 //	public String toString() {
 //		return String.format("%5s / %2d / %s", getName(), getMaxPoints(), getDescription());
 //	}
-
 }

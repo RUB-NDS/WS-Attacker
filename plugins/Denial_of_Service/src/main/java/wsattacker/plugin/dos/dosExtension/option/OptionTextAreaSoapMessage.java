@@ -18,19 +18,11 @@
  */
 package wsattacker.plugin.dos.dosExtension.option;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import wsattacker.main.composition.plugin.option.AbstractOptionChoice;
-import wsattacker.main.composition.testsuite.CurrentOperationObserver;
 import wsattacker.main.testsuite.TestSuite;
 
-import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.model.iface.Operation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import wsattacker.main.composition.plugin.option.AbstractOptionString;
 import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
@@ -179,7 +171,6 @@ public class OptionTextAreaSoapMessage extends AbstractOptionString implements C
 
     @Override
     public void currentRequestContentChanged(String newContent, String oldContent) {
-	System.out.println("requestChanged");
 	this.insertPayloadPlaceholder(newContent);
 	this.setValue(currentMessage);
     }

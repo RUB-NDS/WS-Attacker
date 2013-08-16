@@ -17,8 +17,6 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.plugin.dos.dosExtension.desktop;
-import java.net.URI;
-import java.awt.Desktop;
 
 public class OpenURI {
 

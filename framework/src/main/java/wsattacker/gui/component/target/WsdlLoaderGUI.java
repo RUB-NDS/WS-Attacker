@@ -161,7 +161,6 @@ public class WsdlLoaderGUI extends javax.swing.JPanel {
 					    .addComponent(getJTabbedPane1(), GroupLayout.Alignment.LEADING, 0, 477, Short.MAX_VALUE))
 					.addContainerGap());
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	

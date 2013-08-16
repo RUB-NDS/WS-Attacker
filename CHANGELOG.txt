@@ -1,3 +1,10 @@
+Framework Changes:
+    - The code design was a bit out-dated since 2009. Thus, it is heavily
+      refactored. Most important change: Almost every component like
+      AbstractPlugin or AbstractOption are now using the Java bean concept.
+      This was needed to improve the UI.
+    - New Plugin Configuration Screen, new UI Components for Options
+
 =============
 24. Juni 2013
 =============

@@ -18,22 +18,33 @@
  */
 package wsattacker.main.composition.plugin.option;
 
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionVarcharGUI_NB;
+
 /**
- * WS-Attacker will represent this with a text input field. 
+ * WS-Attacker will represent this with a text input field.
  */
 public abstract class AbstractOptionVarchar extends AbstractOptionString {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 2L;
 	int maxLength;
-	
+
 	public AbstractOptionVarchar(String name, String value, int maxLength) {
 		super(name, value);
 		this.maxLength = maxLength;
 	}
+
 	public AbstractOptionVarchar(String name, String value, String description, int maxLength) {
 		super(name, value, description);
 		this.maxLength = maxLength;
 	}
 
 	public abstract int getMaxLength();
+
+	public abstract void setMaxLength(int maxLength);
+
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionVarcharGUI_NB(this);
+	}
 }

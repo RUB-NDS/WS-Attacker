@@ -18,50 +18,61 @@
  */
 package wsattacker.main.composition.plugin.option;
 
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionIntegerGUI_NB;
+
 /**
- * WS-Attacker will represent this with a text input field. 
+ * WS-Attacker will represent this with a text input field.
  */
 public abstract class AbstractOptionInteger extends AbstractOption {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 2L;
+	public static final String PROP_VALUE = "value";
 	private int value;
-	
+
 	// constructors
 	public AbstractOptionInteger(String name, int value) {
 		this(name, value, "");
 	}
-	
+
 	public AbstractOptionInteger(String name, int value, String description) {
 		super(name, description);
 		this.value = value;
 	}
-	
-	// IMPORTANT: Implementation needed
-	public abstract boolean isValid(String value);
-	public abstract boolean isValid(int value);
-	
-	public boolean parseValue(String value) {
-		if(isValid(value)) {
-			this.value = Integer.parseInt(value);
-			notifyValueChanged();
-			return true;
-		}
-		return false;
-	}
-	public String getValueAsString() {
-		return Integer.toString(value);
-	}
-	
+
 	// Integer specific
 	public int getValue() {
 		return value;
 	}
-	public boolean setValue(int value) {
-		if(isValid(value)) {
+
+	public void setValue(int value) {
+		if (isValid(value)) {
+			int oldValue = this.value;
 			this.value = value;
-			notifyValueChanged();
-			return true;
+			firePropertyChange(PROP_VALUE, oldValue, value);
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
 		}
-		return false;
+	}
+
+	// IMPORTANT: Implementation needed
+	@Override
+	public abstract boolean isValid(String value);
+
+	public abstract boolean isValid(int value);
+
+	@Override
+	public void parseValue(String value) {
+		this.setValue(Integer.parseInt(value));
+	}
+
+	@Override
+	public String getValueAsString() {
+		return Integer.toString(value);
+	}
+
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionIntegerGUI_NB(this);
 	}
 }

@@ -34,7 +34,7 @@ import org.apache.ws.security.util.XmlSchemaDateFormat;
  */
 public class TimestampUpdateHelper {
 
-    private String start, end;
+    private final String start, end;
 
     public TimestampUpdateHelper(String originalStart, String originalEnd) throws ParseException {
         // 1) Detect if Timestamp uses milliseconds

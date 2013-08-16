@@ -23,14 +23,7 @@ import wsattacker.plugin.dos.dosExtension.gui.GuiAttackStatusRunnable;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import javax.swing.*;
 
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import java.util.Map;
-import org.apache.commons.httpclient.methods.PostMethod;
-
-import wsattacker.main.composition.testsuite.RequestResponsePair;
-import wsattacker.main.plugin.PluginOptionContainer;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-import wsattacker.plugin.dos.dosExtension.requestSender.RequestObject;
 
 
 /**

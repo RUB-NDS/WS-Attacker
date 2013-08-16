@@ -18,16 +18,13 @@
  */
 package wsattacker.main.testsuite;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import wsattacker.main.composition.testsuite.CurrentOperationObserver;
-import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
-
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.log4j.Logger;
+import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
+import wsattacker.main.composition.testsuite.CurrentOperationObserver;
 
 /**
  * Holds a references to the currently used operation

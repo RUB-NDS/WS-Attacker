@@ -28,7 +28,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * Helper class to manipulate (update) time conditions in SAML elements.
@@ -36,7 +36,7 @@ import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
  *
  * @author christian
  */
-public class SamlConditionsUpdater {
+public final class SamlConditionsUpdater {
 
     public static DateFormat inMilli = new XmlSchemaDateFormat();
     public static DateFormat normal = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");

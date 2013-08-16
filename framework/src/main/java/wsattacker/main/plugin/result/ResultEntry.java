@@ -19,7 +19,6 @@
 package wsattacker.main.plugin.result;
 
 import java.util.Date;
-
 import wsattacker.util.DateFormater;
 
 /**

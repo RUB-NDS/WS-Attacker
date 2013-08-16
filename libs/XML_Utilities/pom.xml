@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>XML_Utilities_Library</artifactId>
+    <name>WS-Attacker-Library_XML_Utilities</name>
+    <inceptionYear>2013</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>cmainka</id>
+            <name>Christian Mainka</name>
+            <email>Christian.Mainka@rub.de</email>
+            <url>http://www.nds.rub.de/chair/people/cmainka/</url>
+            <organization>NDS</organization>
+            <organizationUrl>http://www.nds.rub.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>wsattacker.library</groupId>
+        <artifactId>wsattacker-libraries</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/../../license_header.txt</header>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

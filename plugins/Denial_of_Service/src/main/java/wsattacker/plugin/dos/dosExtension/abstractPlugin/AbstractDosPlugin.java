@@ -20,7 +20,6 @@ package wsattacker.plugin.dos.dosExtension.abstractPlugin;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.support.types.StringToStringsMap;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,34 @@ import wsattacker.plugin.dos.dosExtension.requestSender.RequestObject;
  */
 public abstract class AbstractDosPlugin extends AbstractPlugin {
 
+    public static final String PROP_COUNTERMEASURES = "countermeasures";
+    public static final String PROP_OPTIONNUMBERTHREADS = "optionNumberThreads";
+    public static final String PROP_OPTIONNUMBERREQUESTS = "optionNumberRequests";
+    public static final String PROP_OPTIONSECONDSBETWEENPROBES = "optionSecondsBetweenProbes";
+    public static final String PROP_OPTIONSECONDSBETWEENREQUESTS = "optionSecondsBetweenRequests";
+    public static final String PROP_OPTIONAUTOFINALIZESWITCH = "optionAutoFinalizeSwitch";
+    public static final String PROP_OPTIONAUTOFINALIZESECONDS = "optionAutoFinalizeSeconds";
+    public static final String PROP_OPTIONNETWORKTESTENABLED = "optionNetworkTestEnabled";
+    public static final String PROP_OPTIONNETWORKTESTNUMBERREQUESTS = "optionNetworkTestNumberRequests";
+    public static final String PROP_OPTIONNETWORKTESTREQUESTINTERVAL = "optionNetworkTestRequestInterval";
+    public static final String PROP_OPTIONTEXTAREASOAPMESSAGE = "optionTextAreaSoapMessage";
+    public static final String PROP_ORIGINALREQUESTRESPONSEPAIR = "originalRequestResponsePair";
+    public static final String PROP_ORIGINALREQUESTHEADERFIELDS = "originalRequestHeaderFields";
+    public static final String PROP_UNTAMPEREDREQUESTOBJECT = "untamperedRequestObject";
+    public static final String PROP_TAMPEREDREQUESTOBJECT = "tamperedRequestObject";
+    public static final String PROP_ATTACKMODEL = "attackModel";
+    public static final String PROP_ATTACKPRECHECK = "attackPrecheck";
+    public static final String NUMBER_OF_PARALLEL_THREADS = "Number of parallel threads";
+    public static final String NUMBER_OF_REQUESTS_PER_THREAD = "Number of requests per thread";
+    public static final String DELAY_BETWEEN_ATTACK_REQUESTS = "Delay between attack requests";
+    public static final String DELAY_BETWEEN_CONTINUOUS_TESTPROBE_REQUES = "Delay between continuous testprobe requests";
+    public static final String SERVER_RECOVERY_TIME = "Server recovery time";
+    public static final String AUTO_STOP = "Auto stop";
+    public static final String AUTO_STOP_TIME = "Auto stop: Time";
+    public static final String NETWORK_STABILITY_TEST = "Network stability test";
+    public static final String NETWORK_STABILITY_TEST_NUMBER_OF_REQUESTS = "Network stability test: Number of requests";
+    public static final String NETWORK_STABILITY_TEST_DELAY_BETWEEN_TEST = "Network stability test: Delay between testrequest";
+    public static final String MESSAGE = "Message";
     private static final long serialVersionUID = 1L;
     // DoS Plugin Options - Default
     private AbstractOptionInteger optionNumberThreads;
@@ -56,8 +83,6 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
     private AbstractOptionInteger optionNetworkTestNumberRequests;
     private AbstractOptionInteger optionNetworkTestRequestInterval;
     private OptionTextAreaSoapMessage optionTextAreaSoapMessage;
-    // "Right-Click"-GUI List
-    private List<PluginFunctionInterface> functionList;
     // Requests
     private RequestResponsePair originalRequestResponsePair;
     private Map<String, String> originalRequestHeaderFields;
@@ -66,12 +91,26 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
     // DOS-attackModel
     private AttackModel attackModel;
     private boolean attackPrecheck = true; // Only if true GUI is started!
+    private String countermeasures = "";
 
     /**
-     * String of countermeasures
+     * Get the countermeasures
+     *
+     * @return the value of countermeasures
      */
     public String getCountermeasures() {
-        return "";
+        return countermeasures;
+    }
+
+    /**
+     * Set the countermeasures
+     *
+     * @param countermeasures new value of countermeasures
+     */
+    public void setCountermeasures(String countermeasures) {
+        String oldCountermeasures = this.countermeasures;
+        this.countermeasures = countermeasures;
+        firePropertyChange(PROP_COUNTERMEASURES, oldCountermeasures, countermeasures);
     }
 
     /**
@@ -95,18 +134,20 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
 
     // Mandatory Init operations for DoS extesnion- Do NOT change!
     public void preInitPlugin() {
-        // <editor-fold defaultstate="collapsed" desc="Attack Parameters - Should not be changed">
+        setCategory(new String[] {"Denial of Service"});
+        setAuthor("Andreas Falkenberg");
+        setVersion("1.1 / 2013-07-26");
         // DOS Options - MANDATORY FOR DOS-PLUGIN TO WORK
-        setOptionNumberThreads(new OptionLimitedInteger("Param 1", 2, "Number parallel attack threads", 0, 65536));
-        setOptionNumberRequests(new OptionLimitedInteger("Param 2", 4, "Number requests per thread", 0, 65536));
-        setOptionSecondsBetweenRequests(new OptionLimitedInteger("Param 3", 750, "Milliseconds between every attack request", 0, 65536));
-        setOptionSecondsBetweenProbes(new OptionLimitedInteger("Param 4", 500, "Milliseconds between every testprobe request", 0, 65536));
-        setOptionSecondsServerLoadRecovery(new OptionLimitedInteger("Param 5", 4, "Seconds server recovery time", 0, 65536));
-        setOptionAutoFinalizeSwitch(new OptionSimpleBoolean("Param 6.0", true, "false = manuel stop, true = auto stop after defined sec after last tampered request"));
-        setOptionAutoFinalizeSeconds(new OptionLimitedInteger("Param 6.1", 5, "seconds auto stop", 0, 655360));
-        setOptionNetworkTestEnabled(new OptionSimpleBoolean("Param 7.0", false, "false = network stability test disabled, true = enabled"));
-        setOptionNetworkTestNumberRequests(new OptionLimitedInteger("Param 7.1", 40, "Perform network stability test with defined number of requests", 0, 655360));
-        setOptionNetworkTestRequestInterval(new OptionLimitedInteger("Param 7.2", 500, "ms between each Network Stability Testrequest", 0, 655360));
+        setOptionNumberThreads(new OptionLimitedInteger(NUMBER_OF_PARALLEL_THREADS, 2, "The number of used threads for attacking the web service", 0, 65536));
+        setOptionNumberRequests(new OptionLimitedInteger(NUMBER_OF_REQUESTS_PER_THREAD, 4, "The total number of requests sent by each thread", 0, 65536));
+        setOptionSecondsBetweenRequests(new OptionLimitedInteger(DELAY_BETWEEN_ATTACK_REQUESTS, 750, "Milliseconds to wait between every attack request", 0, 65536));
+        setOptionSecondsBetweenProbes(new OptionLimitedInteger(DELAY_BETWEEN_CONTINUOUS_TESTPROBE_REQUES, 500, "Milliseconds to wait between every testprobe request (Simulates normal User)", 0, 65536));
+        setOptionSecondsServerLoadRecovery(new OptionLimitedInteger(SERVER_RECOVERY_TIME, 4, "Seconds between receiving last untampered request and sending first untampered request", 0, 65536));
+        setOptionAutoFinalizeSwitch(new OptionSimpleBoolean(AUTO_STOP, true, "false = manuel stop, true = auto stop after defined sec after last tampered request"));
+        setOptionAutoFinalizeSeconds(new OptionLimitedInteger(AUTO_STOP_TIME, 5, "Seconds between receiving last tampered request and finalization (end) of attack", 0, 655360));
+        setOptionNetworkTestEnabled(new OptionSimpleBoolean(NETWORK_STABILITY_TEST, false, "false = network stability test disabled, true = enabled"));
+        setOptionNetworkTestNumberRequests(new OptionLimitedInteger(NETWORK_STABILITY_TEST_NUMBER_OF_REQUESTS, 40, "Perform network stability test with defined number of requests", 0, 655360));
+        setOptionNetworkTestRequestInterval(new OptionLimitedInteger(NETWORK_STABILITY_TEST_DELAY_BETWEEN_TEST, 500, "Milliseconds to wait between each Network Stability Testrequest", 0, 655360));
         getPluginOptions().add(getOptionNumberThreads());
         getPluginOptions().add(getOptionNumberRequests());
         getPluginOptions().add(getOptionSecondsBetweenProbes());
@@ -120,10 +161,7 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
 
         // Plugin Specific Options
         setState(PluginState.Ready);
-        // </editor-fold>
-
-        setFunctionList(new ArrayList<PluginFunctionInterface>());
-        getFunctionList().add(new DOSPostAnalyzeFunction());
+        setPluginFunctions(new PluginFunctionInterface[] {new DOSPostAnalyzeFunction()});
     }
 
     /*
@@ -133,7 +171,7 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
      */
     public void postInitPlugin() {
         // set payload position -> Always last option
-        setOptionTextAreaSoapMessage(new OptionTextAreaSoapMessage("Message", "set position of payload placeholder", getPayloadPosition()));
+        setOptionTextAreaSoapMessage(new OptionTextAreaSoapMessage(MESSAGE, "set position of payload placeholder", getPayloadPosition()));
         getPluginOptions().add(getOptionTextAreaSoapMessage());
     }
 
@@ -232,10 +270,11 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
      * No need to override!
      * @param original
      */
+    @Override
     public void attackImplementationHook(RequestResponsePair original) {
 
         // save OriginalRequestResponsePair pointer
-        originalRequestResponsePair = original;
+        setOriginalRequestResponsePair(original);
 
         // save Original Header Fields for all subsequent requests
         createOriginalRequestHeaderFields();
@@ -252,10 +291,10 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
 
             // perform DOS Attack
             // - returns ONLY if attackModel is in finished state!
-            attackModel = AttackMVC.runDosAttack(this);
+            setAttackModel(AttackMVC.runDosAttack(this));
 
             // update PostAnalyze function with full model!
-            DOSPostAnalyzeFunction b = (DOSPostAnalyzeFunction) functionList.get(0);
+            DOSPostAnalyzeFunction b = (DOSPostAnalyzeFunction) getPluginFunctions(0);
             b.setAttackModel(attackModel);
 
             // Set Attack Points
@@ -277,19 +316,14 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
     }
 
     @Override
-    public int getMaxPoints() {
-        return 100;
-    }
-
-    @Override
     public void clean() {
-        attackModel = null;
+        setAttackModel(null);
         setCurrentPoints(0);
         setState(PluginState.Ready);
 
         // clean functionList with empty model!
-        if (functionList.get(0) != null && functionList.get(0) instanceof DOSPostAnalyzeFunction) {
-            DOSPostAnalyzeFunction b = (DOSPostAnalyzeFunction) functionList.get(0);
+        if (getPluginFunctions(0) instanceof DOSPostAnalyzeFunction) {
+            DOSPostAnalyzeFunction b = (DOSPostAnalyzeFunction) getPluginFunctions(0);
             b.setAttackModel(attackModel);
         }
     }
@@ -302,8 +336,8 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
 //	    originalRequest = null;
 //	    originalAction = null;
 //	}
-        tamperedRequestObject = null;
-        untamperedRequestObject = null;
+        setTamperedRequestObject(null);
+        setUntamperedRequestObject(null);
     }
 
     @Override
@@ -311,11 +345,6 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
         // successfull only server is vulnerable for one method
         // note: one point = possible server misconfiguration
         return isFinished() && (getCurrentPoints() > 1);
-    }
-
-    @Override
-    public String[] getCategory() {
-        return new String[]{"Denial of Service"};
     }
 
     @Override
@@ -329,11 +358,6 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
          */
     }
 
-    @Override
-    public List<PluginFunctionInterface> getPluginFunctionList() {
-        return functionList;
-    }
-
     /**
      * ------------------------------------------
      * Getter and Setter
@@ -343,32 +367,16 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
         return optionNumberThreads;
     }
 
-    public void setOptionNumberThreads(AbstractOptionInteger optionNumberThreads) {
-        this.optionNumberThreads = optionNumberThreads;
-    }
-
     public AbstractOptionInteger getOptionNumberRequests() {
         return optionNumberRequests;
-    }
-
-    public void setOptionNumberRequests(AbstractOptionInteger optionNumberRequests) {
-        this.optionNumberRequests = optionNumberRequests;
     }
 
     public AbstractOptionInteger getOptionSecondsBetweenProbes() {
         return optionSecondsBetweenProbes;
     }
 
-    public void setOptionSecondsBetweenProbes(AbstractOptionInteger optionSecondsBetweenProbes) {
-        this.optionSecondsBetweenProbes = optionSecondsBetweenProbes;
-    }
-
     public AbstractOptionInteger getOptionSecondsBetweenRequests() {
         return optionSecondsBetweenRequests;
-    }
-
-    public void setOptionSecondsBetweenRequests(AbstractOptionInteger optionSecondsBetweenRequests) {
-        this.optionSecondsBetweenRequests = optionSecondsBetweenRequests;
     }
 
     public AbstractOptionInteger getOptionSecondsServerLoadRecovery() {
@@ -391,64 +399,28 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
         return attackModel;
     }
 
-    public void setAttackModel(AttackModel attackModel) {
-        this.attackModel = attackModel;
-    }
-
     public boolean getAttackPrecheck() {
         return attackPrecheck;
-    }
-
-    public void setAttackPrecheck(boolean attackPrecheck) {
-        this.attackPrecheck = attackPrecheck;
     }
 
     public OptionSimpleBoolean getOptionAutoFinalizeSwitch() {
         return optionAutoFinalizeSwitch;
     }
 
-    public void setOptionAutoFinalizeSwitch(OptionSimpleBoolean optionAutoFinalizeSwitch) {
-        this.optionAutoFinalizeSwitch = optionAutoFinalizeSwitch;
-    }
-
     public AbstractOptionInteger getOptionAutoFinalizeSeconds() {
         return optionAutoFinalizeSeconds;
-    }
-
-    public void setOptionAutoFinalizeSeconds(AbstractOptionInteger optionAutoFinalizeSeconds) {
-        this.optionAutoFinalizeSeconds = optionAutoFinalizeSeconds;
-    }
-
-    public List<PluginFunctionInterface> getFunctionList() {
-        return functionList;
-    }
-
-    public void setFunctionList(List<PluginFunctionInterface> functionList) {
-        this.functionList = functionList;
     }
 
     public OptionSimpleBoolean getOptionNetworkTestEnabled() {
         return optionNetworkTestEnabled;
     }
 
-    public void setOptionNetworkTestEnabled(OptionSimpleBoolean optionNetworkTestEnabled) {
-        this.optionNetworkTestEnabled = optionNetworkTestEnabled;
-    }
-
     public AbstractOptionInteger getOptionNetworkTestNumberRequests() {
         return optionNetworkTestNumberRequests;
     }
 
-    public void setOptionNetworkTestNumberRequests(AbstractOptionInteger optionNetworkTestNumberRequests) {
-        this.optionNetworkTestNumberRequests = optionNetworkTestNumberRequests;
-    }
-
     public AbstractOptionInteger getOptionNetworkTestRequestInterval() {
         return optionNetworkTestRequestInterval;
-    }
-
-    public void setOptionNetworkTestRequestInterval(AbstractOptionInteger optionNetworkTestRequestInterval) {
-        this.optionNetworkTestRequestInterval = optionNetworkTestRequestInterval;
     }
 
     public RequestObject getTamperedRequestObject() {
@@ -456,7 +428,7 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
     }
 
     public void setTamperedRequestObject(Map<String, String> httpHeaderMap, String endpoint, String msg) {
-        this.tamperedRequestObject = new RequestObject(msg, endpoint, httpHeaderMap);
+        this.setTamperedRequestObject(new RequestObject(msg, endpoint, httpHeaderMap));
     }
 
     public RequestObject getUntamperedRequestObject() {
@@ -464,33 +436,117 @@ public abstract class AbstractDosPlugin extends AbstractPlugin {
     }
 
     public void setUntamperedRequestObject(Map<String, String> httpHeaderMap, String endpoint, String msg) {
-        this.untamperedRequestObject = new RequestObject(msg, endpoint, httpHeaderMap);
+        this.setUntamperedRequestObject(new RequestObject(msg, endpoint, httpHeaderMap));
     }
 
     public OptionTextAreaSoapMessage getOptionTextAreaSoapMessage() {
         return optionTextAreaSoapMessage;
     }
 
-    public void setOptionTextAreaSoapMessage(OptionTextAreaSoapMessage optionTextAreaSoapMessage) {
-        this.optionTextAreaSoapMessage = optionTextAreaSoapMessage;
-    }
-
     public Map<String, String> getOriginalRequestHeaderFields() {
         if (originalRequestHeaderFields == null) {
-            originalRequestHeaderFields = new HashMap<String, String>();
+            setOriginalRequestHeaderFields(new HashMap<String, String>());
         }
         return originalRequestHeaderFields;
-    }
-
-    public void setOriginalRequestHeaderFields(Map<String, String> originalRequestHeaderFields) {
-        this.originalRequestHeaderFields = originalRequestHeaderFields;
     }
 
     public RequestResponsePair getOriginalRequestResponsePair() {
         return originalRequestResponsePair;
     }
 
+    public void setOptionNumberThreads(AbstractOptionInteger optionNumberThreads) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionNumberThreads = this.optionNumberThreads;
+        this.optionNumberThreads = optionNumberThreads;
+        firePropertyChange(PROP_OPTIONNUMBERTHREADS, oldOptionNumberThreads, optionNumberThreads);
+    }
+
+    public void setOptionNumberRequests(AbstractOptionInteger optionNumberRequests) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionNumberRequests = this.optionNumberRequests;
+        this.optionNumberRequests = optionNumberRequests;
+        firePropertyChange(PROP_OPTIONNUMBERREQUESTS, oldOptionNumberRequests, optionNumberRequests);
+    }
+
+    public void setOptionSecondsBetweenProbes(AbstractOptionInteger optionSecondsBetweenProbes) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionSecondsBetweenProbes = this.optionSecondsBetweenProbes;
+        this.optionSecondsBetweenProbes = optionSecondsBetweenProbes;
+        firePropertyChange(PROP_OPTIONSECONDSBETWEENPROBES, oldOptionSecondsBetweenProbes, optionSecondsBetweenProbes);
+    }
+
+    public void setOptionSecondsBetweenRequests(AbstractOptionInteger optionSecondsBetweenRequests) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionSecondsBetweenRequests = this.optionSecondsBetweenRequests;
+        this.optionSecondsBetweenRequests = optionSecondsBetweenRequests;
+        firePropertyChange(PROP_OPTIONSECONDSBETWEENREQUESTS, oldOptionSecondsBetweenRequests, optionSecondsBetweenRequests);
+    }
+
+    public void setOptionAutoFinalizeSwitch(OptionSimpleBoolean optionAutoFinalizeSwitch) {
+        wsattacker.main.plugin.option.OptionSimpleBoolean oldOptionAutoFinalizeSwitch = this.optionAutoFinalizeSwitch;
+        this.optionAutoFinalizeSwitch = optionAutoFinalizeSwitch;
+        firePropertyChange(PROP_OPTIONAUTOFINALIZESWITCH, oldOptionAutoFinalizeSwitch, optionAutoFinalizeSwitch);
+    }
+
+    public void setOptionAutoFinalizeSeconds(AbstractOptionInteger optionAutoFinalizeSeconds) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionAutoFinalizeSeconds = this.optionAutoFinalizeSeconds;
+        this.optionAutoFinalizeSeconds = optionAutoFinalizeSeconds;
+        firePropertyChange(PROP_OPTIONAUTOFINALIZESECONDS, oldOptionAutoFinalizeSeconds, optionAutoFinalizeSeconds);
+    }
+
+    public void setOptionNetworkTestEnabled(OptionSimpleBoolean optionNetworkTestEnabled) {
+        wsattacker.main.plugin.option.OptionSimpleBoolean oldOptionNetworkTestEnabled = this.optionNetworkTestEnabled;
+        this.optionNetworkTestEnabled = optionNetworkTestEnabled;
+        firePropertyChange(PROP_OPTIONNETWORKTESTENABLED, oldOptionNetworkTestEnabled, optionNetworkTestEnabled);
+    }
+
+    public void setOptionNetworkTestNumberRequests(AbstractOptionInteger optionNetworkTestNumberRequests) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionNetworkTestNumberRequests = this.optionNetworkTestNumberRequests;
+        this.optionNetworkTestNumberRequests = optionNetworkTestNumberRequests;
+        firePropertyChange(PROP_OPTIONNETWORKTESTNUMBERREQUESTS, oldOptionNetworkTestNumberRequests, optionNetworkTestNumberRequests);
+    }
+
+    public void setOptionNetworkTestRequestInterval(AbstractOptionInteger optionNetworkTestRequestInterval) {
+        wsattacker.main.composition.plugin.option.AbstractOptionInteger oldOptionNetworkTestRequestInterval = this.optionNetworkTestRequestInterval;
+        this.optionNetworkTestRequestInterval = optionNetworkTestRequestInterval;
+        firePropertyChange(PROP_OPTIONNETWORKTESTREQUESTINTERVAL, oldOptionNetworkTestRequestInterval, optionNetworkTestRequestInterval);
+    }
+
+    public void setOptionTextAreaSoapMessage(OptionTextAreaSoapMessage optionTextAreaSoapMessage) {
+        wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage oldOptionTextAreaSoapMessage = this.optionTextAreaSoapMessage;
+        this.optionTextAreaSoapMessage = optionTextAreaSoapMessage;
+        firePropertyChange(PROP_OPTIONTEXTAREASOAPMESSAGE, oldOptionTextAreaSoapMessage, optionTextAreaSoapMessage);
+    }
+
     public void setOriginalRequestResponsePair(RequestResponsePair originalRequestResponsePair) {
+        wsattacker.main.composition.testsuite.RequestResponsePair oldOriginalRequestResponsePair = this.originalRequestResponsePair;
         this.originalRequestResponsePair = originalRequestResponsePair;
+        firePropertyChange(PROP_ORIGINALREQUESTRESPONSEPAIR, oldOriginalRequestResponsePair, originalRequestResponsePair);
+    }
+
+    public void setOriginalRequestHeaderFields(Map<String, String> originalRequestHeaderFields) {
+        java.util.Map<java.lang.String, java.lang.String> oldOriginalRequestHeaderFields = this.originalRequestHeaderFields;
+        this.originalRequestHeaderFields = originalRequestHeaderFields;
+        firePropertyChange(PROP_ORIGINALREQUESTHEADERFIELDS, oldOriginalRequestHeaderFields, originalRequestHeaderFields);
+    }
+
+    public void setUntamperedRequestObject(RequestObject untamperedRequestObject) {
+        wsattacker.plugin.dos.dosExtension.requestSender.RequestObject oldUntamperedRequestObject = this.untamperedRequestObject;
+        this.untamperedRequestObject = untamperedRequestObject;
+        firePropertyChange(PROP_UNTAMPEREDREQUESTOBJECT, oldUntamperedRequestObject, untamperedRequestObject);
+    }
+
+    public void setTamperedRequestObject(RequestObject tamperedRequestObject) {
+        wsattacker.plugin.dos.dosExtension.requestSender.RequestObject oldTamperedRequestObject = this.tamperedRequestObject;
+        this.tamperedRequestObject = tamperedRequestObject;
+        firePropertyChange(PROP_TAMPEREDREQUESTOBJECT, oldTamperedRequestObject, tamperedRequestObject);
+    }
+
+    public void setAttackModel(AttackModel attackModel) {
+        wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel oldAttackModel = this.attackModel;
+        this.attackModel = attackModel;
+        firePropertyChange(PROP_ATTACKMODEL, oldAttackModel, attackModel);
+    }
+
+    public void setAttackPrecheck(boolean attackPrecheck) {
+        boolean oldAttackPrecheck = this.attackPrecheck;
+        this.attackPrecheck = attackPrecheck;
+        firePropertyChange(PROP_ATTACKPRECHECK, oldAttackPrecheck, attackPrecheck);
     }
 }

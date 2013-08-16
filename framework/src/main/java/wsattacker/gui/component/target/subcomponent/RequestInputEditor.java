@@ -18,22 +18,19 @@
  */
 package wsattacker.gui.component.target.subcomponent;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
+import java.beans.PropertyChangeSupport;
 import wsattacker.gui.util.XmlTextPane;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
 import wsattacker.main.composition.testsuite.CurrentRequestObserver;
-import wsattacker.main.testsuite.TestSuite;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import java.beans.PropertyChangeSupport;
 
 public class RequestInputEditor extends XmlTextPane implements CurrentRequestContentChangeObserver, CurrentRequestObserver {
 
     private static final long serialVersionUID = 1L;
-    public static final String PROP_CONTROLLER = "PROP_CONTROLLER";
+    public static final String PROP_CONTROLLER = "controller";
     private ControllerInterface controller = null;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 

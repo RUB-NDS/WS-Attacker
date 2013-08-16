@@ -28,7 +28,8 @@ public class NodeType implements XPathPartInterface {
     public static String[] nodeTypes
       = {"text", "comment", "node", "processing-instruction"};
 
-    private String nodeType, nodeTypeName, nodeTypeArgument;
+    private final String nodeType;
+    private String nodeTypeName, nodeTypeArgument;
 
     public NodeType(String nodeType) {
         this.nodeType = nodeType;
@@ -67,6 +68,13 @@ public class NodeType implements XPathPartInterface {
               .equals(getNodeTypeArguments());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + (this.nodeType != null ? this.nodeType.hashCode() : 0);
+        return hash;
     }
 
     private void eval() {

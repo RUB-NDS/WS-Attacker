@@ -26,14 +26,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import org.apache.log4j.Logger;
 import wsattacker.gui.GuiController;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.plugin.PluginManager;
@@ -46,6 +45,7 @@ import wsattacker.main.plugin.result.ResultLevel;
 public class AttackOverview_NB extends javax.swing.JPanel {
 
 	ControllerInterface controller;
+	private static final Logger LOG = Logger.getLogger(AttackOverview_NB.class);
 
 	/**
 	 * Creates new form AttackOverview_NB
@@ -64,21 +64,21 @@ public class AttackOverview_NB extends javax.swing.JPanel {
 	private void addSelectionModelToEnabledPluginsTable() {
 		enabledPluginTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						if (!e.getValueIsAdjusting()) {
-							int[] selected = enabledPluginTable
-									.getSelectedRows();
-							List<String> sources = new ArrayList<String>();
-							for (int index : selected) {
-								sources.add(PluginManager.getInstance()
-										.getActive(index)
-										.getName());
-							}
-							resultTable.filterSources(sources);
-						}
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					int[] selected = enabledPluginTable
+							.getSelectedRows();
+					List<String> sources = new ArrayList<String>();
+					for (int index : selected) {
+						sources.add(PluginManager.getInstance()
+								.getActive(index)
+								.getName());
 					}
-				});
+					resultTable.filterSources(sources);
+				}
+			}
+		});
 	}
 
 	private void addAdjustmenListenerToResultsScrollbar() {
@@ -93,8 +93,8 @@ public class AttackOverview_NB extends javax.swing.JPanel {
 				JScrollBar bar = resultTableScrollPane.getVerticalScrollBar();
 				int max = bar.getMaximum();
 				int current = bar.getValue();
-				final int THRESHOLD = bar.getVisibleAmount()*2;
-				if (current > (max-THRESHOLD)) {
+				final int THRESHOLD = bar.getVisibleAmount() * 2;
+				if (current > (max - THRESHOLD)) {
 					e.getAdjustable().setValue(max);
 				}
 			}
@@ -280,25 +280,25 @@ public class AttackOverview_NB extends javax.swing.JPanel {
 				}
 			}
 			catch (IOException ex) {
-				Logger.getLogger(AttackOverview_NB.class.getName()).log(Level.SEVERE, null, ex);
+				LOG.warn(ex);
 			}
 			finally {
 				try {
 					out.close();
 				}
 				catch (IOException ex) {
-					Logger.getLogger(AttackOverview_NB.class.getName()).log(Level.SEVERE, null, ex);
+					LOG.warn(ex);
 				}
 			}
 		} else {
-			System.out.println("File access cancelled by user.");
+			LOG.info("File access cancelled by user.");
 		}
     }//GEN-LAST:event_saveAction
 
     private void resultLevelSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_resultLevelSliderStateChanged
 		int val = resultLevelSlider.getValue();
-		String level = ( (JLabel) resultLevelSlider.getLabelTable()
-				.get(val) ).getText();
+		String level = ((JLabel) resultLevelSlider.getLabelTable()
+				.get(val)).getText();
 		resultTable.setLevel(ResultLevel.valueOf(level));
     }//GEN-LAST:event_resultLevelSliderStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables

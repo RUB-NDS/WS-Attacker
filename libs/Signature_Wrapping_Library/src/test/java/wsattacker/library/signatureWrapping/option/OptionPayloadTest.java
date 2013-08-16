@@ -27,7 +27,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 
 public class OptionPayloadTest {
 
@@ -47,7 +47,7 @@ public class OptionPayloadTest {
         assertTrue("Not Expired:\n" + domToString(t), s.verifyTimestamp(t));
         assertTrue("Not Expired:\n" + domToString(t), s.verifyTimestamp(doc));
 
-        Payload o = new Payload(null, "name", t, "timestampoption");
+        Payload o = new Payload(null, t);
 
         assertTrue("Not a Timestamp Element:\n" + domToString(t), o.isTimestamp());
         Element p = o.getPayloadElement();
@@ -63,7 +63,7 @@ public class OptionPayloadTest {
         assertTrue("Not Expired:\n" + domToString(t), s.verifyTimestamp(t));
         assertTrue("Not Expired:\n" + domToString(t), s.verifyTimestamp(doc));
 
-        Payload o = new Payload(null, "name", t, "timestampoption");
+        Payload o = new Payload(null, t);
 
         assertTrue("Not a Timestamp Element:\n" + domToString(t), o.isTimestamp());
         Element p = o.getPayloadElement();

@@ -25,7 +25,6 @@ import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -34,8 +33,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.xmlbeans.XmlException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import wsattacker.plugin.dos.dosExtension.desktop.OpenURI;
-import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryRequest;
 import wsattacker.util.SoapUtilities;
 
 /**

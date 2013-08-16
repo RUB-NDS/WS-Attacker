@@ -24,13 +24,13 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import wsattacker.library.schemaanalyzer.AnyElementPropertiesInterface;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.AnyElementPropertiesInterface;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.getFastXPath;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.getFastXPath;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.analysis.WrapperProperties;
@@ -46,17 +46,17 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessToo
  */
 public class XPathDescendantWeakness implements XPathWeaknessInterface {
 
-    private static Logger log = Logger.getLogger(XPathDescendantWeakness.class);
-    private Step step;
+    private final static Logger LOG = Logger.getLogger(XPathDescendantWeakness.class);
+    private final Step step;
     private int numberOfPossibilites, numberOfPostProcessPossibilites;
-    private String preXPath, postXPath;
-    private List<WrapperProperties> wrapperProperties;
-    private List<XPathWeaknessInterface> postProcessList;
+    private final String preXPath, postXPath;
+    private final List<WrapperProperties> wrapperProperties = new ArrayList<WrapperProperties>();
+    private final List<XPathWeaknessInterface> postProcessList = new ArrayList<XPathWeaknessInterface>();
 
     public XPathDescendantWeakness(Step descendantStep,
       SignedElement signedElement,
       PayloadElement payloadElement,
-      SchemaAnalyzerInterface schemaAnalyser)
+      SchemaAnalyzer schemaAnalyser)
       throws InvalidWeaknessException {
         if (!descendantStep.getAxisSpecifier().getAxisName().toFullString().startsWith("descendant")) {
             throw new InvalidWeaknessException("No descendant-* Axis");
@@ -75,8 +75,8 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
             try {
                 matched = (List<Element>) DomUtilities.evaluateXPath(doc, preXPath);
             } catch (XPathExpressionException e) {
-                log.warn(String.format("PreXPath '%s' does not match any Elements!", preXPath));
-                log.error(e.getMessage());
+                LOG.warn(String.format("PreXPath '%s' does not match any Elements!", preXPath));
+                LOG.error(e.getMessage());
                 return;
             }
         } else {
@@ -84,8 +84,7 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
             matched = new ArrayList<Element>();
             matched.add(doc.getDocumentElement());
         }
-        log.info("init: Matched " + matched.toString());
-        wrapperProperties = new ArrayList<WrapperProperties>();
+        LOG.info("init: Matched " + matched.toString());
         Set<AnyElementPropertiesInterface> schemaWeaknesses;
         for (Element ele : matched) {
             schemaWeaknesses = schemaAnalyser.findExpansionPoint(ele);
@@ -93,8 +92,8 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
                 WrapperProperties wp = new WrapperProperties(extension, signedElement.getSignedElement());
 
                 int factor = (wp.isWrapperNeeded() ? 1 : 2);
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format("Parent: %s / Positions: %d / wrapper needed? %b", extension.getDocumentElement()
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(String.format("Parent: %s / Positions: %d / wrapper needed? %b", extension.getDocumentElement()
                       .getNodeName(), wp.getPossiblePositions(), wp.isWrapperNeeded()));
                 }
                 numberOfPossibilites += (factor * wp.getPossiblePositions());
@@ -109,7 +108,6 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         // Post Processes:
         // XPathAttributeWeakness
         // ///////////////////////
-        postProcessList = new ArrayList<XPathWeaknessInterface>();
         for (Step cur = descendantStep; cur != null; cur = cur.getNextStep()) {
             XPathWeaknessInterface aw;
             try {
@@ -151,7 +149,7 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         int originalindex = index;
         if (index >= getNumberOfPossibilities()) {
             String warn = String.format("Index >= numberOfPossibilites (%d >= %d)", index, getNumberOfPossibilities());
-            log.warn(warn);
+            LOG.warn(warn);
             throw new InvalidWeaknessException(warn);
         }
 
@@ -192,8 +190,8 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
             }
             index -= wp.getPossiblePositions();
         }
-        if (log.isDebugEnabled()) {
-            log.trace(String
+        if (LOG.isDebugEnabled()) {
+            LOG.trace(String
               .format("abuseWeakness #%d => wpi=%d, child=%d, realWrapper=%b, postIndex=%d, postIndexAbuse=%d", originalindex, wrapperPropertiesIndex, childIndex, useRealWrapper, postProcessListIndex, postProcessAbuseIndex));
         }
         abuseWeakness(wrapperPropertiesIndex, childIndex, useRealWrapper, postProcessListIndex, postProcessAbuseIndex, signedElement, payloadElement);
@@ -230,8 +228,8 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
 //      log.warn(warn);
 //      throw new InvalidWeaknessException(warn);
 //    }
-        if (log.isDebugEnabled()) {
-            log.debug("Detected signedPostPart:\n" + getFastXPath(signedPostPart));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Detected signedPostPart:\n" + getFastXPath(signedPostPart));
         }
         // TODO: Now trying with replaceChild()
 //    Element signedPostPartParent = (Element) signedPostPart.getParentNode();
@@ -242,8 +240,8 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         // Now place the Payload
         // ////////////////////////////////////////////////////
         Element payloadPostPart = XPathWeaknessTools.createPayloadPostPart(signedPostPart, signedElement, payloadElement);
-        if (log.isDebugEnabled()) {
-            log.debug("Created payloadPostPart: \n" + domToString(payloadPostPart, true));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Created payloadPostPart: \n" + domToString(payloadPostPart, true));
         }
 //    signedPostPartParent.insertBefore(payloadPostPart, signedPostPart);
         if (pay.useThisPayloadElement()) {
@@ -270,7 +268,7 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         // Do we use a ns1:wrapper Element or just use the signed Element?
         // ////////////////////////////////////////////////////////////////
         if (useRealWrapper) {
-            log.trace("Surrounding singnedPostPart with real Wrapper Element!");
+            LOG.trace("Surrounding singnedPostPart with real Wrapper Element!");
             // TODO: Use a random Wrapper Name
             wrapper = wrapperParent.getOwnerDocument()
               .createElementNS(NamespaceConstants.URI_NS_WSATTACKER, NamespaceConstants.PREFIX_NS_WSATTACKER + ":wrapper");
@@ -292,14 +290,14 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         // ///////////////////
         List<Element> children = DomUtilities.getAllChildElements(wrapperParent);
         if (childIndex < children.size()) {
-            if (log.isDebugEnabled()) {
-                log.trace("Inserting Wrapper " + wrapper.getNodeName() + " before " + children.get(childIndex).getNodeName() + " Element as a child of " + wrapperParent
+            if (LOG.isDebugEnabled()) {
+                LOG.trace("Inserting Wrapper " + wrapper.getNodeName() + " before " + children.get(childIndex).getNodeName() + " Element as a child of " + wrapperParent
                   .getNodeName());
             }
             wrapperParent.insertBefore(wrapper, children.get(childIndex));
         } else {
-            if (log.isDebugEnabled()) {
-                log.trace("Appending Wrapper on " + wrapperParent.getNodeName());
+            if (LOG.isDebugEnabled()) {
+                LOG.trace("Appending Wrapper on " + wrapperParent.getNodeName());
             }
             wrapperParent.appendChild(wrapper);
         }

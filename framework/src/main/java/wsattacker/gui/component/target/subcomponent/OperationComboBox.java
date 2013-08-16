@@ -18,25 +18,22 @@
  */
 package wsattacker.gui.component.target.subcomponent;
 
-import javax.swing.JComboBox;
-
-import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
-import wsattacker.main.composition.testsuite.CurrentOperationObserver;
-import wsattacker.main.testsuite.TestSuite;
-
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.model.iface.Operation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeSupport;
+import javax.swing.JComboBox;
 import wsattacker.main.composition.ControllerInterface;
+import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
+import wsattacker.main.composition.testsuite.CurrentOperationObserver;
 
 public class OperationComboBox extends JComboBox implements CurrentInterfaceObserver,
         CurrentOperationObserver {
 
     private static final long serialVersionUID = 1L;
-    public static final String PROP_CONTROLLER = "PROP_CONTROLLER";
+    public static final String PROP_CONTROLLER = "controller";
     private ControllerInterface controller;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 

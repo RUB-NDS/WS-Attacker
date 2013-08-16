@@ -18,44 +18,59 @@
  */
 package wsattacker.main.composition.plugin.option;
 
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionStringGUI_NB;
+
 /**
- * WS-Attacker will represent this with a text input field for multiple lines. 
+ * WS-Attacker will represent this with a text input field for multiple lines.
  */
 public abstract class AbstractOptionString extends AbstractOption {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 2L;
+	public static final String PROP_VALUE = "value";
 	private String value;
-	
+
 	// constructors
 	public AbstractOptionString(String name, String value) {
 		this(name, value, "");
 	}
-	
+
 	public AbstractOptionString(String name, String value, String description) {
 		super(name, description);
 		this.value = value;
 	}
-	
+
 	// IMPORTANT: Implementation needed
+	@Override
 	public abstract boolean isValid(String value);
-	
-	public boolean parseValue(String value) {
-		if(isValid(value)) {
-			this.value = value;
-			notifyValueChanged();
-			return true;
-		}
-		return false;
+
+	@Override
+	public void parseValue(String value) {
+		setValue(value);
 	}
+
+	@Override
 	public String getValueAsString() {
 		return value;
 	}
-	
+
 	// String specific
 	public String getValue() {
 		return getValueAsString();
 	}
-	public boolean setValue(String value) {
-		return parseValue(value);
+
+	public void setValue(String value) {
+		if (isValid(value)) {
+			String oldValue = this.value;
+			this.value = value;
+			firePropertyChange(PROP_VALUE, oldValue, value);
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
+		}
+	}
+
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionStringGUI_NB(this);
 	}
 }

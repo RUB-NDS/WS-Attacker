@@ -48,6 +48,12 @@ public class AndExpression implements XPathPartInterface, ExpressionInterface {
         return expression;
     }
 
+    /**
+     *
+     * @param o
+     *
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (o instanceof String) {
@@ -57,5 +63,12 @@ public class AndExpression implements XPathPartInterface, ExpressionInterface {
             return expression.equals(((ExpressionInterface) o).getExpression());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.expression != null ? this.expression.hashCode() : 0);
+        return hash;
     }
 }

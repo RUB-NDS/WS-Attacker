@@ -24,39 +24,29 @@ import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapVersion;
 import com.eviware.soapui.model.iface.Request.SubmitException;
-import com.eviware.soapui.support.StringUtils;
 import java.io.*;
 import java.util.*;
 import javax.xml.xpath.XPathExpressionException;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.schema.NullSchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerFactory;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.showOnlyImportant;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
-import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.main.composition.testsuite.RequestResponsePair;
 import wsattacker.main.plugin.PluginState;
 import wsattacker.main.testsuite.TestSuite;
 import wsattacker.plugin.signatureWrapping.function.postanalyze.SignatureWrappingAnalyzeFunction;
 import wsattacker.plugin.signatureWrapping.function.postanalyze.model.AnalysisDataCollector;
 import wsattacker.plugin.signatureWrapping.option.OptionManager;
-import wsattacker.plugin.signatureWrapping.option.OptionPayload;
-import wsattacker.plugin.signatureWrapping.option.OptionSchemaFiles;
 
 /**
  * This class integrates the XSW Plugin into the WS-Attacker framework.
@@ -68,14 +58,17 @@ public class SignatureWrapping extends AbstractPlugin {
     public static final String ANALYSISDATA_NULL_STRING = "NULL Response";
     public static final String ANALYSISDATA_NONXML_STRING = "Non XML Response";
     private static final long serialVersionUID = 1L;
+    private static final String NAME = "Signature Wrapping";
+    private static final String AUTHOR = "Christian Mainka";
+    private static final String[] CATEGORY = new String[] {"Security", "Signature"};
+    private static final String VERSION = "1.4 / 2013-07-26";
     private SignatureManager signatureManager;
     private OptionManager optionManager;
-    private SchemaAnalyzerInterface schemaAnalyser;
-    private SchemaAnalyzerInterface usedSchemaAnalyser;
+    private SchemaAnalyzer schemaAnalyser;
+    private SchemaAnalyzer usedSchemaAnalyser;
     private WrappingOracle wrappingOracle;
     private AnalysisDataCollector analysisData;
-    private List<PluginFunctionInterface> functionList;
-    private int successThreashold = 70;
+    private final int successThreashold = 70;
     private WsdlRequest attackRequest = null;
     private String originalSoapAction = null;
 
@@ -85,6 +78,7 @@ public class SignatureWrapping extends AbstractPlugin {
      */
     @Override
     public void initializePlugin() {
+        initData();
         this.schemaAnalyser = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.ALL);
         this.usedSchemaAnalyser = schemaAnalyser;
         this.signatureManager = new SignatureManager();
@@ -92,11 +86,52 @@ public class SignatureWrapping extends AbstractPlugin {
         this.optionManager.setPlugin(this);
         this.optionManager.setSignatureManager(signatureManager);
         this.analysisData = new AnalysisDataCollector();
-        this.functionList = super.getPluginFunctionList();
-        this.functionList.add(new SignatureWrappingAnalyzeFunction(this));
-        Logger.getLogger("wsattacker.plugin.signatureWrapping").setLevel(Level.INFO);
-        Logger.getLogger("wsattacker.plugin.signatureWrapping.util").setLevel(Level.OFF);
+        setPluginFunctions(new PluginFunctionInterface[] {new SignatureWrappingAnalyzeFunction(this)});
         TestSuite.getInstance().getCurrentRequest().addCurrentRequestContentObserver(optionManager);
+    }
+
+    public void initData() {
+        setName(NAME);
+        setAuthor(AUTHOR);
+        setCategory(CATEGORY);
+        setVersion(VERSION);
+        StringBuilder description = new StringBuilder();
+        description.append("Tries several XML Signature Wrapping techniques to invoke a Service with unsigned content.");
+        description.append("\n\nCurrently supported techniques:");
+        description.append("\n  (1) Attack ID References.");
+        description.append("\n  (2) Abuse descendant* Axis, e.g. double-slash in XPath.");
+        description.append("\n  (3) Abuse attribute expressions in XPaths.");
+        description.append("\n  (4) Try namespace-injection attack to attack prefixes in XPaths.");
+// description.append("\n\nThe Attack can use XML Schema files to reduces the number of tries (and so speed up the attack) by creating only Schema-Valid attack requests.");
+// description.append("\n\nIf some payload is marked as a timestamp, it will be updated and wrapped automatically.");
+// description.append("\n\nNote: In some cases, it makes sense to change the payload to a different operation.");
+// description.append("\nYou can also change the SoapActionHeader if you like.");
+        description.append("\n\n" + "At least one signed part needs some valid XML payload, otherwise the plugin is *not configured*.");
+// description.append("\n\nBy default, the attack is successfull if the response is not a SOAP Error.");
+// description.append("\nTo change this, a search string can be specified to ignore responses without this string.");
+        setDescription(description.toString());
+    }
+
+    public void setUsedSchemaFiles(List<File> fileList) {
+        log().info("Cleared all Schemas");
+        schemaAnalyser = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.EMPTY);
+        for (File f : fileList) {
+            try {
+                Document schema = DomUtilities.readDocument(f);
+                log().info("Adding Schema " + f.getName());
+                schemaAnalyser.appendSchema(schema);
+            } catch (Exception e) {
+                log().warn("Could not read Schema file '" + f.getName() + "'");
+            }
+        }
+    }
+
+    public void setSchemaAnalyzerDepdingOnOption() {
+        if (optionManager.getOptionNoSchema().isOn()) {
+            usedSchemaAnalyser = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.NULL);
+        } else {
+            usedSchemaAnalyser = schemaAnalyser;
+        }
     }
 
     /**
@@ -112,7 +147,7 @@ public class SignatureWrapping extends AbstractPlugin {
         attackRequest = original.getWsdlRequest().getOperation().addNewRequest(getName() + " ATTACK");
 
         // should the soapaction be changed?
-        if (optionManager.getOptionSoapAction().getChoice() > 0) {
+        if (optionManager.getOptionSoapAction().getSelectedIndex() > 0) {
             originalSoapAction = attackRequest.getOperation().getAction();
             attackRequest.getOperation().setAction(optionManager.getOptionSoapAction().getValueAsString());
         }
@@ -145,27 +180,23 @@ public class SignatureWrapping extends AbstractPlugin {
             try {
                 attackDocument = wrappingOracle.getPossibility(i);
             } catch (InvalidWeaknessException e) {
-                log().warn("Could not abuse the weakness.");
-// critical("Could not abuse the weakness.\n" + WeaknessLog.representation());
-                e.printStackTrace();
+                log().warn("Could not abuse the weakness. " + e.getMessage());
                 continue;
             } catch (Exception e) {
                 log().error("Unknown error. " + e.getMessage());
 // critical("Unknown error. " + e.getMessage() + "\n" + WeaknessLog.representation());
-                e.printStackTrace();
                 continue;
             }
 // DomUtilities.writeDocument(attackDocument, String.format("/tmp/xsw/attack_%04d.xml", i+1), true);
             info(WeaknessLog.representation());
-            String attackDocumentAsString = domToString(attackDocument);
+            String attackDocumentAsString = DomUtilities.domToString(attackDocument);
             attackRequest.setRequestContent(attackDocumentAsString);
 
             WsdlSubmit<WsdlRequest> submit;
             try {
                 submit = attackRequest.submit(new WsdlSubmitContext(attackRequest), false);
             } catch (SubmitException e) {
-                log().warn("Could not submit the request. Trying next one.");
-                e.printStackTrace();
+                log().warn("Could not submit the request. Trying next one. " + e.getMessage());
                 continue;
             }
             String responseContent;
@@ -176,7 +207,7 @@ public class SignatureWrapping extends AbstractPlugin {
                 continue;
             }
             if (responseContent == null) {
-                trace("Request:\n" + showOnlyImportant(submit.getRequest().getRequestContent()));
+                trace("Request:\n" + DomUtilities.showOnlyImportant(submit.getRequest().getRequestContent()));
 // trace("Request:\n" + (submit.getRequest().getRequestContent()));
                 important("The server's answer was empty. Server misconfiguration?");
                 analysisData.add(ANALYSISDATA_NULL_STRING, i, "");
@@ -186,10 +217,10 @@ public class SignatureWrapping extends AbstractPlugin {
             try {
                 SoapVersion soapVersion = attackRequest.getOperation().getInterface().getSoapVersion();
                 if (SoapUtils.isSoapFault(responseContent, soapVersion)) {
-                    trace("Request:\n" + showOnlyImportant(submit.getRequest().getRequestContent()));
+                    trace("Request:\n" + DomUtilities.showOnlyImportant(submit.getRequest().getRequestContent()));
 // trace("Request:\n" + (submit.getRequest().getRequestContent()));
                     info("Server does not accept the message, you got a SOAP error.");
-                    trace("Response:\n" + showOnlyImportant(responseContent));
+                    trace("Response:\n" + DomUtilities.showOnlyImportant(responseContent));
 
                     // Now we have to find the SOAPFault reason:
                     String xpath;
@@ -219,11 +250,10 @@ public class SignatureWrapping extends AbstractPlugin {
                         java.util.logging.Logger.getLogger(SignatureWrapping.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                     }
 
-
                     continue;
                 }
             } catch (XmlException e) {
-                trace("Request:\n" + showOnlyImportant(submit.getRequest().getRequestContent()));
+                trace("Request:\n" + DomUtilities.showOnlyImportant(submit.getRequest().getRequestContent()));
                 // trace("Request:\n" + (submit.getRequest().getRequestContent()));
                 info("The answer is not valid XML. Server missconfiguration?");
                 analysisData.add(ANALYSISDATA_NONXML_STRING, i, responseContent);
@@ -246,9 +276,9 @@ public class SignatureWrapping extends AbstractPlugin {
 
             critical("Server Accepted the Request with Possibility " + (i + 1) + ".");
             important(String
-              .format("Attack-Vector:\n\n%s\nRequest:\n%s", WeaknessLog.representation(), showOnlyImportant(submit
+              .format("Attack-Vector:\n\n%s\nRequest:\n%s", WeaknessLog.representation(), DomUtilities.showOnlyImportant(submit
               .getRequest().getRequestContent())));
-            info("Response:\n" + showOnlyImportant(responseContent));
+            info("Response:\n" + DomUtilities.showOnlyImportant(responseContent));
             setCurrentPoints(getMaxPoints());
             ++successCounter;
             if (optionManager.getAbortOnFirstSuccess().isOn()) {
@@ -276,6 +306,8 @@ public class SignatureWrapping extends AbstractPlugin {
         } else if (signedElements == elementsByID) {
             setCurrentPoints(20);
             message = "Warning: Server uses ID References but could not be successfully attacked.";
+        } else {
+            message = "### This is a not expected result";
         }
 
         // print result
@@ -300,62 +332,26 @@ public class SignatureWrapping extends AbstractPlugin {
         return isFinished() && getCurrentPoints() >= successThreashold;
     }
 
-    /**
-     * The maximum rating is 100. This is used to create a percent-rating.
-     */
-    @Override
-    public int getMaxPoints() {
-        return 100;
-    }
-
     public void checkState() {
         // Change does not have payload -> Check if we have still *any* payload
-        System.out.print("### CHECK_STATE");
+        log().debug("### CHECK_STATE");
         List<Payload> list = signatureManager.getPayloads();
         if (list.isEmpty()) {
-            System.out.print("### List Empty -> Not_Configured");
+            log().debug("### List Empty -> Not_Configured");
             // No possible payloads found -> Request does not have a Signature
             setState(PluginState.Not_Configured);
         } else {
             for (Payload payload : list) {
-                // At least one payload that is not a timestamp:
-//	  if (!payload.isTimestamp() && payload.hasPayload())
-                System.out.format("### Checking Option '%s' -> Timestamp? %b // hasPayload? %b\n", payload.getName(), payload.isTimestamp(), payload.hasPayload());
+                if (log().isDebugEnabled()) {
+                    log().debug(String.format("### Checking Option %s", payload.toString()));
+                }
                 if (payload.isTimestamp() || payload.hasPayload()) {
                     setState(PluginState.Ready);
                     return;
                 }
             }
-            System.out.print("### Finally -> Not_Configured");
+            log().debug("### Finally -> Not_Configured");
             setState(PluginState.Not_Configured);
-        }
-    }
-
-    /**
-     * Observer fuction wich is called if an Option is changed.
-     */
-    @Override
-    public void optionValueChanged(AbstractOption option) {
-        if (option instanceof OptionPayload) {
-            checkState();
-        } else if (option instanceof OptionSchemaFiles) {
-            log().info("Cleared all Schemas");
-            schemaAnalyser = new SchemaAnalyzer();
-            for (File f : ((OptionSchemaFiles) option).getFiles()) {
-                try {
-                    Document schema = DomUtilities.readDocument(f);
-                    log().info("Adding Schema " + f.getName());
-                    schemaAnalyser.appendSchema(schema);
-                } catch (Exception e) {
-                    log().warn("Could not read Schema file '" + f.getName() + "'");
-                }
-            }
-        } else if (option == optionManager.getOptionNoSchema()) {
-            if (optionManager.getOptionNoSchema().isOn()) {
-                usedSchemaAnalyser = new NullSchemaAnalyzer();
-            } else {
-                usedSchemaAnalyser = schemaAnalyser;
-            }
         }
     }
 
@@ -395,57 +391,11 @@ public class SignatureWrapping extends AbstractPlugin {
         removeAttackReqeust();
     }
 
-    @Override
-    public String getName() {
-        return "Signature Wrapping";
-    }
-
-    @Override
-    public String getAuthor() {
-        return "Christian Mainka";
-    }
-
-    @Override
-    public String getDescription() {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Tries several XML Signature Wrapping techniques to invoke a Service with unsigned content.");
-        desc.append("\n\nCurrently supported techniques:");
-        desc.append("\n  (1) Attack ID References.");
-        desc.append("\n  (2) Abuse descendant* Axis, e.g. double-slash in XPath.");
-        desc.append("\n  (3) Abuse attribute expressions in XPaths.");
-        desc.append("\n  (4) Try namespace-injection attack to attack prefixes in XPaths.");
-// desc.append("\n\nThe Attack can use XML Schema files to reduces the number of tries (and so speed up the attack) by creating only Schema-Valid attack requests.");
-// desc.append("\n\nIf some payload is marked as a timestamp, it will be updated and wrapped automatically.");
-// desc.append("\n\nNote: In some cases, it makes sense to change the payload to a different operation.");
-// desc.append("\nYou can also change the SoapActionHeader if you like.");
-        desc.append("\n\n" + "At least one signed part needs some valid XML payload, otherwise the plugin is *not configured*.");
-// desc.append("\n\nBy default, the attack is successfull if the response is not a SOAP Error.");
-// desc.append("\nTo change this, a search string can be specified to ignore responses without this string.");
-        return desc.toString();
-    }
-
-    @Override
-    public String getVersion() {
-        return "1.1 / 2012-11-06";
-    }
-
-    @Override
-    public String[] getCategory() {
-        return new String[]{
-            "Security", "Signature"
-        };
-    }
-
-    @Override
-    public List<PluginFunctionInterface> getPluginFunctionList() {
-        return functionList;
-    }
-
     public SignatureManager getSignatureManager() {
         return signatureManager;
     }
 
-    public SchemaAnalyzerInterface getUsedSchemaAnalyser() {
+    public SchemaAnalyzer getUsedSchemaAnalyser() {
         return usedSchemaAnalyser;
     }
 

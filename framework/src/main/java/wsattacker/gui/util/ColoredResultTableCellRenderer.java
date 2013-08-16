@@ -21,10 +21,8 @@ package wsattacker.gui.util;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
-
 import wsattacker.main.plugin.result.ResultLevel;
 
 public class ColoredResultTableCellRenderer extends

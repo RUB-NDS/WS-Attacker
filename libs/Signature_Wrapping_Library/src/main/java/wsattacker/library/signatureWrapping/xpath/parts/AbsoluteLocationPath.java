@@ -78,6 +78,13 @@ public class AbsoluteLocationPath implements XPathPartInterface {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.absoluteLocationPath != null ? this.absoluteLocationPath.hashCode() : 0);
+        return hash;
+    }
+
     /*
      * Evaluation Methods
      */

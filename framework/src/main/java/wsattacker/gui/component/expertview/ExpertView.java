@@ -18,25 +18,22 @@
  */
 package wsattacker.gui.component.expertview;
 
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
-import wsattacker.main.composition.testsuite.CurrentOperationObserver;
-import wsattacker.main.composition.testsuite.CurrentRequestObserver;
-import wsattacker.main.testsuite.TestSuite;
-
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.impl.wsdl.panels.iface.WsdlInterfacePanelBuilder;
 import com.eviware.soapui.impl.wsdl.panels.operation.WsdlOperationPanelBuilder;
 import com.eviware.soapui.impl.wsdl.panels.request.WsdlRequestPanelBuilder;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
+import wsattacker.main.composition.testsuite.CurrentOperationObserver;
+import wsattacker.main.composition.testsuite.CurrentRequestObserver;
+import wsattacker.main.testsuite.TestSuite;
 
 
 /**

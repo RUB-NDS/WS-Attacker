@@ -24,7 +24,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.XPathElement;
@@ -180,7 +180,6 @@ public class XPathNamespaceInjectionWeakness implements XPathWeaknessInterface {
           .getXPathElement());
         for (int i = 1; i < declarationPosition; ++i) {
             // go up
-            System.out.println("Up: " + i);
             declarationElement = (Element) declarationElement.getParentNode();
         }
         declarationElement.setAttribute("xmlns:" + thePrefix, injectedNamespaceUri);

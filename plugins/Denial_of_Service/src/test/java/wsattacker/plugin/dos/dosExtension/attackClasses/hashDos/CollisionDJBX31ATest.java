@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX31A;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

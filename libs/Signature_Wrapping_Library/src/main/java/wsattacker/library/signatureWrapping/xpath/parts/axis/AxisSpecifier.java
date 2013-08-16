@@ -25,7 +25,7 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
  */
 public class AxisSpecifier implements XPathPartInterface {
 
-    private String axisSpecifier;
+    private final String axisSpecifier;
     private AxisName axisName;
     private NodeType nodeType;
     private NodeName nodeName;
@@ -63,18 +63,32 @@ public class AxisSpecifier implements XPathPartInterface {
 
     @Override
     public boolean equals(Object o) {
+        boolean result = false;
         if (o instanceof String) {
-            return equals(new AxisSpecifier((String) o));
+            result = equals(new AxisSpecifier((String) o));
         }
         if (o instanceof AxisSpecifier) {
+//            AxisSpecifier ax = (AxisSpecifier) o;
+//            boolean sameNodeName = (ax.getNodeName() == getNodeName()) || (ax.getNodeName() != null && getNodeName() != null && ax
+//              .getNodeName().equals(getNodeName()));
+//            boolean sameNodeType = (ax.getNodeType() == getNodeType()) || (ax.getNodeType() != null && getNodeType() != null && ax
+//              .getNodeType().equals(getNodeType()));
+//            result = ax.getAxisName().equals(getAxisName()) && sameNodeName && sameNodeType;
             AxisSpecifier ax = (AxisSpecifier) o;
-            boolean sameNodeName = (ax.getNodeName() == getNodeName()) || (ax.getNodeName() != null && getNodeName() != null && ax
+            result |= (ax.getNodeName() == getNodeName()) || (ax.getNodeName() != null && getNodeName() != null && ax
               .getNodeName().equals(getNodeName()));
-            boolean sameNodeType = (ax.getNodeType() == getNodeType()) || (ax.getNodeType() != null && getNodeType() != null && ax
+            result &= (ax.getNodeType() == getNodeType()) || (ax.getNodeType() != null && getNodeType() != null && ax
               .getNodeType().equals(getNodeType()));
-            return ax.getAxisName().equals(getAxisName()) && sameNodeName && sameNodeType;
+            result &= ax.getAxisName().equals(getAxisName());
         }
-        return false;
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.axisSpecifier != null ? this.axisSpecifier.hashCode() : 0);
+        return hash;
     }
 
     private void eval() {

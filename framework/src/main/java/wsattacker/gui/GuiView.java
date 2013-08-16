@@ -18,7 +18,6 @@
  */
 package wsattacker.gui;
 
-import com.eviware.soapui.ui.Navigator;
 import com.eviware.x.form.XFormFactory;
 import com.eviware.x.impl.swing.SwingFormFactory;
 import javax.swing.WindowConstants;
@@ -26,20 +25,19 @@ import wsattacker.gui.component.MainWindow;
 import wsattacker.gui.component.attackoverview.AttackOverview_NB;
 import wsattacker.gui.component.expertview.ExpertView;
 import wsattacker.gui.component.log.GuiAppender;
-import wsattacker.gui.component.pluginconfiguration.PluginConfigurationGUI;
+import wsattacker.gui.component.pluginconfiguration.PluginConfigurationGUI_NB;
 import wsattacker.gui.component.target.WsdlLoaderGUI_NB;
 import wsattacker.gui.component.testrequest.RequestResponseGUI;
 import wsattacker.main.composition.ControllerInterface;
-import wsattacker.main.testsuite.TestSuite;
 
 public class GuiView implements Runnable {
+
 	ControllerInterface controller;
 	WsdlLoaderGUI_NB wsdlLoader;
 	MainWindow mainWindow;
-	PluginConfigurationGUI pluginConfig;
+	PluginConfigurationGUI_NB pluginConfig;
 	AttackOverview_NB attack;
 	RequestResponseGUI testRequest;
-
 	ExpertView expertView;
 
 	GuiView(ControllerInterface controller) {
@@ -59,8 +57,8 @@ public class GuiView implements Runnable {
 		testRequest = new RequestResponseGUI(controller);
 		mainWindow.getTabs().add(testRequest);
 
-		// plugin config
-		pluginConfig = new PluginConfigurationGUI(controller);
+		pluginConfig = new PluginConfigurationGUI_NB();
+		pluginConfig.getController().setController(controller);
 		mainWindow.getTabs().add(pluginConfig);
 
 		// attack
@@ -95,9 +93,9 @@ public class GuiView implements Runnable {
 		return testRequest;
 	}
 
-        public AttackOverview_NB getAttackOverview() {
-                return attack;
-        }
+	public AttackOverview_NB getAttackOverview() {
+		return attack;
+	}
 
 	@Override
 	public void run() {

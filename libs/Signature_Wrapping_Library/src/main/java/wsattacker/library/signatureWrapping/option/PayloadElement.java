@@ -26,8 +26,8 @@ import org.w3c.dom.Element;
  */
 public class PayloadElement {
 
-    private Element payloadElement;
-    private Element refferringElement;
+    private final Element payloadElement;
+    private final Element refferringElement;
     private boolean usePayloadElement = true;
 
     public PayloadElement(Element payloadElement, Element refferingElement) {

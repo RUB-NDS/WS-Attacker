@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.chart;
 
-import wsattacker.plugin.dos.dosExtension.chart.ChartObject;
 import org.jfree.chart.JFreeChart;
 import org.junit.After;
 import org.junit.AfterClass;

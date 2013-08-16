@@ -18,14 +18,10 @@
  */
 package wsattacker.gui.component.attackoverview.subcomponent;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-
 import wsattacker.gui.util.CenteredTableCellRenderer;
 import wsattacker.gui.util.ColoredResultTableCellRenderer;
 import wsattacker.gui.util.MultiLineTableCellRenderer;

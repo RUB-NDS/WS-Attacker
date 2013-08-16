@@ -18,124 +18,202 @@
  */
 package wsattacker.main.plugin;
 
-import wsattacker.main.composition.plugin.PluginOptionContainerObserver;
-import wsattacker.main.composition.plugin.PluginOptionValueObserver;
-import wsattacker.main.composition.plugin.option.AbstractOption;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-
 import org.apache.log4j.Logger;
+import org.jdesktop.beans.AbstractBean;
+import wsattacker.main.composition.plugin.AbstractPlugin;
+import wsattacker.main.composition.plugin.option.AbstractOption;
 
 /**
  * A container class for holding and managing plugin options
+ *
  * @author Christian Mainka
  *
  */
-public class PluginOptionContainer implements Iterable<AbstractOption>, Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private static Logger log = Logger.getLogger(PluginOptionContainer.class);
-	
-	private List<AbstractOption> options;
-	transient private Set<PluginOptionContainerObserver> containerObservers;
-	transient private Set<PluginOptionValueObserver> valueObservers;
-	
+public class PluginOptionContainer extends AbstractBean implements Iterable<AbstractOption>, Serializable {
+
+	private static final long serialVersionUID = 2L;
+	final private static Logger LOG = Logger.getLogger(PluginOptionContainer.class);
+	public static final String PROP_OPTIONS = "options";
+	public static final String PROP_OWNERPLUGIN = "ownerPlugin";
+	private List<AbstractOption> options = new ArrayList<AbstractOption>();
+	private AbstractPlugin ownerPlugin;
+
 	public PluginOptionContainer() {
-		this.options = new ArrayList<AbstractOption> ();
-		this.containerObservers = new HashSet<PluginOptionContainerObserver>(); // observers for observing the container state
-		this.valueObservers = new HashSet<PluginOptionValueObserver>(); // observer for observing option values
+		super();
 	}
+
+	public PluginOptionContainer(AbstractPlugin ownerPlugin) {
+		this();
+		this.ownerPlugin = ownerPlugin;
+	}
+
+	/**
+	 * Get the value of ownerPlugin
+	 *
+	 * @return the value of ownerPlugin
+	 */
+	public AbstractPlugin getOwnerPlugin() {
+		return ownerPlugin;
+	}
+
+	/**
+	 * Set the value of ownerPlugin
+	 *
+	 * @param ownerPlugin new value of ownerPlugin
+	 */
+	public void setOwnerPlugin(AbstractPlugin ownerPlugin) {
+		AbstractPlugin oldOwnerPlugin = this.ownerPlugin;
+		this.ownerPlugin = ownerPlugin;
+		firePropertyChange(PROP_OWNERPLUGIN, oldOwnerPlugin, ownerPlugin);
+	}
+
+	/**
+	 * Get all options. This List is unmodifable!
+	 *
+	 * @return the value of options
+	 */
+	public List<AbstractOption> getOptions() {
+		return Collections.unmodifiableList(options);
+	}
+
+	/**
+	 * Set all options at once, overwrite the old options completely.
+	 *
+	 * @param options new value of options
+	 */
+	public synchronized void setOptions(List<AbstractOption> options) {
+		synchronizeCollectionForAllPlugins(options);
+		List<AbstractOption> oldOptions = new ArrayList<AbstractOption>(this.options);
+		this.options = new ArrayList<AbstractOption>(options);
+		List<AbstractOption> newOptions = getOptions();
+		fireIndexedPropertyChange(PROP_OPTIONS, 0, oldOptions, newOptions);
+	}
+
+	/**
+	 * Get the value of options at specified index
+	 *
+	 * @param index
+	 * @return the value of options at specified index
+	 */
+	public AbstractOption getOptions(int index) {
+		return this.options.get(index);
+	}
+
+	/**
+	 * Set the value of options at specified index. Note that the old option
+	 * is overwritten.
+	 *
+	 * @param index
+	 * @param newOption new value of options at specified index
+	 */
+	public synchronized void setOptions(int index, AbstractOption newOption) {
+		AbstractOption oldOption = this.options.set(index, newOption);
+		fireIndexedPropertyChange(PROP_OPTIONS, index, oldOption, newOption);
+	}
+
 	/**
 	 * Adds an AbstractOption to the container
-	 * @param o
+	 *
+	 * @param option
 	 * @return the container (for multi adding)
 	 */
-	public PluginOptionContainer add(AbstractOption o) {
-		return add(options.size(), o);
+	public void add(AbstractOption option) {
+		add(options.size(), option);
 	}
-	
+
 	/**
 	 * Adds an AbstractOption to the container at a specified position
+	 *
 	 * @param position
 	 * @param option
 	 * @return the container (for multi adding)
 	 */
-	public PluginOptionContainer add(int position, AbstractOption o) {
-		AbstractOption search = getByName(o.getName());
+	public synchronized void add(int position, AbstractOption option) {
+		AbstractOption search = getByName(option.getName());
 		if (search != null) {
-			log.warn("Trying to add an option with an existing name... option not added! Please consult the plugin maintainer!");
-			return this;
+			LOG.warn("Trying to add an option with an existing name... option not added! Please consult the plugin maintainer!");
+		} else {
+			List<AbstractOption> oldOptions = new ArrayList<AbstractOption>(options);
+			options.add(position, option);
+			option.setCollection(this);
+			List<AbstractOption> newOptions = getOptions();
+			fireIndexedPropertyChange(PROP_OPTIONS, position, oldOptions, newOptions);
 		}
-		options.add(position, o);
-		o.setCollection(this);
-		notifyPluginOptionContainerOptionAdded(position);
-		return this;
 	}
-	
+
 	/**
 	 * removes an AbstractOption from the container
+	 *
 	 * @param option
 	 * @return the container (for multi adding)
 	 */
-	public PluginOptionContainer remove(AbstractOption o) {
-		if(options.contains(o)) {
-			options.remove(o);
-			o.setCollection(null);
+	public synchronized void remove(AbstractOption option) {
+		if (options.contains(option)) {
+			int position = indexOf(option);
+			List<AbstractOption> oldOptions = new ArrayList<AbstractOption>(options);
+			options.remove(option);
+			List<AbstractOption> newOptions = getOptions();
+			option.setCollection(null);
+			fireIndexedPropertyChange(PROP_OPTIONS, position, oldOptions, newOptions);
 		}
-		notifyPluginOptionContainerOptionRemoved(o);
-		return this;
 	}
-	
+
 	public boolean contains(AbstractOption o) {
 		return options.contains(o);
 	}
 
-	public void clear() {
-		for(AbstractOption o : options) {
-			remove(o);
-		}
+	public synchronized void clear() {
+		List<AbstractOption> oldOptions = new ArrayList<AbstractOption>(options);
+		options.clear();
+		List<AbstractOption> newOptions = getOptions();
+		fireIndexedPropertyChange(PROP_OPTIONS, 0, oldOptions, newOptions);
 	}
-	
+
 	/**
 	 * Gets an option by its index
+	 *
 	 * @param index
 	 * @return the option
 	 */
 	public AbstractOption getByIndex(int index) {
-		return options.get(index);
+		return getOptions(index);
 	}
-	
+
 	/**
 	 * Gets an option by its name
+	 *
 	 * @param name
 	 * @return the option
 	 */
 	public AbstractOption getByName(String name) {
-		for(AbstractOption option : options) {
+		AbstractOption result = null;
+		for (AbstractOption option : options) {
 			if (option.getName().equals(name)) {
-				return option;
+				result = option;
 			}
 		}
-		return null;
+		return result;
 	}
-	
+
 	/**
-	 * gets the index of an option
-	 * this can be used for adding options after/before another
+	 * gets the index of an option this can be used for adding options
+	 * after/before another
+	 *
 	 * @param option
 	 * @return the index of the option
 	 */
 	public int indexOf(AbstractOption option) {
 		return options.indexOf(option);
 	}
-	
+
 	/**
 	 * count the contained options
+	 *
 	 * @return size
 	 */
 	public int size() {
@@ -146,57 +224,22 @@ public class PluginOptionContainer implements Iterable<AbstractOption>, Serializ
 	public Iterator<AbstractOption> iterator() {
 		return options.iterator();
 	}
-	
-	// Observer
 
-	/**
-	 * Add a plugin container observer
-	 * The observer will be notified if a new options is added or an options is removed.
-	 */
-	public void addPluginOptionContainerObserver(PluginOptionContainerObserver o) {
-		containerObservers.add(o);
+	public AbstractOption[] getOptionArray() {
+		return options.toArray(new AbstractOption[]{});
 	}
 
-	public void removePluginOptionContainerObserver(PluginOptionContainerObserver o) {
-		containerObservers.remove(o);
-	}
-	
-	/**
-	 * Add a plugin value observer
-	 * The obsever will be notified if an option contained in this container changed its value
-	 * @param o
-	 */
-	public void addPluginValueContainerObserver(PluginOptionValueObserver o) {
-		valueObservers.add(o);
-	}
-
-	public void removePluginValueContainerObserver(PluginOptionValueObserver o) {
-		valueObservers.remove(o);
-	}
-	
-	private void notifyPluginOptionContainerOptionAdded(int index) {
-		for(PluginOptionContainerObserver o : containerObservers) {
-			o.optionContainerOptionAdded(this, index);
+	private void synchronizeCollectionForAllPlugins(List<AbstractOption> newOptions) {
+		// new added options must
+		for (AbstractOption o : newOptions) {
+			if (!options.contains(o)) {
+				o.setCollection(this);
+			}
 		}
-	}
-	
-	private void notifyPluginOptionContainerOptionRemoved(AbstractOption removedOption) {
-		for(PluginOptionContainerObserver o : containerObservers) {
-			o.optionContainerOptionRemoved(this, removedOption);
+		for (AbstractOption o : this.options) {
+			if (!newOptions.contains(o)) {
+				o.setCollection(null);
+			}
 		}
-	}
-	
-	private void notifyPluginOptionValueChanged(AbstractOption option) {
-		for(PluginOptionValueObserver o : valueObservers) {
-			o.optionValueChanged(option);
-		}
-	}
-	
-	/**
-	 * this method will be called by the contained options
-	 * @param option
-	 */
-	public void optionValueChanged(AbstractOption option) {
-		notifyPluginOptionValueChanged(option);
 	}
 }

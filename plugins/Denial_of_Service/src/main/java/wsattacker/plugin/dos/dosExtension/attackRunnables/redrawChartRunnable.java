@@ -18,8 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackRunnables;
 
-import javax.swing.border.LineBorder;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import wsattacker.plugin.dos.dosExtension.chart.ChartObject;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;

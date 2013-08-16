@@ -18,20 +18,17 @@
  */
 package wsattacker.gui.component.target.subcomponent;
 
-import javax.swing.JTextField;
-
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import java.beans.PropertyChangeSupport;
+import javax.swing.JTextField;
 import wsattacker.main.composition.ControllerInterface;
-
 import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
-import wsattacker.main.testsuite.TestSuite;
 
 public class WsdlInputField extends JTextField implements
         CurrentInterfaceObserver {
     
     private static final long serialVersionUID = 1L;
-    public static final String PROP_CONTROLLER = "PROP_CONTROLLER";
+    public static final String PROP_CONTROLLER = "controller";
     private ControllerInterface controller;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     

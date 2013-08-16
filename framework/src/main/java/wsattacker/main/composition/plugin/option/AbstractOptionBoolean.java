@@ -18,45 +18,59 @@
  */
 package wsattacker.main.composition.plugin.option;
 
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionBooleanGUI_NB;
+
 /**
  * WS-Attacker will represent this as a checkbox.
  */
 public abstract class AbstractOptionBoolean extends AbstractOption {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 2L;
+	public static final String PROP_ON = "on";
 	private boolean on;
-	
+
 	public AbstractOptionBoolean(String name, boolean on) {
 		this(name, on, "");
 	}
-	
+
 	public AbstractOptionBoolean(String name, boolean on, String description) {
 		super(name, description);
 		this.on = on;
 	}
-	
+
 	public boolean isOn() {
 		return on;
 	}
-	
-	public boolean setOn(boolean on) {
-		if(isValid(on)) {
+
+	public void setOn(boolean on) {
+		if (isValid(on)) {
+			boolean oldOn = this.on;
 			this.on = on;
-			notifyValueChanged();
-			return true;
+			firePropertyChange(PROP_ON, oldOn, on);
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(%s) returned false", on));
 		}
-		return false;
 	}
-	public boolean parseValue(String value) {
-		if(isValid(value)) {
-			setOn(new Boolean(value));
-			return true;
+
+	@Override
+	public void parseValue(String value) {
+		if (isValid(value)) {
+			setOn(Boolean.valueOf(value));
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
 		}
-		return false;
 	}
+
+	@Override
 	public String getValueAsString() {
-		return (new Boolean(on)).toString();
+		return String.format("%b", isOn());
 	}
-	
+
 	public abstract boolean isValid(boolean on);
+
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionBooleanGUI_NB(this);
+	}
 }

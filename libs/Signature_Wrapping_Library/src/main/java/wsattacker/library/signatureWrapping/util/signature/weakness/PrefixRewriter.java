@@ -21,9 +21,9 @@ package wsattacker.library.signatureWrapping.util.signature.weakness;
 import java.util.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
-public class PrefixRewriter {
+public final class PrefixRewriter {
 
     public static void rewritePrefix(Element element, String oldPrefix, String newPrefix) {
         rewritePrefix(element, oldPrefix, newPrefix, new ArrayList<Element>(0));

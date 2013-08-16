@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.gui;
 
-import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.AbortController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.CloseAttackUnfinishedController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.FinalizeController;

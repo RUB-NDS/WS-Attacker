@@ -18,31 +18,26 @@
  */
 package wsattacker.main.plugin;
 
-import com.eviware.soapui.SoapUI;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceConfigurationError;
-import java.util.ServiceLoader;
-
-import org.apache.log4j.Logger;
-
-import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.plugin.PluginManagerListener;
-import wsattacker.main.composition.plugin.PluginObserver;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
+import org.apache.log4j.Logger;
+import wsattacker.main.composition.plugin.AbstractPlugin;
+import wsattacker.main.composition.plugin.PluginManagerListener;
+import wsattacker.main.composition.plugin.PluginObserver;
 
 /**
  * The plugin manger manges all plugins. It can load them, activate them and is
@@ -51,13 +46,13 @@ import java.util.logging.Level;
  * @author Christian Mainka
  *
  */
-public class PluginManager implements PluginObserver {
+public final class PluginManager implements PluginObserver, Iterable<AbstractPlugin> {
 
-	private static Logger log = Logger.getLogger(PluginManager.class);
+	private static final Logger LOG = Logger.getLogger(PluginManager.class);
 	// singleton
-	private static PluginManager singleton = new PluginManager();
+	private static final PluginManager singleton = new PluginManager();
 	PluginContainer allPlugins, activePlugins;
-	transient private List<PluginManagerListener> listeners;
+	private final transient List<PluginManagerListener> listeners;
 
 	private PluginManager() {
 		// we handle two containers
@@ -78,7 +73,7 @@ public class PluginManager implements PluginObserver {
 				// filter jar files
 				if (file.isFile() && file.getName().toLowerCase().endsWith("jar")) {
 					// add to classpath
-					log.info("Loading " + file.getAbsolutePath());
+					LOG.info("Loading " + file.getAbsolutePath());
 					addToClasspath(file);
 				}
 			}
@@ -92,22 +87,22 @@ public class PluginManager implements PluginObserver {
 			method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
 		}
 		catch (NoSuchMethodException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 		catch (SecurityException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 		catch (MalformedURLException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 		catch (IllegalAccessException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 		catch (IllegalArgumentException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 		catch (InvocationTargetException ex) {
-			log.error(ex);
+			LOG.error(ex);
 		}
 
 	}
@@ -125,7 +120,7 @@ public class PluginManager implements PluginObserver {
 		// first we clear all known plugins
 		removeAllPlugins();
 		logger.info("(Re-)laoding available Plugins");
-		log.info("Searching for Plugins in Directory: " + pluginDir.getAbsolutePath());
+		LOG.info("Searching for Plugins in Directory: " + pluginDir.getAbsolutePath());
 		loadAvailableJars(pluginDir);
 
 		// add to list of available plugins
@@ -141,20 +136,26 @@ public class PluginManager implements PluginObserver {
 				o = it.next();
 			}
 			catch (ServiceConfigurationError sce) {
-				log.error(sce.getMessage());
+				LOG.error(sce.getMessage());
 				continue;
 			}
-			AbstractPlugin p = (AbstractPlugin) o;
-			p.initializePlugin();
-			addPlugin(p);
-			logger.trace("Loaded Plugin '" + p.getName() + "'");
+			AbstractPlugin plugin = (AbstractPlugin) o;
+			try {
+				plugin.initializePlugin();
+			}
+			catch (UnsupportedOperationException e) {
+				logger.warn("Could not load Plugin '" + plugin.getClass().getName() + "' / " + e.getMessage());
+				continue;
+			}
+			addPlugin(plugin);
+			logger.trace("Loaded Plugin '" + plugin.getName() + "'");
 			++suc;
 		}
 		String loaded = String.format("Successfuly loaded %d of %d plugins", suc, anz);
 		if (suc < anz) {
-			log.warn(loaded);
+			LOG.warn(loaded);
 		} else {
-			log.info(loaded);
+			LOG.info(loaded);
 		}
 		notifyContainerChanged();
 	}
@@ -197,7 +198,7 @@ public class PluginManager implements PluginObserver {
 		activeListObject = ois.readObject();
 		ois.close();
 		if (!(pluginObject instanceof PluginContainer)) {
-			log.error("Incompatible Filetype. Could not read plugin configuration.");
+			LOG.error("Incompatible Filetype. Could not read plugin configuration.");
 			return;
 		}
 		// restore plugin configuration
@@ -207,11 +208,11 @@ public class PluginManager implements PluginObserver {
 			if (currentPlugin != null) {
 				currentPlugin.restoreConfiguration(savedPlugin); // let the plugin restore its config
 			} else {
-				log.warn("Could not restore Plugin-Configuration for Plugin '" + savedPlugin.getName() + "' - Plugin not available!");
+				LOG.warn("Could not restore Plugin-Configuration for Plugin '" + savedPlugin.getName() + "' - Plugin not available!");
 			}
 		}
 		if (!(activeListObject instanceof List)) {
-			log.error("Incompatible Filetype. Could not read active plugin list.");
+			LOG.error("Incompatible Filetype. Could not read active plugin list.");
 			return;
 		}
 		@SuppressWarnings("rawtypes")
@@ -287,8 +288,8 @@ public class PluginManager implements PluginObserver {
 		}
 	}
 
-	// accessing plugins
-	public Iterator<AbstractPlugin> getPluginIterator() {
+	@Override
+	public Iterator<AbstractPlugin> iterator() {
 		return allPlugins.iterator();
 	}
 

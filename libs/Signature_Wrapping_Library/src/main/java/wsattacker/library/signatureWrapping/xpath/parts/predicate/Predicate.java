@@ -29,8 +29,8 @@ import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools
  */
 public class Predicate implements XPathPartInterface {
 
-    private String predicate;
-    private List<OrExpression> orExpressions;
+    private final String predicate;
+    private final List<OrExpression> orExpressions;
 
     public Predicate(String predicate) {
         this.predicate = predicate;
@@ -65,6 +65,13 @@ public class Predicate implements XPathPartInterface {
             return ((Predicate) o).getOrExpressions().equals(getOrExpressions());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + (this.predicate != null ? this.predicate.hashCode() : 0);
+        return hash;
     }
 
     private void eval() {

@@ -33,17 +33,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.signatureWrapping.schema.NullSchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzer;
-import wsattacker.library.signatureWrapping.schema.SchemaAnalyzerInterface;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
-import static wsattacker.library.signatureWrapping.util.dom.DomUtilities.domToString;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
@@ -133,8 +132,7 @@ public class XPathDescendantWeaknessTest {
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         String postXPath = "ns1:payloadBody";
 
         Element bodyChild = soap.getDummyPayloadBody();
@@ -171,8 +169,7 @@ public class XPathDescendantWeaknessTest {
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         String postXPath = "ns1:payloadBody/ns2:b";
 
         Element bodyChild = soap.getDummyPayloadBody();
@@ -219,8 +216,7 @@ public class XPathDescendantWeaknessTest {
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         String postXPath = "soapenv:Envelope/soapenv:Body/ns1:payloadBody/ns2:b";
 
         Element bodyChild = soap.getDummyPayloadBody();
@@ -260,8 +256,7 @@ public class XPathDescendantWeaknessTest {
       throws Exception {
         SoapTestDocument soap = new SoapTestDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         String xpath = "/soapenv:Envelope//ns1:payloadBody/ns2:b";
 
         Document doc = soap.getDocument();
@@ -324,8 +319,7 @@ public class XPathDescendantWeaknessTest {
       throws Exception {
         SoapTestDocument soap = new SoapTestDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         String xpath = "//ns1:payloadBody";
 
         Document doc = soap.getDocument();
@@ -383,13 +377,12 @@ public class XPathDescendantWeaknessTest {
 // log(Level.ALL);
         log.info("Starting xpathDescendantWithAttributeWeaknessTest");
 
-        String[] xpatharray
-          = {"/soapenv:Envelope//ns1:payloadBody[@wsu:Id='%s']/ns2:b", "//*[@wsu:Id='%s']/ns2:b"};
+        String[] xpatharray = {"/soapenv:Envelope//ns1:payloadBody[@wsu:Id='%s']/ns2:b", "//*[@wsu:Id='%s']/ns2:b"};
 
         for (String xpathformat : xpatharray) {
             SoapTestDocument soap = new SoapTestDocument();
 
-            SchemaAnalyzerInterface sa = new SchemaAnalyzer();
+            SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
 
             Document doc = soap.getDocument();
             // get signed element
@@ -400,7 +393,6 @@ public class XPathDescendantWeaknessTest {
             signedElement.appendChild(doc.createElementNS("http://ns2", "ns2:c"));
             signedElement = theSigned;
 
-            sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
             String id = soap.getDummyPayloadBodyWsuId();
             String xpath = String.format(xpathformat, id);
 
@@ -470,8 +462,7 @@ public class XPathDescendantWeaknessTest {
         log(Level.ALL);
         SoapTestDocument soap = new SoapTestDocument();
 
-        SchemaAnalyzerInterface sa = new SchemaAnalyzer();
-        sa.appendSchema(DomUtilities.readDocument("src/main/resources/XML Schema/soap11.xsd"));
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
         // get signed element
         Element signedElement = soap.getDummyPayloadBody();
         String id = soap.getDummyPayloadBodyWsuId();
@@ -534,7 +525,7 @@ public class XPathDescendantWeaknessTest {
     @Test
     public void withPreXPath() throws Exception {
         Document doc = DomUtilities.readDocument("src/test/resources/signed_rampart_message_soap_1.2.xml");
-        SchemaAnalyzerInterface sa = new NullSchemaAnalyzer();
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.NULL);
         SignatureManager sm = new SignatureManager();
         sm.setDocument(doc);
         Payload option = sm.getPayloads().get(1);
@@ -582,7 +573,8 @@ public class XPathDescendantWeaknessTest {
         assertFalse(payload.isTimestamp());
         assertTrue(payload.hasPayload());
 
-        WrappingOracle wrappingOracle = new WrappingOracle(soap.getDocument(), signatureManager.getPayloads(), new NullSchemaAnalyzer());
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.NULL);
+        WrappingOracle wrappingOracle = new WrappingOracle(soap.getDocument(), signatureManager.getPayloads(), sa);
         int max = wrappingOracle.maxPossibilities();
         assertTrue(0 < max);
 

@@ -19,18 +19,35 @@
 package wsattacker.main.composition.plugin.option;
 
 import java.io.File;
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.gui.component.pluginconfiguration.option.OptionFileGUI_NB;
 
 /**
- * WS-Attacker will represent this with a file picker. 
+ * WS-Attacker will represent this with a file picker.
  */
 public abstract class AbstractOptionFile extends AbstractOption {
-	private static final long serialVersionUID = 1L;
-	
-	File file;
-	
+
+	private static final long serialVersionUID = 2L;
+	public static final String PROP_FILE = "file";
+	private File file = null;
+
 	protected AbstractOptionFile(String name, String description) {
 		super(name, description);
 		this.file = null;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		if (isValid(file)) {
+			File oldFile = this.file;
+			this.file = file;
+			firePropertyChange(PROP_FILE, oldFile, file);
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", file));
+		}
 	}
 
 	@Override
@@ -43,33 +60,25 @@ public abstract class AbstractOptionFile extends AbstractOption {
 			return false;
 		}
 	}
-	
+
 	public abstract boolean isValid(File file);
 
 	@Override
-	public boolean parseValue(String value) {
-		if(isValid(value)) {
-			return setFile(new File(value));
+	public void parseValue(String value) {
+		if (isValid(value)) {
+			setFile(new File(value));
+		} else {
+			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
 		}
-		return false;
-	}
-	
-	public boolean setFile(File file) {
-		if(isValid(file)) {
-			this.file = file;
-			notifyValueChanged();
-			return true;
-		}
-		return false;
 	}
 
 	@Override
 	public String getValueAsString() {
-		return (file==null)?"":file.toString();
-	}
-	
-	public File getValue() {
-		return file;
+		return (file == null) ? "" : file.toString();
 	}
 
+	@Override
+	public OptionGUI createOptionGUI() {
+		return new OptionFileGUI_NB(this);
+	}
 }

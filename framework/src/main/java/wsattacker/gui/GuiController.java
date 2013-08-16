@@ -27,20 +27,14 @@ import com.eviware.soapui.model.iface.Request.SubmitException;
 import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import wsattacker.exception.NotSupportedException;
 import wsattacker.gui.component.log.GuiAppender;
-import wsattacker.gui.component.testrequest.RequestResponseGUI;
-import wsattacker.gui.component.target.WsdlLoaderGUI;
 import wsattacker.gui.component.target.WsdlLoaderGUI_NB;
+import wsattacker.gui.component.testrequest.RequestResponseGUI;
 import wsattacker.main.Preferences;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.plugin.AbstractPlugin;
@@ -51,16 +45,14 @@ import wsattacker.main.testsuite.CurrentRequest;
 import wsattacker.main.testsuite.TestSuite;
 
 public class GuiController implements ControllerInterface {
-	private static GuiController c = new GuiController(); // singleton
 
+	private static GuiController c = new GuiController(); // singleton
 	PluginManager pluginManager;
 	TestSuite testSuite;
 	Preferences prefs;
 	Logger log;
 	GuiView guiView;
-
 	private boolean abortAttacks;
-
 	Thread runThread;
 	PluginRunner runner;
 
@@ -106,7 +98,6 @@ public class GuiController implements ControllerInterface {
 		Logger.getLogger("wstester.main.PluginCollection").setLevel(Level.INFO);
 
 		// soapui logger
-
 		Logger.getLogger("com.eviware.soapui").setLevel(Level.OFF);
 		Logger.getLogger(DefaultSoapUICore.class).setLevel(Level.OFF);
 		Logger.getLogger("com.eviware.soapui.impl").setLevel(Level.OFF);
@@ -121,7 +112,6 @@ public class GuiController implements ControllerInterface {
 	// Interface Methods:
 	// Plugins
 	// ==============================================
-
 	@Override
 	public PluginManager getPluginManager() {
 		// return this.allPlugins.getPlugins();
@@ -167,19 +157,19 @@ public class GuiController implements ControllerInterface {
 	}
 
 	@Override
-	public boolean setOptionValue(AbstractPlugin plugin, String optionName,
+	public void setOptionValue(AbstractPlugin plugin, String optionName,
 			String optionValue) {
 		AbstractOption option = plugin.getPluginOptions().getByName(optionName);
-		if (option == null)
-			return false;
+		if (option == null) {
+			throw new NullPointerException("Option is null");
+		}
 		if (option.isValid(optionValue)) {
 			log.debug(String.format("Set PluginOption for '%s': {%s=%s}",
 					plugin.getName(), optionName, optionValue));
-			return option.parseValue(optionValue);
+			option.parseValue(optionValue);
 		}
 		log.debug(String.format("Value {%s=%s} for Plugin '%s' is INVALID!",
 				optionName, optionValue, plugin.getName()));
-		return false;
 	}
 
 	@Override
@@ -191,10 +181,10 @@ public class GuiController implements ControllerInterface {
 		runner = new PluginRunner(testSuite);
 		runThread = new Thread(runner);
 		runThread.setName("Run Plugins");
-                guiView.getAttackOverview().enableStartButton(false);
-                guiView.getAttackOverview().enableStopButton(true);
-                guiView.getAttackOverview().enableCleanButton(false);
-                guiView.getAttackOverview().enableSaveButton(false);
+		guiView.getAttackOverview().enableStartButton(false);
+		guiView.getAttackOverview().enableStopButton(true);
+		guiView.getAttackOverview().enableCleanButton(false);
+		guiView.getAttackOverview().enableSaveButton(false);
 		// SoapUI.getThreadPool().execute(runThread);
 		runThread.start();
 	}
@@ -206,6 +196,7 @@ public class GuiController implements ControllerInterface {
 	}
 
 	class PluginStopper implements Runnable {
+
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
@@ -219,9 +210,10 @@ public class GuiController implements ControllerInterface {
 				active.abortAttack();
 				try {
 					Thread.sleep(3000);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
 				} // wait for 3 seconds
-					// know force to kill the thread if its still running.
+				// know force to kill the thread if its still running.
 				if (runThread.isAlive()
 						&& runThread.getName().equals("Run Plugins")) {
 					log.warn("Force to kill thread, since plugin is still running.");
@@ -239,17 +231,17 @@ public class GuiController implements ControllerInterface {
 				setEnabledTabs(true, 0, 1, 2);
 				abortAttacks = false;
 			}
-                        guiView.getAttackOverview().enableStartButton(false);
-                        guiView.getAttackOverview().enableStopButton(false);
-                        guiView.getAttackOverview().enableCleanButton(true);
-                        guiView.getAttackOverview().enableSaveButton(true);
+			guiView.getAttackOverview().enableStartButton(false);
+			guiView.getAttackOverview().enableStopButton(false);
+			guiView.getAttackOverview().enableCleanButton(true);
+			guiView.getAttackOverview().enableSaveButton(true);
 		}
 	}
 
 	@Override
 	public void cleanPlugins() {
 		boolean noError = true;
-		Iterator<AbstractPlugin> it = getPluginManager().getPluginIterator();
+		Iterator<AbstractPlugin> it = getPluginManager().iterator();
 		AbstractPlugin plugin;
 		while (it.hasNext()) {
 			plugin = it.next();
@@ -268,15 +260,17 @@ public class GuiController implements ControllerInterface {
 			}
 		}
 		Result.getGlobalResult().clear();
-		if (noError)
+		if (noError) {
 			log.info("All Plugins successfully cleaned");
-                guiView.getAttackOverview().enableStartButton(true);
-                guiView.getAttackOverview().enableStopButton(false);
-                guiView.getAttackOverview().enableCleanButton(false);
-                guiView.getAttackOverview().enableSaveButton(false);
+		}
+		guiView.getAttackOverview().enableStartButton(true);
+		guiView.getAttackOverview().enableStopButton(false);
+		guiView.getAttackOverview().enableCleanButton(false);
+		guiView.getAttackOverview().enableSaveButton(false);
 	}
 
 	class PluginRunner implements Runnable {
+
 		TestSuite testSuite;
 		AbstractPlugin active;
 
@@ -323,10 +317,10 @@ public class GuiController implements ControllerInterface {
 			}
 			active = null;
 			setEnabledTabs(true, 0, 1, 2);
-                        guiView.getAttackOverview().enableStartButton(false);
-                        guiView.getAttackOverview().enableStopButton(false);
-                        guiView.getAttackOverview().enableCleanButton(true);
-                        guiView.getAttackOverview().enableSaveButton(true);
+			guiView.getAttackOverview().enableStartButton(false);
+			guiView.getAttackOverview().enableStopButton(false);
+			guiView.getAttackOverview().enableCleanButton(true);
+			guiView.getAttackOverview().enableSaveButton(true);
 		}
 
 		public AbstractPlugin getActive() {
@@ -338,9 +332,11 @@ public class GuiController implements ControllerInterface {
 	public void savePluginConfiguration(File file) {
 		try {
 			getPluginManager().savePlugins(file);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			log.error("IO Exception : " + e.getMessage());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("Unknown Error:" + e.getMessage());
 		}
 	}
@@ -349,11 +345,14 @@ public class GuiController implements ControllerInterface {
 	public void loadPluginConfiguration(File file) {
 		try {
 			getPluginManager().loadPlugins(file);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			log.error("IO Exception : " + e.getMessage());
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			log.error("Could not find all Plugin Classes");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("Unknown Error:" + e.getMessage());
 		}
 		log.info("Successfully loaded Configuration");
@@ -383,6 +382,7 @@ public class GuiController implements ControllerInterface {
 	}
 
 	class WsdlLoadRunner implements Runnable {
+
 		String uri;
 
 		public WsdlLoadRunner(String uri) {
@@ -407,16 +407,17 @@ public class GuiController implements ControllerInterface {
 				wsdlGui.getServiceComboBox().setEnabled(true);
 				wsdlGui.getOperationComboBox().setEnabled(true);
 				wsdlGui.getNewRequestButtom().setEnabled(true);
-			} catch (SoapUIException e) {
+			}
+			catch (SoapUIException e) {
 				log.error("SoapUIException while loading WSDL: " + e.getMessage());
-				e.printStackTrace();
-			} catch (NotSupportedException e) {
-				log.error("NotSupportedException while loading WSDL: " + e.getMessage());
-				e.printStackTrace();
-			} catch (Exception e) {
+			}
+			catch (UnsupportedOperationException e) {
+				log.error("UnsupportedOperationException while loading WSDL: " + e.getMessage());
+			}
+			catch (Exception e) {
 				log.error("Wsdl File could not be loaded: " + e.getMessage());
-				e.printStackTrace();
-			} finally {
+			}
+			finally {
 				// re-enable fields
 				wsdlGui.getUriField().setEnabled(true);
 				wsdlGui.getLoadButton().setEnabled(true);
@@ -526,6 +527,7 @@ public class GuiController implements ControllerInterface {
 	}
 
 	class TestRequest implements Runnable {
+
 		CurrentRequest request;
 
 		public TestRequest(CurrentRequest request) {
@@ -539,21 +541,22 @@ public class GuiController implements ControllerInterface {
 			log.info("Submitting Request...");
 			try {
 				request.submitRequest();
-			} catch (NullPointerException e) {
+			}
+			catch (NullPointerException e) {
 				String error = "Error while doing Test Request"
 						+ e.getMessage();
 				log.error(error);
 				gui.getResponseContent().setText(error);
-				e.printStackTrace();
 				return;
-			} catch (SubmitException e) {
+			}
+			catch (SubmitException e) {
 				String error = "Error while doing Test Request. "
 						+ e.getMessage();
 				log.error(error);
 				gui.getResponseContent().setText(error);
-				e.printStackTrace();
 				return;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("Unknown Error:" + e.getMessage());
 				return;
 			}
@@ -580,7 +583,6 @@ public class GuiController implements ControllerInterface {
 	}
 
 	// Additional Getter
-
 	public GuiView getGuiView() {
 		return guiView;
 	}

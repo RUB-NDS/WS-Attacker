@@ -19,12 +19,10 @@
 package wsattacker.main.plugin;
 
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import wsattacker.main.plugin.PluginContainer;
-import static org.junit.Assert.*;
 
 public class TestPluginContainer {
 

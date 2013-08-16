@@ -31,7 +31,7 @@ import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools
  */
 public class Step implements XPathPartInterface {
 
-    private String step;
+    private final String step;
     private Step nextStep, previousStep;
     private AxisSpecifier axisSpecifier;
     private List<Predicate> predicates;
@@ -98,14 +98,22 @@ public class Step implements XPathPartInterface {
 
     @Override
     public boolean equals(Object o) {
+        boolean result = false;
         if (o instanceof String) {
-            return equals(new Step((String) o));
+            result = equals(new Step((String) o));
         }
         if (o instanceof Step) {
             Step rel = (Step) o;
-            return rel.getAxisSpecifier().equals(getAxisSpecifier()) && rel.getPredicates().equals(getPredicates());
+            result = rel.getAxisSpecifier().equals(getAxisSpecifier()) && rel.getPredicates().equals(getPredicates());
         }
-        return false;
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.step != null ? this.step.hashCode() : 0);
+        return hash;
     }
 
     /*

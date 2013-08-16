@@ -49,23 +49,21 @@ class EnabledPluginTablePopup extends JPopupMenu {
 		public void actionPerformed(ActionEvent ae) {
 			function.getGuiWindow().setVisible(true);
 		}
-
 	}
 
 	public EnabledPluginTablePopup() {
-		System.out.println("### POPUP ###");
 		addPopupMenuListener(new PopupMenuListener() {
 			private void maybeUpdateSelection(PopupMenuEvent e) {
 				final AWTEvent awtEvent = EventQueue.getCurrentEvent();
 				final MouseEvent me;
-				if (!( awtEvent instanceof MouseEvent )
-						|| !( me = (MouseEvent) awtEvent ).isPopupTrigger()) {
+				if (!(awtEvent instanceof MouseEvent)
+						|| !(me = (MouseEvent) awtEvent).isPopupTrigger()) {
 					return;
 				}
 				final JPopupMenu menu = (JPopupMenu) e.getSource();
 				final Component invoker = menu.getInvoker();
 
-				if (!( invoker instanceof JTable )) {
+				if (!(invoker instanceof JTable)) {
 					return;
 				}
 				final JTable table = (JTable) invoker;
@@ -81,11 +79,13 @@ class EnabledPluginTablePopup extends JPopupMenu {
 				removeAll();
 				AbstractPlugin plugin = PluginManager.getInstance().getActive(row);
 				JMenu pluginmenu = new JMenu(plugin.getName());
-				for (PluginFunctionInterface function : plugin.getPluginFunctionList()) {
-					JMenuItem item = new JMenuItem(function.getName());
-					item.addActionListener(new ActionListenerHelper(function));
-					item.setEnabled(function.isEnabled());
-					pluginmenu.add(item);
+				for (PluginFunctionInterface function : plugin.getPluginFunctions()) {
+					if (function == null) {
+						JMenuItem item = new JMenuItem(function.getName());
+						item.addActionListener(new ActionListenerHelper(function));
+						item.setEnabled(function.isEnabled());
+						pluginmenu.add(item);
+					}
 				}
 				add(pluginmenu);
 			}

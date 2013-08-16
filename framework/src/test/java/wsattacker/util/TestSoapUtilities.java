@@ -19,8 +19,17 @@
 package wsattacker.util;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import static wsattacker.util.SoapUtilities.allNamespaces;
 import static wsattacker.util.SoapUtilities.getParents;
 import static wsattacker.util.SoapUtilities.getSoapChilds;
@@ -28,19 +37,6 @@ import static wsattacker.util.SoapUtilities.inputNeeded;
 import static wsattacker.util.SoapUtilities.soapToString;
 import static wsattacker.util.SoapUtilities.stringToSoap;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.junit.Test;
-
-import wsattacker.util.SoapUtilities;
 
 public class TestSoapUtilities {
 	private static final String MESSAGE = "" +

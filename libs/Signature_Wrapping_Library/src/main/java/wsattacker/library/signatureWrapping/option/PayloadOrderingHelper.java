@@ -21,7 +21,7 @@ package wsattacker.library.signatureWrapping.option;
 import java.util.*;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
 
-public class PayloadOrderingHelper {
+final public class PayloadOrderingHelper {
 
     public static void orderOuterToInner(List<Payload> payloadList) {
         List<Payload> copyList = new ArrayList<Payload>();

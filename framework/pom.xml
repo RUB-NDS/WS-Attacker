@@ -5,7 +5,6 @@
     <name>WS-Attacker-Framework</name>
     <groupId>wsattacker.framework</groupId>
     <artifactId>wsattacker-framework</artifactId>
-    <version>1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <inceptionYear>2010</inceptionYear>
 
@@ -27,7 +26,7 @@
     <parent>
         <groupId>wsattacker.basis</groupId>
         <artifactId>wsattacker-basis</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <repositories>
@@ -35,12 +34,10 @@
             <id>eviware</id>
             <url>http://www.eviware.com/repository/maven2/</url>
         </repository>
-        <!--
-        This Seems to be down, so we use it as a local dependency.
         <repository>
             <id>ESSI-Lab repository</id>
-            <url>http://ulisse.pin.unifi.it:8081/nexus/content/groups/open.repos</url>
             <name>ESSI-Lab repository</name>
+            <url>http://essi-lab.eu/nexus/content/groups/open.repos</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -48,7 +45,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        -->
     </repositories>
 
     <dependencies>
@@ -59,22 +55,21 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>it.cnr.imaa.essi</groupId>
             <artifactId>lablib-checkboxtree</artifactId>
             <version>3.3</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/../external-libs/lablib-checkboxtree-3.3.jar</systemPath>
         </dependency>
+        <!--
+          <dependency>
+              <groupId>org.jdesktop</groupId>
+              <artifactId>beansbinding</artifactId>
+              <version>1.2.1</version>
+          </dependency>
+        -->
         <dependency>
-            <groupId>org.jdesktop</groupId>
-            <artifactId>beansbinding</artifactId>
-            <version>1.2.1</version>
+            <groupId>it.tidalwave.betterbeansbinding</groupId>
+            <artifactId>betterbeansbinding-swingbinding</artifactId>
+            <version>1.3.0</version>
         </dependency>
     </dependencies>
 
@@ -144,45 +139,13 @@
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
-				<configuration>
-                                    <header>${basedir}/../license_header.txt</header>
+                <configuration>
+                    <header>${basedir}/../license_header.txt</header>
                     <properties>
                         <owner>Christian Mainka</owner>
                     </properties>
                 </configuration>
             </plugin>
-            <!--
-                This would extract and include all required libs into the
-                WS-Attacker JAR
-            -->
-<!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-
-                            Remove Signatures as we extract all used JAR files
-
-             <filters>
-              <filter>
-               <artifact>*:*</artifact>
-               <excludes>
-                <exclude>META-INF/*.SF</exclude>
-                <exclude>META-INF/*.DSA</exclude>
-                <exclude>META-INF/*.RSA</exclude>
-                <exclude>META-INF/*.INF</exclude>
-               </excludes>
-              </filter>
-             </filters>
-               </configuration>
-              </execution>
-             </executions>
-            </plugin>-->
         </plugins>
     </build>
 </project>

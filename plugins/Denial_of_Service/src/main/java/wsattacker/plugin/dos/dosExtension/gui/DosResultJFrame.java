@@ -23,46 +23,20 @@
 package wsattacker.plugin.dos.dosExtension.gui;
 
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.URL;
-import java.util.Calendar;
-
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle;
-import javax.swing.SwingConstants;
-
-import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.SwingUtilities;
-import org.apache.commons.io.FileUtils;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.PieDataset;
-import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateAttackStateRunnable;
 import wsattacker.plugin.dos.dosExtension.attackRunnables.redrawChartRunnable;
 
 import wsattacker.plugin.dos.dosExtension.chart.ChartObject;
-import wsattacker.plugin.dos.dosExtension.desktop.OpenURI;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.CloseAttackFinishedController;
 
 import wsattacker.plugin.dos.dosExtension.mvc.controller.ReportController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.HelpController;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
-import wsattacker.plugin.dos.dosExtension.mvc.view.ButtonView;
 
 
 /**

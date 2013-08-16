@@ -18,129 +18,166 @@
  */
 package wsattacker.plugin.signatureWrapping.option;
 
+import wsattacker.plugin.signatureWrapping.gui.OptionPayloadGUI_NB;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
-import wsattacker.gui.composition.AbstractOptionGUI;
+import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.library.signatureWrapping.option.Payload;
-import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
-import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
-import wsattacker.main.composition.ControllerInterface;
-import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.plugin.option.AbstractOptionComplex;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import wsattacker.main.composition.plugin.option.AbstractOption;
 
 /**
  * The OptionPayload class hold gives a connection between the signed element
  * and the payload element.
  */
-public class OptionPayload extends AbstractOptionComplex {
+public class OptionPayload extends AbstractOption implements PropertyChangeListener {
 
-	private static Logger log = Logger.getLogger(OptionPayload.class);
-	private Payload payload;
+    public static final String PROP_PAYLOAD = "payload";
+    final static private Logger LOG = Logger.getLogger(OptionPayload.class);
+    private final Payload payload;
+    public static final String PROP_VALUE = "value";
+    public static final String PROP_WORKINGXPATH = "workingXPath";
 
-	/**
-	 * Constructor for the OptionPayload.
-	 *
-	 * @param referringElement : Reference to the Reference element.
-	 * @param name : Name of the option.
-	 * @param signedElement : The signed element. This is usefull, if the
-	 * Reference element selects more than one signed element (e.g. when using
-	 * XPath).
-	 * @param description . Description of the option.
-	 */
-	public OptionPayload(Payload payload) {
-		super(payload.getName(), payload.getDescription());
-		this.payload = payload;
-	}
+    /**
+     * Get the value of value
+     *
+     * @return the value of value
+     */
+    public String getValue() {
+        return (payload == null) ? "" : payload.getValue();
+    }
 
-	/**
-	 * Does this option has any payload?
-	 *
-	 * @return
-	 */
-	public boolean hasPayload() {
-		return payload.hasPayload();
-	}
+    /**
+     * Constructor for the OptionPayload.
+     *
+     * @param referringElement : Reference to the Reference element.
+     * @param name             : Name of the option.
+     * @param signedElement    : The signed element. This is usefull, if the
+     *                         Reference element selects more than one signed element (e.g. when using
+     *                         XPath).
+     * @param description      . Description of the option.
+     */
+    public OptionPayload(Payload payload) {
+        super("Payload Option", "This payload will be placed at the position of the signed element.");
+        if (payload.getSignedElement() != null) {
+            String name = String.format("Payload for %s", payload.getSignedElement().getNodeName());
+            setName(name);
+            String description = DomUtilities.getFastXPath(payload.getSignedElement());
+            setDescription(description);
+        }
+        this.payload = payload;
+        payload.addPropertyChangeListener(this);
+    }
 
-	/**
-	 * Returns the payload element.
-	 * If it is a Timestamp element, automatically an updated one is returned.
-	 *
-	 * @return the payload elemeent.
-	 * @throws InvalidPayloadException
-	 */
-	public Element getPayloadElement() throws InvalidPayloadException {
-		return payload.getPayloadElement();
-	}
+    /**
+     * Does this option has any payload?
+     *
+     * @return
+     */
+    public boolean hasPayload() {
+        return (payload == null) ? false : payload.hasPayload();
+    }
 
-	/**
-	 * Return the signed element.
-	 *
-	 * @return
-	 */
-	public Element getSignedElement() {
-		return payload.getSignedElement();
-	}
+    /**
+     * Is the signed element a Timestamp element?
+     *
+     * @return
+     */
+    public boolean isTimestamp() {
+        return (payload == null) ? false : payload.isTimestamp();
+    }
 
-	/**
-	 * Return the Reference element.
-	 *
-	 * @return
-	 */
-	public ReferringElementInterface getReferringElement() {
-		return payload.getReferringElement();
-	}
+    /**
+     * Set if the signed element is a Timestamp element.
+     *
+     * @param isTimestamp
+     */
+    public void setTimestamp(boolean isTimestamp) {
+        payload.setTimestamp(isTimestamp);
+    }
 
-	/**
-	 * Is the signed element a Timestamp element?
-	 *
-	 * @return
-	 */
-	public boolean isTimestamp() {
-		return payload.isTimestamp();
-	}
+    @Override
+    public boolean isValid(String value) {
+        return payload.isValid(value);
+    }
 
-	/**
-	 * Set if the signed element is a Timestamp element.
-	 *
-	 * @param isTimestamp
-	 */
-	public void setTimestamp(boolean isTimestamp) {
-		payload.setTimestamp(isTimestamp);
-	}
+    /**
+     * Returns the GUI component for the OptionPayload used by the WS-Attacker.
+     */
+    @Override
+    public OptionGUI createOptionGUI() {
+        LOG.trace(getName() + ": " + "GUI Requested");
+        return new OptionPayloadGUI_NB(this);
+    }
 
-	private Logger log() {
-		return Logger.getLogger(getClass());
-	}
+    /**
+     * The the value for the payload.
+     */
+    @Override
+    public void parseValue(String value) {
+        setValue(value);
+    }
 
-	@Override
-	public boolean isValid(String value) {
-		return payload.isValid(value);
-	}
+    /**
+     * Set the value of value
+     *
+     * @param value new value of value
+     */
+    public void setValue(String value) {
+        boolean isValid = isValid(value);
+        if (isValid) {
+            String oldValue = getValue();
+            payload.setValue(value);
+            String newValue = getValue();
+            firePropertyChange(PROP_VALUE, oldValue, newValue);
+            LOG.info(String.format("Saving Payload Value: %s", newValue));
+        } else {
+            throw new IllegalArgumentException(String.format("isValid(\"%s\" returned false", value));
+        }
+    }
 
-	/**
-	 * Returns the GUI component for the OptionPayload used by the WS-Attacker.
-	 */
-	@Override
-	public AbstractOptionGUI getComplexGUI(ControllerInterface controller,
-	  AbstractPlugin plugin) {
-		log().trace(getName() + ": " + "GUI Requested");
-		return new OptionPayloadGUI(controller, plugin, this);
-	}
+    @Override
+    public String getValueAsString() {
+        return getValue();
+    }
 
-	/**
-	 * The the value for the payload.
-	 */
-	@Override
-	public boolean parseValue(String value) {
-		boolean isValid = isValid(value);
-		if (isValid) {
-			payload.setValue(value);
-		}
-		return isValid;
-	}
+    /**
+     * Get the value of workingXPath
+     *
+     * @return the value of workingXPath
+     */
+    public String getWorkingXPath() {
+        String result;
+        if (payload != null && payload.getReferringElement() != null) {
+            result = payload.getReferringElement().getXPath();
+        } else {
+            result = "";
+        }
+        return result;
+    }
 
-	@Override
-	public String getValueAsString() {
-		return payload.getValue();
-	}
+    /**
+     * Set the value of workingXPath
+     *
+     * @param workingXPath new value of workingXPath
+     */
+    public void setWorkingXPath(String workingXPath) {
+        String oldWorkingXPath = getWorkingXPath();
+        payload.getReferringElement().setXPath(workingXPath);
+        firePropertyChange(PROP_WORKINGXPATH, oldWorkingXPath, workingXPath);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent pce) {
+        final String property = pce.getPropertyName();
+        if (Payload.PROP_TIMESTAMP.equals(property)) {
+            firePropertyChange(pce);
+        } else if (Payload.PROP_PAYLOADELEMENT.equals(property)) {
+            String oldValue = DomUtilities.domToString((Element) pce.getOldValue());
+            String newValue = DomUtilities.domToString((Element) pce.getNewValue());
+            firePropertyChange(PROP_VALUE, oldValue, newValue);
+        }
+    }
 }

@@ -42,8 +42,8 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 public class XPathAttributeWeaknessPostProcess implements XPathWeaknessInterface {
 
     private Step step;
-    private static Logger log = Logger.getLogger(XPathAttributeWeaknessPostProcess.class);
-    private List<AttributeAndExpression> attributeAndList;
+    private final static Logger LOG = Logger.getLogger(XPathAttributeWeaknessPostProcess.class);
+    private final List<AttributeAndExpression> attributeAndList;
 
     public XPathAttributeWeaknessPostProcess(Step step)
       throws InvalidWeaknessException {
@@ -115,7 +115,7 @@ public class XPathAttributeWeaknessPostProcess implements XPathWeaknessInterface
         }
 
         if (signedAttribute == null) {
-            log.warn("Could not detect signed attribute Element for " + and);
+            LOG.warn("Could not detect signed attribute Element for " + and);
             throw new InvalidWeaknessException();
         }
 
@@ -169,7 +169,7 @@ public class XPathAttributeWeaknessPostProcess implements XPathWeaknessInterface
             default:
 
                 String error = "Index out of range: '" + index + "'";
-                log.warn(error);
+                LOG.warn(error);
                 throw new InvalidWeaknessException(error);
         }
 

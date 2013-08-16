@@ -18,10 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.concurrent.TimeUnit;
-
 public class CollisionDJBX31A implements CollisionInterface {   
     
     /**

@@ -37,9 +37,9 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessToo
  */
 public class XPathAttributeWeakness implements XPathWeaknessInterface {
 
-    private XPathWeaknessInterface postProcess;
-    private Step step;
-    private int matches;
+    private final XPathWeaknessInterface postProcess;
+    private final Step step;
+    private final int matches;
 
     public XPathAttributeWeakness(Step step,
       SignedElement signedElement,

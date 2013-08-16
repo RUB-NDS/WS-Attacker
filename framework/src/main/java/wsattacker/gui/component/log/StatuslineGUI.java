@@ -19,15 +19,12 @@
 package wsattacker.gui.component.log;
 
 import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-
 import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
-
 import wsattacker.gui.util.Colors;
 
 public class StatuslineGUI extends JLabel {

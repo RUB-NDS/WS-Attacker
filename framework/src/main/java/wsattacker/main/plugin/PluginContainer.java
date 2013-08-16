@@ -20,7 +20,6 @@ package wsattacker.main.plugin;
 
 import java.io.Serializable;
 import java.util.Iterator;
-
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.util.SortedUniqueList;
 

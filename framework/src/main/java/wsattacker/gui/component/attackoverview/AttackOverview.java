@@ -196,7 +196,6 @@ public class AttackOverview extends javax.swing.JPanel {
 			thisLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {
 					getClean(), stop, start });
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

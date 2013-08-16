@@ -17,8 +17,8 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package wsattacker.gui.component.testrequest;
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -28,13 +28,10 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-
+import wsattacker.gui.component.target.subcomponent.RequestInputEditor;
 import wsattacker.gui.util.XmlTextPane;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.testsuite.CurrentRequestObserver;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import wsattacker.gui.component.target.subcomponent.RequestInputEditor;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -138,7 +135,6 @@ public class RequestResponseGUI extends javax.swing.JPanel implements CurrentReq
 					    .addComponent(responseScrollPane, GroupLayout.Alignment.LEADING, 0, 417, Short.MAX_VALUE))
 					.addGap(7));
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	

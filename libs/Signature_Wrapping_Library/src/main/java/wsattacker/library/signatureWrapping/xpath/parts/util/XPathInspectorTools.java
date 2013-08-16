@@ -27,7 +27,7 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
  * @author christian
  *
  */
-public class XPathInspectorTools {
+public final class XPathInspectorTools {
 
     /**
      * Find the next character 'needle' in the String 's' beginning at

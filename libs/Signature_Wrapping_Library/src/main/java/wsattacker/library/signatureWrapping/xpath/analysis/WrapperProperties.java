@@ -19,18 +19,18 @@
 package wsattacker.library.signatureWrapping.xpath.analysis;
 
 import org.w3c.dom.Element;
-import wsattacker.library.signatureWrapping.schema.AnyElementPropertiesInterface;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.schemaanalyzer.AnyElementPropertiesInterface;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * Wrapper class which hold the properties for a payload element.
  */
 public class WrapperProperties {
 
-    private AnyElementPropertiesInterface anyElementPorperties;
-    private Element signedElement;
-    private int possiblePositions;
-    private boolean wrapperNeeded;
+    private final AnyElementPropertiesInterface anyElementPorperties;
+    private final Element signedElement;
+    private final int possiblePositions;
+    private final boolean wrapperNeeded;
 
     /**
      * Constructor.

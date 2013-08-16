@@ -20,6 +20,12 @@ package wsattacker.library.signatureWrapping.util.signature;
 
 import org.w3c.dom.Element;
 
+/**
+ * This interface represents a referring element. This can be either an ID-based
+ * referring element or an XPath based referring element.
+ *
+ * @author Christian Mainka
+ */
 public interface ReferringElementInterface {
 
     /**

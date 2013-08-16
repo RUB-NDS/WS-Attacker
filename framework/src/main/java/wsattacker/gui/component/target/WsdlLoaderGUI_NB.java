@@ -17,7 +17,7 @@ import wsattacker.main.composition.ControllerInterface;
  * @author christian
  */
 public class WsdlLoaderGUI_NB extends javax.swing.JPanel {
-    public static final String PROP_CONTROLLER = "PROP_CONTROLLER";
+    public static final String PROP_CONTROLLER = "controller";
 
     private ControllerInterface controller = null;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);

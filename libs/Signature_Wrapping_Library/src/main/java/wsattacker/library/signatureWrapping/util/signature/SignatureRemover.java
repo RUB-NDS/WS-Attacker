@@ -21,7 +21,7 @@ package wsattacker.library.signatureWrapping.util.signature;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import wsattacker.library.signatureWrapping.util.dom.DomUtilities;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * Helper Class to remove an XML Signature from an XML message.
