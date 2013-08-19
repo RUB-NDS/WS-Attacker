@@ -32,7 +32,7 @@
     <repositories>
         <repository>
             <id>eviware</id>
-            <url>http://www.eviware.com/repository/maven2/</url>
+            <url>http://www.eviware.com/repository/maven2</url>
         </repository>
         <repository>
             <id>ESSI-Lab repository</id>
