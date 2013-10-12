@@ -57,9 +57,6 @@ public class XmlAttributeCount extends AbstractDosPlugin {
           + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
           + "with the defined number of unique attributes.\n"
           + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-          + "\n\n"
-          + "Parameter 8 defines the number of attributes to be inserted.\n"
-          + "Each attribute name and each attribute value is unique.\n"
           + "\n\n");
         setCountermeasures("In order to counter the attack limit the number of attributes of an element.\n This can be achived using XML schema validation.");
     }

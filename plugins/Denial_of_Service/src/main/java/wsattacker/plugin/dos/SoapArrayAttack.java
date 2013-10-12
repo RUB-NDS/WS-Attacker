@@ -61,9 +61,6 @@ public class SoapArrayAttack extends AbstractDosPlugin {
           + "\n\n"
           + "The attack algorithm will automatically search for any SOAP array and will \n"
           + "change the array size to the value defined in parameter 8."
-          + "\n\n"
-          + "Parameter 8 defines the size of the array. The higher the array size, the higher the allocated memory.\n"
-          + "One Billion array elements is the default value\n"
           + "\n\n");
         setCountermeasures("In order to counter the attack, strict schema validation has to be performed that limits the array size. "
           + "See http://clawslab.nds.rub.de/wiki/index.php/Soap_Array_Attack for more detailed countermeasures.");

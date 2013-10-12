@@ -68,9 +68,6 @@ public class XmlElementCount extends AbstractDosPlugin {
           + "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
           + "All inserted elements have the same name as defined in parameter 8.1. \n"
           + "All inserted elements are children of the same element."
-          + "\n\n"
-          + "Parameter 8.0 defines the number of elements to be inserted.\n"
-          + "Parameter 8.1 sets the name of the elements to be insterted.\n"
           + "\n\n");
         setCountermeasures("In order to counter the attack limit the number of elements in an XML document.\n This can be achived using XML schema validation.");
     }

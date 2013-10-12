@@ -62,8 +62,7 @@ public class XmlExternalEntity extends AbstractDosPlugin {
           + "with an attribute that uses the entity that points to the external resource.\n"
           + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
           + "\n\n"
-          + "Parameter 8 defines the path to the external resource."
-          + "The default value /dev/null/ will only work on Linux bases Web services."
+          + "The default value for the external source paramter is /dev/null/ and will only work on Linux bases Web services."
           + "\n\n");
         setCountermeasures("In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
           + "Apache Axis2 1.5.2 is e.g. known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore");

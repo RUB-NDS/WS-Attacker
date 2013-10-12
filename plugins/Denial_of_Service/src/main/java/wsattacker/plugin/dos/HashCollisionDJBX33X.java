@@ -64,9 +64,6 @@ public class HashCollisionDJBX33X extends AbstractDosPlugin {
           + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
           + "with the defined number of colliding attributes or XML namespaces.\n"
           + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-          + "\n\n"
-          + "Parameter 8 defines the number of colliding XML attributes or XML namespaces.\n"
-          + "Parameter 9 decides if colliding attributes or colliding XML namespaces are inserted "
           + "\n\n");
         setCountermeasures("In order to fix the root of the problem the implementation of the "
           + "hash mapping algorithm has to be made cryptographically stronger.\n"

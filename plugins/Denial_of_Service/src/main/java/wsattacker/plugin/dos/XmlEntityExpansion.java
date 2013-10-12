@@ -57,7 +57,7 @@ public class XmlEntityExpansion extends AbstractDosPlugin {
           + "with an attribute that uses an entity that will start the recursive process.\n"
           + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
           + "\n\n"
-          + "Parameter 8 defines the exponent that is used for calculating the number of resulting XML entities. "
+          + "The number of entitites defines the exponent that is used for calculating the number of resulting XML entities. "
           + "The base is 2.\n"
           + "- Input 10 will result in  2^10 = 1024 entities."
           + "- Input 15 will result in  2^10 = 32768 entities."
