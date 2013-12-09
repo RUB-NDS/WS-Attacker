@@ -27,7 +27,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_SCHEMA;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SCHEMA;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class SchemaAnalyzerImpl implements SchemaAnalyzer {

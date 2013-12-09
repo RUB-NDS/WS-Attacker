@@ -25,16 +25,16 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_DS;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_SOAP_1_1;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_SOAP_1_2;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_WSSE;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_WSU;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_SOAP_1_1;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_SOAP_1_2;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSSE_1_0;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSU;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_DS;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_SOAP_1_1;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_SOAP_1_2;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_WSSE;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_WSU;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SOAP_1_1;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SOAP_1_2;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSSE_1_0;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**

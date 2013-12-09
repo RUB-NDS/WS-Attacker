@@ -43,7 +43,7 @@ import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;

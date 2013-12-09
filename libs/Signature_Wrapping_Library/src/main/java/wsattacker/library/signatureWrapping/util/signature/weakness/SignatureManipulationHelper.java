@@ -26,7 +26,7 @@ import java.util.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 public final class SignatureManipulationHelper {
 

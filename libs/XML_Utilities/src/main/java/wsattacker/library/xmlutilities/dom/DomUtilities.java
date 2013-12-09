@@ -44,7 +44,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSU;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 
 public final class DomUtilities {
 

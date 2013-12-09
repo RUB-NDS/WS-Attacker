@@ -32,7 +32,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.getFastXPath;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.analysis.WrapperProperties;
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;

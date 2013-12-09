@@ -58,11 +58,11 @@ import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.evaluateXPath;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.findChildren;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.getFirstChildElement;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_DS;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.PREFIX_NS_WSSE;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSSE_1_0;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_WSU;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_DS;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_WSSE;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSSE_1_0;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 
 /**

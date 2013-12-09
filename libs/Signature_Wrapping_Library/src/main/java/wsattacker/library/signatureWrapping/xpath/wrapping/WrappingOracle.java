@@ -30,7 +30,7 @@ import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import static wsattacker.library.signatureWrapping.util.signature.NamespaceConstants.URI_NS_DS;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
 import wsattacker.library.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.library.signatureWrapping.util.signature.XPathElement;
 import wsattacker.library.signatureWrapping.xpath.analysis.XPathAnalyser;

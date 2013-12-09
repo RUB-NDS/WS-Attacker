@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
 import wsattacker.library.signatureFaking.exceptions.CertificateHandlerException;
 import wsattacker.library.signatureFaking.exceptions.SignatureFakingException;
 import wsattacker.library.signatureFaking.helper.CertificateHandler;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**

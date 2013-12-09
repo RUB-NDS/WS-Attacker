@@ -35,7 +35,7 @@ import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
 

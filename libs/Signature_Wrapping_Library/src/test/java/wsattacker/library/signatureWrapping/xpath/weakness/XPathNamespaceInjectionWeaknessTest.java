@@ -31,7 +31,7 @@ import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
-import wsattacker.library.signatureWrapping.util.signature.NamespaceConstants;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
