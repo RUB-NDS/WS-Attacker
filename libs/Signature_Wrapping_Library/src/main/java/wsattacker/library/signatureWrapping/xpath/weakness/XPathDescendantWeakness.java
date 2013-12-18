@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import wsattacker.library.schemaanalyzer.AnyElementPropertiesInterface;
+import wsattacker.library.schemaanalyzer.AnyElementProperties;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
@@ -85,10 +85,10 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
             matched.add(doc.getDocumentElement());
         }
         LOG.info("init: Matched " + matched.toString());
-        Set<AnyElementPropertiesInterface> schemaWeaknesses;
+        Set<AnyElementProperties> schemaWeaknesses;
         for (Element ele : matched) {
             schemaWeaknesses = schemaAnalyser.findExpansionPoint(ele);
-            for (AnyElementPropertiesInterface extension : schemaWeaknesses) {
+            for (AnyElementProperties extension : schemaWeaknesses) {
                 WrapperProperties wp = new WrapperProperties(extension, signedElement.getSignedElement());
 
                 int factor = (wp.isWrapperNeeded() ? 1 : 2);
@@ -257,7 +257,7 @@ public class XPathDescendantWeakness implements XPathWeaknessInterface {
         // Which Schema-Weakness to abuse:
         // ////////////////////////////////
         WrapperProperties wrapperProperty = wrapperProperties.get(wrapperPropertiesIndex);
-        AnyElementPropertiesInterface anyElementProperties = wrapperProperty.getAnyElementPorperties();
+        AnyElementProperties anyElementProperties = wrapperProperty.getAnyElementPorperties();
 
         // The parent of the wrapper to place
         Element wrapperParent = DomUtilities

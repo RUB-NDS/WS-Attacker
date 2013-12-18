@@ -26,6 +26,7 @@ import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadOrderingHelper;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 /**
  * This class defines which parts of an XML Document is signed. For this

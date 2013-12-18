@@ -47,5 +47,5 @@ public interface SchemaAnalyzer {
      * @param fromHere
      * @param filterList
      */
-    public abstract Set<AnyElementPropertiesInterface> findExpansionPoint(Element fromHere);
+    public abstract Set<AnyElementProperties> findExpansionPoint(Element fromHere);
 }

@@ -99,7 +99,7 @@ public class SchemaAnalyzerImpl implements SchemaAnalyzer {
      * wsattacker.plugin.signatureWrapping.schema.SchemaAnalyserInterface#findExpansionPoint(org.w3c.dom.Element)
      */
     @Override
-    public Set<AnyElementPropertiesInterface> findExpansionPoint(Element fromHere) {
+    public Set<AnyElementProperties> findExpansionPoint(Element fromHere) {
         if (!isInCurrentAnalysis(fromHere)) {
             LOG.trace("New Document to analyze!");
             // We will clone the Document of Node fromHere and add all possible expansionpoints
@@ -109,12 +109,12 @@ public class SchemaAnalyzerImpl implements SchemaAnalyzer {
         Document expandedDoc = expandedAnalyzingDocument; // get current analyzed document
         Element start = DomUtilities.findCorrespondingElement(expandedDoc, fromHere); // corresponding "fromHere"
         // return a Map of <Node,Properties>
-        Set<AnyElementPropertiesInterface> result = new TreeSet<AnyElementPropertiesInterface>();
+        Set<AnyElementProperties> result = new TreeSet<AnyElementProperties>();
         findExpansionPoint(result, start);
         return result;
     }
 
-    private void findExpansionPoint(Set<AnyElementPropertiesInterface> result,
+    private void findExpansionPoint(Set<AnyElementProperties> result,
       Element start) {
         LOG.trace("Find expansion point of Element '" + start.getNodeName() + "'");
         // Shall the Element be filtered?
@@ -130,7 +130,7 @@ public class SchemaAnalyzerImpl implements SchemaAnalyzer {
             if ("any".equals(possibleChild.getLocalName())) {
                 if (!hasAny) {
                     hasAny = true; // add only one any child element
-                    result.add(new AnyElementProperties(possibleChild, start));
+                    result.add(new AnyElementPropertiesImpl(possibleChild, start));
                     LOG.trace("\t-> xs:any <- allowed!");
                 }
             } else {

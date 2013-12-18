@@ -18,7 +18,6 @@
         <module>Schema_Analyzer_Library</module>
         <module>Signature_Wrapping_Library</module>
         <module>Signature_Faking_Library</module>
-        <module>XML_Encryption_Attack_Library</module>
     </modules>
 
     <build>

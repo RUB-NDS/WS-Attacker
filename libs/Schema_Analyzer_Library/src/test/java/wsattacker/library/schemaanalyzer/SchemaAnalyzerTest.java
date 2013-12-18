@@ -159,7 +159,7 @@ public class SchemaAnalyzerTest {
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
         instance.appendSchema(DOC_SOAP11);
 
-        Set<AnyElementPropertiesInterface> result = instance.findExpansionPoint(fromHere);
+        Set<AnyElementProperties> result = instance.findExpansionPoint(fromHere);
 
         Set<String> expectedResult = new HashSet<String>();
         expectedResult.add(URI_NS_SOAP_1_1 + ":" + PREFIX_NS_SOAP_1_1 + ":" + "Envelope");
@@ -169,7 +169,7 @@ public class SchemaAnalyzerTest {
         assertEquals(expectedResult.size(), result.size());
 
         Set<String> gotResult = new HashSet<String>();
-        for (AnyElementPropertiesInterface any : result) {
+        for (AnyElementProperties any : result) {
             Element extensionPoint = any.getDocumentElement();
             gotResult.add(extensionPoint.getNamespaceURI() + ":" + extensionPoint.getNodeName());
         }
@@ -189,7 +189,7 @@ public class SchemaAnalyzerTest {
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
         instance.appendSchema(DOC_SOAP12);
 
-        Set<AnyElementPropertiesInterface> result = instance.findExpansionPoint(fromHere);
+        Set<AnyElementProperties> result = instance.findExpansionPoint(fromHere);
 
         Set<String> expectedResult = new HashSet<String>();
         expectedResult.add(URI_NS_SOAP_1_2 + ":" + PREFIX_NS_SOAP_1_2 + ":" + "Body");
@@ -198,7 +198,7 @@ public class SchemaAnalyzerTest {
         assertEquals(expectedResult.size(), result.size());
 
         Set<String> gotResult = new HashSet<String>();
-        for (AnyElementPropertiesInterface any : result) {
+        for (AnyElementProperties any : result) {
             Element extensionPoint = any.getDocumentElement();
             gotResult.add(extensionPoint.getNamespaceURI() + ":" + extensionPoint.getNodeName());
         }
@@ -214,7 +214,7 @@ public class SchemaAnalyzerTest {
         sa.appendSchema(DOC_XPATH);
         sa.appendSchema(DOC_WSSE10);
         sa.appendSchema(DOC_WSSE11);
-        Set<AnyElementPropertiesInterface> result;
+        Set<AnyElementProperties> result;
         List<String> cmp;
         List<QName> filterList;
 
@@ -233,7 +233,7 @@ public class SchemaAnalyzerTest {
         result = sa.findExpansionPoint(envelope);
         // Compare results
         assertEquals(cmp.size(), result.size()); // same size
-        for (AnyElementPropertiesInterface prop : result) {
+        for (AnyElementProperties prop : result) {
             assertTrue(cmp.contains(prop.getDocumentElement().getNodeName())); // all elements contained
         }
 
@@ -249,7 +249,7 @@ public class SchemaAnalyzerTest {
         result = sa.findExpansionPoint(envelope);
         // Compare results
         assertEquals(cmp.size(), result.size()); // same size
-        for (AnyElementPropertiesInterface prop : result) {
+        for (AnyElementProperties prop : result) {
             assertTrue(cmp.contains(prop.getDocumentElement().getNodeName())); // all elements contained
         }
 
@@ -278,7 +278,7 @@ public class SchemaAnalyzerTest {
         result = sa.findExpansionPoint(envelope); // Double Test
         // Compare results
         assertEquals("Not all expected elements contained: " + result.toString(), cmp.size(), result.size()); // same size
-        for (AnyElementPropertiesInterface prop : result) {
+        for (AnyElementProperties prop : result) {
             assertTrue(cmp.contains(prop.getDocumentElement().getNodeName())); // all elements contained
         }
         sa.setFilterList(new ArrayList<QName>()); // no filter
@@ -296,7 +296,7 @@ public class SchemaAnalyzerTest {
         result = sa.findExpansionPoint(envelope);
         // Compare results
         assertEquals(cmp.size(), result.size()); // same size
-        for (AnyElementPropertiesInterface prop : result) {
+        for (AnyElementProperties prop : result) {
             assertTrue(cmp.contains(prop.getDocumentElement().getNodeName())); // all elements contained
         }
     }

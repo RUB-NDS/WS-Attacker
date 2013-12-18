@@ -209,8 +209,8 @@ public class SoapActionSpoofing extends AbstractPlugin implements PropertyChange
                 String soapActionValue;
                 soapActionValue = TestSuite
                   .getInstance()
-                  .getCurrentService()
-                  .getWsdlService()
+                  .getCurrentInterface()
+                  .getWsdlInterface()
                   .getOperationByName(chosenOperationName)
                   .getAction();
                 log().info(String.format("Setting SOAPAction: %s -> %s", chosenOperationName, soapActionValue));

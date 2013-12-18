@@ -25,38 +25,26 @@ import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDial
 
 public class SignatureWrappingAnalyzeFunction implements PluginFunctionInterface {
 
-	SignatureWrapping plugin;
+    SignatureWrapping plugin;
 
-	public SignatureWrappingAnalyzeFunction(SignatureWrapping plugin) {
-		this.plugin = plugin;
-	}
+    public SignatureWrappingAnalyzeFunction(SignatureWrapping plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public String getName() {
-		return "Analyze XSW Responses";
-	}
+    @Override
+    public String getName() {
+        return "Analyze XSW Responses";
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true; //plugin.isFinished(); // TODO: change to plugin.isFinished
-	}
+    @Override
+    public boolean isEnabled() {
+        return plugin.isFinished();
+    }
 
-	@Override
-	public Window getGuiWindow() {
-		AnalysisDialog dialog = new AnalysisDialog(null, true);
-//		AnalysisData testData = new AnalysisData();
-//		testData.add("<eins/>", 1);
-//		testData.add("<eins/>", 3);
-//		testData.add("<eins/>", 5);
-//		testData.add("<zwei/>", 2);
-//		testData.add("<zwei/>", 4);
-//		testData.add("<zwei/>", 6);
-//		testData.add("<drei/>", 7);
-//		testData.add("<drei/>", 8);
-//		testData.add("<drei/>", 9);
-//		plugin.setAnalysisData(testData);
-		dialog.setSignatureWrappingPlugin(plugin);
-		return dialog;
-	}
-
+    @Override
+    public Window getGuiWindow() {
+        AnalysisDialog dialog = new AnalysisDialog(null, true);
+        dialog.setSignatureWrappingPlugin(plugin);
+        return dialog;
+    }
 }

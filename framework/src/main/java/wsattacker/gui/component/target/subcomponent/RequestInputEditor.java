@@ -21,95 +21,117 @@ package wsattacker.gui.component.target.subcomponent;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import wsattacker.gui.util.XmlTextPane;
 import wsattacker.main.composition.ControllerInterface;
-import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
-import wsattacker.main.composition.testsuite.CurrentRequestObserver;
+import wsattacker.main.testsuite.CurrentRequest;
+import wsattacker.main.testsuite.TestSuite;
 
-public class RequestInputEditor extends XmlTextPane implements CurrentRequestContentChangeObserver, CurrentRequestObserver {
+public class RequestInputEditor extends XmlTextPane implements PropertyChangeListener {
 
-    private static final long serialVersionUID = 1L;
-    public static final String PROP_CONTROLLER = "controller";
-    private ControllerInterface controller = null;
-    private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+	private static final long serialVersionUID = 1L;
+	public static final String PROP_CONTROLLER = "controller";
+	private ControllerInterface controller = null;
+	private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
-    public RequestInputEditor() {
-        this.setEditable(true);
-        this.setText("");
-//		TestSuite.getInstance().getCurrentRequest().addCurrentRequestContentObserver(this);
-//		TestSuite.getInstance().getCurrentRequest().addCurrentRequestObserver(this);
-    }
+	public RequestInputEditor() {
+		this.setEditable(true);
+		this.setText("");
+	}
 
-    private void saveContent() {
-        String content = this.getText();
-        if (getController() != null) {
-            getController().setRequestContent(content);
-        }
-    }
+	private void saveContent() {
+		String content = this.getText();
+		if (getController() != null) {
+			getController().setRequestContent(content);
+		}
+	}
 
-    private void updateContent(String content) {
-        this.setText(content);
-    }
+	private void updateContent(String content) {
+		this.setText(content);
+	}
 
-    @Override
-    public void currentRequestChanged(WsdlRequest newRequest,
-            WsdlRequest oldRequest) {
-        updateContent(newRequest.getRequestContent());
-        setEnabled(true);
-    }
+	public void currentRequestChanged(WsdlRequest newRequest,
+		WsdlRequest oldRequest) {
+		updateContent(newRequest.getRequestContent());
+		setEnabled(true);
+	}
 
-    @Override
-    public void noCurrentRequest() {
-        updateContent("");
-        setEnabled(false);
-    }
+	public void noCurrentRequest() {
+		updateContent("");
+		setEnabled(false);
+	}
 
-    @Override
-    public void currentRequestContentChanged(String newContent,
-            String oldContent) {
-        updateContent(newContent);
-        setEnabled(true);
-    }
+	public void currentRequestContentChanged(String newContent,
+		String oldContent) {
+		updateContent(newContent);
+		setEnabled(true);
+	}
 
-    @Override
-    public void noCurrentRequestcontent() {
-        updateContent("");
-        setEnabled(false);
-    }
+	public void noCurrentRequestcontent() {
+		updateContent("");
+		setEnabled(false);
+	}
 
-    /**
-     * @return the controller
-     */
-    public ControllerInterface getController() {
-        return controller;
-    }
+	/**
+	 * @return the controller
+	 */
+	public ControllerInterface getController() {
+		return controller;
+	}
 
-    /**
-     * @param controller the controller to set
-     */
-    public void setController(ControllerInterface controller) {
-        wsattacker.main.composition.ControllerInterface oldController = controller;
-        this.controller = controller;
+	/**
+	 * @param controller the controller to set
+	 */
+	public void setController(ControllerInterface controller) {
+		wsattacker.main.composition.ControllerInterface oldController = controller;
+		this.controller = controller;
 
-        if (oldController != null) {
-            oldController.getTestSuite().getCurrentRequest().removeCurrentRequestObserver(this);
-            oldController.getTestSuite().getCurrentRequest().removeCurrentRequestContentObserver(this);
-        }
-        if (this.controller != null) {
-            this.controller.getTestSuite().getCurrentRequest().addCurrentRequestObserver(this);
-            this.controller.getTestSuite().getCurrentRequest().addCurrentRequestContentObserver(this);
-            this.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    saveContent();
-                }
+		if (oldController != null) {
+//			oldController.getTestSuite().getCurrentRequest().removeCurrentRequestObserver(this);
+//			oldController.getTestSuite().getCurrentRequest().removeCurrentRequestContentObserver(this);
+			oldController.getTestSuite().getCurrentRequest().removePropertyChangeListener(this);
+		}
+		if (this.controller != null) {
+//			this.controller.getTestSuite().getCurrentRequest().addCurrentRequestObserver(this);
+//			this.controller.getTestSuite().getCurrentRequest().addCurrentRequestContentObserver(this);
+			final TestSuite testSuite = this.controller.getTestSuite();
+			testSuite.getCurrentRequest().addPropertyChangeListener(CurrentRequest.PROP_WSDLREQUEST, this);
+			testSuite.getCurrentRequest().addPropertyChangeListener(CurrentRequest.PROP_WSDLREQUESTCONTENT, this);
+			this.addFocusListener(new FocusListener() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					saveContent();
+				}
 
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-        }
-        propertyChangeSupport.firePropertyChange(PROP_CONTROLLER, oldController, controller);
-    }
+				@Override
+				public void focusGained(FocusEvent e) {
+				}
+			});
+		}
+		propertyChangeSupport.firePropertyChange(PROP_CONTROLLER, oldController, controller);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent pce) {
+		final String propName = pce.getPropertyName();
+		if (propName.equals(CurrentRequest.PROP_WSDLREQUEST)) {
+			final WsdlRequest newRequest = (WsdlRequest) pce.getNewValue();
+			final WsdlRequest oldRequest = (WsdlRequest) pce.getOldValue();
+			if (newRequest == null) {
+				noCurrentRequest();
+			} else {
+				currentRequestChanged(newRequest, oldRequest);
+			}
+		} else if (propName.equals(CurrentRequest.PROP_WSDLREQUESTCONTENT)) {
+			final String newContent = (String) pce.getNewValue();
+			final String oldContent = (String) pce.getOldValue();
+			if (newContent == null) {
+				noCurrentRequestcontent();
+			} else {
+				currentRequestContentChanged(newContent, oldContent);
+			}
+		}
+	}
 }

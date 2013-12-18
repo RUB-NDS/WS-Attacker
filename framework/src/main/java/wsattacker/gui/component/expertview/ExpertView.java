@@ -28,27 +28,27 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
-import wsattacker.main.composition.testsuite.CurrentOperationObserver;
-import wsattacker.main.composition.testsuite.CurrentRequestObserver;
+import wsattacker.main.testsuite.CurrentInterface;
+import wsattacker.main.testsuite.CurrentOperation;
+import wsattacker.main.testsuite.CurrentRequest;
 import wsattacker.main.testsuite.TestSuite;
 
-
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObserver, CurrentRequestObserver {
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
+public class ExpertView implements PropertyChangeListener {
+
 	Component servicePanel, operationPanel, requestPanel;
 	JPanel panel;
 	WsdlInterfacePanelBuilder serviceBuilder;
@@ -64,28 +64,30 @@ public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObs
 		// returned component
 		panel = new JPanel();
 		GridBagLayout panelLayout = new GridBagLayout();
-		panelLayout.rowWeights = new double[] {0.2, 0.2, 0.6};
-		panelLayout.rowHeights = new int[] {99, 98, 7};
-		panelLayout.columnWeights = new double[] {0.1};
-		panelLayout.columnWidths = new int[] {7};
+		panelLayout.rowWeights = new double[]{0.2, 0.2, 0.6};
+		panelLayout.rowHeights = new int[]{99, 98, 7};
+		panelLayout.columnWeights = new double[]{0.1};
+		panelLayout.columnWidths = new int[]{7};
 		panel.setLayout(panelLayout);
 		panel.setName("Expert View");
 		panel.setPreferredSize(new java.awt.Dimension(368, 374));
 
 		// observe
-		testSuite.getCurrentService().addCurrentServiceObserver(this);
-		testSuite.getCurrentOperation().addCurrentOperationObserver(this);
-		testSuite.getCurrentRequest().addCurrentRequestObserver(this);
+//		testSuite.getCurrentInterface().addCurrentServiceObserver(this);
+//		testSuite.getCurrentOperation().addCurrentOperationObserver(this);
+//		testSuite.getCurrentRequest().addCurrentRequestObserver(this);
+		testSuite.getCurrentInterface().addPropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
+		testSuite.getCurrentOperation().addPropertyChangeListener(CurrentOperation.PROP_WSDLOPERATION, this);
+		testSuite.getCurrentRequest().addPropertyChangeListener(CurrentRequest.PROP_WSDLREQUEST, this);
 	}
 
 	public Component getView() {
 		return panel;
 	}
 
-	@Override
 	public void currentRequestChanged(WsdlRequest newRequest,
-			WsdlRequest oldRequest) {
-		if(requestPanel != null && SwingUtilities.isDescendingFrom(requestPanel, panel)) {
+		WsdlRequest oldRequest) {
+		if (requestPanel != null && SwingUtilities.isDescendingFrom(requestPanel, panel)) {
 			panel.remove(requestPanel);
 		}
 		requestPanel = requestBuilder.buildOverviewPanel(newRequest); // TODO: This causes an Error with JDK7
@@ -93,48 +95,68 @@ public class ExpertView implements CurrentInterfaceObserver, CurrentOperationObs
 		panel.add(requestPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 	}
 
-	@Override
 	public void noCurrentRequest() {
-		if(requestPanel != null && SwingUtilities.isDescendingFrom(requestPanel, panel)) {
+		if (requestPanel != null && SwingUtilities.isDescendingFrom(requestPanel, panel)) {
 			panel.remove(requestPanel);
 		}
-		requestPanel = null;
+//		requestPanel = null;
 	}
 
-	@Override
 	public void currentOperationChanged(WsdlOperation newOperation,
-			WsdlOperation oldOperation) {
-		if(operationPanel != null && SwingUtilities.isDescendingFrom(operationPanel, panel)) {
+		WsdlOperation oldOperation) {
+		if (operationPanel != null && SwingUtilities.isDescendingFrom(operationPanel, panel)) {
 			panel.remove(operationPanel);
 		}
 		operationPanel = operationBuilder.buildOverviewPanel(newOperation);
 //		panel.add(operationPanel,panel.getComponentCount()>0?1:panel.getComponentCount());
-		panel.add(operationPanel,new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		panel.add(operationPanel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 	}
 
-	@Override
 	public void noCurrentOperation() {
-		if(operationPanel != null && SwingUtilities.isDescendingFrom(operationPanel, panel)) {
+		if (operationPanel != null && SwingUtilities.isDescendingFrom(operationPanel, panel)) {
 			panel.remove(operationPanel);
 		}
-		operationPanel = null;
+//		operationPanel = null;
 	}
 
-	@Override
-	public void currentInterfaceChanged(WsdlInterface newService,
-			WsdlInterface oldService) {
-		if(servicePanel != null && SwingUtilities.isDescendingFrom(servicePanel, panel)) {
+	public void currentInterfaceChanged(WsdlInterface newService, WsdlInterface oldService) {
+		if (servicePanel != null && SwingUtilities.isDescendingFrom(servicePanel, panel)) {
 			panel.remove(servicePanel);
 		}
 		servicePanel = serviceBuilder.buildOverviewPanel(newService);
-		panel.add(servicePanel,new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		panel.add(servicePanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+	}
+
+	public void noCurrentInterface() {
+		if (servicePanel != null && SwingUtilities.isDescendingFrom(servicePanel, panel)) {
+			panel.remove(servicePanel);
+		}
+//		serviceBuilder = null;
 	}
 
 	@Override
-	public void noCurrentInterface() {
-		if(servicePanel != null && SwingUtilities.isDescendingFrom(servicePanel, panel)) {
-			panel.remove(servicePanel);
+	public void propertyChange(PropertyChangeEvent pce) {
+		final String propName = pce.getPropertyName();
+		if (propName.equals(CurrentRequest.PROP_WSDLREQUEST)) {
+			final WsdlRequest newRequest = (WsdlRequest) pce.getNewValue();
+			final WsdlRequest oldRequest = (WsdlRequest) pce.getOldValue();
+			if (newRequest == null) {
+				noCurrentRequest();
+			} else {
+				currentRequestChanged(newRequest, oldRequest);
+			}
+		} else if (CurrentInterface.PROP_WSDLINTERFACE.equals(propName)) {
+			WsdlInterface newInterface = (WsdlInterface) pce.getNewValue();
+			WsdlInterface oldInterface = (WsdlInterface) pce.getOldValue();
+			if (newInterface == null) {
+				noCurrentInterface();
+			} else {
+				currentInterfaceChanged(newInterface, oldInterface);
+			}
+		} else if (CurrentOperation.PROP_WSDLOPERATION.equals(propName)) {
+			final WsdlOperation newOperation = (WsdlOperation) pce.getNewValue();
+			final WsdlOperation oldOperation = (WsdlOperation) pce.getOldValue();
+			currentOperationChanged(newOperation, oldOperation);
 		}
-		serviceBuilder = null;
 	}
 }

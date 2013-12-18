@@ -20,7 +20,14 @@ package wsattacker.main.composition.testsuite;
 
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 
+@Deprecated
+/**
+ * This method will be removed in future version. Use the propertyChangeSupport
+ * instead.
+ */
 public interface CurrentOperationObserver {
+
 	public void currentOperationChanged(WsdlOperation newOperation, WsdlOperation oldOperation);
+
 	public void noCurrentOperation();
 }

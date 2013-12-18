@@ -10,7 +10,6 @@
 \usepackage{subfiles}
 
 \usepackage{url}
-\usepackage{hyperref}
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
 
@@ -82,6 +81,10 @@
 % header and footer
 \usepackage[headsepline,footsepline]{scrpage2}
 \usepackage{lastpage}
+
+% load hyperref always as a last package
+\usepackage{hyperref}
+
 \clearscrheadfoot
 \pagestyle{scrheadings}
 %\automark[chapter]{section}

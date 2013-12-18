@@ -20,7 +20,14 @@ package wsattacker.main.composition.testsuite;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 
+@Deprecated
+/**
+ * This method will be removed in future version. Use the propertyChangeSupport
+ * instead.
+ */
 public interface CurrentRequestObserver {
+
 	public void currentRequestChanged(WsdlRequest newRequest, WsdlRequest oldRequest);
+
 	public void noCurrentRequest();
 }

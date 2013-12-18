@@ -23,11 +23,11 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * This class is a NullObject imeplementation of the
- * AnyElementPropertiesInterface.
+ * AnyElementProperties.
  * It is used if no XML Schema Validation shall be performed.
  * It always returns that any element can have any wrapper element.
  */
-public class NullAnyElementProperties implements AnyElementPropertiesInterface {
+public class NullAnyElementProperties implements AnyElementProperties {
 
     private final Element documentElement;
 
@@ -62,15 +62,15 @@ public class NullAnyElementProperties implements AnyElementPropertiesInterface {
     }
 
     @Override
-    public int compareTo(AnyElementPropertiesInterface other) {
+    public int compareTo(AnyElementProperties other) {
         return DomUtilities.getFastXPath(documentElement).compareTo(DomUtilities.getFastXPath(other.getDocumentElement()));
     }
 
     @Override
     public boolean equals(Object other) {
         boolean isEqual = false;
-        if (other instanceof AnyElementProperties) {
-            isEqual = DomUtilities.getFastXPath(documentElement).equals(DomUtilities.getFastXPath(((AnyElementPropertiesInterface) other)
+        if (other instanceof AnyElementPropertiesImpl) {
+            isEqual = DomUtilities.getFastXPath(documentElement).equals(DomUtilities.getFastXPath(((AnyElementProperties) other)
               .getDocumentElement()));
         }
         return isEqual;

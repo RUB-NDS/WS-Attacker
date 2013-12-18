@@ -19,7 +19,7 @@
 package wsattacker.library.signatureWrapping.xpath.analysis;
 
 import org.w3c.dom.Element;
-import wsattacker.library.schemaanalyzer.AnyElementPropertiesInterface;
+import wsattacker.library.schemaanalyzer.AnyElementProperties;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
@@ -27,7 +27,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
  */
 public class WrapperProperties {
 
-    private final AnyElementPropertiesInterface anyElementPorperties;
+    private final AnyElementProperties anyElementPorperties;
     private final Element signedElement;
     private final int possiblePositions;
     private final boolean wrapperNeeded;
@@ -38,7 +38,7 @@ public class WrapperProperties {
      * @param anyElementPorperties
      * @param signedElement
      */
-    public WrapperProperties(AnyElementPropertiesInterface anyElementPorperties,
+    public WrapperProperties(AnyElementProperties anyElementPorperties,
       Element signedElement) {
         this.anyElementPorperties = anyElementPorperties;
         // TODO: Is this signedElement needed?
@@ -47,7 +47,7 @@ public class WrapperProperties {
         this.wrapperNeeded = anyElementPorperties.needsWrapper(signedElement.getNamespaceURI());
     }
 
-    public AnyElementPropertiesInterface getAnyElementPorperties() {
+    public AnyElementProperties getAnyElementPorperties() {
         return anyElementPorperties;
     }
 

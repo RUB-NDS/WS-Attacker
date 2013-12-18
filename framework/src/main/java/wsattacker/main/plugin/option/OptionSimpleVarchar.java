@@ -55,7 +55,8 @@ public class OptionSimpleVarchar extends AbstractOptionVarchar {
 	@Override
 	public boolean isValid(String value) {
 		boolean result = true;
-		if (value.contains(System.getProperty("line.separator"))) {
+		// System.getProperty("line.separator") is not a good idea because it can be \n\r on other systems
+		if (value.contains("\n")) {
 			result = false;
 		}
 		if ((this.maxLength > 0) && (value.length() > this.maxLength)) {

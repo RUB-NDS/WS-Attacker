@@ -16,16 +16,33 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package wsattacker.main.composition.testsuite;
+package wsattacker.gui.controller;
 
+import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.testsuite.TestSuite;
 
-@Deprecated
-/**
- * This method will be removed in future version. Use the propertyChangeSupport
- * instead.
- */
-public interface WsdlChangeObserver {
+public class TestSuiteController extends AbstractBean {
 
-	public void wsdlChanged(TestSuite testSuite);
+	private TestSuite testSuite = TestSuite.getInstance();
+	public static final String PROP_TESTSUITE = "testSuite";
+
+	/**
+	 * Get the value of testSuite
+	 *
+	 * @return the value of testSuite
+	 */
+	public TestSuite getTestSuite() {
+		return testSuite;
+	}
+
+	/**
+	 * Set the value of testSuite
+	 *
+	 * @param testSuite new value of testSuite
+	 */
+	public void setTestSuite(TestSuite testSuite) {
+		TestSuite oldTestSuite = this.testSuite;
+		this.testSuite = testSuite;
+		firePropertyChange(PROP_TESTSUITE, oldTestSuite, testSuite);
+	}
 }

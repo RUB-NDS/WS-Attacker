@@ -39,7 +39,7 @@ public class SchemaNullTest {
         SchemaAnalyzer sa = new NullSchemaAnalyzer();
         Element envelope = soap.getDocumentElement();
 
-        Set<AnyElementPropertiesInterface> result = sa.findExpansionPoint(envelope);
+        Set<AnyElementProperties> result = sa.findExpansionPoint(envelope);
 
         List<Element> childElementList = DomUtilities.getAllChildElements(envelope, true);
         childElementList.add(0, envelope);
@@ -49,7 +49,7 @@ public class SchemaNullTest {
         assertEquals(fastXPathList.size(), result.size());
 
         List<String> contained = new ArrayList<String>();
-        for (AnyElementPropertiesInterface any : result) {
+        for (AnyElementProperties any : result) {
             String fxp = DomUtilities.getFastXPath(any.getDocumentElement());
             assertTrue(fastXPathList.contains(fxp));
             assertTrue(!contained.contains(fxp));
@@ -71,7 +71,7 @@ public class SchemaNullTest {
         filterList.add(new QName(body.getNamespaceURI(), body.getLocalName(), body.getPrefix()));
         sa.setFilterList(filterList);
 
-        Set<AnyElementPropertiesInterface> result = sa.findExpansionPoint(envelope);
+        Set<AnyElementProperties> result = sa.findExpansionPoint(envelope);
 
         List<Element> childElementList = new ArrayList<Element>();
         childElementList.add(envelope);
@@ -83,7 +83,7 @@ public class SchemaNullTest {
         assertEquals(fastXPathList.size(), result.size());
 
         List<String> contained = new ArrayList<String>();
-        for (AnyElementPropertiesInterface any : result) {
+        for (AnyElementProperties any : result) {
             String fxp = DomUtilities.getFastXPath(any.getDocumentElement());
             assertTrue(fastXPathList.contains(fxp));
             assertTrue(!contained.contains(fxp));

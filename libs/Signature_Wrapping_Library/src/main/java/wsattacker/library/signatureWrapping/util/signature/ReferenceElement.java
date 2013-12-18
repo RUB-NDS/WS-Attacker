@@ -27,6 +27,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 public class ReferenceElement implements ReferringElementInterface {
 

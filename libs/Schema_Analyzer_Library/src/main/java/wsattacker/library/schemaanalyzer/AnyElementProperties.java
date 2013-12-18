@@ -19,105 +19,32 @@
 package wsattacker.library.schemaanalyzer;
 
 import org.w3c.dom.Element;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
 
-/**
- * Wrapper Class. Can be expanded if additional features are necessary.
- *
- */
-public class AnyElementProperties implements AnyElementPropertiesInterface {
+public interface AnyElementProperties extends Comparable<AnyElementProperties> {
 
-    Element anyElement, documentElement;
-
-    public AnyElementProperties(Element anyElement,
-      Element documentElement) {
-        this.anyElement = anyElement;
-        this.documentElement = documentElement;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementPropertiesInterface#getDocumentElement()
+    /**
+     * @return the element which has <xs:any> child element within the current
+     *         working Document.
      */
-    @Override
-    public Element getDocumentElement() {
-        return documentElement;
-    }
+    public abstract Element getDocumentElement();
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementPropertiesInterface#getProcessContentsAttribute()
+    /**
+     * @return the value of the processContents attribute
      */
-    @Override
-    public String getProcessContentsAttribute() {
-        String processContents = anyElement.getAttribute("processContents");
-        if (processContents == null || processContents.isEmpty()) {
-            processContents = "strict";
-        }
-        return processContents;
-    }
+    public abstract String getProcessContentsAttribute();
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementPropertiesInterface#getNamespaceAttributeValue()
+    /**
+     * @return the value of the namespace attribute
      */
-    @Override
-    public String getNamespaceAttributeValue() {
-        String namespace = anyElement.getAttribute("namespace");
-        if (namespace == null || namespace.isEmpty()) {
-            namespace = "##any";
-        }
-        return namespace;
-    }
+    public abstract String getNamespaceAttributeValue();
 
-    private boolean allowsDirectChildelements() {
-        return getNamespaceAttributeValue().equals("##any");
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementPropertiesInterface#needsWrapper(java.lang.String)
+    /**
+     * Compares the namespace of the parent element with the one of the child
+     * element.
+     * If they are the same and the namespace attribute is ##other, it returns
+     * true.
+     *
+     * @return if the child elements needs a wrapper.
      */
-    @Override
-    public boolean needsWrapper(String childNamespaceURI) {
-        boolean needsWrapper;
-        String namespace = anyElement.getAttribute("namespace");
-        if (namespace != null && namespace.equals("##other")) {
-            needsWrapper = documentElement.getNamespaceURI().equals(childNamespaceURI);
-        } else {
-            needsWrapper = !allowsDirectChildelements();
-        }
-        return needsWrapper;
-    }
-
-    @Override
-    public int compareTo(AnyElementPropertiesInterface other) {
-        return DomUtilities.getFastXPath(documentElement).compareTo(DomUtilities.getFastXPath(other.getDocumentElement()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        boolean isEqual = false;
-        if (other instanceof AnyElementProperties) {
-            isEqual = DomUtilities.getFastXPath(documentElement).equals(DomUtilities.getFastXPath(((AnyElementPropertiesInterface) other)
-              .getDocumentElement()));
-        }
-        return isEqual;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + (this.documentElement != null ? DomUtilities.getFastXPath(this.documentElement).hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("AnyElementProperties{processContents=%s, namespace=%s, documentElement=%s}", getProcessContentsAttribute(), getNamespaceAttributeValue(), DomUtilities.getFastXPath(documentElement));
-    }
+    public abstract boolean needsWrapper(String childNamespaceURI);
 }

@@ -52,7 +52,6 @@
             <groupId>eviware</groupId>
             <artifactId>maven-soapui-plugin</artifactId>
             <version>4.5.1</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>it.cnr.imaa.essi</groupId>

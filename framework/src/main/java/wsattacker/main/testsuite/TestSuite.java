@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
+import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.composition.testsuite.WsdlChangeObserver;
 
 /**
@@ -38,28 +39,32 @@ import wsattacker.main.composition.testsuite.WsdlChangeObserver;
  * @author Christian Mainka
  *
  */
-public class TestSuite {
+final public class TestSuite extends AbstractBean {
 
 	private static TestSuite instance = new TestSuite();
-	Logger log;
-
-	WsdlProject project;
-	CurrentInterface currentInterface;
-	CurrentOperation currentOperation;
-	CurrentRequest currentRequest;
-
-	List<WsdlChangeObserver> wsdlChangeObserver = new ArrayList<WsdlChangeObserver>();
+	private static final Logger LOG = Logger.getLogger(TestSuite.class);
+	public static final String PROP_PROJECT = "project";
+	public static final String PROP_CURRENTINTERFACE = "currentInterface";
+	public static final String PROP_CURRENTOPERATION = "currentOperation";
+	public static final String PROP_CURRENTREQUEST = "currentRequest";
 
 	public static TestSuite getInstance() {
 		return instance;
 	}
+	final private List<WsdlChangeObserver> wsdlChangeObserver = new ArrayList<WsdlChangeObserver>();
+	private WsdlProject project;
+	private CurrentInterface currentInterface;
+	private CurrentOperation currentOperation;
+	private CurrentRequest currentRequest;
 
-	private TestSuite() {
-		log = Logger.getLogger(getClass());
+	public TestSuite() {
 		this.project = createEmptyProject();
-		currentInterface = new CurrentInterface(this);
-		currentOperation = new CurrentOperation(this);
-		currentRequest = new CurrentRequest(this);
+		this.currentInterface = new CurrentInterface();
+		this.currentInterface.setTestSuite(this);
+		this.currentOperation = new CurrentOperation();
+		this.currentOperation.setCurrentInterface(currentInterface);
+		this.currentRequest = new CurrentRequest();
+		this.currentRequest.setCurrentOperation(currentOperation);
 	}
 
 	// projects are needed for soapui but not for ws-attacker, since we have our own projects
@@ -70,53 +75,19 @@ public class TestSuite {
 			project = fac.createNew();
 		}
 		catch (XmlException e) {
-			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
+			LOG.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
 		}
 		catch (IOException e) {
-			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
+			LOG.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
 		}
 		catch (SoapUIException e) {
-			log.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
+			LOG.fatal("Could not Instanciate WsdlProject: " + e.getMessage());
 		}
 		return project;
 	}
 
-	public WsdlProject getProject() {
-		return project;
-	}
-
-	public void setProject(WsdlProject project) {
-		this.project = project;
-	}
-
-	public CurrentInterface getCurrentService() {
-		return currentInterface;
-	}
-
-	public CurrentOperation getCurrentOperation() {
-		return currentOperation;
-	}
-
-	public CurrentRequest getCurrentRequest() {
-		return currentRequest;
-	}
-
-	public void addCurrentWsdlChangeObserver(WsdlChangeObserver o) {
-		wsdlChangeObserver.add(o);
-	}
-
-	public void removeCurrentWsdlChangeObserver(WsdlChangeObserver o) {
-		wsdlChangeObserver.remove(o);
-	}
-
-	public void notifyCurrentWsdlChangeObservers() {
-		for (WsdlChangeObserver o : wsdlChangeObserver) {
-			o.wsdlChanged(this);
-		}
-	}
-
-	public void setWsdl(String url) throws SoapUIException, UnsupportedOperationException, MalformedURLException {
-		assert (this.project != null);
+	public void loadWsdl(String url) throws SoapUIException, MalformedURLException {
+		assert (this.getProject() != null);
 		if (url.length() > 0) {
 			// convert string to uri
 			if (new File(url).exists()) {
@@ -135,8 +106,77 @@ public class TestSuite {
 		WsdlProject project = createEmptyProject();
 		WsdlInterfaceFactory.importWsdl(project, url, false); // import wsdl
 		setProject(project);
-		notifyCurrentWsdlChangeObservers();
-		log.info("Successfully loaded wsdl");
+		LOG.info("Successfully loaded wsdl");
 
+	}
+
+	public WsdlProject getProject() {
+		return project;
+	}
+
+	protected void setProject(WsdlProject newProject) {
+		WsdlProject oldProject = this.project;
+		this.project = newProject;
+		firePropertyChange(PROP_PROJECT, oldProject, newProject);
+		notifyCurrentWsdlChangeObservers();
+	}
+
+	public CurrentInterface getCurrentInterface() {
+		return currentInterface;
+	}
+
+	protected void setCurrentInterface(CurrentInterface newCurrentInterface) {
+		CurrentInterface oldCurrentInterface = this.currentInterface;
+		this.currentInterface = newCurrentInterface;
+		firePropertyChange(PROP_CURRENTINTERFACE, oldCurrentInterface, newCurrentInterface);
+	}
+
+	public CurrentOperation getCurrentOperation() {
+		return currentOperation;
+	}
+
+	protected void setCurrentOperation(CurrentOperation newCurrentOperation) {
+		CurrentOperation oldCurrentOperation = this.currentOperation;
+		this.currentOperation = newCurrentOperation;
+		firePropertyChange(PROP_CURRENTOPERATION, oldCurrentOperation, newCurrentOperation);
+	}
+
+	public CurrentRequest getCurrentRequest() {
+		return currentRequest;
+	}
+
+	protected void setCurrentRequest(CurrentRequest newCurrentRequest) {
+		CurrentRequest oldCurrentRequest = this.currentRequest;
+		this.currentRequest = newCurrentRequest;
+		firePropertyChange(PROP_CURRENTREQUEST, oldCurrentRequest, newCurrentRequest);
+	}
+
+	@Deprecated
+	/**
+	 * This method will be removed in future version. Use the
+	 * propertyChangeSupport instead.
+	 */
+	public void addCurrentWsdlChangeObserver(WsdlChangeObserver o) {
+		wsdlChangeObserver.add(o);
+	}
+
+	@Deprecated
+	/**
+	 * This method will be removed in future version. Use the
+	 * propertyChangeSupport instead.
+	 */
+	public void removeCurrentWsdlChangeObserver(WsdlChangeObserver o) {
+		wsdlChangeObserver.remove(o);
+	}
+
+	@Deprecated
+	/**
+	 * This method will be removed in future version. Use the
+	 * propertyChangeSupport instead.
+	 */
+	private void notifyCurrentWsdlChangeObservers() {
+		for (WsdlChangeObserver o : wsdlChangeObserver) {
+			o.wsdlChanged(this);
+		}
 	}
 }

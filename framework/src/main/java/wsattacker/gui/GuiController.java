@@ -91,7 +91,7 @@ public class GuiController implements ControllerInterface {
 		log = Logger.getRootLogger();
 		Logger.getRootLogger().removeAllAppenders();
 		PatternLayout layout = new PatternLayout(
-				"%d{ABSOLUTE} %-5p [%c{1}] %m%n");
+			"%d{ABSOLUTE} %-5p [%c{1}] %m%n");
 		log.addAppender(new ConsoleAppender(layout));
 		log.addAppender(new GuiAppender());
 		Logger.getLogger("wstester.util").setLevel(Level.INFO);
@@ -142,7 +142,7 @@ public class GuiController implements ControllerInterface {
 		if (plugin != null) {
 			if (getPluginManager().isActive(plugin) != active) {
 				log.info(String.format((active ? "(+) A" : "(-) Dea")
-						+ "ctivating Plugin %s", plugin.getName()));
+					+ "ctivating Plugin %s", plugin.getName()));
 				getPluginManager().setActive(plugin, active);
 			}
 		} else {
@@ -158,18 +158,18 @@ public class GuiController implements ControllerInterface {
 
 	@Override
 	public void setOptionValue(AbstractPlugin plugin, String optionName,
-			String optionValue) {
+		String optionValue) {
 		AbstractOption option = plugin.getPluginOptions().getByName(optionName);
 		if (option == null) {
 			throw new NullPointerException("Option is null");
 		}
 		if (option.isValid(optionValue)) {
 			log.debug(String.format("Set PluginOption for '%s': {%s=%s}",
-					plugin.getName(), optionName, optionValue));
+				plugin.getName(), optionName, optionValue));
 			option.parseValue(optionValue);
 		}
 		log.debug(String.format("Value {%s=%s} for Plugin '%s' is INVALID!",
-				optionName, optionValue, plugin.getName()));
+			optionName, optionValue, plugin.getName()));
 	}
 
 	@Override
@@ -201,12 +201,12 @@ public class GuiController implements ControllerInterface {
 		@Override
 		public void run() {
 			if (runThread.isAlive()
-					&& runThread.getName().equals("Run Plugins")) {
+				&& runThread.getName().equals("Run Plugins")) {
 				abortAttacks = true;
 				log.info("Stopping all active plugins");
 				AbstractPlugin active = runner.getActive();
 				log.warn("Gently aborting plugin '" + active.getName()
-						+ "' (Waiting for 3 sec)");
+					+ "' (Waiting for 3 sec)");
 				active.abortAttack();
 				try {
 					Thread.sleep(3000);
@@ -215,13 +215,13 @@ public class GuiController implements ControllerInterface {
 				} // wait for 3 seconds
 				// know force to kill the thread if its still running.
 				if (runThread.isAlive()
-						&& runThread.getName().equals("Run Plugins")) {
+					&& runThread.getName().equals("Run Plugins")) {
 					log.warn("Force to kill thread, since plugin is still running.");
 					runThread.stop();
 				}
 				active.stopAttack();
 				Iterator<AbstractPlugin> it = getPluginManager()
-						.getActivePluginIterator();
+					.getActivePluginIterator();
 				while (it.hasNext()) {
 					AbstractPlugin otherPlugin = it.next();
 					if (otherPlugin.isReady()) {
@@ -248,14 +248,14 @@ public class GuiController implements ControllerInterface {
 			plugin.clean();
 			if (plugin.isFinished() || plugin.isRunning()) {
 				log.error("Plugin " + plugin.getName()
-						+ " could not be cleaned, Status is still "
-						+ plugin.getState());
+					+ " could not be cleaned, Status is still "
+					+ plugin.getState());
 				noError |= false;
 			}
 			if (plugin.getCurrentPoints() != 0) {
 				log.error("Plugin " + plugin.getName()
-						+ "could not be cleaned, it has still "
-						+ plugin.getCurrentPoints() + " Points");
+					+ "could not be cleaned, it has still "
+					+ plugin.getCurrentPoints() + " Points");
 				noError |= false;
 			}
 		}
@@ -313,7 +313,7 @@ public class GuiController implements ControllerInterface {
 				log.info("Starting plugin '" + plugin.getName() + "'");
 				plugin.startAttack();
 				log.info("Plugin finished: " + plugin.getCurrentPoints() + "/"
-						+ plugin.getMaxPoints());
+					+ plugin.getMaxPoints());
 			}
 			active = null;
 			setEnabledTabs(true, 0, 1, 2);
@@ -402,7 +402,7 @@ public class GuiController implements ControllerInterface {
 			wsdlGui.updateUI();
 
 			try {
-				testSuite.setWsdl(uri);
+				testSuite.loadWsdl(uri);
 				// re-enable fields
 				wsdlGui.getServiceComboBox().setEnabled(true);
 				wsdlGui.getOperationComboBox().setEnabled(true);
@@ -429,9 +429,9 @@ public class GuiController implements ControllerInterface {
 	public boolean setCurrentService(String serviceName) {
 		WsdlProject project = testSuite.getProject();
 		if ((project != null)
-				&& (project.getInterfaceByName(serviceName) != null)) {
+			&& (project.getInterfaceByName(serviceName) != null)) {
 			WsdlInterface service = (WsdlInterface) project
-					.getInterfaceByName(serviceName);
+				.getInterfaceByName(serviceName);
 			setCurrentService(service);
 			return true;
 		} else {
@@ -445,9 +445,9 @@ public class GuiController implements ControllerInterface {
 	public boolean setCurrentService(int index) {
 		WsdlProject project = testSuite.getProject();
 		if ((project != null) && (index >= 0)
-				&& (index < project.getInterfaceCount())) {
+			&& (index < project.getInterfaceCount())) {
 			WsdlInterface service = (WsdlInterface) project
-					.getInterfaceAt(index);
+				.getInterfaceAt(index);
 			setCurrentService(service);
 			return true;
 		} else {
@@ -457,21 +457,21 @@ public class GuiController implements ControllerInterface {
 	}
 
 	private void setCurrentService(WsdlInterface service) {
-		this.testSuite.getCurrentService().setWsdlService(service);
+		this.testSuite.getCurrentInterface().setWsdlInterface(service);
 		log.info("Set current service to '" + service.getName() + "'");
 	}
 
 	@Override
 	public boolean setCurrentOperation(String operationString) {
-		WsdlOperation operation = testSuite.getCurrentService()
-				.getWsdlService().getOperationByName(operationString);
+		WsdlOperation operation = testSuite.getCurrentInterface()
+			.getWsdlInterface().getOperationByName(operationString);
 		return setCurrentOperation(operation);
 	}
 
 	@Override
 	public boolean setCurrentOperation(int index) {
-		WsdlOperation operation = testSuite.getCurrentService()
-				.getWsdlService().getOperationAt(index);
+		WsdlOperation operation = testSuite.getCurrentInterface()
+			.getWsdlInterface().getOperationAt(index);
 		return setCurrentOperation(operation);
 
 	}
@@ -492,7 +492,7 @@ public class GuiController implements ControllerInterface {
 		if (request != null) {
 			log.info("Resetting content for basic Request");
 			request.setRequestContent(request.getOperation().createRequest(
-					prefs.isCreateOtionalElements()));
+				prefs.isCreateOtionalElements()));
 		}
 	}
 
@@ -528,7 +528,7 @@ public class GuiController implements ControllerInterface {
 
 	class TestRequest implements Runnable {
 
-		CurrentRequest request;
+		final CurrentRequest request;
 
 		public TestRequest(CurrentRequest request) {
 			this.request = request;
@@ -544,14 +544,14 @@ public class GuiController implements ControllerInterface {
 			}
 			catch (NullPointerException e) {
 				String error = "Error while doing Test Request"
-						+ e.getMessage();
+					+ e.getMessage();
 				log.error(error);
 				gui.getResponseContent().setText(error);
 				return;
 			}
 			catch (SubmitException e) {
 				String error = "Error while doing Test Request. "
-						+ e.getMessage();
+					+ e.getMessage();
 				log.error(error);
 				gui.getResponseContent().setText(error);
 				return;
@@ -561,14 +561,14 @@ public class GuiController implements ControllerInterface {
 				return;
 			}
 			String responseContent = request.getWsdlResponse()
-					.getContentAsString();
+				.getContentAsString();
 			if (responseContent == null) {
 				log.warn("Got an empty response. Bad request?");
 				gui.getResponseContent().setText("");
 			} else {
 				log.info("Successfully received Response");
 				gui.getResponseContent().setText(
-						(responseContent == null) ? "" : responseContent);
+					(responseContent == null) ? "" : responseContent);
 			}
 		}
 	}

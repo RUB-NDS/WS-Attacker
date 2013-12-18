@@ -28,6 +28,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -39,7 +40,7 @@ class EnabledPluginTablePopup extends JPopupMenu {
 
 	class ActionListenerHelper implements ActionListener {
 
-		private PluginFunctionInterface function;
+		final private PluginFunctionInterface function;
 
 		public ActionListenerHelper(PluginFunctionInterface function) {
 			this.function = function;
@@ -57,7 +58,7 @@ class EnabledPluginTablePopup extends JPopupMenu {
 				final AWTEvent awtEvent = EventQueue.getCurrentEvent();
 				final MouseEvent me;
 				if (!(awtEvent instanceof MouseEvent)
-						|| !(me = (MouseEvent) awtEvent).isPopupTrigger()) {
+					|| !(me = (MouseEvent) awtEvent).isPopupTrigger()) {
 					return;
 				}
 				final JPopupMenu menu = (JPopupMenu) e.getSource();
@@ -78,16 +79,24 @@ class EnabledPluginTablePopup extends JPopupMenu {
 //				table.changeSelection(row, col, me.CtrlDown(), me.isShiftDown());
 				removeAll();
 				AbstractPlugin plugin = PluginManager.getInstance().getActive(row);
-				JMenu pluginmenu = new JMenu(plugin.getName());
+//				JMenu pluginmenu = new JMenu(plugin.getName());
+				add(new JMenuItem(plugin.getName()));
+				add(new JSeparator());
+				if (plugin.getPluginFunctions().length == 0) {
+					JMenuItem item = new JMenuItem("- No additional functions -");
+					item.setEnabled(false);
+					add(item);
+				}
 				for (PluginFunctionInterface function : plugin.getPluginFunctions()) {
-					if (function == null) {
+					if (function != null) {
 						JMenuItem item = new JMenuItem(function.getName());
 						item.addActionListener(new ActionListenerHelper(function));
 						item.setEnabled(function.isEnabled());
-						pluginmenu.add(item);
+//						pluginmenu.add(item);
+						add(item);
 					}
 				}
-				add(pluginmenu);
+//				add(pluginmenu);
 			}
 
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {

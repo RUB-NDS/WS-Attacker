@@ -16,7 +16,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package wsattacker.library.signatureWrapping.util.signature;
+package wsattacker.library.xmlutilities.namespace;
 
 public final class NamespaceConstants {
 

@@ -1,24 +1,22 @@
-\section{How to use the DoS extension of the WS-Attacker}
-\label{sec:how_to_use_ws_attacker}
+\section[DoS Extension]{How to Use the DoS Extension of the WS-Attacker}
+\label{sec:how_to_use_dos_extension}
 
-This guide will show you how to use the DoS attack plugins of the WS-Attacker.
+This guide shows how to use the DoS attack plugins of the WS-Attacker.
 
-\subsection{General Design of the WS-Attacker DoS extension}
+\subsection{General Design of the WS-Attacker DoS Extension}
 \label{sec:design_DoS_extension}
 
-
-
-The design of the automated Web service DoS attack tool is shown in Figure \ref{fig:architectureDosAttackTool} using a UML-based activity diagram to describe the high level program flow.
+The design of the automated Web service DoS attack tool is shown in Figure~\ref{fig:architectureDosAttackTool} using a UML-based activity diagram to describe the high level program flow.
 This newly created design is especially tailored towards solving the problems caused by using the blackbox approach when measuring the attack success.\newline
 
 For each Web service specific DoS attack, the following nine parameters have to be set up:
 \begin{itemize}
   \item M = number of sequential (un)tampered requests per thread 
-  \item N = number parallel threads 
+  \item N = number of parallel threads 
   \item T = milliseconds between continuous untampered testprobe requests
   \item K = milliseconds between each (un)tampered request 
   \item X = seconds between receiving last untampered request and sending first untampered request 
-  \item S = seconds between receiving last tampered request and finalization (end) of attack 
+  \item S = seconds between receiving last tampered request and finalization (end) of the attack 
   \item L = number of network stability test requests
   \item R = milliseconds between each network stability test request 
   \item Message = the string will be used to create a tampered request.\\
@@ -34,23 +32,22 @@ Furthermore, the following two boolean values have to be set:
   \item Boolean performNetworkStabilityTest\\If true, network stability test will get performed. Otherwise, it will get skipped.
 \end{itemize}
 
-The program flow when executing a single attack is shown in Figure \ref{fig:architectureDosAttackTool}.
+The program flow when executing a single attack is shown in Figure~\ref{fig:architectureDosAttackTool}.
 \begin{landscape}
   \begin{figure}[!ht]
 	  \centering
-	  \vspace{20pt}
-	  \includegraphics[width=23cm]{img/architecture.png}
+	  \includegraphics[width=21cm]{img/architecture.png}
 	  \caption{Architecture of an automated Web service specific DoS attack tool}
 	  \label{fig:architectureDosAttackTool}
   \end{figure}
 \end{landscape}
 
-The steps in Figure \ref{fig:architectureDosAttackTool} are as follows:
+The steps in Figure~\ref{fig:architectureDosAttackTool} are as follows:
   \begin{enumerate}
-    \item Test network stability\par When the program is started, a network stability test will get performed (only when enabled by the user). The outcome will tell the tester whether or not a penetration test is feasable under the given network delays. The result has just informative character. A negative result of the network stability test will not stop the program. 
-    \item Perform attack\par After the network stability test, the program flow splits in two branches.  
+    \item Test network stability\par When the program is started, a network stability test will get performed (only when enabled by the user). The outcome will tell the tester whether or not a penetration test is feasible under the given network delays. The result has just informative character. A negative result of the network stability test will not stop the program. 
+    \item Perform attack\par After the network stability test, the program flow splits into two branches.  
     \begin{enumerate}
-      \item Branch 1: Perform attack including error correction\par This branch performs the actual attack. However, errors might occur. Therefore, branch 1 is split in 3 substeps.
+      \item Branch 1: Perform attack including error correction\par This branch performs the actual attack. However, errors might occur. Therefore, branch 1 is split into three substeps.
       \begin{enumerate}
 	\item Branch 1 - step 1:\\Open N threads in parallel and send M untampered requests per thread.\par Each thread induces a delay of K seconds between each request. The delay timer starts as soon as the the client tries to send the request. It is not waited until a response is returned. Otherwise, reproducible results would not be possible.
 	\item Branch 1 - step 2:\\Wait for X seconds. 
@@ -131,7 +128,7 @@ Only in step 3 slight differences can occur, since the attack specific parameter
 
 
 \subsubsection{Load the WSDL}
-\label{sec:loading_a_wsdl}
+\label{sec:loading_a_wsdl_dos}
 
 After starting WS-Attacker, the GUI appears and offers an input field to enter the location
 of the WSDL, see Figure \ref{fig:dosStep1}.
@@ -148,7 +145,7 @@ In this testcase the WSDL file \url{http://127.0.0.1:8080/axis2/services/Version
 For more information on the other parameters please refer to the general WS-Attacker documentation.
 
 \subsubsection{Submit a test request}
-\label{sec:submitting_a_test_request}
+\label{sec:submitting_a_test_request_dos}
 Next step is to do a test request: Figure \ref{fig:dosStep2} shows
 the test request and the corresponding response. 
 The test request is very important. It is used as the baseline request for all further testing. 
@@ -163,7 +160,7 @@ Based on this test request, all attack payloads will be build later on.
 \end{figure}
 
 \subsubsection{Select and configure the attack plugins}
-\label{sec:attack_plugin_configuration}
+\label{sec:attack_plugin_configuration_dos}
 
 Next the attack plugin is selected and configured. In this scenario, only the coercive parsing DoS attack
 is chosen. As soon as the plugin is selected, the attack options will show up on the right side (Figure \ref{fig:dosStep3}). 
@@ -201,10 +198,10 @@ The following DoS attack extension specific parameters can be left unchanged:
 \end{itemize}
 
 \subsubsection{Start the attack}
-\label{sec:starting_the_attacks}
+\label{sec:starting_the_attacks_dos}
 
 The last step is to start the attack. 
-Just switch to the \"Attack Overview\"-tab and press the start button. See figure \ref{fig:dosStep4}.
+Just switch to the \"Attack Overview\"-tab and press the start button. See Figure~\ref{fig:dosStep4}.
 
 \begin{figure}[H]
     \begin{center}
@@ -228,7 +225,7 @@ While the attack is running
 \label{sec:view_results}
 
 Once the attack is finished, the status column should turn green. The column ''Rating`` and ''vulnerable`` already give a rough hint of the attack success.
-As shown in  \ref{fig:dosStep4_2}, the tested webservice is rated as 100\% vulnerbale. 
+As shown in Figure~\ref{fig:dosStep4_2}, the tested Web Service is rated as 100\% vulnerbale. 
 \begin{figure}[ht!]
     \begin{center}
         \includegraphics[width=0.95\textwidth]{img/dosStep4_2.png}
@@ -238,7 +235,7 @@ As shown in  \ref{fig:dosStep4_2}, the tested webservice is rated as 100\% vulne
 \end{figure}
 
 In Order to see a detailed attack description, just right click the coercive parsing attack row. 
-A sub menu will show that lets you choose the ''View Attack Results`` option. The final attack result are presented in Figure \ref{fig:dosStep4_3}.
+A sub menu will show that lets you choose the ''View Attack Results`` option. The final attack result are presented in Figure~\ref{fig:dosStep4_3}.
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.95\textwidth]{img/dosStep4_3.png}
@@ -246,7 +243,7 @@ A sub menu will show that lets you choose the ''View Attack Results`` option. Th
     \caption{View attack result details}
     \label{fig:dosStep4_3}
 \end{figure}
-As shown in Figure \ref{fig:dosStep4_3}, the tested Web Service is clearly vulnerable. 
+As shown in Figure~\ref{fig:dosStep4_3}, the tested Web Service is clearly vulnerable. 
 The ''attack roundtrip time ratio`` is at 7813. This means that on average, the response time of a tampered request is 7813 times longer than a regular untampered request under the same load scenario.
 
 The attack results with all details (including all payload requests) can be saved as Txt-File and Jpg-File by clicking the button ''Export Results + Request Details``.

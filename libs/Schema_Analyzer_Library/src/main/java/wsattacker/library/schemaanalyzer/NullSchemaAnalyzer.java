@@ -51,13 +51,13 @@ public class NullSchemaAnalyzer implements SchemaAnalyzer {
      * wsattacker.plugin.signatureWrapping.schema.SchemaAnalyserInterface#findExpansionPoint(org.w3c.dom.Element)
      */
     @Override
-    public Set<AnyElementPropertiesInterface> findExpansionPoint(Element fromHere) {
-        Set<AnyElementPropertiesInterface> result = new TreeSet<AnyElementPropertiesInterface>();
+    public Set<AnyElementProperties> findExpansionPoint(Element fromHere) {
+        Set<AnyElementProperties> result = new TreeSet<AnyElementProperties>();
         findExpansionPoint(result, fromHere);
         return result;
     }
 
-    private void findExpansionPoint(Set<AnyElementPropertiesInterface> result,
+    private void findExpansionPoint(Set<AnyElementProperties> result,
       Element start) {
         if (filterList.contains(new QName(start.getNamespaceURI(), start.getLocalName()))) {
             return;
