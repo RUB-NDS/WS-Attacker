@@ -25,9 +25,10 @@ import com.eviware.soapui.impl.wsdl.WsdlInterface;
  * This method will be removed in future version. Use the propertyChangeSupport
  * instead.
  */
-public interface CurrentInterfaceObserver {
+public interface CurrentInterfaceObserver
+{
 
-	public void currentInterfaceChanged(WsdlInterface newInterface, WsdlInterface oldInterface);
+    public void currentInterfaceChanged( WsdlInterface newInterface, WsdlInterface oldInterface );
 
-	public void noCurrentInterface();
+    public void noCurrentInterface();
 }

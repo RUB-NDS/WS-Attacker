@@ -18,43 +18,55 @@
  */
 package wsattacker.plugin.dos.dosExtension.requestSender;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.support.types.StringToStringsMap;
-import java.util.*;
 
 /**
- * RequestObjects are used to send requests via
- * various constructors can be used to build the RequestObject
+ * RequestObjects are used to send requests via various constructors can be used to build the RequestObject
  */
-public class RequestObject {
+public class RequestObject
+{
 
     private String xmlMessage = "";
+
     private String endpoint;
+
     private Map<String, String> httpHeaderMap;
 
-    public RequestObject() {
+    public RequestObject()
+    {
     }
 
-    public RequestObject(String xmlMessage, String endpoint, Map<String, String> httpHeaderMap) {
+    public RequestObject( String xmlMessage, String endpoint, Map<String, String> httpHeaderMap )
+    {
         this.xmlMessage = xmlMessage;
         this.endpoint = endpoint;
         this.httpHeaderMap = httpHeaderMap;
-        this.setHeaderContentLength();
+        // this.setHeaderContentLength();
     }
 
-    public RequestObject(WsdlRequest wsdlRequest) {
+    public RequestObject( WsdlRequest wsdlRequest )
+    {
         this.xmlMessage = wsdlRequest.getRequestContent();
         this.endpoint = wsdlRequest.getEndpoint();
-        this.createHttpHeaderMap(wsdlRequest);
-        this.setHeaderContentLength();
+        this.createHttpHeaderMap( wsdlRequest );
+        // this.setHeaderContentLength();
     }
 
-    public void createHttpHeaderMap(WsdlRequest wsdlRequest) {
-        httpHeaderMap = new HashMap();
+    public void createHttpHeaderMap( WsdlRequest wsdlRequest )
+    {
+        httpHeaderMap = new HashMap<String, String>();
         StringToStringsMap originalHeaders = wsdlRequest.getRequestHeaders();
-        for (Map.Entry<String, List<String>> entry : originalHeaders.entrySet()) {
-            for (String value : entry.getValue()) {
-                httpHeaderMap.put(entry.getKey(), value);
+        for ( Map.Entry<String, List<String>> entry : originalHeaders.entrySet() )
+        {
+            for ( String value : entry.getValue() )
+            {
+                httpHeaderMap.put( entry.getKey(), value );
             }
         }
     }
@@ -62,53 +74,62 @@ public class RequestObject {
     /*
      * return Header as multiline string
      */
-    public String getHeaderString(String linebreak) {
-        Iterator iterator = httpHeaderMap.keySet().iterator();
-        StringBuilder sb = new StringBuilder("");
-        while (iterator.hasNext()) {
-            String key = iterator.next().toString();
-            String value = httpHeaderMap.get(key).toString();
-            sb.append(key).append(" ").append(value).append(linebreak);
+    public String getHeaderString( String linebreak )
+    {
+        Iterator<String> iterator = httpHeaderMap.keySet().iterator();
+        StringBuilder sb = new StringBuilder( "" );
+        while ( iterator.hasNext() )
+        {
+            String key = iterator.next();
+            String value = httpHeaderMap.get( key );
+            sb.append( key ).append( " " ).append( value ).append( linebreak );
         }
         return sb.toString();
     }
 
-    /*
-     * Set correct content length
-     * Should be called whenever content of message is set or changed OR
-     * when Header is overwritten
-     */
-    public void setHeaderContentLength() {
-        httpHeaderMap.put("Content-Length", String.valueOf(xmlMessage.length()));
-    }
+    // /*
+    // * Set correct content length Should be called whenever content of message
+    // * is set or changed OR when Header is overwritten
+    // */
+    // public void setHeaderContentLength() {
+    // httpHeaderMap
+    // .put("Content-Length", String.valueOf(xmlMessage.length()));
+    // }
 
-    public String getXmlMessage() {
+    public String getXmlMessage()
+    {
         return xmlMessage;
     }
 
-    public void setXmlMessage(String xmlMessage) {
+    public void setXmlMessage( String xmlMessage )
+    {
         this.xmlMessage = xmlMessage;
-        this.setHeaderContentLength();
+        // this.setHeaderContentLength();
     }
 
-    public String getEndpoint() {
+    public String getEndpoint()
+    {
         return endpoint;
     }
 
-    public void setEndpoint(String endpoint) {
+    public void setEndpoint( String endpoint )
+    {
         this.endpoint = endpoint;
     }
 
-    public Map<String, String> getHttpHeaderMap() {
+    public Map<String, String> getHttpHeaderMap()
+    {
         return httpHeaderMap;
     }
 
-    public void setHttpHeaderMap(Map<String, String> httpHeaderMap) {
+    public void setHttpHeaderMap( Map<String, String> httpHeaderMap )
+    {
         this.httpHeaderMap = httpHeaderMap;
-        this.setHeaderContentLength();
+        // this.setHeaderContentLength();
     }
 
-    public int getXmlMessageLength() {
+    public int getXmlMessageLength()
+    {
         return this.xmlMessage.length();
     }
 }

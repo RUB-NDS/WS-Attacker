@@ -21,74 +21,91 @@ package wsattacker.main.plugin;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.testsuite.RequestResponsePair;
 
-public class NullPlugin extends AbstractPlugin {
+public class NullPlugin
+    extends AbstractPlugin
+{
 
-	private static final long serialVersionUID = 1L;
-	private String name, description;
-	private int maxPoints;
+    private static final long serialVersionUID = 1L;
 
-	public NullPlugin(String name) {
-		this(name, "", 0);
-	}
+    private String name, description;
 
-	public NullPlugin(String name, String description, int maxPoints) {
-		this.name = name;
-		this.description = description;
-		this.maxPoints = maxPoints;
-	}
+    private int maxPoints;
 
-	@Override
-	public void initializePlugin() {
-		// TODO Auto-generated method stub
-	}
+    public NullPlugin( String name )
+    {
+        this( name, "", 0 );
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    public NullPlugin( String name, String description, int maxPoints )
+    {
+        this.name = name;
+        this.description = description;
+        this.maxPoints = maxPoints;
+    }
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public void initializePlugin()
+    {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public int getMaxPoints() {
-		return maxPoints;
-	}
+    @Override
+    public String getName()
+    {
+        return name;
+    }
 
-	@Override
-	protected void attackImplementationHook(RequestResponsePair request) {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public String getDescription()
+    {
+        return description;
+    }
 
-	@Override
-	public void clean() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public int getMaxPoints()
+    {
+        return maxPoints;
+    }
 
-	@Override
-	public boolean wasSuccessful() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    protected void attackImplementationHook( RequestResponsePair request )
+    {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public String getAuthor() {
-		return "Test";
-	}
+    @Override
+    public void clean()
+    {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public String getVersion() {
-		return "1";
-	}
+    @Override
+    public boolean wasSuccessful()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public String[] getCategory() {
-		return new String[]{"Test"};
-	}
-//	@Override
-//	public String toString() {
-//		return String.format("%5s / %2d / %s", getName(), getMaxPoints(), getDescription());
-//	}
+    @Override
+    public String getAuthor()
+    {
+        return "Test";
+    }
+
+    @Override
+    public String getVersion()
+    {
+        return "1";
+    }
+
+    @Override
+    public String[] getCategory()
+    {
+        return new String[] { "Test" };
+    }
+    // @Override
+    // public String toString() {
+    // return String.format("%5s / %2d / %s", getName(), getMaxPoints(),
+    // getDescription());
+    // }
 }

@@ -34,107 +34,132 @@ import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.gui.component.log.StatuslineGUI;
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
+ * use. If Jigloo is being used commercially (ie, by a corporation, company or business for any purpose whatever) then
+ * you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of
+ * Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO
+ * JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class MainWindow extends javax.swing.JFrame {
+public class MainWindow
+    extends javax.swing.JFrame
+{
 
-	private static final Logger LOG = Logger.getLogger(MainWindow.class);
-	private static final long serialVersionUID = 1L;
-	private StatuslineGUI statusline;
-	private JMenuBar menu;
-	private JMenu jMenu1;
-	private AbstractAction exitAction;
-	private JMenuItem exit;
-	private JSeparator jSeparator1;
-	private JTabbedPane tabs;
+    private static final Logger LOG = Logger.getLogger( MainWindow.class );
 
-	public MainWindow() {
-		super();
-		initGUI();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void initGUI() {
-		try {
-			GroupLayout thisLayout = new GroupLayout((JComponent) getContentPane());
-			getContentPane().setLayout(thisLayout);
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setPreferredSize(new java.awt.Dimension(800, 600));
-			{
-				statusline = GuiAppender.getStatusbar();
-			}
-			{
-				tabs = new JTabbedPane();
-			}
-			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(getTabsx(), 0, 312, Short.MAX_VALUE)
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 1, GroupLayout.PREFERRED_SIZE)
-					.addComponent(statusline, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap());
-			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(thisLayout.createParallelGroup()
-					.addComponent(statusline, GroupLayout.Alignment.LEADING, 0, 448, Short.MAX_VALUE)
-					.addComponent(getTabsx(), GroupLayout.Alignment.LEADING, 0, 448, Short.MAX_VALUE))
-					.addContainerGap());
-			{
-				menu = new JMenuBar();
-				setJMenuBar(getMenu());
-				{
-					jMenu1 = new JMenu();
-					menu.add(jMenu1);
-					jMenu1.setText("File");
-					{
-						jSeparator1 = new JSeparator();
-						jMenu1.add(jSeparator1);
-					}
-					{
-						exit = new JMenuItem();
-						jMenu1.add(exit);
-						exit.setText("Exit");
-						exit.setAction(getExitAction());
-					}
-				}
-			}
-			this.setSize(472, 391);
-		}
-		catch (Exception e) {
-			LOG.warn("Exception catched at MainWindow. This should not happen: " + e.getMessage());
-		}
-	}
+    private StatuslineGUI statusline;
 
-	public JTabbedPane getTabs() {
-		return tabs;
-	}
+    private JMenuBar menu;
 
-	public StatuslineGUI getStatusline() {
-		return statusline;
-	}
+    private JMenu jMenu1;
 
-	public JMenuBar getMenu() {
-		return menu;
-	}
+    private AbstractAction exitAction;
 
-	public JTabbedPane getTabsx() {
-		return tabs;
-	}
+    private JMenuItem exit;
 
-	@SuppressWarnings("serial")
-	private AbstractAction getExitAction() {
-		if (exitAction == null) {
-			exitAction = new AbstractAction("Exit", null) {
-				public void actionPerformed(ActionEvent evt) {
-					System.exit(0);
-				}
-			};
-		}
-		return exitAction;
-	}
+    private JSeparator jSeparator1;
+
+    private JTabbedPane tabs;
+
+    public MainWindow()
+    {
+        super();
+        initGUI();
+    }
+
+    private void initGUI()
+    {
+        try
+        {
+            GroupLayout thisLayout = new GroupLayout( (JComponent) getContentPane() );
+            getContentPane().setLayout( thisLayout );
+            setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
+            this.setPreferredSize( new java.awt.Dimension( 800, 600 ) );
+            {
+                statusline = GuiAppender.getStatusbar();
+            }
+            {
+                tabs = new JTabbedPane();
+            }
+            thisLayout.setVerticalGroup( thisLayout.createSequentialGroup().addContainerGap().addComponent( getTabsx(),
+                                                                                                            0,
+                                                                                                            312,
+                                                                                                            Short.MAX_VALUE ).addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED,
+                                                                                                                                               1,
+                                                                                                                                               GroupLayout.PREFERRED_SIZE ).addComponent( statusline,
+                                                                                                                                                                                          GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                          18,
+                                                                                                                                                                                          GroupLayout.PREFERRED_SIZE ).addContainerGap() );
+            thisLayout.setHorizontalGroup( thisLayout.createSequentialGroup().addContainerGap().addGroup( thisLayout.createParallelGroup().addComponent( statusline,
+                                                                                                                                                         GroupLayout.Alignment.LEADING,
+                                                                                                                                                         0,
+                                                                                                                                                         448,
+                                                                                                                                                         Short.MAX_VALUE ).addComponent( getTabsx(),
+                                                                                                                                                                                         GroupLayout.Alignment.LEADING,
+                                                                                                                                                                                         0,
+                                                                                                                                                                                         448,
+                                                                                                                                                                                         Short.MAX_VALUE ) ).addContainerGap() );
+            {
+                menu = new JMenuBar();
+                setJMenuBar( getMenu() );
+                {
+                    jMenu1 = new JMenu();
+                    menu.add( jMenu1 );
+                    jMenu1.setText( "File" );
+                    {
+                        jSeparator1 = new JSeparator();
+                        jMenu1.add( jSeparator1 );
+                    }
+                    {
+                        exit = new JMenuItem();
+                        jMenu1.add( exit );
+                        exit.setText( "Exit" );
+                        exit.setAction( getExitAction() );
+                    }
+                }
+            }
+            this.setSize( 472, 391 );
+        }
+        catch ( Exception e )
+        {
+            LOG.warn( "Exception catched at MainWindow. This should not happen: " + e.getMessage() );
+        }
+    }
+
+    public JTabbedPane getTabs()
+    {
+        return tabs;
+    }
+
+    public StatuslineGUI getStatusline()
+    {
+        return statusline;
+    }
+
+    public JMenuBar getMenu()
+    {
+        return menu;
+    }
+
+    public JTabbedPane getTabsx()
+    {
+        return tabs;
+    }
+
+    @SuppressWarnings( "serial" )
+    private AbstractAction getExitAction()
+    {
+        if ( exitAction == null )
+        {
+            exitAction = new AbstractAction( "Exit", null )
+            {
+                public void actionPerformed( ActionEvent evt )
+                {
+                    System.exit( 0 );
+                }
+            };
+        }
+        return exitAction;
+    }
 }

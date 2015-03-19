@@ -25,60 +25,79 @@ import wsattacker.gui.component.pluginconfiguration.option.OptionFileGUI_NB;
 /**
  * WS-Attacker will represent this with a file picker.
  */
-public abstract class AbstractOptionFile extends AbstractOption {
+public abstract class AbstractOptionFile
+    extends AbstractOption
+{
 
-	private static final long serialVersionUID = 2L;
-	public static final String PROP_FILE = "file";
-	private File file = null;
+    private static final long serialVersionUID = 2L;
 
-	protected AbstractOptionFile(String name, String description) {
-		super(name, description);
-		this.file = null;
-	}
+    public static final String PROP_FILE = "file";
 
-	public File getFile() {
-		return file;
-	}
+    private File file = null;
 
-	public void setFile(File file) {
-		if (isValid(file)) {
-			File oldFile = this.file;
-			this.file = file;
-			firePropertyChange(PROP_FILE, oldFile, file);
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", file));
-		}
-	}
+    protected AbstractOptionFile( String name, String description )
+    {
+        super( name, description );
+        this.file = null;
+    }
 
-	@Override
-	public boolean isValid(String value) {
-		try {
-			File test = new File(value);
-			return isValid(test);
-		}
-		catch (Exception e) {
-			return false;
-		}
-	}
+    public File getFile()
+    {
+        return file;
+    }
 
-	public abstract boolean isValid(File file);
+    public void setFile( File file )
+    {
+        if ( isValid( file ) )
+        {
+            File oldFile = this.file;
+            this.file = file;
+            firePropertyChange( PROP_FILE, oldFile, file );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", file ) );
+        }
+    }
 
-	@Override
-	public void parseValue(String value) {
-		if (isValid(value)) {
-			setFile(new File(value));
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
-		}
-	}
+    @Override
+    public boolean isValid( String value )
+    {
+        try
+        {
+            File test = new File( value );
+            return isValid( test );
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+    }
 
-	@Override
-	public String getValueAsString() {
-		return (file == null) ? "" : file.toString();
-	}
+    public abstract boolean isValid( File file );
 
-	@Override
-	public OptionGUI createOptionGUI() {
-		return new OptionFileGUI_NB(this);
-	}
+    @Override
+    public void parseValue( String value )
+    {
+        if ( isValid( value ) )
+        {
+            setFile( new File( value ) );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", value ) );
+        }
+    }
+
+    @Override
+    public String getValueAsString()
+    {
+        return ( file == null ) ? "" : file.toString();
+    }
+
+    @Override
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionFileGUI_NB( this );
+    }
 }

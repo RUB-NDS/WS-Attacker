@@ -25,9 +25,10 @@ import com.eviware.soapui.impl.wsdl.WsdlRequest;
  * This method will be removed in future version. Use the propertyChangeSupport
  * instead.
  */
-public interface CurrentRequestObserver {
+public interface CurrentRequestObserver
+{
 
-	public void currentRequestChanged(WsdlRequest newRequest, WsdlRequest oldRequest);
+    public void currentRequestChanged( WsdlRequest newRequest, WsdlRequest oldRequest );
 
-	public void noCurrentRequest();
+    public void noCurrentRequest();
 }

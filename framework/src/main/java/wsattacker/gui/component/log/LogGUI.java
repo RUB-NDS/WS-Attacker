@@ -24,30 +24,37 @@ import org.apache.log4j.Layout;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 
-public class LogGUI extends JScrollPane {
+public class LogGUI
+    extends JScrollPane
+{
 
     private static final long serialVersionUID = 1L;
+
     JTextArea content;
+
     Layout layout;
 
-    public LogGUI() {
+    public LogGUI()
+    {
         super();
-        setName("Log");
+        setName( "Log" );
         this.content = new JTextArea();
 
-        this.content.setEditable(false);
-        setViewportView(content);
-        this.layout = new PatternLayout("%d{ABSOLUTE} %-5p [%c{1}] %m%n");
-//        this.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-//            @Override
-//            public void adjustmentValueChanged(AdjustmentEvent e) {
-//                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-//            }
-//        });
+        this.content.setEditable( false );
+        setViewportView( content );
+        this.layout = new PatternLayout( "%d{ABSOLUTE} %-5p [%c{1}] %m%n" );
+        // this.getVerticalScrollBar().addAdjustmentListener(new
+        // AdjustmentListener() {
+        // @Override
+        // public void adjustmentValueChanged(AdjustmentEvent e) {
+        // e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+        // }
+        // });
     }
 
-    public void appendLog(LoggingEvent loggingEvent) {
-        content.append(layout.format(loggingEvent));
-		content.setCaretPosition(content.getDocument().getLength());
+    public void appendLog( LoggingEvent loggingEvent )
+    {
+        content.append( layout.format( loggingEvent ) );
+        content.setCaretPosition( content.getDocument().getLength() );
     }
 }

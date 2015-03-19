@@ -21,10 +21,10 @@ package wsattacker.plugin.dos.dosExtension.mvc.view;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * Interface that all modelListeners have to implement
- * valueChanged is the method that gets executed once a model changes!
+ * Interface that all modelListeners have to implement valueChanged is the method that gets executed once a model
+ * changes!
  */
 public interface AttackListener
 {
-    public void valueChanged(AttackModel model);
+    public void valueChanged( AttackModel model );
 }

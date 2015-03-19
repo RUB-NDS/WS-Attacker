@@ -18,41 +18,48 @@
  */
 package wsattacker.main.plugin;
 
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestPluginContainer {
+public class TestPluginContainer
+{
 
-	private static PluginContainer plugins;
-	private static NullPlugin p1,p2;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		plugins = new PluginContainer();
-		p1 = new NullPlugin("Eins", "Erstes eingefügtes Plugin", 1);
-		p2 = new NullPlugin("Zwei", "Zweites eingefügtes Plugin", 1);
-	}
-	
-	@Before
-	public void setUp() throws Exception {
-		plugins.clear();
-		plugins.add(p1);
-		plugins.add(p2);
-	}
-	
-	@Test
-	public void getByName() {
-		assertTrue(plugins.getByName("Zwei") == p2);
-		assertTrue(plugins.getByName("Vier") == null);
-	}
-	
-	@Test
-	public void contains() {
-		assertTrue(plugins.contains(p1));
-		assertTrue(plugins.contains(p2));
-	}
+    private static PluginContainer plugins;
+
+    private static NullPlugin p1, p2;
+
+    @BeforeClass
+    public static void setUpBeforeClass()
+        throws Exception
+    {
+        plugins = new PluginContainer();
+        p1 = new NullPlugin( "Eins", "Erstes eingefügtes Plugin", 1 );
+        p2 = new NullPlugin( "Zwei", "Zweites eingefügtes Plugin", 1 );
+    }
+
+    @Before
+    public void setUp()
+        throws Exception
+    {
+        plugins.clear();
+        plugins.add( p1 );
+        plugins.add( p2 );
+    }
+
+    @Test
+    public void getByName()
+    {
+        assertTrue( plugins.getByName( "Zwei" ) == p2 );
+        assertTrue( plugins.getByName( "Vier" ) == null );
+    }
+
+    @Test
+    public void contains()
+    {
+        assertTrue( plugins.contains( p1 ) );
+        assertTrue( plugins.contains( p2 ) );
+    }
 
 }

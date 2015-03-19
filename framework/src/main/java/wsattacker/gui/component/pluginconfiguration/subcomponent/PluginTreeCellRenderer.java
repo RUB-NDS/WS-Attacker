@@ -29,48 +29,61 @@ import org.apache.log4j.Logger;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.util.Category;
 
-public class PluginTreeCellRenderer extends DefaultCheckboxTreeCellRenderer {
+public class PluginTreeCellRenderer
+    extends DefaultCheckboxTreeCellRenderer
+{
 
-	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(PluginTreeCellRenderer.class);
-	public static final String PROP_PLUGINTREE = "pluginTree";
-	private JTree pluginTree;
+    private static final long serialVersionUID = 1L;
 
-	public PluginTreeCellRenderer() {
-	}
+    private static final Logger LOG = Logger.getLogger( PluginTreeCellRenderer.class );
 
-	public JTree getPluginTree() {
-		return pluginTree;
-	}
+    public static final String PROP_PLUGINTREE = "pluginTree";
 
-	public void setPluginTree(PluginTree pluginTree) {
-		JTree oldPluginTree = this.pluginTree;
-		this.pluginTree = pluginTree;
-		super.firePropertyChange("pluginTree", oldPluginTree, pluginTree);
-	}
+    private JTree pluginTree;
 
-	@Override
-	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-		Component defaultCell = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-		JLabel additionalText = new JLabel();
-		additionalText.setFont(new Font("Dialog", 2, 12));
-		JPanel newCell = new JPanel();
-		newCell.setLayout(new FlowLayout(0, 0, 0));
-		newCell.setOpaque(false);
-		newCell.add(defaultCell);
-		newCell.add(additionalText);
-		if (value instanceof Category) {
-			additionalText.setText(String.format("(%d)", new Object[]{
-				Integer.valueOf(((Category) value).getLeafsRecursive().size())
-			}));
-		} else if (value instanceof AbstractPlugin) {
-			AbstractPlugin plugin = (AbstractPlugin) value;
-			additionalText.setText(String.format("(%s)", new Object[]{
-				plugin.getState()
-			}));
-		} else {
-			LOG.warn((new StringBuilder()).append("Does not expect class: ").append(value.getClass()).toString());
-		}
-		return newCell;
-	}
+    public PluginTreeCellRenderer()
+    {
+    }
+
+    public JTree getPluginTree()
+    {
+        return pluginTree;
+    }
+
+    public void setPluginTree( PluginTree pluginTree )
+    {
+        JTree oldPluginTree = this.pluginTree;
+        this.pluginTree = pluginTree;
+        super.firePropertyChange( "pluginTree", oldPluginTree, pluginTree );
+    }
+
+    @Override
+    public Component getTreeCellRendererComponent( JTree tree, Object value, boolean selected, boolean expanded,
+                                                   boolean leaf, int row, boolean hasFocus )
+    {
+        Component defaultCell =
+            super.getTreeCellRendererComponent( tree, value, selected, expanded, leaf, row, hasFocus );
+        JLabel additionalText = new JLabel();
+        additionalText.setFont( new Font( "Dialog", 2, 12 ) );
+        JPanel newCell = new JPanel();
+        newCell.setLayout( new FlowLayout( 0, 0, 0 ) );
+        newCell.setOpaque( false );
+        newCell.add( defaultCell );
+        newCell.add( additionalText );
+        if ( value instanceof Category )
+        {
+            additionalText.setText( String.format( "(%d)",
+                                                   new Object[] { Integer.valueOf( ( (Category) value ).getLeafsRecursive().size() ) } ) );
+        }
+        else if ( value instanceof AbstractPlugin )
+        {
+            AbstractPlugin plugin = (AbstractPlugin) value;
+            additionalText.setText( String.format( "(%s)", new Object[] { plugin.getState() } ) );
+        }
+        else
+        {
+            LOG.warn( ( new StringBuilder() ).append( "Does not expect class: " ).append( value.getClass() ).toString() );
+        }
+        return newCell;
+    }
 }

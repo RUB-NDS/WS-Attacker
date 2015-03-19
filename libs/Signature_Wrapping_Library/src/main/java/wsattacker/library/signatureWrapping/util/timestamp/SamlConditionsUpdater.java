@@ -31,66 +31,83 @@ import org.w3c.dom.Node;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
- * Helper class to manipulate (update) time conditions in SAML elements.
- * The difference between notBefore and notOnOrAfter are kept.
- *
+ * Helper class to manipulate (update) time conditions in SAML elements. The difference between notBefore and
+ * notOnOrAfter are kept.
+ * 
  * @author christian
  */
-public final class SamlConditionsUpdater {
+public final class SamlConditionsUpdater
+{
 
-    public static DateFormat inMilli = new XmlSchemaDateFormat();
-    public static DateFormat normal = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    final public static DateFormat inMilli = new XmlSchemaDateFormat();
+
+    final public static DateFormat normal = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss'Z'" );
+
     public static DateFormat df = inMilli;
+
     public final static String XPATH_NOT_BEFORE = "//attribute::*[local-name()='NotBefore']";
+
     public final static String XPATH_NOT_ON_OR_AFTER = "//attribute::*[local-name()='NotOnOrAfter']";
 
-    private SamlConditionsUpdater() {
+    private SamlConditionsUpdater()
+    {
     }
 
-    public static void updateConditionsElement(Element conditionsElement, int beforeSec, int afterSec) {
+    public static void updateConditionsElement( Element conditionsElement, int beforeSec, int afterSec )
+    {
         Calendar notBefore = Calendar.getInstance();
         Calendar notOnOrAfter = (Calendar) notBefore.clone();
-        notBefore.add(Calendar.SECOND, -1 * beforeSec);
-        notOnOrAfter.add(Calendar.SECOND, afterSec);
+        notBefore.add( Calendar.SECOND, -1 * beforeSec );
+        notOnOrAfter.add( Calendar.SECOND, afterSec );
 
-        conditionsElement.setAttribute("NotBefore", df.format(notBefore.getTime()));
-        conditionsElement.setAttribute("NotOnOrAfter", df.format(notOnOrAfter.getTime()));
+        conditionsElement.setAttribute( "NotBefore", df.format( notBefore.getTime() ) );
+        conditionsElement.setAttribute( "NotOnOrAfter", df.format( notOnOrAfter.getTime() ) );
     }
 
-    public static void updateTimestamps(Document document, int beforeSeconds, int afterSeconds) {
+    public static void updateTimestamps( Document document, int beforeSeconds, int afterSeconds )
+    {
         Calendar notBefore = Calendar.getInstance();
-        notBefore.add(Calendar.SECOND, -1 * beforeSeconds);
+        notBefore.add( Calendar.SECOND, -1 * beforeSeconds );
         Calendar notOnOrAfter = Calendar.getInstance();
-        notOnOrAfter.setTime(notBefore.getTime());
-        notOnOrAfter.add(Calendar.SECOND, afterSeconds);
-        updateTimestamps(document, notBefore, notOnOrAfter);
+        notOnOrAfter.setTime( notBefore.getTime() );
+        notOnOrAfter.add( Calendar.SECOND, afterSeconds );
+        updateTimestamps( document, notBefore, notOnOrAfter );
 
     }
 
-    public static void updateTimestamps(Document document, Calendar notBefore, Calendar notOnOrAfter) {
-        try {
+    public static void updateTimestamps( Document document, Calendar notBefore, Calendar notOnOrAfter )
+    {
+        try
+        {
             XmlSchemaDateFormat df = new XmlSchemaDateFormat();
 
-            List<? extends Node> notBeforeList = DomUtilities.evaluateXPath(document, XPATH_NOT_BEFORE);
-            for (Node n : notBeforeList) {
+            List<? extends Node> notBeforeList = DomUtilities.evaluateXPath( document, XPATH_NOT_BEFORE );
+            for ( Node n : notBeforeList )
+            {
                 Attr notBeforeAttr = (Attr) n;
-                notBeforeAttr.setTextContent(df.format(notBefore.getTime()));
+                notBeforeAttr.setTextContent( df.format( notBefore.getTime() ) );
             }
-            List<? extends Node> notOnOrAfterList = DomUtilities.evaluateXPath(document, XPATH_NOT_ON_OR_AFTER);
-            for (Node n : notOnOrAfterList) {
+            List<? extends Node> notOnOrAfterList = DomUtilities.evaluateXPath( document, XPATH_NOT_ON_OR_AFTER );
+            for ( Node n : notOnOrAfterList )
+            {
                 Attr notOnOrAfterAttr = (Attr) n;
-                notOnOrAfterAttr.setTextContent(df.format(notOnOrAfter.getTime()));
+                notOnOrAfterAttr.setTextContent( df.format( notOnOrAfter.getTime() ) );
             }
-        } catch (XPathExpressionException ex) {
-            Logger.getLogger(SamlConditionsUpdater.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( XPathExpressionException ex )
+        {
+            Logger.getLogger( SamlConditionsUpdater.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
-    public static void updateTimestampsByXPath(Document document, String xpathToFindTimestampAttr, Calendar calendar) throws XPathExpressionException {
-        List<? extends Node> attrList = DomUtilities.evaluateXPath(document, XPATH_NOT_BEFORE);
-        for (Node n : attrList) {
+    public static void updateTimestampsByXPath( Document document, String xpathToFindTimestampAttr, Calendar calendar )
+        throws XPathExpressionException
+    {
+        List<? extends Node> attrList = DomUtilities.evaluateXPath( document, XPATH_NOT_BEFORE );
+        for ( Node n : attrList )
+        {
             Attr notBefore = (Attr) n;
-            notBefore.setTextContent(df.format(calendar.getTime()));
+            notBefore.setTextContent( df.format( calendar.getTime() ) );
         }
     }
 }

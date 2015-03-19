@@ -23,87 +23,111 @@ import java.util.Collections;
 import java.util.List;
 import wsattacker.main.composition.plugin.option.AbstractOptionChoice;
 
-public class OptionSimpleChoice extends AbstractOptionChoice {
+public class OptionSimpleChoice
+    extends AbstractOptionChoice
+{
 
-	private static final long serialVersionUID = 1L;
-	public static final String PROP_CHOICES = "choices";
-	public static final String PROP_SELECTEDINDEX = "selectedIndex";
-	public static final String PROP_SELECTEDASSTRING = "selectedAsString";
-	private List<String> choices;
-	private int selected;
+    private static final long serialVersionUID = 1L;
 
-	public OptionSimpleChoice(String name, String description) {
-		this(name, new ArrayList<String>(), 0);
-		choices.add("No hoices available");
-	}
+    public static final String PROP_CHOICES = "choices";
 
-	public OptionSimpleChoice(String name, List<String> choices, int selected) {
-		this(name, choices, selected, "");
-	}
+    public static final String PROP_SELECTEDINDEX = "selectedIndex";
 
-	public OptionSimpleChoice(String name, List<String> choices, int selected, String description) {
-		super(name, description);
-		this.choices = choices;
-		if ((selected >= 0) && (selected < choices.size())) {
-			this.selected = selected;
-		}
-	}
+    public static final String PROP_SELECTEDASSTRING = "selectedAsString";
 
-	@Override
-	public boolean isValid(int choice) {
-		return ((choice >= 0) && (choice < choices.size()));
-	}
+    private List<String> choices;
 
-	@Override
-	public boolean isValid(String value) {
-		return choices.contains(value);
-	}
+    private int selected;
 
-	@Override
-	public void parseValue(String value) {
-		if (isValid(value)) {
-			setSelectedIndex(choices.indexOf(value));
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
-		}
-	}
+    public OptionSimpleChoice( String name, String description )
+    {
+        this( name, new ArrayList<String>(), 0 );
+        choices.add( "No hoices available" );
+    }
 
-	@Override
-	public String getSelectedAsString() {
-		return choices.get(selected);
-	}
+    public OptionSimpleChoice( String name, List<String> choices, int selected )
+    {
+        this( name, choices, selected, "" );
+    }
 
-	@Override
-	public List<String> getChoices() {
-		return Collections.unmodifiableList(choices);
-	}
+    public OptionSimpleChoice( String name, List<String> choices, int selected, String description )
+    {
+        super( name, description );
+        this.choices = choices;
+        if ( ( selected >= 0 ) && ( selected < choices.size() ) )
+        {
+            this.selected = selected;
+        }
+    }
 
-	@Override
-	public void setSelectedAsString(String value) {
-		parseValue(value);
-	}
+    @Override
+    public boolean isValid( int choice )
+    {
+        return ( ( choice >= 0 ) && ( choice < choices.size() ) );
+    }
 
-	@Override
-	public void setSelectedIndex(int index) {
-		if (isValid(index)) {
-			int oldSelected = this.selected;
-			String oldString = getValueAsString();
-			this.selected = index;
-			String newString = getValueAsString();
-			firePropertyChange(PROP_SELECTEDINDEX, oldSelected, selected);
-			firePropertyChange(PROP_SELECTEDASSTRING, oldString, newString);
-		}
-	}
+    @Override
+    public boolean isValid( String value )
+    {
+        return choices.contains( value );
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return selected;
-	}
+    @Override
+    public void parseValue( String value )
+    {
+        if ( isValid( value ) )
+        {
+            setSelectedIndex( choices.indexOf( value ) );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", value ) );
+        }
+    }
 
-	@Override
-	public void setChoices(List<String> choices) {
-		java.util.List<java.lang.String> oldChoices = this.choices;
-		this.choices = choices;
-		firePropertyChange(PROP_CHOICES, oldChoices, choices);
-	}
+    @Override
+    public String getSelectedAsString()
+    {
+        return choices.get( selected );
+    }
+
+    @Override
+    public List<String> getChoices()
+    {
+        return Collections.unmodifiableList( choices );
+    }
+
+    @Override
+    public void setSelectedAsString( String value )
+    {
+        parseValue( value );
+    }
+
+    @Override
+    public void setSelectedIndex( int index )
+    {
+        if ( isValid( index ) )
+        {
+            int oldSelected = this.selected;
+            String oldString = getValueAsString();
+            this.selected = index;
+            String newString = getValueAsString();
+            firePropertyChange( PROP_SELECTEDINDEX, oldSelected, selected );
+            firePropertyChange( PROP_SELECTEDASSTRING, oldString, newString );
+        }
+    }
+
+    @Override
+    public int getSelectedIndex()
+    {
+        return selected;
+    }
+
+    @Override
+    public void setChoices( List<String> choices )
+    {
+        java.util.List<java.lang.String> oldChoices = this.choices;
+        this.choices = choices;
+        firePropertyChange( PROP_CHOICES, oldChoices, choices );
+    }
 }

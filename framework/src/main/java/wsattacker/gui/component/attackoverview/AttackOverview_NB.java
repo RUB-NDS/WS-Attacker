@@ -39,93 +39,108 @@ import wsattacker.main.plugin.PluginManager;
 import wsattacker.main.plugin.result.ResultLevel;
 
 /**
- *
  * @author christian
  */
-public class AttackOverview_NB extends javax.swing.JPanel {
+public class AttackOverview_NB
+    extends javax.swing.JPanel
+{
 
-	ControllerInterface controller;
-	private static final Logger LOG = Logger.getLogger(AttackOverview_NB.class);
+    ControllerInterface controller;
 
-	/**
-	 * Creates new form AttackOverview_NB
-	 */
-	public AttackOverview_NB() {
-		this(GuiController.getInstance());
-	}
+    private static final Logger LOG = Logger.getLogger( AttackOverview_NB.class );
 
-	public AttackOverview_NB(ControllerInterface controller) {
-		this.controller = controller;
-		initComponents();
-		addSelectionModelToEnabledPluginsTable();
-		addAdjustmenListenerToResultsScrollbar();
-	}
+    /**
+     * Creates new form AttackOverview_NB
+     */
+    public AttackOverview_NB()
+    {
+        this( GuiController.getInstance() );
+    }
 
-	private void addSelectionModelToEnabledPluginsTable() {
-		enabledPluginTable.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					int[] selected = enabledPluginTable
-							.getSelectedRows();
-					List<String> sources = new ArrayList<String>();
-					for (int index : selected) {
-						sources.add(PluginManager.getInstance()
-								.getActive(index)
-								.getName());
-					}
-					resultTable.filterSources(sources);
-				}
-			}
-		});
-	}
+    public AttackOverview_NB( ControllerInterface controller )
+    {
+        this.controller = controller;
+        initComponents();
+        addSelectionModelToEnabledPluginsTable();
+        addAdjustmenListenerToResultsScrollbar();
+    }
 
-	private void addAdjustmenListenerToResultsScrollbar() {
-		resultTableScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				if (e.getValueIsAdjusting()) {
-					// The user is dragging the knob
-					return;
-				}
+    private void addSelectionModelToEnabledPluginsTable()
+    {
+        enabledPluginTable.getSelectionModel().addListSelectionListener( new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged( ListSelectionEvent e )
+            {
+                if ( !e.getValueIsAdjusting() )
+                {
+                    int[] selected = enabledPluginTable.getSelectedRows();
+                    List<String> sources = new ArrayList<String>();
+                    for ( int index : selected )
+                    {
+                        sources.add( PluginManager.getInstance().getActive( index ).getName() );
+                    }
+                    resultTable.filterSources( sources );
+                }
+            }
+        } );
+    }
 
-				JScrollBar bar = resultTableScrollPane.getVerticalScrollBar();
-				int max = bar.getMaximum();
-				int current = bar.getValue();
-				final int THRESHOLD = bar.getVisibleAmount() * 2;
-				if (current > (max - THRESHOLD)) {
-					e.getAdjustable().setValue(max);
-				}
-			}
-		});
-//		resultTableScrollPane.setAutoscrolls(true);
-	}
+    private void addAdjustmenListenerToResultsScrollbar()
+    {
+        resultTableScrollPane.getVerticalScrollBar().addAdjustmentListener( new AdjustmentListener()
+        {
+            @Override
+            public void adjustmentValueChanged( AdjustmentEvent e )
+            {
+                if ( e.getValueIsAdjusting() )
+                {
+                    // The user is dragging the knob
+                    return;
+                }
 
-	public void enableStartButton(boolean enable) {
-		start.setEnabled(enable);
-	}
+                JScrollBar bar = resultTableScrollPane.getVerticalScrollBar();
+                int max = bar.getMaximum();
+                int current = bar.getValue();
+                final int THRESHOLD = bar.getVisibleAmount() * 2;
+                if ( current > ( max - THRESHOLD ) )
+                {
+                    e.getAdjustable().setValue( max );
+                }
+            }
+        } );
+        // resultTableScrollPane.setAutoscrolls(true);
+    }
 
-	public void enableStopButton(boolean enable) {
-		stop.setEnabled(enable);
-	}
+    public void enableStartButton( boolean enable )
+    {
+        start.setEnabled( enable );
+    }
 
-	public void enableCleanButton(boolean enable) {
-		clean.setEnabled(enable);
-	}
+    public void enableStopButton( boolean enable )
+    {
+        stop.setEnabled( enable );
+    }
 
-	public void enableSaveButton(boolean enable) {
-		save.setEnabled(enable);
-	}
+    public void enableCleanButton( boolean enable )
+    {
+        clean.setEnabled( enable );
+    }
 
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void enableSaveButton( boolean enable )
+    {
+        save.setEnabled( enable );
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
+     * content of this method is always regenerated by the Form Editor.
+     */
+    @SuppressWarnings( "unchecked" )
+    // <editor-fold defaultstate="collapsed"
+    // desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         saveResultsFileChooser = new javax.swing.JFileChooser();
@@ -140,179 +155,203 @@ public class AttackOverview_NB extends javax.swing.JPanel {
         resultTable = new wsattacker.gui.component.attackoverview.subcomponent.ResultTable();
         resultLevelSlider = new wsattacker.gui.component.attackoverview.subcomponent.ResultLevelSlider();
 
-        saveResultsFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        saveResultsFileChooser.setDialogTitle("Save Results to...");
-        saveResultsFileChooser.setFileFilter(new FileFilter() {
+        saveResultsFileChooser.setDialogType( javax.swing.JFileChooser.SAVE_DIALOG );
+        saveResultsFileChooser.setDialogTitle( "Save Results to..." );
+        saveResultsFileChooser.setFileFilter( new FileFilter()
+        {
 
             @Override
-            public boolean accept(File file) {
+            public boolean accept( File file )
+            {
                 // Allow only directories, or files with ".txt" extension
-                return file.isDirectory() || file.getAbsolutePath().endsWith(".txt");
+                return file.isDirectory() || file.getAbsolutePath().endsWith( ".txt" );
             }
 
             @Override
-            public String getDescription() {
+            public String getDescription()
+            {
                 // This description will be displayed in the dialog,
                 // hard-coded = ugly, should be done via I18N
                 return "Text documents (*.txt)";
             }
-        });
+        } );
 
-        setName("Attack Overview"); // NOI18N
+        setName( "Attack Overview" ); // NOI18N
 
-        start.setText("Start");
+        start.setText( "Start" );
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, stop, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), start, org.jdesktop.beansbinding.BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
+        org.jdesktop.beansbinding.Binding binding =
+            org.jdesktop.beansbinding.Bindings.createAutoBinding( org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+                                                                  stop,
+                                                                  org.jdesktop.beansbinding.ELProperty.create( "${enabled}" ),
+                                                                  start,
+                                                                  org.jdesktop.beansbinding.BeanProperty.create( "selected" ) );
+        bindingGroup.addBinding( binding );
 
-        start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startAction(evt);
+        start.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed( java.awt.event.ActionEvent evt )
+            {
+                startAction( evt );
             }
-        });
+        } );
 
-        stop.setText("Stop");
-        stop.setEnabled(false);
-        stop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopAction(evt);
+        stop.setText( "Stop" );
+        stop.setEnabled( false );
+        stop.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed( java.awt.event.ActionEvent evt )
+            {
+                stopAction( evt );
             }
-        });
+        } );
 
-        clean.setText("Clean");
-        clean.setEnabled(false);
-        clean.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cleanAction(evt);
+        clean.setText( "Clean" );
+        clean.setEnabled( false );
+        clean.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed( java.awt.event.ActionEvent evt )
+            {
+                cleanAction( evt );
             }
-        });
+        } );
 
-        save.setText("Save");
-        save.setEnabled(false);
-        save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAction(evt);
+        save.setText( "Save" );
+        save.setEnabled( false );
+        save.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed( java.awt.event.ActionEvent evt )
+            {
+                saveAction( evt );
             }
-        });
+        } );
 
-        splitviewPane.setDividerLocation((2+PluginManager.getInstance()
-            .countPlugins())*enabledPluginTable.getRowHeight());
-    splitviewPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        splitviewPane.setDividerLocation( ( 2 + PluginManager.getInstance().countPlugins() )
+            * enabledPluginTable.getRowHeight() );
+        splitviewPane.setOrientation( javax.swing.JSplitPane.VERTICAL_SPLIT );
 
-    enabledPluginTableScrollPane.setViewportView(enabledPluginTable);
+        enabledPluginTableScrollPane.setViewportView( enabledPluginTable );
 
-    splitviewPane.setLeftComponent(enabledPluginTableScrollPane);
+        splitviewPane.setLeftComponent( enabledPluginTableScrollPane );
 
-    resultTableScrollPane.setViewportView(resultTable);
+        resultTableScrollPane.setViewportView( resultTable );
 
-    splitviewPane.setRightComponent(resultTableScrollPane);
+        splitviewPane.setRightComponent( resultTableScrollPane );
 
-    resultLevelSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-        public void stateChanged(javax.swing.event.ChangeEvent evt) {
-            resultLevelSliderStateChanged(evt);
-        }
-    });
+        resultLevelSlider.addChangeListener( new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged( javax.swing.event.ChangeEvent evt )
+            {
+                resultLevelSliderStateChanged( evt );
+            }
+        } );
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-    this.setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(splitviewPane)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(start)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(stop)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(clean)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(save)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                    .addComponent(resultLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap())
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(start)
-                    .addComponent(stop)
-                    .addComponent(clean)
-                    .addComponent(save))
-                .addComponent(resultLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(splitviewPane, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-            .addContainerGap())
-    );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
+        this.setLayout( layout );
+        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createSequentialGroup().addContainerGap().addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( splitviewPane ).addGroup( layout.createSequentialGroup().addComponent( start ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( stop ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( clean ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( save ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        58,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Short.MAX_VALUE ).addComponent( resultLevelSlider,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        305,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE ) ) ).addContainerGap() ) );
+        layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createSequentialGroup().addContainerGap().addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( start ).addComponent( stop ).addComponent( clean ).addComponent( save ) ).addComponent( resultLevelSlider,
+                                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.PREFERRED_SIZE ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( splitviewPane,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              239,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Short.MAX_VALUE ).addContainerGap() ) );
 
-    bindingGroup.bind();
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAction
-		controller.startActivePlugins();
-    }//GEN-LAST:event_startAction
+    private void startAction( java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_startAction
+        controller.startActivePlugins();
+    }// GEN-LAST:event_startAction
 
-    private void stopAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAction
-		controller.stopActivePlugins();
-    }//GEN-LAST:event_stopAction
+    private void stopAction( java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_stopAction
+        controller.stopActivePlugins();
+    }// GEN-LAST:event_stopAction
 
-    private void cleanAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanAction
-		controller.cleanPlugins();
-    }//GEN-LAST:event_cleanAction
+    private void cleanAction( java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_cleanAction
+        controller.cleanPlugins();
+    }// GEN-LAST:event_cleanAction
 
-    private void saveAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAction
-		int returnVal = saveResultsFileChooser.showSaveDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = saveResultsFileChooser.getSelectedFile();
-			BufferedWriter out = null;
-			try {
-				out = new BufferedWriter(new FileWriter(file));
-				for (int row = 0; row < resultTable.getRowCount(); ++row) {
-					for (int col = 0; col < resultTable.getColumnCount(); ++col) {
-						out.write(resultTable.getValueAt(row, col).toString());
-						out.newLine();
-					}
-					out.newLine();
-				}
-			}
-			catch (IOException ex) {
-				LOG.warn(ex);
-			}
-			finally {
-				try {
-					out.close();
-				}
-				catch (IOException ex) {
-					LOG.warn(ex);
-				}
-			}
-		} else {
-			LOG.info("File access cancelled by user.");
-		}
-    }//GEN-LAST:event_saveAction
+    private void saveAction( java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_saveAction
+        int returnVal = saveResultsFileChooser.showSaveDialog( this );
+        if ( returnVal == JFileChooser.APPROVE_OPTION )
+        {
+            File file = saveResultsFileChooser.getSelectedFile();
+            BufferedWriter out = null;
+            try
+            {
+                out = new BufferedWriter( new FileWriter( file ) );
+                for ( int row = 0; row < resultTable.getRowCount(); ++row )
+                {
+                    for ( int col = 0; col < resultTable.getColumnCount(); ++col )
+                    {
+                        out.write( resultTable.getValueAt( row, col ).toString() );
+                        out.newLine();
+                    }
+                    out.newLine();
+                }
+            }
+            catch ( IOException ex )
+            {
+                LOG.warn( ex );
+            }
+            finally
+            {
+                try
+                {
+                    out.close();
+                }
+                catch ( IOException ex )
+                {
+                    LOG.warn( ex );
+                }
+            }
+        }
+        else
+        {
+            LOG.info( "File access cancelled by user." );
+        }
+    }// GEN-LAST:event_saveAction
 
-    private void resultLevelSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_resultLevelSliderStateChanged
-		int val = resultLevelSlider.getValue();
-		String level = ((JLabel) resultLevelSlider.getLabelTable()
-				.get(val)).getText();
-		resultTable.setLevel(ResultLevel.valueOf(level));
-    }//GEN-LAST:event_resultLevelSliderStateChanged
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void resultLevelSliderStateChanged( javax.swing.event.ChangeEvent evt )
+    {// GEN-FIRST:event_resultLevelSliderStateChanged
+        int val = resultLevelSlider.getValue();
+        String level = ( (JLabel) resultLevelSlider.getLabelTable().get( val ) ).getText();
+        resultTable.setLevel( ResultLevel.valueOf( level ) );
+    }// GEN-LAST:event_resultLevelSliderStateChanged
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+
     private javax.swing.JButton clean;
+
     private wsattacker.gui.component.attackoverview.subcomponent.EnabledPluginTable enabledPluginTable;
+
     private javax.swing.JScrollPane enabledPluginTableScrollPane;
+
     private wsattacker.gui.component.attackoverview.subcomponent.ResultLevelSlider resultLevelSlider;
+
     private wsattacker.gui.component.attackoverview.subcomponent.ResultTable resultTable;
+
     private javax.swing.JScrollPane resultTableScrollPane;
+
     private javax.swing.JButton save;
+
     private javax.swing.JFileChooser saveResultsFileChooser;
+
     private javax.swing.JSplitPane splitviewPane;
+
     private javax.swing.JButton start;
+
     private javax.swing.JButton stop;
+
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

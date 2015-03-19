@@ -48,6 +48,12 @@
             <artifactId>Signature_Wrapping_Library</artifactId>
             <version>1.4-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>wsattacker.library</groupId>
+            <artifactId>SoapHttpClient</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,10 +62,9 @@
                 Use a Licence Header
             -->
             <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
                 <configuration>
-                    <header>${basedir}/../../license_header.txt</header>
                     <properties>
                         <owner>Christian Mainka</owner>
                     </properties>

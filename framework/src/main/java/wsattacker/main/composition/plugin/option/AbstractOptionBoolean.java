@@ -24,53 +24,70 @@ import wsattacker.gui.component.pluginconfiguration.option.OptionBooleanGUI_NB;
 /**
  * WS-Attacker will represent this as a checkbox.
  */
-public abstract class AbstractOptionBoolean extends AbstractOption {
+public abstract class AbstractOptionBoolean
+    extends AbstractOption
+{
 
-	private static final long serialVersionUID = 2L;
-	public static final String PROP_ON = "on";
-	private boolean on;
+    private static final long serialVersionUID = 2L;
 
-	public AbstractOptionBoolean(String name, boolean on) {
-		this(name, on, "");
-	}
+    public static final String PROP_ON = "on";
 
-	public AbstractOptionBoolean(String name, boolean on, String description) {
-		super(name, description);
-		this.on = on;
-	}
+    private boolean on;
 
-	public boolean isOn() {
-		return on;
-	}
+    public AbstractOptionBoolean( String name, boolean on )
+    {
+        this( name, on, "" );
+    }
 
-	public void setOn(boolean on) {
-		if (isValid(on)) {
-			boolean oldOn = this.on;
-			this.on = on;
-			firePropertyChange(PROP_ON, oldOn, on);
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(%s) returned false", on));
-		}
-	}
+    public AbstractOptionBoolean( String name, boolean on, String description )
+    {
+        super( name, description );
+        this.on = on;
+    }
 
-	@Override
-	public void parseValue(String value) {
-		if (isValid(value)) {
-			setOn(Boolean.valueOf(value));
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
-		}
-	}
+    public boolean isOn()
+    {
+        return on;
+    }
 
-	@Override
-	public String getValueAsString() {
-		return String.format("%b", isOn());
-	}
+    public void setOn( boolean on )
+    {
+        if ( isValid( on ) )
+        {
+            boolean oldOn = this.on;
+            this.on = on;
+            firePropertyChange( PROP_ON, oldOn, on );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(%s) returned false", on ) );
+        }
+    }
 
-	public abstract boolean isValid(boolean on);
+    @Override
+    public void parseValue( String value )
+    {
+        if ( isValid( value ) )
+        {
+            setOn( Boolean.valueOf( value ) );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", value ) );
+        }
+    }
 
-	@Override
-	public OptionGUI createOptionGUI() {
-		return new OptionBooleanGUI_NB(this);
-	}
+    @Override
+    public String getValueAsString()
+    {
+        return String.format( "%b", isOn() );
+    }
+
+    public abstract boolean isValid( boolean on );
+
+    @Override
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionBooleanGUI_NB( this );
+    }
 }

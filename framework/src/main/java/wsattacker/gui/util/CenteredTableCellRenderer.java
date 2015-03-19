@@ -25,17 +25,19 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class CenteredTableCellRenderer implements TableCellRenderer {
-	private static final long serialVersionUID = 1L;
+public class CenteredTableCellRenderer
+    implements TableCellRenderer
+{
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		TableCellRenderer defaultCR = new DefaultTableCellRenderer();
-		JLabel c = (JLabel) defaultCR.getTableCellRendererComponent(
-				table, value, isSelected, hasFocus, row, column);
-		c.setHorizontalAlignment(SwingConstants.CENTER);
-		c.setVerticalAlignment(SwingConstants.CENTER);
-		return c;
-	}
+    @Override
+    public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
+                                                    int row, int column )
+    {
+        TableCellRenderer defaultCR = new DefaultTableCellRenderer();
+        JLabel c = (JLabel) defaultCR.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+        c.setHorizontalAlignment( SwingConstants.CENTER );
+        c.setVerticalAlignment( SwingConstants.CENTER );
+        return c;
+    }
 }

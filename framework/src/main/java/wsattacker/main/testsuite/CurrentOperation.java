@@ -30,102 +30,128 @@ import wsattacker.main.composition.testsuite.CurrentOperationObserver;
 
 /**
  * Holds a references to the currently used operation
- *
+ * 
  * @author Christian Mainka
- *
  */
-public class CurrentOperation extends AbstractBean implements PropertyChangeListener {
+public class CurrentOperation
+    extends AbstractBean
+    implements PropertyChangeListener
+{
 
-	final private static Logger LOG = Logger.getLogger(CurrentOperation.class);
-	public static final String PROP_WSDLOPERATION = "wsdlOperation";
-	private WsdlOperation wsdlOperation;
-	private CurrentInterface currentInterface;
-	final private List<CurrentOperationObserver> observers = new ArrayList<CurrentOperationObserver>();
+    final private static Logger LOG = Logger.getLogger( CurrentOperation.class );
 
-	public CurrentOperation() {
-	}
+    public static final String PROP_WSDLOPERATION = "wsdlOperation";
 
-	public CurrentInterface getCurrentInterface() {
-		return currentInterface;
-	}
+    private WsdlOperation wsdlOperation;
 
-	public void setCurrentInterface(CurrentInterface newCurrentInterface) {
-		final CurrentInterface oldInterface = this.currentInterface;
-		if (oldInterface != null) {
-			oldInterface.removePropertyChangeListener(this);
-		}
-		this.currentInterface = newCurrentInterface;
-		if (newCurrentInterface != null) {
-			newCurrentInterface.addPropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
-		}
-	}
+    private CurrentInterface currentInterface;
 
-	/**
-	 * Get the value of wsdlOperation
-	 *
-	 * @return the value of wsdlOperation
-	 */
-	public WsdlOperation getWsdlOperation() {
-		return wsdlOperation;
-	}
+    final private List<CurrentOperationObserver> observers = new ArrayList<CurrentOperationObserver>();
 
-	/**
-	 * Set the value of wsdlOperation
-	 *
-	 * @param newWsdlOperation new value of wsdlOperation
-	 */
-	public void setWsdlOperation(WsdlOperation newWsdlOperation) {
-		WsdlOperation oldWsdlOperation = this.wsdlOperation;
-		this.wsdlOperation = newWsdlOperation;
-		firePropertyChange(PROP_WSDLOPERATION, oldWsdlOperation, newWsdlOperation);
-		notifyCurrentOperationObservers(newWsdlOperation, oldWsdlOperation);
-	}
+    public CurrentOperation()
+    {
+    }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent pce) {
-		final String propName = pce.getPropertyName();
-		if (TestSuite.PROP_CURRENTINTERFACE.equals(propName)) {
-			LOG.info("Detected Service change");
-			final CurrentInterface newCI = (CurrentInterface) pce.getNewValue();
-			final WsdlInterface wsdlInterface = newCI.getWsdlInterface();
-			if (wsdlInterface != null && wsdlInterface.getOperationCount() > 0) {
-				// set default operation if any existing
-				WsdlOperation operation = wsdlInterface.getOperationAt(0);
-				LOG.info("Set default operation to: " + operation.getName());
-				setWsdlOperation(operation);
-			} else {
-				setWsdlOperation(null);
-			}
-		}
-	}
+    public CurrentInterface getCurrentInterface()
+    {
+        return currentInterface;
+    }
 
-	@Deprecated
-	/**
-	 * This method will be removed in future version. Use the
-	 * propertyChangeSupport instead.
-	 */
-	public void addCurrentOperationObserver(CurrentOperationObserver o) {
-		observers.add(o);
-	}
+    public void setCurrentInterface( CurrentInterface newCurrentInterface )
+    {
+        final CurrentInterface oldInterface = this.currentInterface;
+        if ( oldInterface != null )
+        {
+            oldInterface.removePropertyChangeListener( this );
+        }
+        this.currentInterface = newCurrentInterface;
+        if ( newCurrentInterface != null )
+        {
+            newCurrentInterface.addPropertyChangeListener( CurrentInterface.PROP_WSDLINTERFACE, this );
+        }
+    }
 
-	@Deprecated
-	/**
-	 * This method will be removed in future version. Use the
-	 * propertyChangeSupport instead.
-	 */
-	public void removeCurrentOperationObserver(CurrentOperationObserver o) {
-		observers.remove(o);
-	}
+    /**
+     * Get the value of wsdlOperation
+     * 
+     * @return the value of wsdlOperation
+     */
+    public WsdlOperation getWsdlOperation()
+    {
+        return wsdlOperation;
+    }
 
-	private void notifyCurrentOperationObservers(WsdlOperation newOperation, WsdlOperation oldOperation) {
-		if (newOperation == null) {
-			for (CurrentOperationObserver o : observers) {
-				o.noCurrentOperation();
-			}
-		} else {
-			for (CurrentOperationObserver o : observers) {
-				o.currentOperationChanged(newOperation, oldOperation);
-			}
-		}
-	}
+    /**
+     * Set the value of wsdlOperation
+     * 
+     * @param newWsdlOperation new value of wsdlOperation
+     */
+    public void setWsdlOperation( WsdlOperation newWsdlOperation )
+    {
+        WsdlOperation oldWsdlOperation = this.wsdlOperation;
+        this.wsdlOperation = newWsdlOperation;
+        firePropertyChange( PROP_WSDLOPERATION, oldWsdlOperation, newWsdlOperation );
+        notifyCurrentOperationObservers( newWsdlOperation, oldWsdlOperation );
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent pce )
+    {
+        final String propName = pce.getPropertyName();
+        if ( TestSuite.PROP_CURRENTINTERFACE.equals( propName ) )
+        {
+            LOG.info( "Detected Service change" );
+            final CurrentInterface newCI = (CurrentInterface) pce.getNewValue();
+            final WsdlInterface wsdlInterface = newCI.getWsdlInterface();
+            if ( wsdlInterface != null && wsdlInterface.getOperationCount() > 0 )
+            {
+                // set default operation if any existing
+                WsdlOperation operation = wsdlInterface.getOperationAt( 0 );
+                LOG.info( "Set default operation to: " + operation.getName() );
+                setWsdlOperation( operation );
+            }
+            else
+            {
+                setWsdlOperation( null );
+            }
+        }
+    }
+
+    @Deprecated
+    /**
+     * This method will be removed in future version. Use the
+     * propertyChangeSupport instead.
+     */
+    public void addCurrentOperationObserver( CurrentOperationObserver o )
+    {
+        observers.add( o );
+    }
+
+    @Deprecated
+    /**
+     * This method will be removed in future version. Use the
+     * propertyChangeSupport instead.
+     */
+    public void removeCurrentOperationObserver( CurrentOperationObserver o )
+    {
+        observers.remove( o );
+    }
+
+    private void notifyCurrentOperationObservers( WsdlOperation newOperation, WsdlOperation oldOperation )
+    {
+        if ( newOperation == null )
+        {
+            for ( CurrentOperationObserver o : observers )
+            {
+                o.noCurrentOperation();
+            }
+        }
+        else
+        {
+            for ( CurrentOperationObserver o : observers )
+            {
+                o.currentOperationChanged( newOperation, oldOperation );
+            }
+        }
+    }
 }

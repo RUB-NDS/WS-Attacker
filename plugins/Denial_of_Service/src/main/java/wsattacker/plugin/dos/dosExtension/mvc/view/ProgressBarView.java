@@ -24,24 +24,27 @@ import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
  * JLabel, das den Status ausgibt!
+ * 
  * @author af
- *
  */
-@SuppressWarnings("serial")
-public class ProgressBarView extends JProgressBar implements AttackListener
+@SuppressWarnings( "serial" )
+public class ProgressBarView
+    extends JProgressBar
+    implements AttackListener
 {
 
     // Konstruktor mit Status
-    public ProgressBarView(AttackModel model){}
+    public ProgressBarView( AttackModel model )
+    {
+    }
 
     /**
-     * implementiert Attack Listener, daher ist diese Methode vorhanden...
-     * wird immer automatisch aufgerufen, wenn model sich geändert hat!
+     * implementiert Attack Listener, daher ist diese Methode vorhanden... wird immer automatisch aufgerufen, wenn model
+     * sich geändert hat!
      */
-    public void valueChanged(AttackModel model)
+    @Override
+    public void valueChanged( AttackModel model )
     {
-        this.setValue(model.getProgress());
+        this.setValue( model.getProgress() );
     }
 }
-
-

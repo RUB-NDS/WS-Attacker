@@ -24,33 +24,38 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 /**
- *
  * @author christian
  */
-public class OptionManagerTest {
+public class OptionManagerTest
+{
 
-    private static final Logger LOG = Logger.getLogger(OptionManagerTest.class);
+    private static final Logger LOG = Logger.getLogger( OptionManagerTest.class );
+
     private static final String SIMPLE_SIGNED = "src/test/resources/Signed_Request.xml";
 
-    public OptionManagerTest() {
+    public OptionManagerTest()
+    {
     }
 
     @Test
-    public void testSimpleSignedRequest() throws FileNotFoundException, IOException, SAXException {
-//        LOG.info("Options for testSimpleSignedRequest");
-//        OptionManager optionManager = OptionManager.getInstance();
-//        SignatureManager signatureManager = new SignatureManager();
-//
-//        optionManager.setSignatureManager(signatureManager);
-//
-//        Document signed_request = DomUtilities.readDocument(SIMPLE_SIGNED);
-//        assertNotNull(signed_request);
-//
-//        optionManager.currentRequestContentChanged(DomUtilities.domToString(signed_request), "");
-//
-//        assertEquals(1, signatureManager.getPayloads().size());
-//
-//        Document usedXML = signatureManager.getDocument();
-//        assertTrue(signed_request.isEqualNode(usedXML));
+    public void testSimpleSignedRequest()
+        throws FileNotFoundException, IOException, SAXException
+    {
+        // LOG.info("Options for testSimpleSignedRequest");
+        // OptionManager optionManager = OptionManager.getInstance();
+        // SignatureManager signatureManager = new SignatureManager();
+        //
+        // optionManager.setSignatureManager(signatureManager);
+        //
+        // Document signed_request = DomUtilities.readDocument(SIMPLE_SIGNED);
+        // assertNotNull(signed_request);
+        //
+        // optionManager.currentRequestContentChanged(DomUtilities.domToString(signed_request),
+        // "");
+        //
+        // assertEquals(1, signatureManager.getPayloads().size());
+        //
+        // Document usedXML = signatureManager.getDocument();
+        // assertTrue(signed_request.isEqualNode(usedXML));
     }
 }

@@ -21,11 +21,14 @@ package wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete;
 import wsattacker.library.signatureWrapping.util.exception.InvalidTypeException;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.AbstractFunctionAndExpression;
 
-public class NamespaceUriAndExpression extends AbstractFunctionAndExpression {
+public class NamespaceUriAndExpression
+    extends AbstractFunctionAndExpression
+{
 
-    public NamespaceUriAndExpression(String expression)
-      throws InvalidTypeException {
-        super(expression, "namespace-uri()");
+    public NamespaceUriAndExpression( String expression )
+        throws InvalidTypeException
+    {
+        super( expression, "namespace-uri()" );
     }
 
 }

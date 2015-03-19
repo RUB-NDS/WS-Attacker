@@ -24,61 +24,77 @@ import wsattacker.library.signatureWrapping.xpath.parts.Step;
 /**
  * The NodeName has a prefix and a localname, whereas the Prefix may be empty.
  */
-public class NodeName implements XPathPartInterface {
+public class NodeName
+    implements XPathPartInterface
+{
 
     private final String nodeName;
+
     private String prefix, localname;
 
-    public NodeName(String nodeName) {
+    public NodeName( String nodeName )
+    {
         this.nodeName = nodeName;
         eval();
     }
 
-    private void eval() {
-        int index = nodeName.indexOf(':');
-        if (index > 0) {
-            prefix = nodeName.substring(0, index);
-            localname = nodeName.substring(index + 1);
-        } else {
+    private void eval()
+    {
+        int index = nodeName.indexOf( ':' );
+        if ( index > 0 )
+        {
+            prefix = nodeName.substring( 0, index );
+            localname = nodeName.substring( index + 1 );
+        }
+        else
+        {
             prefix = "";
             localname = nodeName;
         }
     }
 
-    public String getNodeName() {
+    public String getNodeName()
+    {
         return nodeName;
     }
 
-    public String getPrefix() {
+    public String getPrefix()
+    {
         return prefix;
     }
 
-    public String getLocalname() {
+    public String getLocalname()
+    {
         return localname;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return nodeName;
     }
 
     @Override
-    public String toFullString() {
+    public String toFullString()
+    {
         return toString();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String || o instanceof Step) {
-            return o.equals(toString());
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String || o instanceof Step )
+        {
+            return o.equals( toString() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 3;
-        hash = 73 * hash + (this.nodeName != null ? this.nodeName.hashCode() : 0);
+        hash = 73 * hash + ( this.nodeName != null ? this.nodeName.hashCode() : 0 );
         return hash;
     }
 }

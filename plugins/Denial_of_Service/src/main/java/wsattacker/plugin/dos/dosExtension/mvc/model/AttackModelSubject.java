@@ -21,16 +21,15 @@ package wsattacker.plugin.dos.dosExtension.mvc.model;
 import wsattacker.plugin.dos.dosExtension.mvc.view.AttackListener;
 
 /**
- * Interface that makes sure that the Model implements the ObserverPatter right
- * In this case the ModelObject is our Subject that informs the listeners
- *
+ * Interface that makes sure that the Model implements the ObserverPatter right In this case the ModelObject is our
+ * Subject that informs the listeners
+ * 
  * @author af
- *
  */
-public interface AttackModelSubject {
+public interface AttackModelSubject
+{
 
-    public void addAttackListener(AttackListener l);
+    public void addAttackListener( AttackListener l );
 
-    public void removeAttackListener(AttackListener l);
-    //private void fireModelChanged();
+    public void removeAttackListener( AttackListener l );
 }

@@ -26,49 +26,60 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * NullSchemaAnalyser is a XML Schema Analyser which will say that
- * every child in the document can have <xs:any> child element.
- * Thus, weaknesses can be used as if the server does not
- * validate any kind of XML Schema.
+ * NullSchemaAnalyser is a XML Schema Analyser which will say that every child in the document can have <xs:any> child
+ * element. Thus, weaknesses can be used as if the server does not validate any kind of XML Schema.
  */
-public class NullSchemaAnalyzer implements SchemaAnalyzer {
+public class NullSchemaAnalyzer
+    implements SchemaAnalyzer
+{
 
     List<QName> filterList = new ArrayList<QName>();
 
     @Override
-    public void setFilterList(List<QName> filterList) {
+    public void setFilterList( List<QName> filterList )
+    {
         this.filterList = filterList;
     }
 
     @Override
-    public void appendSchema(Document newSchema) {
+    public void appendSchema( Document newSchema )
+    {
         // Nothing to do
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.SchemaAnalyserInterface#findExpansionPoint(org.w3c.dom.Element)
+     * @see wsattacker.plugin.signatureWrapping.schema.SchemaAnalyserInterface# findExpansionPoint(org.w3c.dom.Element)
      */
     @Override
-    public Set<AnyElementProperties> findExpansionPoint(Element fromHere) {
+    public Set<AnyElementProperties> findExpansionPoint( Element fromHere )
+    {
         Set<AnyElementProperties> result = new TreeSet<AnyElementProperties>();
-        findExpansionPoint(result, fromHere);
+        findExpansionPoint( result, fromHere );
         return result;
     }
 
-    private void findExpansionPoint(Set<AnyElementProperties> result,
-      Element start) {
-        if (filterList.contains(new QName(start.getNamespaceURI(), start.getLocalName()))) {
+    private void findExpansionPoint( Set<AnyElementProperties> result, Element start )
+    {
+        if ( filterList.contains( new QName( start.getNamespaceURI(), start.getLocalName() ) ) )
+        {
             return;
         }
-        result.add(new NullAnyElementProperties(start));
+        result.add( new NullAnyElementProperties( start ) );
         // Recursive with all child elements
         NodeList theChildren = start.getChildNodes();
-        for (int i = 0; i < theChildren.getLength(); ++i) {
-            if (theChildren.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                findExpansionPoint(result, (Element) theChildren.item(i));
+        for ( int i = 0; i < theChildren.getLength(); ++i )
+        {
+            if ( theChildren.item( i ).getNodeType() == Node.ELEMENT_NODE )
+            {
+                findExpansionPoint( result, (Element) theChildren.item( i ) );
             }
         }
+    }
+
+    @Override
+    public List<QName> getFilterList()
+    {
+        return filterList;
     }
 }

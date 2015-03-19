@@ -20,25 +20,31 @@ package wsattacker.main.plugin.option;
 
 import wsattacker.main.composition.plugin.option.AbstractOptionBoolean;
 
-public class OptionSimpleBoolean extends AbstractOptionBoolean {
-	private static final long serialVersionUID = 1L;
+public class OptionSimpleBoolean
+    extends AbstractOptionBoolean
+{
+    private static final long serialVersionUID = 1L;
 
-	public OptionSimpleBoolean(String name, boolean on) {
-		super(name, on);
-	}
-	
-	public OptionSimpleBoolean(String name, boolean set, String description) {
-		super(name, set, description);
-	}
+    public OptionSimpleBoolean( String name, boolean on )
+    {
+        super( name, on );
+    }
 
-	@Override
-	public boolean isValid(boolean on) {
-		return true;
-	}
+    public OptionSimpleBoolean( String name, boolean set, String description )
+    {
+        super( name, set, description );
+    }
 
-	@Override
-	public boolean isValid(String value) {
-		return true;
-	}
+    @Override
+    public boolean isValid( boolean on )
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isValid( String value )
+    {
+        return true;
+    }
 
 }

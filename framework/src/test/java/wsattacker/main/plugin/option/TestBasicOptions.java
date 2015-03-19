@@ -18,72 +18,76 @@
  */
 package wsattacker.main.plugin.option;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
 
-public class TestBasicOptions {
+public class TestBasicOptions
+{
 
-	@Test
-	public void optionInteger() {
-		AbstractOptionInteger iOpt = new OptionSimpleInteger("Integer", 0, "Integer Test");
-		assertTrue("Legal Value", iOpt.isValid("0"));
-		assertTrue("Legal Value", iOpt.isValid("1"));
-		assertTrue("Legal Value", iOpt.isValid("9999"));
-		assertTrue("Legal Value", iOpt.isValid("-1"));
+    @Test
+    public void optionInteger()
+    {
+        AbstractOptionInteger iOpt = new OptionSimpleInteger( "Integer", 0, "Integer Test" );
+        assertTrue( "Legal Value", iOpt.isValid( "0" ) );
+        assertTrue( "Legal Value", iOpt.isValid( "1" ) );
+        assertTrue( "Legal Value", iOpt.isValid( "9999" ) );
+        assertTrue( "Legal Value", iOpt.isValid( "-1" ) );
 
-		assertFalse("A String is not an Integer", iOpt.isValid("eins"));
-		assertFalse("A String is not an Integer", iOpt.isValid("1a"));
-		assertFalse("A String is not an Integer", iOpt.isValid("a1"));
+        assertFalse( "A String is not an Integer", iOpt.isValid( "eins" ) );
+        assertFalse( "A String is not an Integer", iOpt.isValid( "1a" ) );
+        assertFalse( "A String is not an Integer", iOpt.isValid( "a1" ) );
 
-		assertFalse("No floats allowed", iOpt.isValid("1.0"));
-		assertFalse("No floats allowed", iOpt.isValid("1.2"));
+        assertFalse( "No floats allowed", iOpt.isValid( "1.0" ) );
+        assertFalse( "No floats allowed", iOpt.isValid( "1.2" ) );
 
-		assertFalse("Hex not allowed", iOpt.isValid("0x10"));
+        assertFalse( "Hex not allowed", iOpt.isValid( "0x10" ) );
 
-		assertTrue("Leading Zeros", iOpt.isValid("010"));
-		iOpt.parseValue("010");
-		assertTrue("Octal not allowed", iOpt.getValue() == 10);
-		assertFalse("Octal not allowed", iOpt.getValue() == 8);
-	}
+        assertTrue( "Leading Zeros", iOpt.isValid( "010" ) );
+        iOpt.parseValue( "010" );
+        assertTrue( "Octal not allowed", iOpt.getValue() == 10 );
+        assertFalse( "Octal not allowed", iOpt.getValue() == 8 );
+    }
 
-	@Test
-	public void optionLimitedInteger() {
-		AbstractOptionInteger iOpt = new OptionLimitedInteger("Limited Integer", 5, "Limited Integer Test", 1, 10);
-		assertTrue("Legal Value", iOpt.isValid("5"));
-		assertTrue("Legal Value", iOpt.isValid("3"));
+    @Test
+    public void optionLimitedInteger()
+    {
+        AbstractOptionInteger iOpt = new OptionLimitedInteger( "Limited Integer", 5, "Limited Integer Test", 1, 10 );
+        assertTrue( "Legal Value", iOpt.isValid( "5" ) );
+        assertTrue( "Legal Value", iOpt.isValid( "3" ) );
 
-		assertTrue("Test legal Limit", iOpt.isValid("1"));
-		assertTrue("Test legal Limit", iOpt.isValid("10"));
+        assertTrue( "Test legal Limit", iOpt.isValid( "1" ) );
+        assertTrue( "Test legal Limit", iOpt.isValid( "10" ) );
 
-		assertFalse("Test ilegal Limit", iOpt.isValid("0"));
-		assertFalse("Test ilegal Limit", iOpt.isValid("11"));
+        assertFalse( "Test ilegal Limit", iOpt.isValid( "0" ) );
+        assertFalse( "Test ilegal Limit", iOpt.isValid( "11" ) );
 
-		assertFalse("A String is not an Integer", iOpt.isValid("eins"));
-		assertFalse("A String is not an Integer", iOpt.isValid("1a"));
-		assertFalse("A String is not an Integer", iOpt.isValid("a1"));
+        assertFalse( "A String is not an Integer", iOpt.isValid( "eins" ) );
+        assertFalse( "A String is not an Integer", iOpt.isValid( "1a" ) );
+        assertFalse( "A String is not an Integer", iOpt.isValid( "a1" ) );
 
-		assertFalse("No floats allowed", iOpt.isValid("1.0"));
-		assertFalse("No floats allowed", iOpt.isValid("1.2"));
-	}
+        assertFalse( "No floats allowed", iOpt.isValid( "1.0" ) );
+        assertFalse( "No floats allowed", iOpt.isValid( "1.2" ) );
+    }
 
-	@Test
-	public void optionVarchar() {
-		AbstractOptionVarchar vOpt;
+    @Test
+    public void optionVarchar()
+    {
+        AbstractOptionVarchar vOpt;
 
-		vOpt = new OptionSimpleVarchar("Varchar Option", "Value", "Varchar Option");
+        vOpt = new OptionSimpleVarchar( "Varchar Option", "Value", "Varchar Option" );
 
-		assertTrue("Legal Value", vOpt.isValid("Ein String"));
+        assertTrue( "Legal Value", vOpt.isValid( "Ein String" ) );
 
-		assertFalse("Ilegal Value", vOpt.isValid("Ein\nZeilenumbruch"));
+        assertFalse( "Ilegal Value", vOpt.isValid( "Ein\nZeilenumbruch" ) );
 
+        vOpt = new OptionSimpleVarchar( "Varchar Option", "Value", "Varchar Option", 5 );
 
-		vOpt = new OptionSimpleVarchar("Varchar Option", "Value", "Varchar Option", 5);
+        assertTrue( "Legal Value", vOpt.isValid( "1234" ) );
+        assertTrue( "Test Limit", vOpt.isValid( "12345" ) );
 
-		assertTrue("Legal Value", vOpt.isValid("1234"));
-		assertTrue("Test Limit", vOpt.isValid("12345"));
-
-		assertFalse("To long varchar", vOpt.isValid("123456"));
-	}
+        assertFalse( "To long varchar", vOpt.isValid( "123456" ) );
+    }
 }

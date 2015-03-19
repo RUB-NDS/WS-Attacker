@@ -24,17 +24,20 @@
 package wsattacker.library.signatureFaking.exceptions;
 
 /**
- *
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class CertificateHandlerException extends Exception {
+public class CertificateHandlerException
+    extends Exception
+{
 
-    public CertificateHandlerException(String message) {
-        super(message);
+    public CertificateHandlerException( String message )
+    {
+        super( message );
     }
-    
-    public CertificateHandlerException(Exception e) {
-        super(e);
+
+    public CertificateHandlerException( Exception e )
+    {
+        super( e );
     }
 }

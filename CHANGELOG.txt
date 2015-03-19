@@ -1,9 +1,23 @@
+===============
+19. March 2014
+===============
+
 Framework Changes:
     - The code design was a bit out-dated since 2009. Thus, it is heavily
       refactored. Most important change: Almost every component like
       AbstractPlugin or AbstractOption are now using the Java bean concept.
       This was needed to improve the UI.
     - New Plugin Configuration Screen, new UI Components for Options
+    - New Request/Response GUI
+        - Support for additional/custom HTTP Headers
+        - Shows response HTTP Headers
+        - URL Endpoint is now changeable
+    - Simplyfied maven structure
+    - Added custom checkstyle rules
+    - Bumped SoapUI to version 4.6.4
+    - Framework now saves last used WSDL URI
+    - Code improvements and Bug Fixes (thanks to Christian Altmeier)
+    - Proxysupport
 
 =============
 24. Juni 2013

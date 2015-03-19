@@ -21,35 +21,41 @@ package wsattacker.library.signatureWrapping.option;
 import java.util.*;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
 
-final public class PayloadOrderingHelper {
+final public class PayloadOrderingHelper
+{
 
-    public static void orderOuterToInner(List<Payload> payloadList) {
+    public static void orderOuterToInner( List<Payload> payloadList )
+    {
         List<Payload> copyList = new ArrayList<Payload>();
         // Move all but the first items from original List to a Copy
-        for (int i = 1; i < payloadList.size(); ++i) {
-            copyList.add(payloadList.get(i));
-            payloadList.remove(i);
+        for ( int i = 1; i < payloadList.size(); ++i )
+        {
+            copyList.add( payloadList.get( i ) );
+            payloadList.remove( i );
         }
         // Now insert all payloads but ordered
-        main:
-        while (!copyList.isEmpty()) {
-            Payload cmp = copyList.remove(0);
-            check:
-            for (int i = 0; i < payloadList.size(); ++i) {
-                Payload cur = payloadList.get(i);
-                if (isOuter(cmp, cur)) {
-                    payloadList.add(i, cmp);
+        main: while ( !copyList.isEmpty() )
+        {
+            Payload cmp = copyList.remove( 0 );
+            check: for ( int i = 0; i < payloadList.size(); ++i )
+            {
+                Payload cur = payloadList.get( i );
+                if ( isOuter( cmp, cur ) )
+                {
+                    payloadList.add( i, cmp );
                     continue main;
                 }
             }
-            payloadList.add(cmp);
+            payloadList.add( cmp );
         }
     }
 
-    private static boolean isOuter(Payload outer, Payload maybeInner) {
-        return (XPathWeaknessTools.isAncestorOf(outer.getSignedElement(), maybeInner.getSignedElement()) > 0);
+    private static boolean isOuter( Payload outer, Payload maybeInner )
+    {
+        return ( XPathWeaknessTools.isAncestorOf( outer.getSignedElement(), maybeInner.getSignedElement() ) > 0 );
     }
 
-    private PayloadOrderingHelper() {
+    private PayloadOrderingHelper()
+    {
     }
 }

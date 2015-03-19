@@ -4,6 +4,16 @@
   <NonVisualComponents>
     <Component class="wsattacker.gui.component.target.subcomponent.NamespaceTableModel" name="namespaceTableModel">
     </Component>
+    <Component class="wsattacker.main.Preferences" name="prefs">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="Preferences.getInstance();"/>
+      </AuxValues>
+    </Component>
+    <Component class="wsattacker.main.testsuite.CurrentRequest" name="currentRequest">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="wsattacker.main.testsuite.TestSuite.getInstance().getCurrentRequest()"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="name" type="java.lang.String" value="WSDL Loader" noResource="true"/>
@@ -67,7 +77,7 @@
                   <Component id="interfacePanel" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="splitter" pref="242" max="32767" attributes="0"/>
+              <Component id="splitter" pref="244" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -109,7 +119,10 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JScrollPane" name="requestInputEditorScrollPane">
+            <Container class="org.fife.ui.rtextarea.RTextScrollPane" name="requestInputEditorScrollPane">
+              <Properties>
+                <Property name="foldIndicatorEnabled" type="boolean" value="true"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Request Expert View">
@@ -120,7 +133,18 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="wsattacker.gui.component.target.subcomponent.RequestInputEditor" name="requestInputEditor">
+                <Component class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" name="requestInputEditor">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                    <Property name="codeFoldingEnabled" type="boolean" value="true"/>
+                    <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
+                  </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="text" source="currentRequest" sourcePath="${wsdlRequestContent}" target="requestInputEditor" targetPath="text" updateStrategy="0" immediately="false">
+                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                    </BindingProperty>
+                  </BindingProperties>
                 </Component>
               </SubComponents>
             </Container>
@@ -239,6 +263,11 @@
       </Layout>
       <SubComponents>
         <Component class="wsattacker.gui.component.target.subcomponent.WsdlInputField" name="wsdlInputField">
+          <BindingProperties>
+            <BindingProperty name="text" source="prefs" sourcePath="${lastWsdl}" target="wsdlInputField" targetPath="text" updateStrategy="0" immediately="false">
+              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+            </BindingProperty>
+          </BindingProperties>
         </Component>
       </SubComponents>
     </Container>

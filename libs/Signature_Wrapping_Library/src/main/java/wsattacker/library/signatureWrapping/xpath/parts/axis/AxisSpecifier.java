@@ -23,109 +23,147 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
 /**
  * An AxisSpecifier consists of an AxisName, a NodeType and a NodeName.
  */
-public class AxisSpecifier implements XPathPartInterface {
+public class AxisSpecifier
+    implements XPathPartInterface
+{
 
     private final String axisSpecifier;
+
     private AxisName axisName;
+
     private NodeType nodeType;
+
     private NodeName nodeName;
 
-    public AxisSpecifier(String axisSpecifier) {
+    public AxisSpecifier( String axisSpecifier )
+    {
         this.axisSpecifier = axisSpecifier;
         eval();
     }
 
-    public String getAxisSpecifier() {
+    public String getAxisSpecifier()
+    {
         return axisSpecifier;
     }
 
-    public AxisName getAxisName() {
+    public AxisName getAxisName()
+    {
         return axisName;
     }
 
-    public NodeType getNodeType() {
+    public NodeType getNodeType()
+    {
         return nodeType;
     }
 
-    public NodeName getNodeName() {
+    public NodeName getNodeName()
+    {
         return nodeName;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return axisSpecifier;
     }
 
     @Override
-    public String toFullString() {
-        return axisName.toFullString() + "::" + (nodeName != null ? nodeName.toFullString() : nodeType.toFullString());
+    public String toFullString()
+    {
+        return axisName.toFullString() + "::" + ( nodeName != null ? nodeName.toFullString() : nodeType.toFullString() );
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals( Object o )
+    {
         boolean result = false;
-        if (o instanceof String) {
-            result = equals(new AxisSpecifier((String) o));
+        if ( o instanceof String )
+        {
+            result = equals( new AxisSpecifier( (String) o ) );
         }
-        if (o instanceof AxisSpecifier) {
-//            AxisSpecifier ax = (AxisSpecifier) o;
-//            boolean sameNodeName = (ax.getNodeName() == getNodeName()) || (ax.getNodeName() != null && getNodeName() != null && ax
-//              .getNodeName().equals(getNodeName()));
-//            boolean sameNodeType = (ax.getNodeType() == getNodeType()) || (ax.getNodeType() != null && getNodeType() != null && ax
-//              .getNodeType().equals(getNodeType()));
-//            result = ax.getAxisName().equals(getAxisName()) && sameNodeName && sameNodeType;
+        if ( o instanceof AxisSpecifier )
+        {
+            // AxisSpecifier ax = (AxisSpecifier) o;
+            // boolean sameNodeName = (ax.getNodeName() == getNodeName()) ||
+            // (ax.getNodeName() != null && getNodeName() != null && ax
+            // .getNodeName().equals(getNodeName()));
+            // boolean sameNodeType = (ax.getNodeType() == getNodeType()) ||
+            // (ax.getNodeType() != null && getNodeType() != null && ax
+            // .getNodeType().equals(getNodeType()));
+            // result = ax.getAxisName().equals(getAxisName()) && sameNodeName
+            // && sameNodeType;
             AxisSpecifier ax = (AxisSpecifier) o;
-            result |= (ax.getNodeName() == getNodeName()) || (ax.getNodeName() != null && getNodeName() != null && ax
-              .getNodeName().equals(getNodeName()));
-            result &= (ax.getNodeType() == getNodeType()) || (ax.getNodeType() != null && getNodeType() != null && ax
-              .getNodeType().equals(getNodeType()));
-            result &= ax.getAxisName().equals(getAxisName());
+            result |=
+                ( ax.getNodeName() == getNodeName() )
+                    || ( ax.getNodeName() != null && getNodeName() != null && ax.getNodeName().equals( getNodeName() ) );
+            result &=
+                ( ax.getNodeType() == getNodeType() )
+                    || ( ax.getNodeType() != null && getNodeType() != null && ax.getNodeType().equals( getNodeType() ) );
+            result &= ax.getAxisName().equals( getAxisName() );
         }
         return result;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 97 * hash + (this.axisSpecifier != null ? this.axisSpecifier.hashCode() : 0);
+        hash = 97 * hash + ( this.axisSpecifier != null ? this.axisSpecifier.hashCode() : 0 );
         return hash;
     }
 
-    private void eval() {
+    private void eval()
+    {
         this.nodeName = null;
         this.nodeType = null;
         int start = 0;
         // abbrevs:
-        if (axisSpecifier.isEmpty()) {
-            this.axisName = new AxisName("descendant-or-self");
-            this.nodeType = new NodeType("node()");
+        if ( axisSpecifier.isEmpty() )
+        {
+            this.axisName = new AxisName( "descendant-or-self" );
+            this.nodeType = new NodeType( "node()" );
             return;
-        } else if (axisSpecifier.equals("..")) {
-            this.axisName = new AxisName("parent");
-            this.nodeType = new NodeType("node()");
-            return;
-        } else if (axisSpecifier.equals(".")) {
-            this.axisName = new AxisName("self");
-            this.nodeType = new NodeType("node()");
-            return;
-        } else if (axisSpecifier.contains("::")) {
-            start = axisSpecifier.indexOf("::");
-            String axisName = axisSpecifier.substring(0, start);
-            this.axisName = new AxisName(axisName);
-            start += 2;
-        } else if (axisSpecifier.charAt(0) == '@') {
-            this.axisName = new AxisName("@");
-            start = 1;
-        } else {
-            this.axisName = new AxisName("child");
         }
-        String rest = axisSpecifier.substring(start);
-        if (rest.equals("*")) {
-            this.nodeType = new NodeType("*");
-        } else if (rest.indexOf('(') > 0) {
-            this.nodeType = new NodeType(rest);
-        } else {
-            this.nodeName = new NodeName(rest);
+        else if ( axisSpecifier.equals( ".." ) )
+        {
+            this.axisName = new AxisName( "parent" );
+            this.nodeType = new NodeType( "node()" );
+            return;
+        }
+        else if ( axisSpecifier.equals( "." ) )
+        {
+            this.axisName = new AxisName( "self" );
+            this.nodeType = new NodeType( "node()" );
+            return;
+        }
+        else if ( axisSpecifier.contains( "::" ) )
+        {
+            start = axisSpecifier.indexOf( "::" );
+            String axisName = axisSpecifier.substring( 0, start );
+            this.axisName = new AxisName( axisName );
+            start += 2;
+        }
+        else if ( axisSpecifier.charAt( 0 ) == '@' )
+        {
+            this.axisName = new AxisName( "@" );
+            start = 1;
+        }
+        else
+        {
+            this.axisName = new AxisName( "child" );
+        }
+        String rest = axisSpecifier.substring( start );
+        if ( rest.equals( "*" ) )
+        {
+            this.nodeType = new NodeType( "*" );
+        }
+        else if ( rest.indexOf( '(' ) > 0 )
+        {
+            this.nodeType = new NodeType( rest );
+        }
+        else
+        {
+            this.nodeName = new NodeName( rest );
         }
     }
 }

@@ -23,72 +23,87 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools;
 
 /**
- * A predicate is mainly a container for OrExpressions. 1 Predicate -> *
- * OrExpression. 1 OrExpression -> *
+ * A predicate is mainly a container for OrExpressions. 1 Predicate -> * OrExpression. 1 OrExpression -> *
  * AndExpression.
  */
-public class Predicate implements XPathPartInterface {
+public class Predicate
+    implements XPathPartInterface
+{
 
     private final String predicate;
+
     private final List<OrExpression> orExpressions;
 
-    public Predicate(String predicate) {
+    public Predicate( String predicate )
+    {
         this.predicate = predicate;
         this.orExpressions = new ArrayList<OrExpression>();
         eval();
     }
 
-    public String getPredicate() {
+    public String getPredicate()
+    {
         return predicate;
     }
 
-    public List<OrExpression> getOrExpressions() {
+    public List<OrExpression> getOrExpressions()
+    {
         return orExpressions;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return predicate;
     }
 
     @Override
-    public String toFullString() {
-        return XPathInspectorTools.implodeList(orExpressions, " ");
+    public String toFullString()
+    {
+        return XPathInspectorTools.implodeList( orExpressions, " " );
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String) {
-            return equals(new Predicate((String) o));
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String )
+        {
+            return equals( new Predicate( (String) o ) );
         }
-        if (o instanceof Predicate) {
-            return ((Predicate) o).getOrExpressions().equals(getOrExpressions());
+        if ( o instanceof Predicate )
+        {
+            return ( (Predicate) o ).getOrExpressions().equals( getOrExpressions() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 3;
-        hash = 29 * hash + (this.predicate != null ? this.predicate.hashCode() : 0);
+        hash = 29 * hash + ( this.predicate != null ? this.predicate.hashCode() : 0 );
         return hash;
     }
 
-    private void eval() {
+    private void eval()
+    {
         int prevOr = 0;
-        int nextOr = XPathInspectorTools.nextString(predicate, " or ", prevOr);
+        int nextOr = XPathInspectorTools.nextString( predicate, " or ", prevOr );
         String orString;
-        while (nextOr > 0) {
-            orString = predicate.substring(prevOr, nextOr).trim();
-            if (!orString.isEmpty()) {
-                orExpressions.add(new OrExpression(orString));
+        while ( nextOr > 0 )
+        {
+            orString = predicate.substring( prevOr, nextOr ).trim();
+            if ( !orString.isEmpty() )
+            {
+                orExpressions.add( new OrExpression( orString ) );
             }
             prevOr = nextOr + 4; // = nextOr + " or ".length()
-            nextOr = XPathInspectorTools.nextString(predicate, " or ", prevOr);
+            nextOr = XPathInspectorTools.nextString( predicate, " or ", prevOr );
         }
-        orString = predicate.substring(prevOr).trim();
-        if (!orString.isEmpty()) {
-            orExpressions.add(new OrExpression(orString));
+        orString = predicate.substring( prevOr ).trim();
+        if ( !orString.isEmpty() )
+        {
+            orExpressions.add( new OrExpression( orString ) );
         }
     }
 }

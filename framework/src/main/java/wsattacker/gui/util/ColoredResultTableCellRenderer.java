@@ -25,38 +25,40 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import wsattacker.main.plugin.result.ResultLevel;
 
-public class ColoredResultTableCellRenderer extends
-		CenteredTableCellRenderer {
+public class ColoredResultTableCellRenderer
+    extends CenteredTableCellRenderer
+{
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		JLabel c = (JLabel) super.getTableCellRendererComponent(
-				table, value, isSelected, hasFocus, row, column);
-		c.setText((value != null) ? value.toString() : "");
-		ResultLevel level = ResultLevel.valueOf(c.getText());
-		switch (level) {
-		case Trace:
-			c.setFont(new java.awt.Font("Dialog",Font.ITALIC,12));
-			break;
-		case Info:
-			c.setFont(new java.awt.Font("Dialog",Font.PLAIN,12));
-			break;
-		case Important:
-			c.setFont(new java.awt.Font("Dialog",Font.BOLD,12));
-			c.setBackground(Color.lightGray);
-			c.setOpaque(true);
-			break;
-		case Critical:
-			c.setFont(new java.awt.Font("Dialog",Font.BOLD,12));
-			c.setBackground(Colors.INVALID);
-			c.setOpaque(true);
-		default:
-			break;
-		}
-		return c;
-	}
+    @Override
+    public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
+                                                    int row, int column )
+    {
+        JLabel c = (JLabel) super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+        c.setText( ( value != null ) ? value.toString() : "" );
+        ResultLevel level = ResultLevel.valueOf( c.getText() );
+        switch ( level )
+        {
+            case Trace:
+                c.setFont( new java.awt.Font( "Dialog", Font.ITALIC, 12 ) );
+                break;
+            case Info:
+                c.setFont( new java.awt.Font( "Dialog", Font.PLAIN, 12 ) );
+                break;
+            case Important:
+                c.setFont( new java.awt.Font( "Dialog", Font.BOLD, 12 ) );
+                c.setBackground( Color.lightGray );
+                c.setOpaque( true );
+                break;
+            case Critical:
+                c.setFont( new java.awt.Font( "Dialog", Font.BOLD, 12 ) );
+                c.setBackground( Colors.INVALID );
+                c.setOpaque( true );
+            default:
+                break;
+        }
+        return c;
+    }
 
 }

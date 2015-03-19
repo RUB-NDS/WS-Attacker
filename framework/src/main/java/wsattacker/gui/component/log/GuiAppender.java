@@ -24,29 +24,36 @@ import org.apache.log4j.spi.LoggingEvent;
 /**
  * Simple example of creating a Log4j appender that will write to a JTextArea.
  */
-public class GuiAppender extends WriterAppender {
+public class GuiAppender
+    extends WriterAppender
+{
 
-	private static StatuslineGUI statusbar = new StatuslineGUI();
-	private static LogGUI log = new LogGUI();
-	
-	public GuiAppender() {
-	}
+    private static final StatuslineGUI statusbar = new StatuslineGUI();
 
-	public static StatuslineGUI getStatusbar() {
-		return statusbar;
-	}
+    private static final LogGUI log = new LogGUI();
 
-	public static LogGUI getLog() {
-		return log;
-	}
+    public GuiAppender()
+    {
+    }
 
-	@Override
-	/**
-	 * Format and then append the loggingEvent to the stored
-	 * JTextArea.
-	 */
-	public void append(LoggingEvent loggingEvent) {
-		statusbar.setLog(loggingEvent);
-		log.appendLog(loggingEvent);
-	}
+    public static StatuslineGUI getStatusbar()
+    {
+        return statusbar;
+    }
+
+    public static LogGUI getLog()
+    {
+        return log;
+    }
+
+    @Override
+    /**
+     * Format and then append the loggingEvent to the stored
+     * JTextArea.
+     */
+    public void append( LoggingEvent loggingEvent )
+    {
+        statusbar.setLog( loggingEvent );
+        log.appendLog( loggingEvent );
+    }
 }

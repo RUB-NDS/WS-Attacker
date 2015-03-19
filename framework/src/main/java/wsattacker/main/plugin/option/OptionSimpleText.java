@@ -20,23 +20,31 @@ package wsattacker.main.plugin.option;
 
 import wsattacker.main.composition.plugin.option.AbstractOptionString;
 
-public class OptionSimpleText extends AbstractOptionString {
-	private static final long serialVersionUID = 1L;
+public class OptionSimpleText
+    extends AbstractOptionString
+{
+    private static final long serialVersionUID = 1L;
 
-	public OptionSimpleText(String name, String value) {
-		super(name, value);
-	}
-	public OptionSimpleText(String name, String value, String description) {
-		super(name, value, description);
-	}
+    public OptionSimpleText( String name, String value )
+    {
+        super( name, value );
+    }
 
-	String name;
-	String value;
-	String description;
-	
-	@Override
-	public boolean isValid(String value) {
-		return true;
-	}
-	
+    public OptionSimpleText( String name, String value, String description )
+    {
+        super( name, value, description );
+    }
+
+    String name;
+
+    String value;
+
+    String description;
+
+    @Override
+    public boolean isValid( String value )
+    {
+        return true;
+    }
+
 }

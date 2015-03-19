@@ -37,56 +37,58 @@ import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.Posit
 import wsattacker.library.signatureWrapping.xpath.weakness.XPathWeaknessFactory;
 
 /**
- * Analyzes an XPath expression.
- * Uses exactly one signed element and one payload element and relocates them
- * within the message.
+ * Analyzes an XPath expression. Uses exactly one signed element and one payload element and relocates them within the
+ * message.
  */
-public class XPathAnalyser {
+public class XPathAnalyser
+{
 
     public static XPathWeaknessFactoryInterface xpathWeaknessFactory = new XPathWeaknessFactory();
+
     private final AbsoluteLocationPath xpath;
+
     private final List<XPathWeaknessInterface> weaknesses;
+
     int maxPossibilites;
 
     /**
      * Constructor.
-     *
-     * @param ref            : Reference Element (Xpath, ID Reference)
-     * @param signedElement  : the element which is signed
-     * @param payloadElement : the payload element which shall replace the
-     *                       signed element
+     * 
+     * @param ref : Reference Element (Xpath, ID Reference)
+     * @param signedElement : the element which is signed
+     * @param payloadElement : the payload element which shall replace the signed element
      * @param schemaAnalyzer : instance of an SchemaAnaylzer
      */
-    public XPathAnalyser(ReferringElementInterface ref,
-      SignedElement signedElement,
-      PayloadElement payloadElement,
-      SchemaAnalyzer schemaAnalyzer) {
-        this.xpath = new AbsoluteLocationPath(ref);
-        this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyzer);
+    public XPathAnalyser( ReferringElementInterface ref, SignedElement signedElement, PayloadElement payloadElement,
+                          SchemaAnalyzer schemaAnalyzer )
+    {
+        this.xpath = new AbsoluteLocationPath( ref );
+        this.weaknesses = xpathWeaknessFactory.generate( this.xpath, signedElement, payloadElement, schemaAnalyzer );
         // calculate number of possibilities
         maxPossibilites = 0;
-        for (XPathWeaknessInterface w : weaknesses) {
+        for ( XPathWeaknessInterface w : weaknesses )
+        {
             maxPossibilites += w.getNumberOfPossibilities();
         }
     }
 
     /**
      * String constructor should only be used for easy writing JUnit testes.
-     *
+     * 
      * @param xpath
      * @param signedElement
      * @param payloadElement
      * @param schemaAnalyser
      */
-    public XPathAnalyser(String xpath,
-      SignedElement signedElement,
-      PayloadElement payloadElement,
-      SchemaAnalyzer schemaAnalyser) {
-        this.xpath = new AbsoluteLocationPath(xpath);
-        this.weaknesses = xpathWeaknessFactory.generate(this.xpath, signedElement, payloadElement, schemaAnalyser);
+    public XPathAnalyser( String xpath, SignedElement signedElement, PayloadElement payloadElement,
+                          SchemaAnalyzer schemaAnalyser )
+    {
+        this.xpath = new AbsoluteLocationPath( xpath );
+        this.weaknesses = xpathWeaknessFactory.generate( this.xpath, signedElement, payloadElement, schemaAnalyser );
         // calculate number of possibilities
         maxPossibilites = 0;
-        for (XPathWeaknessInterface w : weaknesses) {
+        for ( XPathWeaknessInterface w : weaknesses )
+        {
             maxPossibilites += w.getNumberOfPossibilities();
         }
 
@@ -95,50 +97,49 @@ public class XPathAnalyser {
     /**
      * @return A List of XPathWeaknesses.
      */
-    public List<XPathWeaknessInterface> getWeaknesses() {
+    public List<XPathWeaknessInterface> getWeaknesses()
+    {
         return weaknesses;
     }
 
     /**
      * @return The analyzed XPath expression.
      */
-    public AbsoluteLocationPath getXPath() {
+    public AbsoluteLocationPath getXPath()
+    {
         return xpath;
     }
 
     /**
      * @return The total number of possible XSW messages.
      */
-    public int getMaxPossibilites() {
+    public int getMaxPossibilites()
+    {
         return maxPossibilites;
     }
 
     /**
-     * Applies an XPath weakness. Both Elements are part of the same Document,
-     * which will be modified.
-     *
-     * @param possibility
-     *                       : Index of the weakness to abuse.
-     * @param signedElement
-     *                       : the signed element
-     * @param payloadElement
-     *                       : the payload element (must be in the same Document as the signed
-     *                       element)
-     *
+     * Applies an XPath weakness. Both Elements are part of the same Document, which will be modified.
+     * 
+     * @param possibility : Index of the weakness to abuse.
+     * @param signedElement : the signed element
+     * @param payloadElement : the payload element (must be in the same Document as the signed element)
      * @throws InvalidWeaknessException
      */
-    public void abuseWeakness(int possibility,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException {
-        if (possibility >= maxPossibilites) {
+    public void abuseWeakness( int possibility, SignedElement signedElement, PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
+        if ( possibility >= maxPossibilites )
+        {
             return; // invalid possibility
         }
-        for (int i = 0; i < weaknesses.size(); ++i) {
-            XPathWeaknessInterface w = weaknesses.get(i);
+        for ( int i = 0; i < weaknesses.size(); ++i )
+        {
+            XPathWeaknessInterface w = weaknesses.get( i );
             int num = w.getNumberOfPossibilities();
-            if (possibility < num) {
-                w.abuseWeakness(possibility, signedElement, payloadElement);
+            if ( possibility < num )
+            {
+                w.abuseWeakness( possibility, signedElement, payloadElement );
                 return;
             }
             possibility -= num;
@@ -146,49 +147,63 @@ public class XPathAnalyser {
     }
 
     /**
-     * Validates if the given XPath follows the FastXPath grammar.
-     * These are known to be fast and only vulnerable to namespace injection.
-     *
+     * Validates if the given XPath follows the FastXPath grammar. These are known to be fast and only vulnerable to
+     * namespace injection.
+     * 
      * @return
      */
-    public boolean isFastXPath() {
-        for (Step step : xpath.getRelativeLocationPaths()) {
-            if (!step.getAxisSpecifier().getAxisName().toFullString().equals("child")) {
+    public boolean isFastXPath()
+    {
+        for ( Step step : xpath.getRelativeLocationPaths() )
+        {
+            if ( !step.getAxisSpecifier().getAxisName().toFullString().equals( "child" ) )
+            {
                 return false;
             }
-            if (step.getAxisSpecifier().getNodeType() != null) {
+            if ( step.getAxisSpecifier().getNodeType() != null )
+            {
                 return false;
             }
-            if (step.getAxisSpecifier().getNodeName() == null) {
+            if ( step.getAxisSpecifier().getNodeName() == null )
+            {
                 return false;
             }
-//      if (step.getAxisSpecifier().getNodeName().getPrefix().isEmpty())
-//        return false;
-            if (step.getAxisSpecifier().getNodeName().getNodeName().isEmpty()) {
+            // if (step.getAxisSpecifier().getNodeName().getPrefix().isEmpty())
+            // return false;
+            if ( step.getAxisSpecifier().getNodeName().getNodeName().isEmpty() )
+            {
                 return false;
             }
 
             List<Predicate> predicates = step.getPredicates();
-            if (predicates.isEmpty() || predicates.size() > 2) {
+            if ( predicates.isEmpty() || predicates.size() > 2 )
+            {
                 return false;
             }
             int positions = 0;
             int attributes = 0;
-            for (Predicate pred : step.getPredicates()) {
-                if (pred.getOrExpressions().size() != 1) {
+            for ( Predicate pred : step.getPredicates() )
+            {
+                if ( pred.getOrExpressions().size() != 1 )
+                {
                     return false;
                 }
-                if (pred.getOrExpressions().get(0).getAndExpressions().size() != 1) {
+                if ( pred.getOrExpressions().get( 0 ).getAndExpressions().size() != 1 )
+                {
                     return false;
                 }
-                AndExpression and = pred.getOrExpressions().get(0).getAndExpressions().get(0);
-                if (and instanceof PositionAndExpression) {
+                AndExpression and = pred.getOrExpressions().get( 0 ).getAndExpressions().get( 0 );
+                if ( and instanceof PositionAndExpression )
+                {
                     ++positions;
-                } else if (and instanceof AttributeAndExpression) {
+                }
+                else if ( and instanceof AttributeAndExpression )
+                {
                     ++attributes;
                 }
             }
-            if (positions > 1 || attributes > 1 || (attributes + positions) == 0) {
+            if ( positions > 1 || attributes > 1 || ( attributes + positions ) == 0 )
+            {
                 return false;
             }
         }
@@ -196,61 +211,80 @@ public class XPathAnalyser {
     }
 
     /**
-     * Validates if the given XPath follows the FastXPath grammar but without
-     * prefixes.
-     * This is known to be most secure.
-     *
+     * Validates if the given XPath follows the FastXPath grammar but without prefixes. This is known to be most secure.
+     * 
      * @return
      */
-    public boolean isPrefixfreeTransformedFastXPath() {
-        for (Step step : xpath.getRelativeLocationPaths()) {
-            if (!step.getAxisSpecifier().getAxisName().toFullString().equals("child")) {
+    public boolean isPrefixfreeTransformedFastXPath()
+    {
+        for ( Step step : xpath.getRelativeLocationPaths() )
+        {
+            if ( !step.getAxisSpecifier().getAxisName().toFullString().equals( "child" ) )
+            {
                 return false;
             }
-            if (step.getAxisSpecifier().getNodeName() != null) {
+            if ( step.getAxisSpecifier().getNodeName() != null )
+            {
                 return false;
             }
-            if (step.getAxisSpecifier().getNodeType() == null) {
+            if ( step.getAxisSpecifier().getNodeType() == null )
+            {
                 return false;
             }
-            if (!step.getAxisSpecifier().getNodeType().getNodeTypeName().equals("node")) {
+            if ( !step.getAxisSpecifier().getNodeType().getNodeTypeName().equals( "node" ) )
+            {
                 return false;
             }
 
             List<Predicate> predicates = step.getPredicates();
-            if (predicates.isEmpty() || predicates.size() > 3) {
+            if ( predicates.isEmpty() || predicates.size() > 3 )
+            {
                 return false;
             }
             int positions = 0;
             int attributes = 0;
             int ln = 0;
             int uri = 0;
-            for (Predicate pred : step.getPredicates()) {
-                if (pred.getOrExpressions().size() != 1) {
+            for ( Predicate pred : step.getPredicates() )
+            {
+                if ( pred.getOrExpressions().size() != 1 )
+                {
                     return false;
                 }
-                if (pred.getOrExpressions().get(0).getAndExpressions().size() != 1) {
-                    List<AndExpression> andExpressions = pred.getOrExpressions().get(0).getAndExpressions();
-                    if (andExpressions.size() > 2 || andExpressions.size() < 1) {
+                if ( pred.getOrExpressions().get( 0 ).getAndExpressions().size() != 1 )
+                {
+                    List<AndExpression> andExpressions = pred.getOrExpressions().get( 0 ).getAndExpressions();
+                    if ( andExpressions.size() > 2 || andExpressions.size() < 1 )
+                    {
                         return false;
                     }
-                    for (AndExpression and : andExpressions) {
-                        if (and instanceof LocalNameAndExpression) {
+                    for ( AndExpression and : andExpressions )
+                    {
+                        if ( and instanceof LocalNameAndExpression )
+                        {
                             ++ln;
-                        } else if (and instanceof NamespaceUriAndExpression) {
+                        }
+                        else if ( and instanceof NamespaceUriAndExpression )
+                        {
                             ++uri;
                         }
                     }
-                } else {
-                    AndExpression and = pred.getOrExpressions().get(0).getAndExpressions().get(0);
-                    if (and instanceof PositionAndExpression) {
+                }
+                else
+                {
+                    AndExpression and = pred.getOrExpressions().get( 0 ).getAndExpressions().get( 0 );
+                    if ( and instanceof PositionAndExpression )
+                    {
                         ++positions;
-                    } else if (and instanceof AttributeAndExpression) {
+                    }
+                    else if ( and instanceof AttributeAndExpression )
+                    {
                         ++attributes;
                     }
                 }
             }
-            if (ln != 1 || uri != 1 || positions > 1 || attributes > 1 || (attributes + positions) == 0) {
+            if ( ln != 1 || uri != 1 || positions > 1 || attributes > 1 || ( attributes + positions ) == 0 )
+            {
                 return false;
             }
         }

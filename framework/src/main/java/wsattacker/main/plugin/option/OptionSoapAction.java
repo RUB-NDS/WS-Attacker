@@ -27,53 +27,66 @@ import java.util.List;
 import wsattacker.main.testsuite.CurrentOperation;
 import wsattacker.main.testsuite.TestSuite;
 
-public class OptionSoapAction extends OptionSimpleChoice implements PropertyChangeListener {
+public class OptionSoapAction
+    extends OptionSimpleChoice
+    implements PropertyChangeListener
+{
 
-	private static final long serialVersionUID = 2L;
-	final private static String MANUAL = "Manual Action";
+    private static final long serialVersionUID = 2L;
 
-	public OptionSoapAction(String name, String description) {
-		super(name, description);
-		clearChoices();
-		setSelectedIndex(0);
-		TestSuite.getInstance().getCurrentOperation().addPropertyChangeListener(CurrentOperation.PROP_WSDLOPERATION, this);
-	}
+    final private static String MANUAL = "Manual Action";
 
-	private void clearChoices() {
-		List<String> newChoices = new ArrayList<String>();
-		newChoices.add(MANUAL);
-		setChoices(newChoices);
-	}
+    public OptionSoapAction( String name, String description )
+    {
+        super( name, description );
+        clearChoices();
+        setSelectedIndex( 0 );
+        TestSuite.getInstance().getCurrentOperation().addPropertyChangeListener( CurrentOperation.PROP_WSDLOPERATION,
+                                                                                 this );
+    }
 
-	private void currentOperationChanged(WsdlOperation newOperation,
-		WsdlOperation oldOperation) {
-		final List<Operation> operationList = newOperation.getInterface().getOperationList();
-		final List<String> newChoices = new ArrayList<String>(operationList.size());
-		for (Operation operation : operationList) {
-			final String name = operation.getName();
-			newChoices.add(name);
-		}
-		if (newOperation.getName().equals(getValueAsString())) {
-			setSelectedIndex(0);
-		}
-		setChoices(newChoices);
-	}
+    private void clearChoices()
+    {
+        List<String> newChoices = new ArrayList<String>();
+        newChoices.add( MANUAL );
+        setChoices( newChoices );
+    }
 
-	private void noCurrentOperation() {
-		clearChoices();
-		setSelectedIndex(0);
-	}
+    private void currentOperationChanged( WsdlOperation newOperation, WsdlOperation oldOperation )
+    {
+        final List<Operation> operationList = newOperation.getInterface().getOperationList();
+        final List<String> newChoices = new ArrayList<String>( operationList.size() );
+        for ( Operation operation : operationList )
+        {
+            final String name = operation.getName();
+            newChoices.add( name );
+        }
+        if ( newOperation.getName().equals( getValueAsString() ) )
+        {
+            setSelectedIndex( 0 );
+        }
+        setChoices( newChoices );
+    }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent pce) {
-		final String propName = pce.getPropertyName();
-		if (CurrentOperation.PROP_WSDLOPERATION.equals(propName)) {
-			final WsdlOperation newOperation = (WsdlOperation) pce.getNewValue();
-			if (newOperation == null) {
-				noCurrentOperation();
-			}
-			final WsdlOperation oldOperation = (WsdlOperation) pce.getOldValue();
-			currentOperationChanged(newOperation, oldOperation);
-		}
-	}
+    private void noCurrentOperation()
+    {
+        clearChoices();
+        setSelectedIndex( 0 );
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent pce )
+    {
+        final String propName = pce.getPropertyName();
+        if ( CurrentOperation.PROP_WSDLOPERATION.equals( propName ) )
+        {
+            final WsdlOperation newOperation = (WsdlOperation) pce.getNewValue();
+            if ( newOperation == null )
+            {
+                noCurrentOperation();
+            }
+            final WsdlOperation oldOperation = (WsdlOperation) pce.getOldValue();
+            currentOperationChanged( newOperation, oldOperation );
+        }
+    }
 }

@@ -25,37 +25,52 @@ import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.Local
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.NamespaceUriAndExpression;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete.PositionAndExpression;
 
-public class AndExpressionFactory implements AndExpressionFactoryInterface {
+public class AndExpressionFactory
+    implements AndExpressionFactoryInterface
+{
 
     @Override
-    public AndExpression createAndExpression(String expression) {
-        try {
-            return new AttributeAndExpression(expression);
-        } catch (InvalidTypeException e) {
+    public AndExpression createAndExpression( String expression )
+    {
+        try
+        {
+            return new AttributeAndExpression( expression );
+        }
+        catch ( InvalidTypeException e )
+        {
             // Nothing to do, just ignore
         }
 
-        try {
-            return new PositionAndExpression(expression);
-        } catch (InvalidTypeException e) {
+        try
+        {
+            return new PositionAndExpression( expression );
+        }
+        catch ( InvalidTypeException e )
+        {
             // Nothing to do, just ignore
         }
 
-        try {
-            return new LocalNameAndExpression(expression);
-        } catch (InvalidTypeException e) {
+        try
+        {
+            return new LocalNameAndExpression( expression );
+        }
+        catch ( InvalidTypeException e )
+        {
             // Nothing to do, just ignore
         }
 
-        try {
-            return new NamespaceUriAndExpression(expression);
-        } catch (InvalidTypeException e) {
+        try
+        {
+            return new NamespaceUriAndExpression( expression );
+        }
+        catch ( InvalidTypeException e )
+        {
             // Nothing to do, just ignore
         }
 
         // No special AndExpression found
         // return generic one
-        return new AndExpression(expression);
+        return new AndExpression( expression );
     }
 
 }

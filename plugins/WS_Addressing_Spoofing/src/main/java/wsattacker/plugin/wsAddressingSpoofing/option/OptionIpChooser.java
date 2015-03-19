@@ -34,58 +34,78 @@ import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
 import wsattacker.main.plugin.option.OptionSimpleChoice;
 
-public class OptionIpChooser extends OptionSimpleChoice {
+public class OptionIpChooser
+    extends OptionSimpleChoice
+{
 
     private static final String URL = "http://checkip.dyndns.org";
-    public static final String AUTO = String.format("Detect your IP via %s", URL);
+
+    public static final String AUTO = String.format( "Detect your IP via %s", URL );
+
     public static final String MANUAL = "Edit settings below as you like";
+
     private static final String REGEX = "[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
-    final private static Logger LOG = Logger.getLogger(OptionIpChooser.class);
+
+    private static final Pattern PATTERN = Pattern.compile( REGEX );
+
+    final private static Logger LOG = Logger.getLogger( OptionIpChooser.class );
+
     final private static long serialVersionUID = 2L;
+
     final private AbstractOptionVarchar url;
+
     final private AbstractOptionInteger port;
+
     private HttpClient httpClient;
 
-    public OptionIpChooser(String name, String description, AbstractOptionVarchar url, AbstractOptionInteger port) {
-        this(name, description, url, port, new HttpClient());
+    public OptionIpChooser( String name, String description, AbstractOptionVarchar url, AbstractOptionInteger port )
+    {
+        this( name, description, url, port, new HttpClient() );
     }
 
-    protected OptionIpChooser(String name, String description, AbstractOptionVarchar url, AbstractOptionInteger port, final HttpClient httpClient) {
-        super(name, description);
+    protected OptionIpChooser( String name, String description, AbstractOptionVarchar url, AbstractOptionInteger port,
+                               final HttpClient httpClient )
+    {
+        super( name, description );
         this.httpClient = httpClient;
         List<String> choices = new ArrayList<String>();
-        choices.add(MANUAL);
-        choices.add(AUTO);
-        setChoices(choices);
+        choices.add( MANUAL );
+        choices.add( AUTO );
+        setChoices( choices );
         this.url = url;
         this.port = port;
-        setSelectedAsString(AUTO);
+        setSelectedAsString( AUTO );
     }
 
     @Override
-    public void setSelectedAsString(String selected) {
-        super.setSelectedAsString(selected);
-        if (AUTO.equals(selected)) {
+    public void setSelectedAsString( String selected )
+    {
+        super.setSelectedAsString( selected );
+        if ( AUTO.equals( selected ) )
+        {
             updateUrl();
         }
     }
 
-    public String detectIP() {
+    public String detectIP()
+    {
         String ip = null;
 
         // Create a method instance.
-        GetMethod method = new GetMethod(URL);
+        GetMethod method = new GetMethod( URL );
 
         // Provide custom retry handler is necessary
-//	    method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
+        // method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new
+        // DefaultHttpMethodRetryHandler(3, false));
         String html;
-        try {
+        try
+        {
             // Execute the method.
-            int statusCode = httpClient.executeMethod(method);
+            int statusCode = httpClient.executeMethod( method );
 
-            if (statusCode != HttpStatus.SC_OK) {
-                LOG.error("Could not fetch website to detect IP");
+            if ( statusCode != HttpStatus.SC_OK )
+            {
+                LOG.error( "Could not fetch website to detect IP" );
                 return null;
             }
 
@@ -93,36 +113,47 @@ public class OptionIpChooser extends OptionSimpleChoice {
             byte[] responseBody = method.getResponseBody();
 
             // Deal with the response.
-            // Use caution: ensure correct character encoding and is not binary data
-            html = new String(responseBody);
+            // Use caution: ensure correct character encoding and is not binary
+            // data
+            html = new String( responseBody );
 
-        } catch (HttpException e) {
-            LOG.error("Could not fetch website to detect IP");
+        }
+        catch ( HttpException e )
+        {
+            LOG.error( "Could not fetch website to detect IP" );
             return null;
-        } catch (IOException e) {
-            LOG.error("Could not fetch website to detect IP");
+        }
+        catch ( IOException e )
+        {
+            LOG.error( "Could not fetch website to detect IP" );
             return null;
-        } finally {
+        }
+        finally
+        {
             // Release the connection.
             method.releaseConnection();
         }
-        Matcher m = PATTERN.matcher(html);
+        Matcher m = PATTERN.matcher( html );
 
         // first match is used
         m.find();
-        ip = html.substring(m.start(), m.end());
+        ip = html.substring( m.start(), m.end() );
 
         return ip;
 
     }
 
-    private void updateUrl() {
+    private void updateUrl()
+    {
         String ip = detectIP();
-        if (ip == null) {
-            url.setValue("Could not detect your IP");
-        } else {
-            url.setValue("http://" + ip + ":" + port.getValue());
+        if ( ip == null )
+        {
+            url.setValue( "Could not detect your IP" );
         }
-        setSelectedAsString(MANUAL);
+        else
+        {
+            url.setValue( "http://" + ip + ":" + port.getValue() );
+        }
+        setSelectedAsString( MANUAL );
     }
 }

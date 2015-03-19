@@ -24,22 +24,26 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import wsattacker.main.plugin.result.ResultLevel;
 
-public class ResultLevelSlider extends JSlider {
+public class ResultLevelSlider
+    extends JSlider
+{
 
-    public ResultLevelSlider() {
+    public ResultLevelSlider()
+    {
         Dictionary<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
         ResultLevel[] levels = ResultLevel.values(); // get all result
         // levels
         int max = levels.length - 1;
-        setMinimum(0);
-        setMaximum(max);
-        for (int i = max; i >= 0; --i) {
+        setMinimum( 0 );
+        setMaximum( max );
+        for ( int i = max; i >= 0; --i )
+        {
             // add each to the slider
-            labelTable.put(i, new JLabel(levels[i].toString()));
+            labelTable.put( i, new JLabel( levels[i].toString() ) );
         }
-        setLabelTable(labelTable);
-        setPaintLabels(true);
-        setSnapToTicks(true);
-        setValue(max / 2); // set default level
+        setLabelTable( labelTable );
+        setPaintLabels( true );
+        setSnapToTicks( true );
+        setValue( max / 2 ); // set default level
     }
 }

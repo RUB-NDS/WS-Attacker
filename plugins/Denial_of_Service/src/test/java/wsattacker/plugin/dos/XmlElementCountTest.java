@@ -25,67 +25,80 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
  * @author ianyo
  */
-public class XmlElementCountTest {
+public class XmlElementCountTest
+{
     private static GenericDosPluginTest t;
+
     private static XmlElementCount attackPlugin;
-    
-    public XmlElementCountTest() {
+
+    public XmlElementCountTest()
+    {
     }
-    
+
     @BeforeClass
-    public static void setUpClass() {
-	System.out.println("Start XmlElementCountTest");
-	t = new GenericDosPluginTest();
-	attackPlugin = new XmlElementCount();	
+    public static void setUpClass()
+    {
+        System.out.println( "Start XmlElementCountTest" );
+        t = new GenericDosPluginTest();
+        attackPlugin = new XmlElementCount();
     }
-    
+
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass()
+    {
     }
-    
+
     @Before
-    public void setUp() {
+    public void setUp()
+    {
     }
-    
+
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
     }
 
     @Test
-    public void testInitializePlugin() {
-	t.testInitializePlugin(attackPlugin);
-    }    
-    
-    @Test
-    public void testGetName() {
-	t.testGetName(attackPlugin);
+    public void testInitializePlugin()
+    {
+        t.testInitializePlugin( attackPlugin );
     }
-    
+
     @Test
-    public void testGetDescription() {
-	t.testGetDescription(attackPlugin);
+    public void testGetName()
+    {
+        t.testGetName( attackPlugin );
     }
-    
+
     @Test
-    public void testGetCountermeasures() {
-	t.testGetCountermeasures(attackPlugin);
-    }    
-    
+    public void testGetDescription()
+    {
+        t.testGetDescription( attackPlugin );
+    }
+
     @Test
-    public void testGetAuthor() {
-	t.testGetAuthor(attackPlugin);
-    }        
-    
+    public void testGetCountermeasures()
+    {
+        t.testGetCountermeasures( attackPlugin );
+    }
+
     @Test
-    public void testGetVersion() {
-	t.testGetVersion(attackPlugin);
-    }     
-    
+    public void testGetAuthor()
+    {
+        t.testGetAuthor( attackPlugin );
+    }
+
     @Test
-    public void testCreateTamperedRequest() {
-	t.testCreateTamperedRequest(attackPlugin);
-    }           
+    public void testGetVersion()
+    {
+        t.testGetVersion( attackPlugin );
+    }
+
+    @Test
+    public void testCreateTamperedRequest()
+    {
+        t.testCreateTamperedRequest( attackPlugin );
+    }
 }

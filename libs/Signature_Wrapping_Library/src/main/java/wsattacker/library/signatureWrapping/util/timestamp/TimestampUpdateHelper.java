@@ -29,61 +29,68 @@ import java.util.*;
 import org.apache.ws.security.util.XmlSchemaDateFormat;
 
 /**
- *
  * @author christian
  */
-public class TimestampUpdateHelper {
+public class TimestampUpdateHelper
+{
 
     private final String start, end;
 
-    public TimestampUpdateHelper(String originalStart, String originalEnd) throws ParseException {
+    public TimestampUpdateHelper( String originalStart, String originalEnd )
+        throws ParseException
+    {
         // 1) Detect if Timestamp uses milliseconds
         // /////////////////////////////////////////
         // milliseconds format contains a dot followed by the ms
-        boolean inMilliseconds = originalStart.indexOf('.') > 0;
+        boolean inMilliseconds = originalStart.indexOf( '.' ) > 0;
         // 2) Create a Date formater
         // //////////////////////////
         DateFormat zulu;
-        if (inMilliseconds) {
+        if ( inMilliseconds )
+        {
             zulu = new XmlSchemaDateFormat();
-        } else {
-            zulu = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            zulu.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
+        else
+        {
+            zulu = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss'Z'" );
+            zulu.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
         }
         // 3) Parse the dates
         // ///////////////////
         Calendar created = Calendar.getInstance();
         Calendar expires = Calendar.getInstance();
 
-        created.setTime(zulu.parse(originalStart));
-        expires.setTime(zulu.parse(originalEnd));
+        created.setTime( zulu.parse( originalStart ) );
+        expires.setTime( zulu.parse( originalEnd ) );
 
         // 4) Compute Difference = TTL
         // ////////////////////////////
-        int diff = (int) ((expires.getTimeInMillis() - created.getTimeInMillis()) / 1000);
+        int diff = (int) ( ( expires.getTimeInMillis() - created.getTimeInMillis() ) / 1000 );
 
         // 5) Update Created/Expires according to detected format and TTL
         // ///////////////////////////////////////////////////////////////
         created = Calendar.getInstance();
         expires = Calendar.getInstance();
-        expires.add(Calendar.SECOND, diff);
+        expires.add( Calendar.SECOND, diff );
         // 6) Saves values in Elements
         // ////////////////////////////
-        start = zulu.format(created.getTime());
-        end = zulu.format(expires.getTime());
+        start = zulu.format( created.getTime() );
+        end = zulu.format( expires.getTime() );
     }
 
     /**
      * @return the start
      */
-    public String getStart() {
+    public String getStart()
+    {
         return start;
     }
 
     /**
      * @return the end
      */
-    public String getEnd() {
+    public String getEnd()
+    {
         return end;
     }
 }

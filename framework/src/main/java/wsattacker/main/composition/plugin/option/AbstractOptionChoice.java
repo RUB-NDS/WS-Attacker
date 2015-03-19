@@ -25,35 +25,40 @@ import wsattacker.gui.component.pluginconfiguration.option.OptionChoiceGUI_NB;
 /**
  * WS-Attacker will represent this as a drop-down list.
  */
-public abstract class AbstractOptionChoice extends AbstractOption {
+public abstract class AbstractOptionChoice
+    extends AbstractOption
+{
 
-	private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 2L;
 
-	protected AbstractOptionChoice(String name, String description) {
-		super(name, description);
-	}
+    protected AbstractOptionChoice( String name, String description )
+    {
+        super( name, description );
+    }
 
-	public abstract List<String> getChoices();
+    public abstract List<String> getChoices();
 
-	public abstract void setChoices(List<String> choicesList);
+    public abstract void setChoices( List<String> choicesList );
 
-	public abstract void setSelectedAsString(String value);
+    public abstract void setSelectedAsString( String value );
 
-	public abstract String getSelectedAsString();
+    public abstract String getSelectedAsString();
 
-	@Override
-	public String getValueAsString() {
-		return getSelectedAsString();
-	}
+    @Override
+    public String getValueAsString()
+    {
+        return getSelectedAsString();
+    }
 
-	public abstract void setSelectedIndex(int index);
+    public abstract void setSelectedIndex( int index );
 
-	public abstract int getSelectedIndex();
+    public abstract int getSelectedIndex();
 
-	public abstract boolean isValid(int choice);
+    public abstract boolean isValid( int choice );
 
-	@Override
-	public OptionGUI createOptionGUI() {
-		return new OptionChoiceGUI_NB(this);
-	}
+    @Override
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionChoiceGUI_NB( this );
+    }
 }

@@ -19,32 +19,30 @@
 package wsattacker.plugin.dos.dosExtension.chart;
 
 import org.jfree.chart.JFreeChart;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- *
  * @author ianyo
  */
-public class ChartObjectTest {
-    
-    public ChartObjectTest() {
+public class ChartObjectTest
+{
+
+    public ChartObjectTest()
+    {
     }
 
     /**
      * Test of createOverlaidChart method, of class ChartObject.
      */
     @Test
-    public void testCreateOverlaidChart() {
-	AttackModel model = new AttackModel();
-	ChartObject chartObject = new ChartObject(model);
-        JFreeChart chart = chartObject.createOverlaidChart();	
-	
-	assertNotNull("Should contain chart object",chart);
+    public void testCreateOverlaidChart()
+    {
+        AttackModel model = new AttackModel();
+        ChartObject chartObject = new ChartObject( model );
+        JFreeChart chart = chartObject.createOverlaidChart();
+
+        assertNotNull( "Should contain chart object", chart );
     }
 }

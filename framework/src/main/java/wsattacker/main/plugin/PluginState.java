@@ -25,15 +25,13 @@ package wsattacker.main.plugin;
  */
 
 /**
- * PluginState:
- * Not_Configured: The plugin needs to be configured (user has to set some options)
- * Ready: The plugin ready for use
- * Aborting: The user has requested to stop the current attack
- * Running: The plugin is just attacking
- * Finished: The plugin is finished
- * Stopped: After the user has requested to abort, the controller will stop the thread if its still alive. The plugin will be set to stopped automatically.
- * Failed: The plugin has any error, e.g. could not start because a file is missing or a port is already in use. 
+ * PluginState: Not_Configured: The plugin needs to be configured (user has to set some options) Ready: The plugin ready
+ * for use Aborting: The user has requested to stop the current attack Running: The plugin is just attacking Finished:
+ * The plugin is finished Stopped: After the user has requested to abort, the controller will stop the thread if its
+ * still alive. The plugin will be set to stopped automatically. Failed: The plugin has any error, e.g. could not start
+ * because a file is missing or a port is already in use.
  */
-public enum PluginState {
-	Not_Configured, Ready, Aborting, Running, Finished, Stopped, Failed
+public enum PluginState
+{
+    Not_Configured, Ready, Aborting, Running, Finished, Stopped, Failed
 }

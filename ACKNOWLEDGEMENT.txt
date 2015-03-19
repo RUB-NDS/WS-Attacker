@@ -1,0 +1,14 @@
+===============
+ACKNOWLEDGEMENT
+===============
+
+The following people have contributed Code to the WS-Attacker Project
+
+- Andreas Falkenberg
+    - XML-Denial-of-Service Plugin
+- Dennis Kupser
+    - XML-Encryption Attack Plugin+Library
+- Juraj Somorovsky
+    - Various fixes and code improvements
+- Vladislav Mladenov
+    - Various fixes and code improvements

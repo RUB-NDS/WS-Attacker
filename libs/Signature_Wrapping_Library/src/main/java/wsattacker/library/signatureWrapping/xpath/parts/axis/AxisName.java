@@ -23,52 +23,66 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
 /**
  * Class for specifing the Axis of the Node, e.g. ancestor or descendant.
  */
-public class AxisName implements XPathPartInterface {
+public class AxisName
+    implements XPathPartInterface
+{
 
-    public final static String[] AXISNAME
-      = {"ancestor", "ancestor-or-self", "attribute", "child", "descendant", "descendant-or-self", "following", "following-sibling", "namespace", "parent", "preceding", "preceding-sibling", "self"};
+    public final static String[] AXISNAME = { "ancestor", "ancestor-or-self", "attribute", "child", "descendant",
+        "descendant-or-self", "following", "following-sibling", "namespace", "parent", "preceding",
+        "preceding-sibling", "self" };
 
     private final String axisName;
 
-    public AxisName(String axisName) {
+    public AxisName( String axisName )
+    {
         this.axisName = axisName;
     }
 
-    public String getAxisName() {
+    public String getAxisName()
+    {
         return axisName;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return axisName;
     }
 
     @Override
-    public String toFullString() {
+    public String toFullString()
+    {
         String result = axisName;
-        if (axisName.isEmpty()) {
+        if ( axisName.isEmpty() )
+        {
             result = "child";
-        } else if (axisName.equals("@")) {
+        }
+        else if ( axisName.equals( "@" ) )
+        {
             result = "attribute";
         }
         return result;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String) {
-            return equals(new AxisName((String) o));
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String )
+        {
+            return equals( new AxisName( (String) o ) );
         }
-        if (o instanceof AxisName) {
-            return ((AxisName) o).toFullString().equals(toFullString());
+        if ( o instanceof AxisName )
+        {
+            return ( (AxisName) o ).toFullString().equals( toFullString() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 29 * hash + (this.axisName != null ? this.axisName.hashCode() : 0);
+        hash = 29 * hash + ( this.axisName != null ? this.axisName.hashCode() : 0 );
         return hash;
     }
 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="wsattacker.main.Preferences" name="preferences">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="wsattacker.main.Preferences.getInstance()"/>
+      </AuxValues>
+    </Component>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Configuration" noResource="true"/>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="httpsProxyPortLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="httpsProxyHostLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="httpProxyPortLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="httpProxyHostLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="httpProxyHostValue" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="httpProxyPortValue" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="httpsProxyHostValue" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="httpsProxyPortValue" min="-2" pref="171" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                      <Component id="soapHttpClientConfigurationLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="90" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="soapHttpClientConfigurationLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="httpProxyHostLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="httpProxyHostValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="httpProxyPortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="httpProxyPortValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="httpsProxyHostLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="httpsProxyHostValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="httpsProxyPortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="httpsProxyPortValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="267" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="soapHttpClientConfigurationLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="SOAP HTTP Client Configuration"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="httpProxyHostLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="http.proxyHost"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="httpProxyHostValue">
+      <BindingProperties>
+        <BindingProperty name="text" source="preferences" sourcePath="${httpConfig.httpProxyHost}" target="httpProxyHostValue" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="httpProxyPortLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="http.proxyPort"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="httpProxyPortValue">
+      <BindingProperties>
+        <BindingProperty name="text" source="preferences" sourcePath="${httpConfig.httpProxyPort}" target="httpProxyPortValue" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="httpsProxyHostLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="https.proxyHost"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="httpsProxyHostValue">
+      <BindingProperties>
+        <BindingProperty name="text" source="preferences" sourcePath="${httpConfig.httpsProxyHost}" target="httpsProxyHostValue" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="httpsProxyPortLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="https.proxyPort"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="httpsProxyPortValue">
+      <BindingProperties>
+        <BindingProperty name="text" source="preferences" sourcePath="${httpConfig.httpsProxyPort}" target="httpsProxyPortValue" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
+    </Component>
+  </SubComponents>
+</Form>

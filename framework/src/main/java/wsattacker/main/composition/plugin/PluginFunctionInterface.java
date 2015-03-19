@@ -20,11 +20,12 @@ package wsattacker.main.composition.plugin;
 
 import java.awt.Window;
 
-public interface PluginFunctionInterface {
+public interface PluginFunctionInterface
+{
 
-	public String getName();
+    public String getName();
 
-	public boolean isEnabled();
+    public boolean isEnabled();
 
-	public Window getGuiWindow();
+    public Window getGuiWindow();
 }

@@ -35,38 +35,48 @@ import wsattacker.main.plugin.option.OptionSimpleInteger;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
 
 /**
- *
  * @author christian
  */
-public class OptionIpChooserTest {
+public class OptionIpChooserTest
+{
 
     final private static String IP = "127.0.0.1";
-    final private static String expectedResponseBody = String.format("<html><head><title>Current IP Check</title></head><body>Current IP Address: %s</body></html>", IP);
 
-    public OptionIpChooserTest() {
+    final private static String expectedResponseBody =
+        String.format( "<html><head><title>Current IP Check</title></head><body>Current IP Address: %s</body></html>",
+                       IP );
+
+    public OptionIpChooserTest()
+    {
     }
 
     @Test
-    public void testDetectIP() throws Exception {
-        AbstractOptionVarchar url = new OptionSimpleVarchar("URL", "value");
-        AbstractOptionInteger port = new OptionSimpleInteger("Port", 8080);
-        HttpClient mock = createMock(HttpClient.class);
-        expect(mock.executeMethod(isA(HttpMethod.class))).andAnswer(new IAnswer<Integer>() {
+    public void testDetectIP()
+        throws Exception
+    {
+        AbstractOptionVarchar url = new OptionSimpleVarchar( "URL", "value" );
+        AbstractOptionInteger port = new OptionSimpleInteger( "Port", 8080 );
+        HttpClient mock = createMock( HttpClient.class );
+        expect( mock.executeMethod( isA( HttpMethod.class ) ) ).andAnswer( new IAnswer<Integer>()
+        {
             @Override
-            public Integer answer() throws Throwable {
+            public Integer answer()
+                throws Throwable
+            {
                 HttpMethodBase httpMethod = (HttpMethodBase) (HttpMethod) getCurrentArguments()[0];
-                Field responseStreamField = HttpMethodBase.class.getDeclaredField("responseStream");
-                responseStreamField.setAccessible(true);
-                responseStreamField.set(httpMethod, new ByteArrayInputStream(expectedResponseBody.getBytes("UTF-8")));
+                Field responseStreamField = HttpMethodBase.class.getDeclaredField( "responseStream" );
+                responseStreamField.setAccessible( true );
+                responseStreamField.set( httpMethod,
+                                         new ByteArrayInputStream( expectedResponseBody.getBytes( "UTF-8" ) ) );
                 return HttpStatus.SC_OK;
             }
-        });
-        expectLastCall().times(2);
-        replay(mock);
-        OptionIpChooser ipChooser = new OptionIpChooser("IP Chooser", "Test for IP Chooser", url, port, mock);
-        assertThat(ipChooser.detectIP(), is(IP));
-        String expectedUrl = String.format("http://%s:%d", IP, port.getValue());
-        assertThat(url.getValue(), is(expectedUrl));
-        verify(mock);
+        } );
+        expectLastCall().times( 2 );
+        replay( mock );
+        OptionIpChooser ipChooser = new OptionIpChooser( "IP Chooser", "Test for IP Chooser", url, port, mock );
+        assertThat( ipChooser.detectIP(), is( IP ) );
+        String expectedUrl = String.format( "http://%s:%d", IP, port.getValue() );
+        assertThat( url.getValue(), is( expectedUrl ) );
+        verify( mock );
     }
 }

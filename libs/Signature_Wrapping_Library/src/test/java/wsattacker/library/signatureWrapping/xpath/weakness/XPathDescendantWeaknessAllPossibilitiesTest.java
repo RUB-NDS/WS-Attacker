@@ -39,98 +39,118 @@ import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
 
-public class XPathDescendantWeaknessAllPossibilitiesTest extends XPathDescendantWeakness {
+public class XPathDescendantWeaknessAllPossibilitiesTest
+    extends XPathDescendantWeakness
+{
 
     private static Step descendantStep;
+
     private static Element payloadElement, signedElement;
+
     private static SchemaAnalyzer schemaAnalyzer;
+
     private final List<String> callList;
 
-    public XPathDescendantWeaknessAllPossibilitiesTest() throws InvalidWeaknessException {
-        super(descendantStep, new SignedElement(signedElement, null), new PayloadElement(payloadElement, null), schemaAnalyzer);
+    public XPathDescendantWeaknessAllPossibilitiesTest()
+        throws InvalidWeaknessException
+    {
+        super( descendantStep, new SignedElement( signedElement, null ), new PayloadElement( payloadElement, null ),
+               schemaAnalyzer );
         callList = new ArrayList<String>();
     }
 
     @BeforeClass
     public static void setUpBeforeClass()
-      throws Exception {
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
 
-        schemaAnalyzer = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.WEBSERVICE);
+        schemaAnalyzer = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );
         // get signed element
         signedElement = soap.getDummyPayloadBody();
         String id = soap.getDummyPayloadBodyWsuId();
-        String xpath = String.format("//*[@wsu:Id='%s']/x:y[@attr=\"foo\"]", id);
+        String xpath = String.format( "//*[@wsu:Id='%s']/x:y[@attr=\"foo\"]", id );
 
         Document doc = soap.getDocument();
 
-        signedElement.setTextContent("Original Content");
-// String fastXPathSignedPre = DomUtilities.getFastXPath(signedElement);
+        signedElement.setTextContent( "Original Content" );
+        // String fastXPathSignedPre = DomUtilities.getFastXPath(signedElement);
 
         // create payload element
-        payloadElement = doc
-          .createElementNS(NamespaceConstants.URI_NS_WSATTACKER, NamespaceConstants.PREFIX_NS_WSATTACKER + ":payloadBody");
-        payloadElement.setTextContent("ATTACK");
+        payloadElement =
+            doc.createElementNS( NamespaceConstants.URI_NS_WSATTACKER, NamespaceConstants.PREFIX_NS_WSATTACKER
+                + ":payloadBody" );
+        payloadElement.setTextContent( "ATTACK" );
 
         // 1) Build the XPathDescendantWeakness
-        AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
-        descendantStep = abs.getRelativeLocationPaths().get(0);
+        AbsoluteLocationPath abs = new AbsoluteLocationPath( xpath );
+        descendantStep = abs.getRelativeLocationPaths().get( 0 );
     }
 
     @AfterClass
     public static void tearDownAfterClass()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Before
     public void setUp()
-      throws Exception {
-        Logger.getLogger(getClass()).setLevel(Level.OFF);
+        throws Exception
+    {
+        Logger.getLogger( getClass() ).setLevel( Level.OFF );
     }
 
     @After
     public void tearDown()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Override
-    protected void abuseWeakness(int wrapperPropertiesIndex,
-      int childIndex,
-      boolean useRealWrapper,
-      int postProcessListIndex,
-      int postProcessAbuseIndex,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException {
-        String call = String
-          .format("wpi=%d, child=%d, realWrapper=%b, postIndex=%d, postIndexAbuse=%d", wrapperPropertiesIndex, childIndex, useRealWrapper, postProcessListIndex, postProcessAbuseIndex);
-        if (callList.contains(call)) {
-            callList.add("Already Contained:\n" + call);
-            throw new InvalidWeaknessException("Already called: " + call);
+    protected void abuseWeakness( int wrapperPropertiesIndex, int childIndex, boolean useRealWrapper,
+                                  int postProcessListIndex, int postProcessAbuseIndex, SignedElement signedElement,
+                                  PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
+        String call =
+            String.format( "wpi=%d, child=%d, realWrapper=%b, postIndex=%d, postIndexAbuse=%d", wrapperPropertiesIndex,
+                           childIndex, useRealWrapper, postProcessListIndex, postProcessAbuseIndex );
+        if ( callList.contains( call ) )
+        {
+            callList.add( "Already Contained:\n" + call );
+            throw new InvalidWeaknessException( "Already called: " + call );
         }
-        callList.add(call);
+        callList.add( call );
         return;
     }
 
     @Test
     public void allPosibilites()
-      throws Exception {
-        try {
-            for (int i = 0; i < getNumberOfPossibilities(); ++i) {
-                abuseWeakness(i, null, new PayloadElement(payloadElement, null));
+        throws Exception
+    {
+        try
+        {
+            for ( int i = 0; i < getNumberOfPossibilities(); ++i )
+            {
+                abuseWeakness( i, null, new PayloadElement( payloadElement, null ) );
             }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            Logger log = Logger.getLogger(getClass());
-            log.setLevel(Level.INFO);
-            StringBuffer buf = new StringBuffer();
-            buf.append("All Calls:\n");
-            for (int i = 0; i < callList.size(); ++i) {
-                buf.append(String.format("%2d ==> %s\n", i, callList.get(i)));
-            }
-            log.info(buf);
         }
-        assertEquals((2 * 3 + 2 * 1 + 2 * 2) * (3 + 3), callList.size());
+        catch ( Exception e )
+        {
+            throw e;
+        }
+        finally
+        {
+            Logger log = Logger.getLogger( getClass() );
+            log.setLevel( Level.INFO );
+            StringBuffer buf = new StringBuffer();
+            buf.append( "All Calls:\n" );
+            for ( int i = 0; i < callList.size(); ++i )
+            {
+                buf.append( String.format( "%2d ==> %s\n", i, callList.get( i ) ) );
+            }
+            log.info( buf );
+        }
+        assertEquals( ( 2 * 3 + 2 * 1 + 2 * 2 ) * ( 3 + 3 ), callList.size() );
     }
 }

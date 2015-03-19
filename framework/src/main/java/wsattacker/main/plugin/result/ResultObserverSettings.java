@@ -22,62 +22,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This represents the settings for an result observer
- * It can contain sources and has a level
+ * This represents the settings for an result observer It can contain sources and has a level
+ * 
  * @see ResultLevel
  * @author Christian Mainka
- *
  */
-public class ResultObserverSettings {
-	ResultLevel level;
-	List<String> sources;
+public class ResultObserverSettings
+{
+    ResultLevel level;
 
-	public ResultObserverSettings() {
-		this.level = ResultLevel.Important;
-		this.sources = new ArrayList<String>();
-	}
+    List<String> sources;
 
-	public ResultLevel getLevel() {
-		return level;
-	}
+    public ResultObserverSettings()
+    {
+        this.level = ResultLevel.Important;
+        this.sources = new ArrayList<String>();
+    }
 
-	public void setLevel(ResultLevel level) {
-		this.level = level;
-	}
+    public ResultLevel getLevel()
+    {
+        return level;
+    }
 
-	public void addSource(String s) {
-		if(!sources.contains(s)) {
-			sources.add(s);
-		}
-	}
+    public void setLevel( ResultLevel level )
+    {
+        this.level = level;
+    }
 
-	public void removeSource(String s) {
-		sources.remove(s);
-	}
-	
-	public List<String> getSources() {
-		return sources;
-	}
-	
-	public void setSources(List<String> sources) {
-		this.sources = sources;
-	}
+    public void addSource( String s )
+    {
+        if ( !sources.contains( s ) )
+        {
+            sources.add( s );
+        }
+    }
 
-	/**
-	 * Check if log paramter is valid for this settings,
-	 * that means:
-	 * - log.getSource() is in this.sources
-	 * - log.getLevel() >= this.level
-	 * 
-	 * @param log
-	 * @return
-	 */
-	public boolean check(ResultEntry log) {
-		if (this.level.compareTo(log.getLevel()) < 0 )
-			return false;
-		if (!(this.sources.contains(log.getSource()) || this.sources.isEmpty()))
-			return false;
-		return true;
-	}
+    public void removeSource( String s )
+    {
+        sources.remove( s );
+    }
+
+    public List<String> getSources()
+    {
+        return sources;
+    }
+
+    public void setSources( List<String> sources )
+    {
+        this.sources = sources;
+    }
+
+    /**
+     * Check if log paramter is valid for this settings, that means: - log.getSource() is in this.sources -
+     * log.getLevel() >= this.level
+     * 
+     * @param log
+     * @return
+     */
+    public boolean check( ResultEntry log )
+    {
+        if ( this.level.compareTo( log.getLevel() ) < 0 )
+        {
+            return false;
+        }
+        if ( !( this.sources.contains( log.getSource() ) || this.sources.isEmpty() ) )
+        {
+            return false;
+        }
+        return true;
+    }
 
 }

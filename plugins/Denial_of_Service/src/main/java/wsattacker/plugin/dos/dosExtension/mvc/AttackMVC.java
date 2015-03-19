@@ -18,46 +18,66 @@
  */
 package wsattacker.plugin.dos.dosExtension.mvc;
 
-
-import wsattacker.plugin.dos.dosExtension.gui.GuiAttackStatusRunnable;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-
+import wsattacker.plugin.dos.dosExtension.function.postanalyze.DOSPostAnalyzeFunction;
+import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
+import wsattacker.plugin.dos.dosExtension.gui.GuiAttackStatusRunnable;
+import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * entry point to WS-Attacker DOS-Extension
- * performs the DOS-Attack using the MVC pattern
- * returns to caller only if certain states in model are set:
- * - 
- * - 
- * - 
+ * entry point to WS-Attacker DOS-Extension performs the DOS-Attack using the MVC pattern returns to caller only if
+ * certain states in model are set: - - -
+ * 
  * @return retunrs entire AttackModel with all states, data and attackresults!
  */
 public class AttackMVC
-{	
-    public static AttackModel runDosAttack(AbstractDosPlugin plugin)
+{
+    public static AttackModel runDosAttack( AttackModel attackModel )
     {
-	// unique AttackModel 
-	// - hold entire Attackdata
-	// - provides all attack methods
-        AttackModel model = new AttackModel(plugin);
-        
         // Call GUI via seperate runnabele -> guarantees that it runs in EDT
-        GuiAttackStatusRunnable MyGuiRunnable = new GuiAttackStatusRunnable(model);
-	SwingUtilities.invokeLater(MyGuiRunnable);      
-	
-	// constantly check wheater attack is still running or already finished!
-	while(!model.getAttackFinished()){
-	    try{
-		Thread.sleep(1000);
-	    }catch ( InterruptedException e ){
-		System.out.println("AttackMvc Exception");
-		return model;
-	    }
-	}
-	
-	return model;
+        GuiAttackStatusRunnable myGuiRunnable = new GuiAttackStatusRunnable( attackModel );
+        SwingUtilities.invokeLater( myGuiRunnable );
+
+        // constantly check wheater attack is still running or already finished!
+        while ( !attackModel.isAttackFinished() )
+        {
+            try
+            {
+                Thread.sleep( 1000 );
+            }
+            catch ( InterruptedException e )
+            {
+                // TODO [CHAL 2014-01-02] Use Logger instead of System.out ...
+                System.out.println( "AttackMvc Exception" );
+                return attackModel;
+            }
+        }
+
+        return attackModel;
+    }
+
+    public static AttackModel runDosAttack( AbstractDosPlugin plugin )
+    {
+        // unique AttackModel
+        // - hold entire Attackdata
+        // - provides all attack methods
+        AttackModel model = new AttackModel( plugin );
+
+        AttackModel runDosAttack = runDosAttack( model );
+
+        // Call new JFrame-GUI
+        // ONLY if autoFinalizeSwitch is turned to manuel [== false]!!
+        DosResultJFrame dosResultFrame = new DosResultJFrame( runDosAttack );
+        dosResultFrame.setLocationRelativeTo( null );
+        dosResultFrame.setVisible( !runDosAttack.isAutoFinalizeSwitch() );
+
+        // update PostAnalyze function with full model!
+        DOSPostAnalyzeFunction b = (DOSPostAnalyzeFunction) plugin.getPluginFunctions( 0 );
+        b.setAttackModel( runDosAttack );
+        b.setAttackResultJFrame( dosResultFrame );
+
+        return runDosAttack;
     }
 }

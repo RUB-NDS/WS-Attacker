@@ -24,46 +24,52 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import wsattacker.main.plugin.PluginState;
 
-public class ColoredPluginStateTableCellRenderer extends CenteredTableCellRenderer {
+public class ColoredPluginStateTableCellRenderer
+    extends CenteredTableCellRenderer
+{
 
     private static final long serialVersionUID = 1L;
+
     final private static String FONTNAME = "Dialog";
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        JLabel c = (JLabel) super.getTableCellRendererComponent(
-                table, value, isSelected, hasFocus, row, column);
-        if (value != null) {
-            c.setText(value.toString());
-            PluginState state = PluginState.valueOf(c.getText());
-            switch (state) {
+    public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
+                                                    int row, int column )
+    {
+        JLabel c = (JLabel) super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+        if ( value != null )
+        {
+            c.setText( value.toString() );
+            PluginState state = PluginState.valueOf( c.getText() );
+            switch ( state )
+            {
                 case Ready:
-                    c.setFont(new java.awt.Font(FONTNAME, Font.PLAIN, 12));
+                    c.setFont( new java.awt.Font( FONTNAME, Font.PLAIN, 12 ) );
                     break;
                 case Running:
-                    c.setFont(new java.awt.Font(FONTNAME, Font.ITALIC, 12));
-                    c.setBackground(Colors.RUNNING);
-                    c.setOpaque(true);
+                    c.setFont( new java.awt.Font( FONTNAME, Font.ITALIC, 12 ) );
+                    c.setBackground( Colors.RUNNING );
+                    c.setOpaque( true );
                     break;
                 case Finished:
-                    c.setFont(new java.awt.Font(FONTNAME, Font.BOLD, 12));
-                    c.setBackground(Colors.OK);
-                    c.setOpaque(true);
+                    c.setFont( new java.awt.Font( FONTNAME, Font.BOLD, 12 ) );
+                    c.setBackground( Colors.OK );
+                    c.setOpaque( true );
                     break;
                 case Aborting:
                 case Stopped:
                 case Failed:
                 case Not_Configured:
-                    c.setFont(new java.awt.Font(FONTNAME, Font.BOLD, 12));
-                    c.setBackground(Colors.INVALID);
-                    c.setOpaque(true);
+                    c.setFont( new java.awt.Font( FONTNAME, Font.BOLD, 12 ) );
+                    c.setBackground( Colors.INVALID );
+                    c.setOpaque( true );
                 default:
                     break;
             }
         }
-        else {
-            c.setText("");
+        else
+        {
+            c.setText( "" );
         }
         return c;
     }

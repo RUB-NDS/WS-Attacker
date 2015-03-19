@@ -22,53 +22,60 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.ExpressionInterface
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
 
 /**
- * Smallest part of an Expression. Can be anything what is important for the
- * analysis, e.g. an attribute specifier.
+ * Smallest part of an Expression. Can be anything what is important for the analysis, e.g. an attribute specifier.
  */
-public class AndExpression implements XPathPartInterface, ExpressionInterface {
+public class AndExpression
+    implements XPathPartInterface, ExpressionInterface
+{
 
     protected String expression;
 
-    public AndExpression(String expression) {
+    public AndExpression( String expression )
+    {
         this.expression = expression;
     }
 
     @Override
-    public String getExpression() {
+    public String getExpression()
+    {
         return expression;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return expression;
     }
 
     @Override
-    public String toFullString() {
+    public String toFullString()
+    {
         return expression;
     }
 
     /**
-     *
      * @param o
-     *
      * @return
      */
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String) {
-            return equals(new AndExpression((String) o));
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String )
+        {
+            return equals( new AndExpression( (String) o ) );
         }
-        if (o instanceof AndExpression) {
-            return expression.equals(((ExpressionInterface) o).getExpression());
+        if ( o instanceof AndExpression )
+        {
+            return expression.equals( ( (ExpressionInterface) o ).getExpression() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 67 * hash + (this.expression != null ? this.expression.hashCode() : 0);
+        hash = 67 * hash + ( this.expression != null ? this.expression.hashCode() : 0 );
         return hash;
     }
 }

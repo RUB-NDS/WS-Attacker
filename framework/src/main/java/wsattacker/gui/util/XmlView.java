@@ -34,93 +34,112 @@ import javax.swing.text.PlainView;
 import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
 
-public class XmlView extends PlainView {
+public class XmlView
+    extends PlainView
+{
 
-	private static HashMap<Pattern, Color> patternColors;
-	private static String TAG_PATTERN = "(</?)\\s?>?";
-	private static String TAG_END_PATTERN = "(>)";
-	private static String TAG_NAMESPACE = "</?(\\w+):";
-	private static String TAG_ATTRIBUTE_NAMESPACE = "\\s(\\w+):";
-	private static String TAG_ATTRIBUTE_PATTERN = "\\s[\\w]*:?(\\w*)\\=";
-	private static String TAG_ATTRIBUTE_VALUE = "[a-z-]*\\=(\"[^\"]*\")";
-	private static String TAG_COMMENT = "(<!--.*-->)";
-	private static String TAG_CDATA_START = "(\\<!\\[CDATA\\[).*";
-	private static String TAG_CDATA_END = ".*(]]>)";
+    private static final HashMap<Pattern, Color> patternColors;
 
-	static {
-		// NOTE: the order is important!
-		patternColors = new HashMap<Pattern, Color>();
-		patternColors.put(Pattern.compile(TAG_CDATA_START), new Color(128, 128,128));
-		patternColors.put(Pattern.compile(TAG_CDATA_END), new Color(128, 128,128));
-		patternColors.put(Pattern.compile(TAG_PATTERN), new Color(63, 127, 127));
-		patternColors.put(Pattern.compile(TAG_NAMESPACE), new Color(180, 127, 127));
-		patternColors.put(Pattern.compile(TAG_ATTRIBUTE_PATTERN), new Color(127, 0, 127));
-		patternColors.put(Pattern.compile(TAG_END_PATTERN), new Color(63, 127,127));
-		patternColors.put(Pattern.compile(TAG_ATTRIBUTE_NAMESPACE), new Color(180, 127, 127));
-		patternColors.put(Pattern.compile(TAG_ATTRIBUTE_VALUE), new Color(42,0, 255));
-		patternColors.put(Pattern.compile(TAG_COMMENT), new Color(63, 95, 191));
-	}
+    private static final String TAG_PATTERN = "(</?)\\s?>?";
 
-	public XmlView(Element element) {
+    private static final String TAG_END_PATTERN = "(>)";
 
-		super(element);
+    private static final String TAG_NAMESPACE = "</?(\\w+):";
 
-		// Set tabsize to 4 (instead of the default 8)
-		getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
-	}
+    private static final String TAG_ATTRIBUTE_NAMESPACE = "\\s(\\w+):";
 
-	@Override
-	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
-			int p1) throws BadLocationException {
+    private static final String TAG_ATTRIBUTE_PATTERN = "\\s[\\w]*:?(\\w*)\\=";
 
-		Document doc = getDocument();
-		String text = doc.getText(p0, p1 - p0);
+    private static final String TAG_ATTRIBUTE_VALUE = "[a-z-]*\\=(\"[^\"]*\")";
 
-		Segment segment = getLineBuffer();
+    private static final String TAG_COMMENT = "(<!--.*-->)";
 
-		SortedMap<Integer, Integer> startMap = new TreeMap<Integer, Integer>();
-		SortedMap<Integer, Color> colorMap = new TreeMap<Integer, Color>();
+    private static final String TAG_CDATA_START = "(\\<!\\[CDATA\\[).*";
 
-		// Match all regexes on this snippet, store positions
-		for (Map.Entry<Pattern, Color> entry : patternColors.entrySet()) {
+    private static final String TAG_CDATA_END = ".*(]]>)";
 
-			Matcher matcher = entry.getKey().matcher(text);
+    static
+    {
+        // NOTE: the order is important!
+        patternColors = new HashMap<Pattern, Color>();
+        patternColors.put( Pattern.compile( TAG_CDATA_START ), new Color( 128, 128, 128 ) );
+        patternColors.put( Pattern.compile( TAG_CDATA_END ), new Color( 128, 128, 128 ) );
+        patternColors.put( Pattern.compile( TAG_PATTERN ), new Color( 63, 127, 127 ) );
+        patternColors.put( Pattern.compile( TAG_NAMESPACE ), new Color( 180, 127, 127 ) );
+        patternColors.put( Pattern.compile( TAG_ATTRIBUTE_PATTERN ), new Color( 127, 0, 127 ) );
+        patternColors.put( Pattern.compile( TAG_END_PATTERN ), new Color( 63, 127, 127 ) );
+        patternColors.put( Pattern.compile( TAG_ATTRIBUTE_NAMESPACE ), new Color( 180, 127, 127 ) );
+        patternColors.put( Pattern.compile( TAG_ATTRIBUTE_VALUE ), new Color( 42, 0, 255 ) );
+        patternColors.put( Pattern.compile( TAG_COMMENT ), new Color( 63, 95, 191 ) );
+    }
 
-			while (matcher.find()) {
-				startMap.put(matcher.start(1), matcher.end());
-				colorMap.put(matcher.start(1), entry.getValue());
-			}
-		}
+    public XmlView( Element element )
+    {
 
-		// TODO: check the map for overlapping parts
+        super( element );
 
-		int i = 0;
+        // Set tabsize to 4 (instead of the default 8)
+        getDocument().putProperty( PlainDocument.tabSizeAttribute, 4 );
+    }
 
-		// Colour the parts
-		for (Map.Entry<Integer, Integer> entry : startMap.entrySet()) {
-			int start = entry.getKey();
-			int end = entry.getValue();
+    @Override
+    protected int drawUnselectedText( Graphics graphics, int x, int y, int p0, int p1 )
+        throws BadLocationException
+    {
 
-			if (i < start) {
-				graphics.setColor(Color.black);
-				doc.getText(p0 + i, start - i, segment);
-				x = Utilities.drawTabbedText(segment, x, y, graphics, this, i);
-			}
+        Document doc = getDocument();
+        String text = doc.getText( p0, p1 - p0 );
 
-			graphics.setColor(colorMap.get(start));
-			i = end;
-			doc.getText(p0 + start, i - start, segment);
-			x = Utilities.drawTabbedText(segment, x, y, graphics, this, start);
-		}
+        Segment segment = getLineBuffer();
 
-		// Paint possible remaining text black
-		if (i < text.length()) {
-			graphics.setColor(Color.black);
-			doc.getText(p0 + i, text.length() - i, segment);
-			x = Utilities.drawTabbedText(segment, x, y, graphics, this, i);
-		}
+        SortedMap<Integer, Integer> startMap = new TreeMap<Integer, Integer>();
+        SortedMap<Integer, Color> colorMap = new TreeMap<Integer, Color>();
 
-		return x;
-	}
+        // Match all regexes on this snippet, store positions
+        for ( Map.Entry<Pattern, Color> entry : patternColors.entrySet() )
+        {
+
+            Matcher matcher = entry.getKey().matcher( text );
+
+            while ( matcher.find() )
+            {
+                startMap.put( matcher.start( 1 ), matcher.end() );
+                colorMap.put( matcher.start( 1 ), entry.getValue() );
+            }
+        }
+
+        // TODO: check the map for overlapping parts
+
+        int i = 0;
+
+        // Colour the parts
+        for ( Map.Entry<Integer, Integer> entry : startMap.entrySet() )
+        {
+            int start = entry.getKey();
+            int end = entry.getValue();
+
+            if ( i < start )
+            {
+                graphics.setColor( Color.black );
+                doc.getText( p0 + i, start - i, segment );
+                x = Utilities.drawTabbedText( segment, x, y, graphics, this, i );
+            }
+
+            graphics.setColor( colorMap.get( start ) );
+            i = end;
+            doc.getText( p0 + start, i - start, segment );
+            x = Utilities.drawTabbedText( segment, x, y, graphics, this, start );
+        }
+
+        // Paint possible remaining text black
+        if ( i < text.length() )
+        {
+            graphics.setColor( Color.black );
+            doc.getText( p0 + i, text.length() - i, segment );
+            x = Utilities.drawTabbedText( segment, x, y, graphics, this, i );
+        }
+
+        return x;
+    }
 
 }

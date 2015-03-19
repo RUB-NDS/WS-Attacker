@@ -21,52 +21,58 @@ package wsattacker.library.signatureWrapping.xpath.weakness.util;
 import java.util.*;
 
 /**
- * Simple logging class.
- * Each XPathWeakness can append a simple String to the log.
+ * Simple logging class. Each XPathWeakness can append a simple String to the log.
  */
-public final class WeaknessLog {
+public final class WeaknessLog
+{
 
     private static List<String> log = new ArrayList<String>();
 
     /**
      * Cleans all saved log entries.
      */
-    public static void clean() {
+    public static void clean()
+    {
         log.clear();
     }
 
     /**
      * Append a simple string.
-     *
+     * 
      * @param message
      */
-    public static void append(String message) {
-        log.add(message);
+    public static void append( String message )
+    {
+        log.add( message );
     }
 
     /**
      * Returns the entries as a List.
-     *
+     * 
      * @return List of Logentries.
      */
-    public static List<String> get() {
+    public static List<String> get()
+    {
         return log;
     }
 
     /**
      * Returns the list as a String representation.
-     *
+     * 
      * @return Logstring.
      */
-    public static String representation() {
+    public static String representation()
+    {
         StringBuilder sb = new StringBuilder();
-        for (String s : log) {
-            sb.append(s).append(("\n"));
+        for ( String s : log )
+        {
+            sb.append( s ).append( ( "\n" ) );
         }
         return sb.toString().trim();
     }
 
-    private WeaknessLog() {
+    private WeaknessLog()
+    {
     }
 
 }

@@ -22,24 +22,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-
 /**
  * close all AttackThreads, set Attack to finished + go back to WS-Attacker
+ * 
  * @author af
- *
  */
-public class CloseAttackUnfinishedController implements ActionListener
+public class CloseAttackUnfinishedController
+    implements ActionListener
 {
     private AttackModel model;
 
-    public CloseAttackUnfinishedController(AttackModel model)
+    public CloseAttackUnfinishedController( AttackModel model )
     {
         this.model = model;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
-	// Close Unfinished Attack and GUI + go back to WS-Attacker
-	model.closeAttackUnfinished();
+        // Close Unfinished Attack and GUI + go back to WS-Attacker
+        model.closeAttackUnfinished();
     }
 }

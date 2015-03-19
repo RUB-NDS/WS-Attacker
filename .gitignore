@@ -30,3 +30,4 @@ runnable/plugins/*jar
 *.swo
 *.swp
 target/
+framework/wsattacker_config.xml

@@ -23,66 +23,77 @@ import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 /**
- *
  * @author Andreas Falkenberg
  */
-public class ClockTest {
-    
+public class ClockTest
+{
+
     Clock instance;
-    
-    public ClockTest() {
-	instance = new Clock();
+
+    public ClockTest()
+    {
+        instance = new Clock();
     }
-    
 
     /**
-     * tests if update of clock works
-     * update clock after 1 sec and check if incremented by 1
+     * tests if update of clock works update clock after 1 sec and check if incremented by 1
      */
     @Test
-    public void testUpdate() {
-	System.out.println("update");
-	String str1 = instance.update();
-	try {
-	    Thread.sleep(1000);
-	} catch (InterruptedException ex) {
-	    Logger.getLogger(ClockTest.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	String str2 = instance.update();
-	
-	
-	if(str1.equals("0") && !str2.equals("0")) {
-	    assertTrue(true);
-	} else {
-	    assertTrue(false);
-	}
+    public void testUpdate()
+    {
+        System.out.println( "update" );
+        String str1 = instance.update();
+        try
+        {
+            Thread.sleep( 1000 );
+        }
+        catch ( InterruptedException ex )
+        {
+            Logger.getLogger( ClockTest.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        String str2 = instance.update();
+
+        if ( str1.equals( "0" ) && !str2.equals( "0" ) )
+        {
+            assertTrue( true );
+        }
+        else
+        {
+            assertTrue( false );
+        }
     }
 
     /**
      * Test if clock resets to 0 after several updates!
      */
     @Test
-    public void testReset() {
-	System.out.println("reset");
-	
-	try {
-	    instance.update();
-	    Thread.sleep(1000);
-	    instance.update();
-	} catch (InterruptedException ex) {
-	    Logger.getLogger(ClockTest.class.getName()).log(Level.SEVERE, null, ex);
-	}
+    public void testReset()
+    {
+        System.out.println( "reset" );
 
-	String preResult = instance.update();
-	instance.reset();
-	String result = instance.update();
-	
-	if(result.equals("0") && !preResult.equals("0")) {
-	    assertTrue(true);
-	} else {
-	    assertTrue(false);
-	}	
+        try
+        {
+            instance.update();
+            Thread.sleep( 1000 );
+            instance.update();
+        }
+        catch ( InterruptedException ex )
+        {
+            Logger.getLogger( ClockTest.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+
+        String preResult = instance.update();
+        instance.reset();
+        String result = instance.update();
+
+        if ( result.equals( "0" ) && !preResult.equals( "0" ) )
+        {
+            assertTrue( true );
+        }
+        else
+        {
+            assertTrue( false );
+        }
     }
 }

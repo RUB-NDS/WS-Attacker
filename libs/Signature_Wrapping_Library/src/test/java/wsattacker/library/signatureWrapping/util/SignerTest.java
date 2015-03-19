@@ -32,58 +32,65 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_WSU;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 
-public class SignerTest {
+public class SignerTest
+{
 
     @BeforeClass
     public static void setUpBeforeClass()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @AfterClass
     public static void tearDownAfterClass()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Before
     public void setUp()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @After
     public void tearDown()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Test
-    public void testUriDereferencer() {
+    public void testUriDereferencer()
+    {
         SoapTestDocument soap = new SoapTestDocument();
         // Add body ID
         Element payloadBody = soap.getDummyPayloadBody();
         String theId = soap.getDummyPayloadBodyWsuId();
-        List<Element> referenced = DomUtilities.findElementByWsuId(soap.getDocument(), theId);
-        assertEquals(1, referenced.size());
-        assertEquals(payloadBody, referenced.get(0));
+        List<Element> referenced = DomUtilities.findElementByWsuId( soap.getDocument(), theId );
+        assertEquals( 1, referenced.size() );
+        assertEquals( payloadBody, referenced.get( 0 ) );
 
         // add second wsu:Id element
         Element payloadHeader = soap.getDummyPayloadHeader();
         String otherId = soap.getDummyPayloadHeaderWsuId();
         // find body
-        referenced = DomUtilities.findElementByWsuId(soap.getDocument(), theId);
-        assertEquals(1, referenced.size());
-        assertEquals(payloadBody, referenced.get(0));
+        referenced = DomUtilities.findElementByWsuId( soap.getDocument(), theId );
+        assertEquals( 1, referenced.size() );
+        assertEquals( payloadBody, referenced.get( 0 ) );
         // find header
-        referenced = DomUtilities.findElementByWsuId(soap.getDocument(), otherId);
-        assertEquals(1, referenced.size());
-        assertEquals(payloadHeader, referenced.get(0));
+        referenced = DomUtilities.findElementByWsuId( soap.getDocument(), otherId );
+        assertEquals( 1, referenced.size() );
+        assertEquals( payloadHeader, referenced.get( 0 ) );
 
         // bad id
-        referenced = DomUtilities.findElementByWsuId(soap.getDocument(), "notcontained");
-        assertEquals(0, referenced.size());
+        referenced = DomUtilities.findElementByWsuId( soap.getDocument(), "notcontained" );
+        assertEquals( 0, referenced.size() );
 
     }
 
     @Test
-    public void testUriDereferencerNonDefaultPrefix() {
+    public void testUriDereferencerNonDefaultPrefix()
+    {
         // Test with other prefix
         SoapTestDocument soap = new SoapTestDocument();
         // Add body ID
@@ -92,72 +99,75 @@ public class SignerTest {
         // Add the Id Attribute
         String id = "toSign";
         String prefix = "myprefix";
-        Attr a = soap.getDocument().createAttributeNS(URI_NS_WSU, prefix + ":Id");
-        a.setValue(id);
-        payloadBody.setAttributeNode(a);
+        Attr a = soap.getDocument().createAttributeNS( URI_NS_WSU, prefix + ":Id" );
+        a.setValue( id );
+        payloadBody.setAttributeNode( a );
 
-        List<Element> referenced = DomUtilities.findElementByWsuId(soap.getDocument(), id);
-        assertEquals(1, referenced.size());
-        assertEquals(payloadBody, referenced.get(0));
+        List<Element> referenced = DomUtilities.findElementByWsuId( soap.getDocument(), id );
+        assertEquals( 1, referenced.size() );
+        assertEquals( payloadBody, referenced.get( 0 ) );
     }
 
     @Test
     public void testSignerXpath()
-      throws Exception {
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
         List<String> toSign = new ArrayList<String>();
-        toSign.add("//" + soap.getDummyPayloadBody().getNodeName());
+        toSign.add( "//" + soap.getDummyPayloadBody().getNodeName() );
         // Just an Additional Attribute :-)
-        Attr a = soap.getDocument().createAttributeNS("http://new", "new:test");
-        a.setValue("foo");
-        soap.getDummyPayloadBody().setAttributeNode(a);
-// System.out.println("ToSign: " +toSign.toString());
-// System.out.println(domToString(soap.getDocument()));
-        Signer s = new Signer(new KeyInfoForTesting());
-        s.sign(soap.getDocument(), toSign);
-// System.out.println(domToString(soap.getDocument()));
-        assertTrue(s.verifySignature(soap.getDocument()));
+        Attr a = soap.getDocument().createAttributeNS( "http://new", "new:test" );
+        a.setValue( "foo" );
+        soap.getDummyPayloadBody().setAttributeNode( a );
+        // System.out.println("ToSign: " +toSign.toString());
+        // System.out.println(domToString(soap.getDocument()));
+        Signer s = new Signer( new KeyInfoForTesting() );
+        s.sign( soap.getDocument(), toSign );
+        // System.out.println(domToString(soap.getDocument()));
+        assertTrue( s.verifySignature( soap.getDocument() ) );
     }
 
     @Test
     public void testSignerId()
-      throws Exception {
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
         List<String> toSign = new ArrayList<String>();
         // Declare this as "toSign"
-        toSign.add("#" + soap.getDummyPayloadBodyWsuId());
-        Signer s = new Signer(new KeyInfoForTesting());
-        s.sign(soap.getDocument(), toSign);
-        assertTrue(s.verifySignature(soap.getDocument()));
+        toSign.add( "#" + soap.getDummyPayloadBodyWsuId() );
+        Signer s = new Signer( new KeyInfoForTesting() );
+        s.sign( soap.getDocument(), toSign );
+        assertTrue( s.verifySignature( soap.getDocument() ) );
     }
 
     @Test
     public void testManualSignatureWrapping()
-      throws Exception {
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
         // Original Payload
-        soap.getDummyPayloadBody().setTextContent("Original Content");
+        soap.getDummyPayloadBody().setTextContent( "Original Content" );
 
         List<String> toSign = new ArrayList<String>();
         // Declare this as "toSign"
-        toSign.add("#" + soap.getDummyPayloadBodyWsuId());
-        Signer s = new Signer(new KeyInfoForTesting());
-        s.sign(soap.getDocument(), toSign);
+        toSign.add( "#" + soap.getDummyPayloadBodyWsuId() );
+        Signer s = new Signer( new KeyInfoForTesting() );
+        s.sign( soap.getDocument(), toSign );
 
         // Manual Wrapping Attack
         // 1) Move Signature
         Element signed = soap.getDummyPayloadBody();
-        signed.getParentNode().removeChild(signed);
-        soap.getHeader().appendChild(signed);
+        signed.getParentNode().removeChild( signed );
+        soap.getHeader().appendChild( signed );
         // 2) Add payload
-        soap.getDummyPayloadBody().setTextContent("ATTACK PAYLOAD");
+        soap.getDummyPayloadBody().setTextContent( "ATTACK PAYLOAD" );
         // 3) Add fake id
-        soap.getOrCreateAttribute(soap.getDummyPayloadBody(), "Id", PREFIX_NS_WSU, URI_NS_WSU, "newId");
-// soap.getDummyPayloadBodyWsuId(); // Same ID as above, not that good
+        soap.getOrCreateAttribute( soap.getDummyPayloadBody(), "Id", PREFIX_NS_WSU, URI_NS_WSU, "newId" );
+        // soap.getDummyPayloadBodyWsuId(); // Same ID as above, not that good
 
         // Verify Signature
-// System.out.println(domToString(soap.getDocument()));
-        assertTrue(s.verifySignature(soap.getDocument()));
+        // System.out.println(domToString(soap.getDocument()));
+        assertTrue( s.verifySignature( soap.getDocument() ) );
     }
 
 }

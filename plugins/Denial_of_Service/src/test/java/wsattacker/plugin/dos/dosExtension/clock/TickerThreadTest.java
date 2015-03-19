@@ -18,31 +18,28 @@
  */
 package wsattacker.plugin.dos.dosExtension.clock;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- *
  * @author Andreas Falkenberg
  */
-public class TickerThreadTest {
-    
+public class TickerThreadTest
+{
 
     /**
      * Test of run method, of class TickerThread.
      */
-   @Test
-    public void testRun() {
-	System.out.println("run");
-	AttackModel model = new AttackModel();
-	TickerThread instance = new TickerThread(model);
-	assertNotNull("New Clock Thread should be created and running",instance);
-	instance.interrupt();
-	// TODO review the generated test code and remove the default call to fail.
+    @Test
+    public void testRun()
+    {
+        System.out.println( "run" );
+        AttackModel model = new AttackModel();
+        TickerThread instance = new TickerThread( model );
+        assertNotNull( "New Clock Thread should be created and running", instance );
+        instance.interrupt();
+        // TODO review the generated test code and remove the default call to
+        // fail.
     }
 }

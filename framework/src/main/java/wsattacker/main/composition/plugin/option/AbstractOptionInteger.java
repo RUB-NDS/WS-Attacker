@@ -24,55 +24,69 @@ import wsattacker.gui.component.pluginconfiguration.option.OptionIntegerGUI_NB;
 /**
  * WS-Attacker will represent this with a text input field.
  */
-public abstract class AbstractOptionInteger extends AbstractOption {
+public abstract class AbstractOptionInteger
+    extends AbstractOption
+{
 
-	private static final long serialVersionUID = 2L;
-	public static final String PROP_VALUE = "value";
-	private int value;
+    private static final long serialVersionUID = 2L;
 
-	// constructors
-	public AbstractOptionInteger(String name, int value) {
-		this(name, value, "");
-	}
+    public static final String PROP_VALUE = "value";
 
-	public AbstractOptionInteger(String name, int value, String description) {
-		super(name, description);
-		this.value = value;
-	}
+    private int value;
 
-	// Integer specific
-	public int getValue() {
-		return value;
-	}
+    // constructors
+    public AbstractOptionInteger( String name, int value )
+    {
+        this( name, value, "" );
+    }
 
-	public void setValue(int value) {
-		if (isValid(value)) {
-			int oldValue = this.value;
-			this.value = value;
-			firePropertyChange(PROP_VALUE, oldValue, value);
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
-		}
-	}
+    public AbstractOptionInteger( String name, int value, String description )
+    {
+        super( name, description );
+        this.value = value;
+    }
 
-	// IMPORTANT: Implementation needed
-	@Override
-	public abstract boolean isValid(String value);
+    // Integer specific
+    public int getValue()
+    {
+        return value;
+    }
 
-	public abstract boolean isValid(int value);
+    public void setValue( int value )
+    {
+        if ( isValid( value ) )
+        {
+            int oldValue = this.value;
+            this.value = value;
+            firePropertyChange( PROP_VALUE, oldValue, value );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", value ) );
+        }
+    }
 
-	@Override
-	public void parseValue(String value) {
-		this.setValue(Integer.parseInt(value));
-	}
+    // IMPORTANT: Implementation needed
+    @Override
+    public abstract boolean isValid( String value );
 
-	@Override
-	public String getValueAsString() {
-		return Integer.toString(value);
-	}
+    public abstract boolean isValid( int value );
 
-	@Override
-	public OptionGUI createOptionGUI() {
-		return new OptionIntegerGUI_NB(this);
-	}
+    @Override
+    public void parseValue( String value )
+    {
+        this.setValue( Integer.parseInt( value ) );
+    }
+
+    @Override
+    public String getValueAsString()
+    {
+        return Integer.toString( value );
+    }
+
+    @Override
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionIntegerGUI_NB( this );
+    }
 }

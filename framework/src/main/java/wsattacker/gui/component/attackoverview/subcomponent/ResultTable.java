@@ -31,136 +31,166 @@ import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;
 import wsattacker.util.DateFormater;
 
-public class ResultTable extends JTable {
-	private static final long serialVersionUID = 1L;
-	ResultTableModel model;
-	JTable table;
+public class ResultTable
+    extends JTable
+{
+    private static final long serialVersionUID = 1L;
 
-	public ResultTable() {
-		table = this;
-		model = new ResultTableModel();
-		this.setModel(model);
-		this.setAutoscrolls(true);
-		this.getColumnModel().getColumn(0).setPreferredWidth(50);
-		this.getColumnModel().getColumn(1).setPreferredWidth(50);
-		this.getColumnModel().getColumn(2).setPreferredWidth(100);
-		this.getColumnModel().getColumn(3).setPreferredWidth(500);
-		this.getColumnModel().getColumn(0).setCellRenderer(new CenteredTableCellRenderer());
-		this.getColumnModel().getColumn(1).setCellRenderer(new ColoredResultTableCellRenderer());
-		this.getColumnModel().getColumn(2).setCellRenderer(new CenteredTableCellRenderer());
-		this.getColumnModel().getColumn(3).setCellRenderer(new MultiLineTableCellRenderer());
-	}
+    ResultTableModel model;
 
-	public void filterSources(List<String> sources) {
-		model.filterSources(sources);
-	}
+    JTable table;
 
-	public void setLevel(ResultLevel level) {
-		model.setLevel(level);
-	}
+    public ResultTable()
+    {
+        table = this;
+        model = new ResultTableModel();
+        this.setModel( model );
+        this.setAutoscrolls( true );
+        this.getColumnModel().getColumn( 0 ).setPreferredWidth( 50 );
+        this.getColumnModel().getColumn( 1 ).setPreferredWidth( 50 );
+        this.getColumnModel().getColumn( 2 ).setPreferredWidth( 100 );
+        this.getColumnModel().getColumn( 3 ).setPreferredWidth( 500 );
+        this.getColumnModel().getColumn( 0 ).setCellRenderer( new CenteredTableCellRenderer() );
+        this.getColumnModel().getColumn( 1 ).setCellRenderer( new ColoredResultTableCellRenderer() );
+        this.getColumnModel().getColumn( 2 ).setCellRenderer( new CenteredTableCellRenderer() );
+        this.getColumnModel().getColumn( 3 ).setCellRenderer( new MultiLineTableCellRenderer() );
+    }
 
-	public class ResultTableModel extends AbstractTableModel implements ResultObserver {
+    public void filterSources( List<String> sources )
+    {
+        model.filterSources( sources );
+    }
 
-		private static final long serialVersionUID = 1L;
-		final private String[] columnNames = {"Time", "Level", "Source", "Content"};
-		Result global;
-		Result result;
-		ResultLevel level;
-		List<String> sources;
+    public void setLevel( ResultLevel level )
+    {
+        model.setLevel( level );
+    }
 
-		public ResultTableModel() {
-			result = new Result();
-			global = Result.getGlobalResult();
-			global.registerObserver(this);
-			level = ResultLevel.Important;
-			global.setObserverLevel(this, level);
-			sources = new ArrayList<String>();
-		}
+    public class ResultTableModel
+        extends AbstractTableModel
+        implements ResultObserver
+    {
 
-		public void setLevel(ResultLevel level) {
-			this.level = level;
-			result = global.filterOnly(level);
-			if(sources.size() > 0) {
-				result = result.filterOnly(sources);
-			}
-			global.setObserverLevel(this, level);
-			this.fireTableDataChanged();
-		}
+        private static final long serialVersionUID = 1L;
 
-		public void filterSources(List<String> sources) {
-			this.sources = sources;
-			result = global.filterOnly(level);
-			if(sources.size() > 0) {
-				result = result.filterOnly(sources);
-			}
-			global.setSources(this, sources);
-			this.fireTableDataChanged();
-		}
+        final private String[] columnNames = { "Time", "Level", "Source", "Content" };
 
-		@Override
-		public int getColumnCount() {
-			return columnNames.length;
-		}
+        Result global;
 
-		@Override
-		public String getColumnName(int num){
-			return this.columnNames[num];
-		}
+        Result result;
 
-		@Override
-		public boolean isCellEditable(int y, int x){
-			return false;
-		}
+        ResultLevel level;
 
-		@Override
-		public int getRowCount() {
-			return result.size();
-		}
+        List<String> sources;
 
-		@Override
-		public Object getValueAt(int row, int col) {
-			ResultEntry entry = result.get(row);
-			switch (col) {
-			case 0:
-				return DateFormater.timeonly(entry.getDate());
-			case 1:
-				return entry.getLevel().toString();
-			case 2:
-				return entry.getSource();
-			case 3:
-				return entry.getContent();
-			}
-			return null;
-		}
+        public ResultTableModel()
+        {
+            result = new Result();
+            global = Result.getGlobalResult();
+            global.registerObserver( this );
+            level = ResultLevel.Important;
+            global.setObserverLevel( this, level );
+            sources = new ArrayList<String>();
+        }
 
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		@Override
-		public Class getColumnClass(int c) {
-	        return getValueAt(0, c).getClass();
-	    }
+        public void setLevel( ResultLevel level )
+        {
+            this.level = level;
+            result = global.filterOnly( level );
+            if ( sources.size() > 0 )
+            {
+                result = result.filterOnly( sources );
+            }
+            global.setObserverLevel( this, level );
+            this.fireTableDataChanged();
+        }
 
-		@Override
-		public void logUpdate(ResultEntry log) {
-			result.add(log);
-			this.fireTableDataChanged();
-//			this.fireTableRowsInserted(getRowCount(), getRowCount()); // does not work for multiline cells
+        public void filterSources( List<String> sources )
+        {
+            this.sources = sources;
+            result = global.filterOnly( level );
+            if ( sources.size() > 0 )
+            {
+                result = result.filterOnly( sources );
+            }
+            global.setSources( this, sources );
+            this.fireTableDataChanged();
+        }
 
+        @Override
+        public int getColumnCount()
+        {
+            return columnNames.length;
+        }
 
-//                SwingUtilities.invokeLater(new Runnable() {
-//
-//					@Override
-//                    public void run() {
-//                        table.scrollRectToVisible(table.getCellRect(table.getRowCount() - 1, 0, true));
-//                    }
-//                });
-		}
+        @Override
+        public String getColumnName( int num )
+        {
+            return this.columnNames[num];
+        }
 
-		@Override
-		public void logClear() {
-			result.clear();
-			this.fireTableRowsDeleted(0, getRowCount());
-		}
+        @Override
+        public boolean isCellEditable( int y, int x )
+        {
+            return false;
+        }
 
-	}
+        @Override
+        public int getRowCount()
+        {
+            return result.size();
+        }
+
+        @Override
+        public Object getValueAt( int row, int col )
+        {
+            ResultEntry entry = result.get( row );
+            switch ( col )
+            {
+                case 0:
+                    return DateFormater.timeonly( entry.getDate() );
+                case 1:
+                    return entry.getLevel().toString();
+                case 2:
+                    return entry.getSource();
+                case 3:
+                    return entry.getContent();
+            }
+            return null;
+        }
+
+        @SuppressWarnings( { "rawtypes", "unchecked" } )
+        @Override
+        public Class getColumnClass( int c )
+        {
+            return getValueAt( 0, c ).getClass();
+        }
+
+        @Override
+        public void logUpdate( ResultEntry log )
+        {
+            result.add( log );
+            this.fireTableDataChanged();
+            // this.fireTableRowsInserted(getRowCount(), getRowCount()); // does
+            // not work for multiline cells
+
+            // SwingUtilities.invokeLater(new Runnable() {
+            //
+            // @Override
+            // public void run() {
+            // table.scrollRectToVisible(table.getCellRect(table.getRowCount() -
+            // 1, 0, true));
+            // }
+            // });
+        }
+
+        @Override
+        public void logClear()
+        {
+            result.clear();
+            this.fireTableRowsDeleted( 0, getRowCount() );
+        }
+
+    }
 
 }

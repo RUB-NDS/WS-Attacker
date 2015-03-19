@@ -25,13 +25,11 @@ import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 
 /**
- * Interface for creating a List of XPathWeaknesses.
- * Factory Pattern.
+ * Interface for creating a List of XPathWeaknesses. Factory Pattern.
  */
-public interface XPathWeaknessFactoryInterface {
+public interface XPathWeaknessFactoryInterface
+{
 
-    public List<XPathWeaknessInterface> generate(AbsoluteLocationPath xpath,
-      SignedElement signedElement,
-      PayloadElement payloadElement,
-      SchemaAnalyzer schemaAnalyser);
+    public List<XPathWeaknessInterface> generate( AbsoluteLocationPath xpath, SignedElement signedElement,
+                                                  PayloadElement payloadElement, SchemaAnalyzer schemaAnalyser );
 }

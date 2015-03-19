@@ -23,59 +23,86 @@ import wsattacker.util.DateFormater;
 
 /**
  * A Result is a kind of a log entry,
+ * 
  * @author Christian Mainka
- *
  */
-public class ResultEntry implements Comparable<ResultEntry> {
-	Date date;
-	ResultLevel level;
-	String content;
-	String source;
-	
-	public ResultEntry(ResultLevel level, String source, String content) {
-		this.level = level;
-		this.source = source;
-		this.content = content;
-		this.date = new Date();
-	}
+public class ResultEntry
+    implements Comparable<ResultEntry>
+{
+    Date date;
 
+    ResultLevel level;
 
-	/**
-	 * Each result has a level to describe its verbosity
-	 * @return
-	 */
-	public ResultLevel getLevel() {
-		return this.level;
-	}
+    String content;
 
-	public Date getDate() {
-		return this.date;
-	}
+    String source;
 
-	/**
-	 * Get the source where this result comes from
-	 * Source is only a representative string (no object reference)
-	 * @return
-	 */
-	public String getSource() {
-		return this.source;
-	}
-	
-	public String getContent() {
-		return this.content;
-	}
+    public ResultEntry( ResultLevel level, String source, String content )
+    {
+        this.level = level;
+        this.source = source;
+        this.content = content;
+        this.date = new Date();
+    }
 
-	@Override
-	/**
-	 * comparing logs means comparing their dates
-	 */
-	public int compareTo(ResultEntry o) {
-		return this.date.compareTo(o.getDate());
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("%5s | %s | {%s} %s", this.level, DateFormater.timeonly(this.date), this.source, this.content); // this.level + ")" + "\t# " + this.date + " // " + this.source + " : " + this.content; 
-	}
-	
+    /**
+     * Each result has a level to describe its verbosity
+     * 
+     * @return
+     */
+    public ResultLevel getLevel()
+    {
+        return this.level;
+    }
+
+    public Date getDate()
+    {
+        return this.date;
+    }
+
+    /**
+     * Get the source where this result comes from Source is only a representative string (no object reference)
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+
+    public String getContent()
+    {
+        return this.content;
+    }
+
+    @Override
+    /**
+     * comparing logs means comparing their dates
+     */
+    public int compareTo( ResultEntry o )
+    {
+        return this.date.compareTo( o.getDate() );
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format( "%5s | %s | {%s} %s", this.level, DateFormater.timeonly( this.date ), this.source,
+                              this.content ); // this.level
+                                              // +
+                                              // ")"
+                                              // +
+                                              // "\t# "
+                                              // +
+                                              // this.date
+                                              // +
+                                              // " // "
+                                              // +
+                                              // this.source
+                                              // +
+                                              // " : "
+                                              // +
+                                              // this.content;
+    }
+
 }

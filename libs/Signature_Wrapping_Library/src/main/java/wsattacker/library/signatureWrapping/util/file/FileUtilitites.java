@@ -23,28 +23,39 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
-public class FileUtilitites {
+public class FileUtilitites
+{
 
-    public static String readFileToString(String path) throws FileNotFoundException, IOException {
-        FileInputStream stream = new FileInputStream(path);
-        try {
+    public static String readFileToString( String path )
+        throws FileNotFoundException, IOException
+    {
+        FileInputStream stream = new FileInputStream( path );
+        try
+        {
             FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            MappedByteBuffer bb = fc.map( FileChannel.MapMode.READ_ONLY, 0, fc.size() );
             /*
              * Instead of using default, pass in a decoder.
              */
-            return Charset.defaultCharset().decode(bb).toString();
-        } finally {
+            return Charset.defaultCharset().decode( bb ).toString();
+        }
+        finally
+        {
             stream.close();
         }
     }
 
-    public static void writeStringtoFile(String content, String path) throws IOException {
-        FileWriter fw = new FileWriter(path);
-        BufferedWriter bb = new BufferedWriter(fw);
-        try {
-            bb.write(content);
-        } finally {
+    public static void writeStringtoFile( String content, String path )
+        throws IOException
+    {
+        FileWriter fw = new FileWriter( path );
+        BufferedWriter bb = new BufferedWriter( fw );
+        try
+        {
+            bb.write( content );
+        }
+        finally
+        {
             bb.close();
         }
     }

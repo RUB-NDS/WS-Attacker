@@ -24,118 +24,131 @@ import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.main.plugin.PluginOptionContainer;
 
 /**
- * Interface for a very basic option Does not have any setters except for the
- * string parser All plugin options inherit this interface
- *
+ * Interface for a very basic option Does not have any setters except for the string parser All plugin options inherit
+ * this interface
+ * 
  * @author Christian Mainka
- *
  */
-public abstract class AbstractOption extends AbstractBean implements Serializable {
+public abstract class AbstractOption
+    extends AbstractBean
+    implements Serializable
+{
 
-	private static final long serialVersionUID = 2L;
-	public static final String PROP_COLLECTION = "collection";
-	public static final String PROP_NAME = "name";
-	public static final String PROP_DESCRIPTION = "description";
-	private PluginOptionContainer collection = null;
-	private String name = "AbstractOption", description = "AbstractDescription";
+    private static final long serialVersionUID = 2L;
 
-	/**
-	 * Default constructor
-	 */
-	public AbstractOption() {
-		super();
-	}
+    public static final String PROP_COLLECTION = "collection";
 
-	/**
-	 * Constructor for creating an option with at least a name and a
-	 * description
-	 *
-	 * @param name
-	 * @param description
-	 */
-	public AbstractOption(String name, String description) {
-		this();
-		this.name = name;
-		this.description = description;
-	}
+    public static final String PROP_NAME = "name";
 
-	/**
-	 * Constructor for creating an option with a name and an empty
-	 * description Each option must have a name
-	 *
-	 * @param name
-	 */
-	public AbstractOption(String name) {
-		this(name, "");
-	}
+    public static final String PROP_DESCRIPTION = "description";
 
-	public String getName() {
-		return name;
-	}
+    private PluginOptionContainer collection = null;
 
-	public void setName(String name) {
-		String oldName = this.name;
-		this.name = name;
-		firePropertyChange(PROP_NAME, oldName, name);
-	}
+    private String name = "AbstractOption", description = "AbstractDescription";
 
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * Default constructor
+     */
+    public AbstractOption()
+    {
+        super();
+    }
 
-	public void setDescription(String description) {
-		String oldDescription = this.description;
-		this.description = description;
-		firePropertyChange(PROP_DESCRIPTION, oldDescription, description);
-	}
+    /**
+     * Constructor for creating an option with at least a name and a description
+     * 
+     * @param name
+     * @param description
+     */
+    public AbstractOption( String name, String description )
+    {
+        this();
+        this.name = name;
+        this.description = description;
+    }
 
-	public final PluginOptionContainer getCollection() {
-		return collection;
-	}
+    /**
+     * Constructor for creating an option with a name and an empty description Each option must have a name
+     * 
+     * @param name
+     */
+    public AbstractOption( String name )
+    {
+        this( name, "" );
+    }
 
-	/**
-	 * Each option belongs to exactly one PlugionOptionContainer This method
-	 * will return it
-	 *
-	 * @see PluginOptionContainer
-	 * @return
-	 */
-	public void setCollection(PluginOptionContainer collection) {
-		PluginOptionContainer oldCollection = this.collection;
-		this.collection = collection;
-		firePropertyChange(PROP_COLLECTION, oldCollection, collection);
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	/**
-	 * Each option has a isValid() method It must at least work for a String
-	 * parameter, although there will be different parameter types for e.g.
-	 * Integer options
-	 *
-	 * @param value
-	 * @return true if value is valid
-	 */
-	public abstract boolean isValid(String value); // only for generic proposals
+    public void setName( String name )
+    {
+        String oldName = this.name;
+        this.name = name;
+        firePropertyChange( PROP_NAME, oldName, name );
+    }
 
-	/**
-	 * Each option can parse a String value
-	 *
-	 * @throws IllegalArgumentException if value is Invalid
-	 * @param value
-	 * @return true if value was valid and is set
-	 */
-	public abstract void parseValue(String value); // only for generic proposals
+    public String getDescription()
+    {
+        return description;
+    }
 
-	/**
-	 * Each option can return a String representation of its value
-	 *
-	 * @return
-	 */
-	public abstract String getValueAsString(); // only for generic proposals
+    public void setDescription( String description )
+    {
+        String oldDescription = this.description;
+        this.description = description;
+        firePropertyChange( PROP_DESCRIPTION, oldDescription, description );
+    }
 
-	@Override
-	public String toString() {
-		return String.format("%s{name=%s, description=%s%s", getClass().getName(), name, description, '}');
-	}
+    public final PluginOptionContainer getCollection()
+    {
+        return collection;
+    }
 
-	public abstract OptionGUI createOptionGUI();
+    /**
+     * Each option belongs to exactly one PlugionOptionContainer This method will return it
+     * 
+     * @see PluginOptionContainer
+     * @return
+     */
+    public void setCollection( PluginOptionContainer collection )
+    {
+        PluginOptionContainer oldCollection = this.collection;
+        this.collection = collection;
+        firePropertyChange( PROP_COLLECTION, oldCollection, collection );
+    }
+
+    /**
+     * Each option has a isValid() method It must at least work for a String parameter, although there will be different
+     * parameter types for e.g. Integer options
+     * 
+     * @param value
+     * @return true if value is valid
+     */
+    public abstract boolean isValid( String value ); // only for generic proposals
+
+    /**
+     * Each option can parse a String value
+     * 
+     * @throws IllegalArgumentException if value is Invalid
+     * @param value
+     * @return true if value was valid and is set
+     */
+    public abstract void parseValue( String value ); // only for generic proposals
+
+    /**
+     * Each option can return a String representation of its value
+     * 
+     * @return
+     */
+    public abstract String getValueAsString(); // only for generic proposals
+
+    @Override
+    public String toString()
+    {
+        return String.format( "%s{name=%s, description=%s%s", getClass().getName(), name, description, '}' );
+    }
+
+    public abstract OptionGUI createOptionGUI();
 }

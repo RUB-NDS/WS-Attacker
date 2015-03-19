@@ -25,7 +25,8 @@ import wsattacker.main.testsuite.TestSuite;
  * This method will be removed in future version. Use the propertyChangeSupport
  * instead.
  */
-public interface WsdlChangeObserver {
+public interface WsdlChangeObserver
+{
 
-	public void wsdlChanged(TestSuite testSuite);
+    public void wsdlChanged( TestSuite testSuite );
 }

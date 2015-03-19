@@ -19,26 +19,31 @@
 package wsattacker.library.signatureWrapping.util;
 
 // Key Information for Client Gatway (=alice)
-public class KeyInfoForTesting implements KeyInfoInterface {
+public class KeyInfoForTesting
+    implements KeyInfoInterface
+{
 
     @Override
-    public String getKeyStoreFileName() {
-        System.out.println("###" + System.getProperty("user.dir"));
+    public String getKeyStoreFileName()
+    {
         return "src/test/resources/keys/alice.jks";
     }
 
     @Override
-    public String getKeyStorePassword() {
+    public String getKeyStorePassword()
+    {
         return "storePwd";
     }
 
     @Override
-    public String getEntityName() {
+    public String getEntityName()
+    {
         return "alice";
     }
 
     @Override
-    public String getEntityPassword() {
+    public String getEntityPassword()
+    {
         return "keyPwd";
     }
 }

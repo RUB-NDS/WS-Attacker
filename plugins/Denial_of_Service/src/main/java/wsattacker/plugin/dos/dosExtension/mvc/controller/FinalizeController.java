@@ -22,23 +22,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-
 /**
  * stops Attack and creates attack results!
+ * 
  * @author Andreas Falkenberg
- *
  */
-public class FinalizeController implements ActionListener
+public class FinalizeController
+    implements ActionListener
 {
     private AttackModel model;
 
-    public FinalizeController(AttackModel model)
+    public FinalizeController( AttackModel model )
     {
         this.model = model;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
-    	model.finalizeAttack();
+        model.finalizeAttack();
     }
 }

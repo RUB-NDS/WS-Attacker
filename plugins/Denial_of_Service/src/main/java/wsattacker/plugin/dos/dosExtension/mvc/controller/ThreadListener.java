@@ -20,6 +20,7 @@ package wsattacker.plugin.dos.dosExtension.mvc.controller;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-public interface ThreadListener {
-    public void valueChanged(AttackModel model);
+public interface ThreadListener
+{
+    public void valueChanged( AttackModel model );
 }

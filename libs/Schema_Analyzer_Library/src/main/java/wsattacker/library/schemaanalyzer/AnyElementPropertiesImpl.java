@@ -23,37 +23,39 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * Wrapper Class. Can be expanded if additional features are necessary.
- *
  */
-public class AnyElementPropertiesImpl implements AnyElementProperties {
+public class AnyElementPropertiesImpl
+    implements AnyElementProperties
+{
 
     Element anyElement, documentElement;
 
-    public AnyElementPropertiesImpl(Element anyElement,
-      Element documentElement) {
+    public AnyElementPropertiesImpl( Element anyElement, Element documentElement )
+    {
         this.anyElement = anyElement;
         this.documentElement = documentElement;
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementProperties#getDocumentElement()
+     * @see wsattacker.plugin.signatureWrapping.schema.AnyElementProperties# getDocumentElement()
      */
     @Override
-    public Element getDocumentElement() {
+    public Element getDocumentElement()
+    {
         return documentElement;
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementProperties#getProcessContentsAttribute()
+     * @see wsattacker.plugin.signatureWrapping.schema.AnyElementProperties# getProcessContentsAttribute()
      */
     @Override
-    public String getProcessContentsAttribute() {
-        String processContents = anyElement.getAttribute("processContents");
-        if (processContents == null || processContents.isEmpty()) {
+    public String getProcessContentsAttribute()
+    {
+        String processContents = anyElement.getAttribute( "processContents" );
+        if ( processContents == null || processContents.isEmpty() )
+        {
             processContents = "strict";
         }
         return processContents;
@@ -61,63 +63,77 @@ public class AnyElementPropertiesImpl implements AnyElementProperties {
 
     /*
      * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementProperties#getNamespaceAttributeValue()
+     * @see wsattacker.plugin.signatureWrapping.schema.AnyElementProperties# getNamespaceAttributeValue()
      */
     @Override
-    public String getNamespaceAttributeValue() {
-        String namespace = anyElement.getAttribute("namespace");
-        if (namespace == null || namespace.isEmpty()) {
+    public String getNamespaceAttributeValue()
+    {
+        String namespace = anyElement.getAttribute( "namespace" );
+        if ( namespace == null || namespace.isEmpty() )
+        {
             namespace = "##any";
         }
         return namespace;
     }
 
-    private boolean allowsDirectChildelements() {
-        return getNamespaceAttributeValue().equals("##any");
+    private boolean allowsDirectChildelements()
+    {
+        return getNamespaceAttributeValue().equals( "##any" );
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * wsattacker.plugin.signatureWrapping.schema.AnyElementProperties#needsWrapper(java.lang.String)
+     * @see wsattacker.plugin.signatureWrapping.schema.AnyElementProperties#needsWrapper (java.lang.String)
      */
     @Override
-    public boolean needsWrapper(String childNamespaceURI) {
+    public boolean needsWrapper( String childNamespaceURI )
+    {
         boolean needsWrapper;
-        String namespace = anyElement.getAttribute("namespace");
-        if (namespace != null && namespace.equals("##other")) {
-            needsWrapper = documentElement.getNamespaceURI().equals(childNamespaceURI);
-        } else {
+        String namespace = anyElement.getAttribute( "namespace" );
+        if ( namespace != null && namespace.equals( "##other" ) )
+        {
+            needsWrapper = documentElement.getNamespaceURI().equals( childNamespaceURI );
+        }
+        else
+        {
             needsWrapper = !allowsDirectChildelements();
         }
         return needsWrapper;
     }
 
     @Override
-    public int compareTo(AnyElementProperties other) {
-        return DomUtilities.getFastXPath(documentElement).compareTo(DomUtilities.getFastXPath(other.getDocumentElement()));
+    public int compareTo( AnyElementProperties other )
+    {
+        return DomUtilities.getFastXPath( documentElement ).compareTo( DomUtilities.getFastXPath( other.getDocumentElement() ) );
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals( Object other )
+    {
         boolean isEqual = false;
-        if (other instanceof AnyElementPropertiesImpl) {
-            isEqual = DomUtilities.getFastXPath(documentElement).equals(DomUtilities.getFastXPath(((AnyElementProperties) other)
-              .getDocumentElement()));
+        if ( other instanceof AnyElementPropertiesImpl )
+        {
+            isEqual =
+                DomUtilities.getFastXPath( documentElement ).equals( DomUtilities.getFastXPath( ( (AnyElementProperties) other ).getDocumentElement() ) );
         }
         return isEqual;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 5;
-        hash = 89 * hash + (this.documentElement != null ? DomUtilities.getFastXPath(this.documentElement).hashCode() : 0);
+        hash =
+            89 * hash
+                + ( this.documentElement != null ? DomUtilities.getFastXPath( this.documentElement ).hashCode() : 0 );
         return hash;
     }
 
     @Override
-    public String toString() {
-        return String.format("AnyElementProperties{processContents=%s, namespace=%s, documentElement=%s}", getProcessContentsAttribute(), getNamespaceAttributeValue(), DomUtilities.getFastXPath(documentElement));
+    public String toString()
+    {
+        return String.format( "AnyElementProperties{processContents=%s, namespace=%s, documentElement=%s}",
+                              getProcessContentsAttribute(), getNamespaceAttributeValue(),
+                              DomUtilities.getFastXPath( documentElement ) );
     }
 }

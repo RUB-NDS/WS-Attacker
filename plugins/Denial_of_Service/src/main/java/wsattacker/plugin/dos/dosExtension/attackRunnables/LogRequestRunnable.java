@@ -21,38 +21,49 @@ package wsattacker.plugin.dos.dosExtension.attackRunnables;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * Logs Request-Responsetime 
- * This runable should be called in context of EDT
+ * Logs Request-Responsetime This runable should be called in context of EDT
  */
-public class LogRequestRunnable implements Runnable {
-	private AttackModel model;
-	private String requestType; 
-	private long tsSend;
-	private long tsReceived;
-	private long duration;  
-	private int threadNumber; 
-	private boolean timeOutFlag;
-	private boolean faultFlag;
-	private boolean errorFlag;
-	private String responseString;
-	
-	
-	// Constructor
-	public LogRequestRunnable(AttackModel model, String requestType, long tsSend, long tsReceived, long duration, int threadNumber, boolean timeOutFlag, boolean faultFlag, boolean errorFlag, String responseString){
-		this.model = model;	
-		this.requestType = requestType; 
-		this.tsSend = tsSend;
-		this.tsReceived = tsReceived;
-		this.duration = duration;  
-		this.threadNumber = threadNumber; 
-		this.timeOutFlag = timeOutFlag;
-		this.faultFlag = faultFlag;
-		this.errorFlag = errorFlag;
-		this.responseString = responseString;
-		
-	}
-	
-	public void run(){
-		this.model.logResponseTime(requestType, tsSend, tsReceived, duration, threadNumber, timeOutFlag, faultFlag, errorFlag, responseString);
-	}
+public class LogRequestRunnable
+    implements Runnable
+{
+    private final AttackModel model;
+
+    private final String requestType;
+
+    private final long tsSend;
+
+    private final long tsReceived;
+
+    private final long duration;
+
+    private final int threadNumber;
+
+    private final boolean faultFlag;
+
+    private final boolean errorFlag;
+
+    private final String responseString;
+
+    // Constructor
+    public LogRequestRunnable( AttackModel model, String requestType, long tsSend, long tsReceived, long duration,
+                               int threadNumber, boolean faultFlag, boolean errorFlag, String responseString )
+    {
+        this.model = model;
+        this.requestType = requestType;
+        this.tsSend = tsSend;
+        this.tsReceived = tsReceived;
+        this.duration = duration;
+        this.threadNumber = threadNumber;
+        this.faultFlag = faultFlag;
+        this.errorFlag = errorFlag;
+        this.responseString = responseString;
+
+    }
+
+    @Override
+    public void run()
+    {
+        this.model.logResponseTime( requestType, tsSend, tsReceived, duration, threadNumber, faultFlag, errorFlag,
+                                    responseString );
+    }
 }

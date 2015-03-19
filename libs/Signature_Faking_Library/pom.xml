@@ -54,6 +54,12 @@
             <version>1.4-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
     <build>
@@ -67,10 +73,9 @@
                         Use a Licence Header
             -->
             <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
                 <configuration>
-                    <header>${basedir}/../../license_header.txt</header>
                     <properties>
                         <owner>Juraj Somorovsky</owner>
                     </properties>

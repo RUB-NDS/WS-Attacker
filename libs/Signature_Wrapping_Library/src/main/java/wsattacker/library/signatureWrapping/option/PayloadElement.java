@@ -21,33 +21,40 @@ package wsattacker.library.signatureWrapping.option;
 import org.w3c.dom.Element;
 
 /**
- *
  * @author christian
  */
-public class PayloadElement {
+public class PayloadElement
+{
 
     private final Element payloadElement;
+
     private final Element refferringElement;
+
     private boolean usePayloadElement = true;
 
-    public PayloadElement(Element payloadElement, Element refferingElement) {
+    public PayloadElement( Element payloadElement, Element refferingElement )
+    {
         this.payloadElement = payloadElement;
         this.refferringElement = refferingElement;
     }
 
-    public Element getPayloadElement() {
+    public Element getPayloadElement()
+    {
         return payloadElement;
     }
 
-    public Element getRefferringElement() {
+    public Element getRefferringElement()
+    {
         return refferringElement;
     }
 
-    public boolean useThisPayloadElement() {
+    public boolean useThisPayloadElement()
+    {
         return usePayloadElement;
     }
 
-    public void setUseThisPayloadElement(boolean use) {
+    public void setUseThisPayloadElement( boolean use )
+    {
         this.usePayloadElement = use;
     }
 }

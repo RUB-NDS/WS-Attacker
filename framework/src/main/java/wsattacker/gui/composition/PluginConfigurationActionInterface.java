@@ -18,7 +18,9 @@
  */
 package wsattacker.gui.composition;
 
-public interface PluginConfigurationActionInterface {
-	public void toggleActive();
-	public void configurePlugin();
+public interface PluginConfigurationActionInterface
+{
+    public void toggleActive();
+
+    public void configurePlugin();
 }

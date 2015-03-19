@@ -22,18 +22,20 @@ import org.junit.Test;
 import wsattacker.main.plugin.option.OptionSimpleChoice;
 
 /**
- *
  * @author christian
  */
-public class OptionChoiceGUI_NBTest {
+public class OptionChoiceGUI_NBTest
+{
 
-	public OptionChoiceGUI_NBTest() {
-	}
+    public OptionChoiceGUI_NBTest()
+    {
+    }
 
-	@Test
-	public void testBindingDoUnbind() {
-		OptionSimpleChoice choice = new OptionSimpleChoice("Test Option", "Test Name");
-		OptionChoiceGUI_NB gui = new OptionChoiceGUI_NB(choice);
-		gui.bindingDoUnbind();
-	}
+    @Test
+    public void testBindingDoUnbind()
+    {
+        OptionSimpleChoice choice = new OptionSimpleChoice( "Test Option", "Test Name" );
+        OptionChoiceGUI_NB gui = new OptionChoiceGUI_NB( choice );
+        gui.bindingDoUnbind();
+    }
 }

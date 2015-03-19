@@ -22,17 +22,18 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Andreas Falkenberg
  */
-public class UpdateClockRunnableTest {
-    
+public class UpdateClockRunnableTest
+{
+
     /**
      * Test of run method, of class UpdateClockRunnable.
      */
     @Test
-    public void testRun() {
-	System.out.println("run");
-	assertTrue("Not yet implemented", true);
+    public void testRun()
+    {
+        System.out.println( "run" );
+        assertTrue( "Not yet implemented", true );
     }
 }

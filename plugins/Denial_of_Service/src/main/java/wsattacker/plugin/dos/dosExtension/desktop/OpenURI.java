@@ -18,31 +18,41 @@
  */
 package wsattacker.plugin.dos.dosExtension.desktop;
 
-public class OpenURI {
+import java.awt.Desktop;
+import java.io.File;
+import java.net.URI;
 
-    public OpenURI(String uriString){
+public class OpenURI
+{
 
-        if( !java.awt.Desktop.isDesktopSupported() ) {
+    // TODO [CHAL 2013-12-11]: why is this an object? and not a static method?
+    public OpenURI( File report )
+    {
+
+        if ( !Desktop.isDesktopSupported() )
+        {
 
             System.err.println( "Desktop is not supported (fatal)" );
             System.exit( 1 );
         }
 
+        Desktop desktop = Desktop.getDesktop();
 
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-
-        if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
+        if ( !desktop.isSupported( Desktop.Action.BROWSE ) )
+        {
 
             System.err.println( "Desktop doesn't support the browse action (fatal)" );
             System.exit( 1 );
         }
 
-        try {
-        	System.out.println(System.getProperty("user.dir"));
-            java.net.URI uri = new java.net.URI( "file:///"+uriString );
+        try
+        {
+            System.out.println( System.getProperty( "user.dir" ) );
+            URI uri = report.toURI();
             desktop.browse( uri );
         }
-        catch ( Exception e ) {
+        catch ( Exception e )
+        {
 
             System.err.println( e.getMessage() );
         }

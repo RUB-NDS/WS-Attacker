@@ -21,28 +21,33 @@ package wsattacker.gui.controller;
 import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.testsuite.TestSuite;
 
-public class TestSuiteController extends AbstractBean {
+public class TestSuiteController
+    extends AbstractBean
+{
 
-	private TestSuite testSuite = TestSuite.getInstance();
-	public static final String PROP_TESTSUITE = "testSuite";
+    private TestSuite testSuite = TestSuite.getInstance();
 
-	/**
-	 * Get the value of testSuite
-	 *
-	 * @return the value of testSuite
-	 */
-	public TestSuite getTestSuite() {
-		return testSuite;
-	}
+    public static final String PROP_TESTSUITE = "testSuite";
 
-	/**
-	 * Set the value of testSuite
-	 *
-	 * @param testSuite new value of testSuite
-	 */
-	public void setTestSuite(TestSuite testSuite) {
-		TestSuite oldTestSuite = this.testSuite;
-		this.testSuite = testSuite;
-		firePropertyChange(PROP_TESTSUITE, oldTestSuite, testSuite);
-	}
+    /**
+     * Get the value of testSuite
+     * 
+     * @return the value of testSuite
+     */
+    public TestSuite getTestSuite()
+    {
+        return testSuite;
+    }
+
+    /**
+     * Set the value of testSuite
+     * 
+     * @param testSuite new value of testSuite
+     */
+    public void setTestSuite( TestSuite testSuite )
+    {
+        TestSuite oldTestSuite = this.testSuite;
+        this.testSuite = testSuite;
+        firePropertyChange( PROP_TESTSUITE, oldTestSuite, testSuite );
+    }
 }

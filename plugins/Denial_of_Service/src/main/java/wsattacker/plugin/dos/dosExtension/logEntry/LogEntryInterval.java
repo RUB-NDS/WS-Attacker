@@ -18,75 +18,75 @@
  */
 package wsattacker.plugin.dos.dosExtension.logEntry;
 
-
 /**
  * Data Structure of single discrete Interval that is printed out in Graph!
+ * 
  * @author Andreas Falkenberg
- *
  */
 public class LogEntryInterval
 {
-	private int intervalNumber; 
-	private int intervalLength; // in ms
-	private int numberRequests;
-	private float meanResponseTime;
-	
-	/**
-	 * Konstruktor
-	 */
-	public LogEntryInterval(){
-		this.intervalNumber = -1;
-		this.intervalLength = 1000;
-		this.meanResponseTime = 0;
-		this.numberRequests = 0;
-	}
+    private int intervalNumber;
 
+    private int intervalLength; // in ms
 
+    private int numberRequests;
 
-	public int getIntervalNumber()
-	{
-		return intervalNumber;
-	}
+    private float meanResponseTime;
 
-	public void setIntervalNumber( int intervalNumber )
-	{
-		this.intervalNumber = intervalNumber;
-	}
-	
-	public int getIntervalLength()
-	{
-		return intervalLength;
-	}
+    /**
+     * Konstruktor
+     */
+    public LogEntryInterval()
+    {
+        this.intervalNumber = -1;
+        this.intervalLength = 1000;
+        this.meanResponseTime = 0;
+        this.numberRequests = 0;
+    }
 
-	public void setIntervalLength( int intervalLength )
-	{
-		this.intervalLength = intervalLength;
-	}	
+    public int getIntervalNumber()
+    {
+        return intervalNumber;
+    }
 
-	public int getNumberRequests()
-	{
-		return numberRequests;
-	}
-	
-	public void incNumberRequests()
-	{
-		numberRequests++;
-	}
+    public void setIntervalNumber( int intervalNumber )
+    {
+        this.intervalNumber = intervalNumber;
+    }
 
-	public void setNumberRequests( int numberRequests )
-	{
-		this.numberRequests = numberRequests;
-	}
+    public int getIntervalLength()
+    {
+        return intervalLength;
+    }
 
-	public float getMeanResponseTime()
-	{
-		return meanResponseTime;
-	}
+    public void setIntervalLength( int intervalLength )
+    {
+        this.intervalLength = intervalLength;
+    }
 
-	public void setMeanResponseTime( float meanResponseTime )
-	{
-		this.meanResponseTime = meanResponseTime;
-	}
+    public int getNumberRequests()
+    {
+        return numberRequests;
+    }
 
-	
+    public void incNumberRequests()
+    {
+        numberRequests++;
+    }
+
+    public void setNumberRequests( int numberRequests )
+    {
+        this.numberRequests = numberRequests;
+    }
+
+    public float getMeanResponseTime()
+    {
+        return meanResponseTime;
+    }
+
+    public void setMeanResponseTime( float meanResponseTime )
+    {
+        this.meanResponseTime = meanResponseTime;
+    }
+
 }

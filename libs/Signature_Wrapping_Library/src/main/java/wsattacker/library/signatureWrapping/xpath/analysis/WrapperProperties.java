@@ -25,44 +25,52 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 /**
  * Wrapper class which hold the properties for a payload element.
  */
-public class WrapperProperties {
+public class WrapperProperties
+{
 
     private final AnyElementProperties anyElementPorperties;
+
     private final Element signedElement;
+
     private final int possiblePositions;
+
     private final boolean wrapperNeeded;
 
     /**
      * Constructor.
-     *
+     * 
      * @param anyElementPorperties
      * @param signedElement
      */
-    public WrapperProperties(AnyElementProperties anyElementPorperties,
-      Element signedElement) {
+    public WrapperProperties( AnyElementProperties anyElementPorperties, Element signedElement )
+    {
         this.anyElementPorperties = anyElementPorperties;
         // TODO: Is this signedElement needed?
         this.signedElement = signedElement;
-        this.possiblePositions = 1 + DomUtilities.getAllChildElements(anyElementPorperties.getDocumentElement()).size();
-        this.wrapperNeeded = anyElementPorperties.needsWrapper(signedElement.getNamespaceURI());
+        this.possiblePositions =
+            1 + DomUtilities.getAllChildElements( anyElementPorperties.getDocumentElement() ).size();
+        this.wrapperNeeded = anyElementPorperties.needsWrapper( signedElement.getNamespaceURI() );
     }
 
-    public AnyElementProperties getAnyElementPorperties() {
+    public AnyElementProperties getAnyElementPorperties()
+    {
         return anyElementPorperties;
     }
 
     /**
-     * @return number of possible positions to place the wrapper element.
-     *         Depends on the amount of child elements of the extension point element.
+     * @return number of possible positions to place the wrapper element. Depends on the amount of child elements of the
+     *         extension point element.
      */
-    public int getPossiblePositions() {
+    public int getPossiblePositions()
+    {
         return possiblePositions;
     }
 
     /**
      * @return is a wrapper element needed?
      */
-    public boolean isWrapperNeeded() {
+    public boolean isWrapperNeeded()
+    {
         return wrapperNeeded;
     }
 }

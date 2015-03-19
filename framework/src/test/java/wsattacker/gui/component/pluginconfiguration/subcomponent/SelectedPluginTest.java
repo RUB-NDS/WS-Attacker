@@ -20,11 +20,13 @@ package wsattacker.gui.component.pluginconfiguration.subcomponent;
 
 import java.util.Arrays;
 import javax.swing.JPanel;
-import org.junit.Test;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.gui.component.pluginconfiguration.controller.SelectedPluginController;
 import wsattacker.main.composition.plugin.AbstractPlugin;
@@ -36,126 +38,145 @@ import wsattacker.main.plugin.option.OptionSimpleText;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
 
 /**
- *
  * @author christian
  */
-public class SelectedPluginTest {
+public class SelectedPluginTest
+{
 
-	private static SelectedPlugin gui;
-	private static AbstractPlugin plugin;
-	private static JPanel panel;
-	private static AbstractOption option1, option2, option3, option4, option5;
-	private static SelectedPluginController controller;
+    private static SelectedPlugin gui;
 
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		option1 = new OptionSimpleBoolean("1", true);
-		option2 = new OptionSimpleVarchar("2", "Value");
-		option3 = new OptionSimpleInteger("3", 0);
-		option4 = new OptionSimpleChoice("4", "Choice description");
-		option5 = new OptionSimpleText("5", "Value");
-	}
+    private static AbstractPlugin plugin;
 
-	@Before
-	public void setUp() {
-		gui = new SelectedPlugin();
-		plugin = new DummyPlugin();
-		plugin.setName(plugin.getName() + " TEST");
-		controller = gui.getSelectedPluginController();
-		controller.setSelectedPlugin(plugin);
-		panel = gui.getOptionPanel();
-	}
+    private static JPanel panel;
 
-	@Test
-	public void nonOverlappingOptions() {
-		assertThat(0, is(panel.getComponentCount()));
-		setAndCheck(option1);
-		setAndCheck(option2, option3);
-		setAndCheck(option1, option4, option5);
-	}
+    private static AbstractOption option1, option2, option3, option4, option5;
 
-	@Test
-	public void overlappingOptions() {
-		setAndCheck(option1);
-		setAndCheck(option1, option2);
-		setAndCheck(option1, option2, option3);
-		setAndCheck(option1, option2, option3, option4);
-		setAndCheck(option1, option2, option3, option4, option5);
-		setAndCheck(option1, option2, option3, option4);
-		setAndCheck(option1, option2, option3);
-		setAndCheck(option1, option2);
-		setAndCheck(option1);
-		setAndCheck();
-	}
+    private static SelectedPluginController controller;
 
-	@Test
-	public void changingOrder() {
-		setAndCheck(option1, option2);
-		setAndCheck(option2, option1);
-		setAndCheck(option5, option4, option3, option2, option1);
-		setAndCheck(option1, option3, option2, option5, option4);
-	}
+    @BeforeClass
+    public static void setUpBeforeClass()
+    {
+        option1 = new OptionSimpleBoolean( "1", true );
+        option2 = new OptionSimpleVarchar( "2", "Value" );
+        option3 = new OptionSimpleInteger( "3", 0 );
+        option4 = new OptionSimpleChoice( "4", "Choice description" );
+        option5 = new OptionSimpleText( "5", "Value" );
+    }
 
-	@Test
-	public void settingSingleOptions() {
-		setAndCheck(option1, option2, option3);
-		setOption(1, option5);
-		checkOptions(option1, option5, option3);
-		setOption(0, option4);
-		checkOptions(option4, option5, option3);
-		setOption(2, option1);
-		checkOptions(option4, option5, option1);
-	}
+    @Before
+    public void setUp()
+    {
+        gui = new SelectedPlugin();
+        plugin = new DummyPlugin();
+        plugin.setName( plugin.getName() + " TEST" );
+        controller = gui.getSelectedPluginController();
+        controller.setSelectedPlugin( plugin );
+        panel = gui.getOptionPanel();
+    }
 
-	@Test
-	public void addingOptions() {
-		setAndCheck(option2, option4);
-		addOption(0, option1);
-		checkOptions(option1, option2, option4);
-		addOption(3, option5);
-		checkOptions(option1, option2, option4, option5);
-		addOption(2, option3);
-		checkOptions(option1, option2, option3, option4, option5);
-	}
+    @Test
+    public void nonOverlappingOptions()
+    {
+        assertThat( 0, is( panel.getComponentCount() ) );
+        setAndCheck( option1 );
+        setAndCheck( option2, option3 );
+        setAndCheck( option1, option4, option5 );
+    }
 
-	@Test
-	public void changingPlugin() {
-		setAndCheck(option1, option2);
-		plugin = new DummyPlugin();
-		plugin.setName(plugin.getName() + "TEST 2");
-		setOptions(option3);
-		controller.setSelectedPlugin(plugin);
-		checkOptions(option3);
+    @Test
+    public void overlappingOptions()
+    {
+        setAndCheck( option1 );
+        setAndCheck( option1, option2 );
+        setAndCheck( option1, option2, option3 );
+        setAndCheck( option1, option2, option3, option4 );
+        setAndCheck( option1, option2, option3, option4, option5 );
+        setAndCheck( option1, option2, option3, option4 );
+        setAndCheck( option1, option2, option3 );
+        setAndCheck( option1, option2 );
+        setAndCheck( option1 );
+        setAndCheck();
+    }
 
-	}
+    @Test
+    public void changingOrder()
+    {
+        setAndCheck( option1, option2 );
+        setAndCheck( option2, option1 );
+        setAndCheck( option5, option4, option3, option2, option1 );
+        setAndCheck( option1, option3, option2, option5, option4 );
+    }
 
-	public AbstractOption getPanelOption(int index) {
-		return ((OptionGUI) panel.getComponent(index)).getUsedOption();
-	}
+    @Test
+    public void settingSingleOptions()
+    {
+        setAndCheck( option1, option2, option3 );
+        setOption( 1, option5 );
+        checkOptions( option1, option5, option3 );
+        setOption( 0, option4 );
+        checkOptions( option4, option5, option3 );
+        setOption( 2, option1 );
+        checkOptions( option4, option5, option1 );
+    }
 
-	public void setAndCheck(AbstractOption... options) {
-		setOptions(options);
-		checkOptions(options);
-	}
+    @Test
+    public void addingOptions()
+    {
+        setAndCheck( option2, option4 );
+        addOption( 0, option1 );
+        checkOptions( option1, option2, option4 );
+        addOption( 3, option5 );
+        checkOptions( option1, option2, option4, option5 );
+        addOption( 2, option3 );
+        checkOptions( option1, option2, option3, option4, option5 );
+    }
 
-	public void setOption(int index, AbstractOption option) {
-		plugin.getPluginOptions().setOptions(index, option);
-	}
+    @Test
+    public void changingPlugin()
+    {
+        setAndCheck( option1, option2 );
+        plugin = new DummyPlugin();
+        plugin.setName( plugin.getName() + "TEST 2" );
+        setOptions( option3 );
+        controller.setSelectedPlugin( plugin );
+        checkOptions( option3 );
 
-	public void addOption(int index, AbstractOption option) {
-		plugin.getPluginOptions().add(index, option);
-	}
+    }
 
-	public void setOptions(AbstractOption... options) {
-		plugin.getPluginOptions().setOptions(Arrays.asList(options));
-	}
+    public AbstractOption getPanelOption( int index )
+    {
+        return ( (OptionGUI) panel.getComponent( index ) ).getUsedOption();
+    }
 
-	public void checkOptions(AbstractOption... options) {
-		int length = options.length;
-		for (int i = 0; i < length; ++i) {
-			assertThat(panel.getComponentCount(), greaterThan(i));
-			assertThat(options[i], sameInstance(getPanelOption(i)));
-		}
-		assertThat(panel.getComponentCount(), is(length));
-	}
+    public void setAndCheck( AbstractOption... options )
+    {
+        setOptions( options );
+        checkOptions( options );
+    }
+
+    public void setOption( int index, AbstractOption option )
+    {
+        plugin.getPluginOptions().setOptions( index, option );
+    }
+
+    public void addOption( int index, AbstractOption option )
+    {
+        plugin.getPluginOptions().add( index, option );
+    }
+
+    public void setOptions( AbstractOption... options )
+    {
+        plugin.getPluginOptions().setOptions( Arrays.asList( options ) );
+    }
+
+    public void checkOptions( AbstractOption... options )
+    {
+        int length = options.length;
+        for ( int i = 0; i < length; ++i )
+        {
+            assertThat( panel.getComponentCount(), greaterThan( i ) );
+            assertThat( options[i], sameInstance( getPanelOption( i ) ) );
+        }
+        assertThat( panel.getComponentCount(), is( length ) );
+    }
 }

@@ -32,111 +32,144 @@ import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.testsuite.CurrentInterface;
 import wsattacker.main.testsuite.TestSuite;
 
-public class InterfaceComboBox extends JComboBox implements PropertyChangeListener {
+public class InterfaceComboBox
+    extends JComboBox
+    implements PropertyChangeListener
+{
 
-	private static final long serialVersionUID = 1L;
-	public static final String PROP_CONTROLLER = "controller";
-	private ControllerInterface controller = null;
-	private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+    private static final long serialVersionUID = 1L;
 
-	public InterfaceComboBox() {
-		super();
-		addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				if (controller != null && getSelectedIndex() >= 0) {
-					controller.setCurrentService(getSelectedIndex());
-				}
-			}
-		});
-	}
+    public static final String PROP_CONTROLLER = "controller";
 
-	public void currentInterfaceChanged(WsdlInterface newService,
-		WsdlInterface oldService) {
-		final String name = (String) newService.getName();
-		this.setSelectedItem(name);
-	}
+    private ControllerInterface controller = null;
 
-	public void noCurrentInterface() {
-	}
+    private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport( this );
 
-	public void wsdlChanged(TestSuite testSuite) {
-		List<Interface> list = testSuite.getProject().getInterfaceList();
-		this.removeAllItems();
-		if (list != null) {
-			for (Interface service : list) {
-				final String name = service.getName();
-				this.addItem(name);
-			}
-		}
-		if (this.getItemCount() > 0) {
-			this.setEnabled(true);
-		} else {
-			this.setEnabled(false);
-		}
-	}
+    public InterfaceComboBox()
+    {
+        super();
+        addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent ae )
+            {
+                if ( controller != null && getSelectedIndex() >= 0 )
+                {
+                    controller.setCurrentService( getSelectedIndex() );
+                }
+            }
+        } );
+    }
 
-	/**
-	 * @return the controller
-	 */
-	public ControllerInterface getController() {
-		return controller;
-	}
+    public void currentInterfaceChanged( WsdlInterface newService, WsdlInterface oldService )
+    {
+        final String name = (String) newService.getName();
+        this.setSelectedItem( name );
+    }
 
-	/**
-	 * @param controller the controller to set
-	 */
-	public void setController(ControllerInterface controller) {
-		wsattacker.main.composition.ControllerInterface oldController = controller;
-		this.controller = controller;
+    public void noCurrentInterface()
+    {
+    }
 
-		// remove old observer
-		if (oldController != null) {
-//			oldController.getTestSuite().getCurrentInterface().removeCurrentServiceObserver(this);
-//			oldController.getTestSuite().removeCurrentWsdlChangeObserver(this);
-			final TestSuite testSuite = oldController.getTestSuite();
-			testSuite.getCurrentInterface().removePropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
-			testSuite.removePropertyChangeListener(TestSuite.PROP_PROJECT, this);
-		}
-		// add new abserver
-		if (this.controller != null) {
-//			this.controller.getTestSuite().getCurrentInterface().addCurrentServiceObserver(this);
-//			this.controller.getTestSuite().addCurrentWsdlChangeObserver(this);
-			final TestSuite testSuite = oldController.getTestSuite();
-			testSuite.getCurrentInterface().addPropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
-			testSuite.addPropertyChangeListener(TestSuite.PROP_PROJECT, this);
-		}
+    public void wsdlChanged( TestSuite testSuite )
+    {
+        List<Interface> list = testSuite.getProject().getInterfaceList();
+        this.removeAllItems();
+        if ( list != null )
+        {
+            for ( Interface service : list )
+            {
+                final String name = service.getName();
+                this.addItem( name );
+            }
+        }
+        if ( this.getItemCount() > 0 )
+        {
+            this.setEnabled( true );
+        }
+        else
+        {
+            this.setEnabled( false );
+        }
+    }
 
-		propertyChangeSupport.firePropertyChange(PROP_CONTROLLER, oldController, controller);
-	}
+    /**
+     * @return the controller
+     */
+    public ControllerInterface getController()
+    {
+        return controller;
+    }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent pce) {
-		final String propName = pce.getPropertyName();
-		if (CurrentInterface.PROP_WSDLINTERFACE.equals(propName)) {
-			WsdlInterface newInterface = (WsdlInterface) pce.getNewValue();
-			WsdlInterface oldInterface = (WsdlInterface) pce.getOldValue();
-			if (newInterface == null) {
-				noCurrentInterface();
-			} else {
-				currentInterfaceChanged(newInterface, oldInterface);
-			}
-		} else if (TestSuite.PROP_PROJECT.equals(propName)) {
-			WsdlProject project = (WsdlProject) pce.getNewValue();
-			List<Interface> list = project.getInterfaceList();
-			this.removeAllItems();
-			if (list != null) {
-				for (Interface service : list) {
-					final String name = service.getName();
-					this.addItem(name);
-				}
-			}
-			if (this.getItemCount() > 0) {
-				this.setEnabled(true);
-			} else {
-				this.setEnabled(false);
-			}
+    /**
+     * @param controller the controller to set
+     */
+    public void setController( ControllerInterface controller )
+    {
+        wsattacker.main.composition.ControllerInterface oldController = controller;
+        this.controller = controller;
 
-		}
-	}
+        // remove old observer
+        if ( oldController != null )
+        {
+            // oldController.getTestSuite().getCurrentInterface().removeCurrentServiceObserver(this);
+            // oldController.getTestSuite().removeCurrentWsdlChangeObserver(this);
+            final TestSuite testSuite = oldController.getTestSuite();
+            testSuite.getCurrentInterface().removePropertyChangeListener( CurrentInterface.PROP_WSDLINTERFACE, this );
+            testSuite.removePropertyChangeListener( TestSuite.PROP_PROJECT, this );
+        }
+        // add new abserver
+        if ( this.controller != null )
+        {
+            // this.controller.getTestSuite().getCurrentInterface().addCurrentServiceObserver(this);
+            // this.controller.getTestSuite().addCurrentWsdlChangeObserver(this);
+            final TestSuite testSuite = oldController.getTestSuite();
+            testSuite.getCurrentInterface().addPropertyChangeListener( CurrentInterface.PROP_WSDLINTERFACE, this );
+            testSuite.addPropertyChangeListener( TestSuite.PROP_PROJECT, this );
+        }
+
+        propertyChangeSupport.firePropertyChange( PROP_CONTROLLER, oldController, controller );
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent pce )
+    {
+        final String propName = pce.getPropertyName();
+        if ( CurrentInterface.PROP_WSDLINTERFACE.equals( propName ) )
+        {
+            WsdlInterface newInterface = (WsdlInterface) pce.getNewValue();
+            WsdlInterface oldInterface = (WsdlInterface) pce.getOldValue();
+            if ( newInterface == null )
+            {
+                noCurrentInterface();
+            }
+            else
+            {
+                currentInterfaceChanged( newInterface, oldInterface );
+            }
+        }
+        else if ( TestSuite.PROP_PROJECT.equals( propName ) )
+        {
+            WsdlProject project = (WsdlProject) pce.getNewValue();
+            List<Interface> list = project.getInterfaceList();
+            this.removeAllItems();
+            if ( list != null )
+            {
+                for ( Interface service : list )
+                {
+                    final String name = service.getName();
+                    this.addItem( name );
+                }
+            }
+            if ( this.getItemCount() > 0 )
+            {
+                this.setEnabled( true );
+            }
+            else
+            {
+                this.setEnabled( false );
+            }
+
+        }
+    }
 }

@@ -25,9 +25,10 @@ import com.eviware.soapui.impl.wsdl.WsdlOperation;
  * This method will be removed in future version. Use the propertyChangeSupport
  * instead.
  */
-public interface CurrentOperationObserver {
+public interface CurrentOperationObserver
+{
 
-	public void currentOperationChanged(WsdlOperation newOperation, WsdlOperation oldOperation);
+    public void currentOperationChanged( WsdlOperation newOperation, WsdlOperation oldOperation );
 
-	public void noCurrentOperation();
+    public void noCurrentOperation();
 }

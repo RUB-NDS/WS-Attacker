@@ -25,19 +25,21 @@ import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 /**
  * execute Attack when Start Button ist clicked!!
  */
-public class StartController implements ActionListener
+public class StartController
+    implements ActionListener
 {
     // add reference to Model.
     private AttackModel model;
 
     // construct
-    public StartController(AttackModel model)
+    public StartController( AttackModel model )
     {
         this.model = model;
     }
 
     // runs in EDT -> save to manipulate GUI here
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
         model.startAttack();
     }

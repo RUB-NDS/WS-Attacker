@@ -20,9 +20,13 @@ package wsattacker.gui.util;
 
 import java.awt.Color;
 
-public class Colors {
-	final public static Color INVALID = new Color(0xFC6F6F);
-	final public static Color OK = new Color(0x30A030);
-	final public static Color RUNNING = new Color(0xF89021);
-	final public static Color DEFAULT = Color.WHITE;
+public class Colors
+{
+    final public static Color INVALID = new Color( 0xFC6F6F );
+
+    final public static Color OK = new Color( 0x30A030 );
+
+    final public static Color RUNNING = new Color( 0xF89021 );
+
+    final public static Color DEFAULT = Color.WHITE;
 }

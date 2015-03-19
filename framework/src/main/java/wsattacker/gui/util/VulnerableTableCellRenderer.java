@@ -24,33 +24,42 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import wsattacker.main.plugin.PluginState;
 
-public class VulnerableTableCellRenderer extends CenteredTableCellRenderer {
+public class VulnerableTableCellRenderer
+    extends CenteredTableCellRenderer
+{
 
-	public VulnerableTableCellRenderer() {
-	}
-	
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		
-		Object status = table.getModel().getValueAt(row, 1);
-		if(status.toString().equals(PluginState.Finished.toString()) && value instanceof Boolean) {
-			Boolean succ = (Boolean) value;
-			if(succ.booleanValue()) {
-				c.setBackground(Colors.INVALID);
-				c.setFont(new java.awt.Font("Dialog",Font.BOLD,12));
-				c.setOpaque(true);
-				c.setText("YES");
-			}
-			else {
-				c.setFont(new java.awt.Font("Dialog",Font.ITALIC,12));
-				c.setText("no");
-			}
-		} else {
-			c.setText("");
-		}
-		
-		return c;
-	}
+    public VulnerableTableCellRenderer()
+    {
+    }
+
+    @Override
+    public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
+                                                    int row, int column )
+    {
+        JLabel c = (JLabel) super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+
+        Object status = table.getModel().getValueAt( row, 1 );
+        if ( status.toString().equals( PluginState.Finished.toString() ) && value instanceof Boolean )
+        {
+            Boolean succ = (Boolean) value;
+            if ( succ.booleanValue() )
+            {
+                c.setBackground( Colors.INVALID );
+                c.setFont( new java.awt.Font( "Dialog", Font.BOLD, 12 ) );
+                c.setOpaque( true );
+                c.setText( "YES" );
+            }
+            else
+            {
+                c.setFont( new java.awt.Font( "Dialog", Font.ITALIC, 12 ) );
+                c.setText( "no" );
+            }
+        }
+        else
+        {
+            c.setText( "" );
+        }
+
+        return c;
+    }
 }

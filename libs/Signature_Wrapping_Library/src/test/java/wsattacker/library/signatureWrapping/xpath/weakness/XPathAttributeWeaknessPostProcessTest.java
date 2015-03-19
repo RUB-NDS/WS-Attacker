@@ -42,54 +42,61 @@ import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
 import static wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools.isAncestorOf;
 
-public class XPathAttributeWeaknessPostProcessTest {
+public class XPathAttributeWeaknessPostProcessTest
+{
 
-    private static Logger log = Logger.getLogger(XPathAttributeWeaknessPostProcessTest.class);
+    private static Logger log = Logger.getLogger( XPathAttributeWeaknessPostProcessTest.class );
 
     @BeforeClass
     public static void setUpBeforeClass()
-      throws Exception {
-        Logger.getLogger(XPathAttributeWeaknessPostProcess.class).setLevel(Level.INFO);
-        log.setLevel(Level.TRACE);
+        throws Exception
+    {
+        Logger.getLogger( XPathAttributeWeaknessPostProcess.class ).setLevel( Level.INFO );
+        log.setLevel( Level.TRACE );
     }
 
     @AfterClass
     public static void tearDownAfterClass()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Before
     public void setUp()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @After
     public void tearDown()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Test
-    public void isAncestorTest() {
+    public void isAncestorTest()
+    {
         SoapTestDocument soap = new SoapTestDocument();
         soap.getDummyPayloadBody();
 
         // okay
-        assertEquals(1, isAncestorOf(soap.getEnvelope(), soap.getHeader()));
-        assertEquals(1, isAncestorOf(soap.getEnvelope(), soap.getBody()));
-        assertEquals(2, isAncestorOf(soap.getEnvelope(), soap.getDummyPayloadBody()));
+        assertEquals( 1, isAncestorOf( soap.getEnvelope(), soap.getHeader() ) );
+        assertEquals( 1, isAncestorOf( soap.getEnvelope(), soap.getBody() ) );
+        assertEquals( 2, isAncestorOf( soap.getEnvelope(), soap.getDummyPayloadBody() ) );
 
         // wrong -> isDescendantOf
-        assertEquals(-1, isAncestorOf(soap.getHeader(), soap.getEnvelope()));
-        assertEquals(-1, isAncestorOf(soap.getBody(), soap.getEnvelope()));
-        assertEquals(-1, isAncestorOf(soap.getDummyPayloadBody(), soap.getEnvelope()));
+        assertEquals( -1, isAncestorOf( soap.getHeader(), soap.getEnvelope() ) );
+        assertEquals( -1, isAncestorOf( soap.getBody(), soap.getEnvelope() ) );
+        assertEquals( -1, isAncestorOf( soap.getDummyPayloadBody(), soap.getEnvelope() ) );
 
         // wrong -> isSelf
-        assertEquals(0, isAncestorOf(soap.getHeader(), soap.getHeader()));
+        assertEquals( 0, isAncestorOf( soap.getHeader(), soap.getHeader() ) );
     }
 
     @Test
     public void abuseWeaknessWithNamespaceIdTest()
-      throws Exception {
+        throws Exception
+    {
 
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
@@ -97,168 +104,170 @@ public class XPathAttributeWeaknessPostProcessTest {
         Element signed = soap.getDummyPayloadBody();
         String id = soap.getDummyPayloadBodyWsuId();
 
-        Element payload = (Element) signed.cloneNode(true);
+        Element payload = (Element) signed.cloneNode( true );
 
-        soap.getHeader().appendChild(payload);
+        soap.getHeader().appendChild( payload );
 
         String xpath = "/soapenv:Envelope//*[@wsu:Id='" + id + "']";
-        log.info("Using XPath: " + xpath);
-        AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
-        Step step = abs.getRelativeLocationPaths().get(2);
+        log.info( "Using XPath: " + xpath );
+        AbsoluteLocationPath abs = new AbsoluteLocationPath( xpath );
+        Step step = abs.getRelativeLocationPaths().get( 2 );
 
-        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
+        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess( step );
 
-        assertEquals(3, aw.getNumberOfPossibilities());
+        assertEquals( 3, aw.getNumberOfPossibilities() );
 
         Attr sa, pa;
 
-        aw.abuseWeakness(0, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(0, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNodeNS(URI_NS_WSU, "Id");
-        pa = payload.getAttributeNodeNS(URI_NS_WSU, "Id");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertFalse(pa.getTextContent().equals(id));
-        assertFalse(sa.getTextContent().equals(pa.getTextContent()));
+        aw.abuseWeakness( 0, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(0, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        pa = payload.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertFalse( pa.getTextContent().equals( id ) );
+        assertFalse( sa.getTextContent().equals( pa.getTextContent() ) );
 
-        aw.abuseWeakness(2, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(2, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNodeNS(URI_NS_WSU, "Id");
-        pa = payload.getAttributeNodeNS(URI_NS_WSU, "Id");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertEquals(sa.getTextContent(), pa.getTextContent());
+        aw.abuseWeakness( 2, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(2, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        pa = payload.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertEquals( sa.getTextContent(), pa.getTextContent() );
 
-        aw.abuseWeakness(1, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(1, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNodeNS(URI_NS_WSU, "Id");
-        pa = payload.getAttributeNodeNS(URI_NS_WSU, "Id");
-        assertNotNull(sa);
-        assertNull(pa);
-        assertEquals(sa.getTextContent(), id);
+        aw.abuseWeakness( 1, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(1, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        pa = payload.getAttributeNodeNS( URI_NS_WSU, "Id" );
+        assertNotNull( sa );
+        assertNull( pa );
+        assertEquals( sa.getTextContent(), id );
     }
 
     @Test
     public void abuseWeaknessNoNamespaceIdTest()
-      throws Exception {
+        throws Exception
+    {
 
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
 
         Element signed = soap.getDummyPayloadBody();
         String id = "signed";
-        Attr idAttr = doc.createAttribute("ID");
-        idAttr.setTextContent(id);
-        signed.setAttributeNode(idAttr);
+        Attr idAttr = doc.createAttribute( "ID" );
+        idAttr.setTextContent( id );
+        signed.setAttributeNode( idAttr );
 
-        Element payload = (Element) signed.cloneNode(true);
+        Element payload = (Element) signed.cloneNode( true );
 
-        soap.getHeader().appendChild(payload);
+        soap.getHeader().appendChild( payload );
 
         String xpath = "/soapenv:Envelope//*[@ID='" + id + "']";
-        log.info("Using XPath: " + xpath);
-        AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
-        Step step = abs.getRelativeLocationPaths().get(2);
+        log.info( "Using XPath: " + xpath );
+        AbsoluteLocationPath abs = new AbsoluteLocationPath( xpath );
+        Step step = abs.getRelativeLocationPaths().get( 2 );
 
-        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
+        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess( step );
 
-        assertEquals(3, aw.getNumberOfPossibilities());
+        assertEquals( 3, aw.getNumberOfPossibilities() );
 
         Attr sa, pa;
 
-        aw.abuseWeakness(0, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(0, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNode("ID");
-        pa = payload.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertFalse(pa.getTextContent().equals(id));
-        assertFalse(sa.getTextContent().equals(pa.getTextContent()));
+        aw.abuseWeakness( 0, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(0, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNode( "ID" );
+        pa = payload.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertFalse( pa.getTextContent().equals( id ) );
+        assertFalse( sa.getTextContent().equals( pa.getTextContent() ) );
 
-        aw.abuseWeakness(2, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(2, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNode("ID");
-        pa = payload.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertEquals(sa.getTextContent(), pa.getTextContent());
+        aw.abuseWeakness( 2, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(2, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNode( "ID" );
+        pa = payload.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertEquals( sa.getTextContent(), pa.getTextContent() );
 
-        aw.abuseWeakness(1, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(1, signed, payload)\n" + domToString(doc, true));
-        sa = signed.getAttributeNode("ID");
-        pa = payload.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNull(pa);
-        assertEquals(sa.getTextContent(), id);
+        aw.abuseWeakness( 1, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(1, signed, payload)\n" + domToString( doc, true ) );
+        sa = signed.getAttributeNode( "ID" );
+        pa = payload.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNull( pa );
+        assertEquals( sa.getTextContent(), id );
     }
 
     @Test
     public void abuseWeaknessIDinPreXPathTest()
-      throws Exception {
+        throws Exception
+    {
 
         SoapTestDocument soap = new SoapTestDocument();
         Document doc = soap.getDocument();
 
         Element signedIDelement = soap.getDummyPayloadBody();
-        Element signed = doc.createElementNS("http://test", "test:subelement");
-        signedIDelement.appendChild(signed);
+        Element signed = doc.createElementNS( "http://test", "test:subelement" );
+        signedIDelement.appendChild( signed );
 
         String id = "signed";
-        Attr idAttr = doc.createAttribute("ID");
-        idAttr.setTextContent(id);
-        signedIDelement.setAttributeNode(idAttr);
+        Attr idAttr = doc.createAttribute( "ID" );
+        idAttr.setTextContent( id );
+        signedIDelement.setAttributeNode( idAttr );
 
-        Element payloadIDelement = (Element) signedIDelement.cloneNode(true);
-        Element payload = DomUtilities.getAllChildElements(payloadIDelement).get(0); // there is only one :-)
+        Element payloadIDelement = (Element) signedIDelement.cloneNode( true );
+        Element payload = DomUtilities.getAllChildElements( payloadIDelement ).get( 0 ); // there is only one :-)
 
-        soap.getHeader().appendChild(payloadIDelement);
+        soap.getHeader().appendChild( payloadIDelement );
 
         String xpath = "/soapenv:Envelope//*[@ID='" + id + "']/test:subelement";
-        log.info("Using XPath: " + xpath);
-        AbsoluteLocationPath abs = new AbsoluteLocationPath(xpath);
-        Step step = abs.getRelativeLocationPaths().get(2);
+        log.info( "Using XPath: " + xpath );
+        AbsoluteLocationPath abs = new AbsoluteLocationPath( xpath );
+        Step step = abs.getRelativeLocationPaths().get( 2 );
 
-        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess(step);
+        XPathAttributeWeaknessPostProcess aw = new XPathAttributeWeaknessPostProcess( step );
 
-        assertEquals(3, aw.getNumberOfPossibilities());
+        assertEquals( 3, aw.getNumberOfPossibilities() );
 
         Attr sa, pa;
 
-        aw.abuseWeakness(0, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(0, signed, payload)\n" + domToString(doc, true));
-        sa = signedIDelement.getAttributeNode("ID");
-        pa = payloadIDelement.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertFalse(pa.getTextContent().equals(id));
-        assertFalse(sa.getTextContent().equals(pa.getTextContent()));
+        aw.abuseWeakness( 0, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(0, signed, payload)\n" + domToString( doc, true ) );
+        sa = signedIDelement.getAttributeNode( "ID" );
+        pa = payloadIDelement.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertFalse( pa.getTextContent().equals( id ) );
+        assertFalse( sa.getTextContent().equals( pa.getTextContent() ) );
 
-        aw.abuseWeakness(2, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(2, signed, payload)\n" + domToString(doc, true));
-        sa = signedIDelement.getAttributeNode("ID");
-        pa = payloadIDelement.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNotNull(pa);
-        assertEquals(sa.getTextContent(), id);
-        assertFalse(pa.getTextContent().isEmpty());
-        assertEquals(sa.getTextContent(), pa.getTextContent());
+        aw.abuseWeakness( 2, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(2, signed, payload)\n" + domToString( doc, true ) );
+        sa = signedIDelement.getAttributeNode( "ID" );
+        pa = payloadIDelement.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNotNull( pa );
+        assertEquals( sa.getTextContent(), id );
+        assertFalse( pa.getTextContent().isEmpty() );
+        assertEquals( sa.getTextContent(), pa.getTextContent() );
 
-        aw.abuseWeakness(1, new SignedElement(signed, null), new PayloadElement(payload, null));
-        log.info("abuseWeakness(1, signed, payload)\n" + domToString(doc, true));
-        sa = signedIDelement.getAttributeNode("ID");
-        pa = payloadIDelement.getAttributeNode("ID");
-        assertNotNull(sa);
-        assertNull(pa);
-        assertEquals(sa.getTextContent(), id);
+        aw.abuseWeakness( 1, new SignedElement( signed, null ), new PayloadElement( payload, null ) );
+        log.info( "abuseWeakness(1, signed, payload)\n" + domToString( doc, true ) );
+        sa = signedIDelement.getAttributeNode( "ID" );
+        pa = payloadIDelement.getAttributeNode( "ID" );
+        assertNotNull( sa );
+        assertNull( pa );
+        assertEquals( sa.getTextContent(), id );
     }
 }

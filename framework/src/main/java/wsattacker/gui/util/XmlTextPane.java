@@ -20,15 +20,18 @@ package wsattacker.gui.util;
 
 import javax.swing.JTextPane;
 
-public class XmlTextPane extends JTextPane {
+public class XmlTextPane
+    extends JTextPane
+{
 
     private static final long serialVersionUID = 6270183148379328084L;
 
-    public XmlTextPane() {
-        
+    public XmlTextPane()
+    {
+
         // Set editor kit
-        this.setEditorKitForContentType("text/xml", new XmlEditorKit());
-        this.setContentType("text/xml");
+        this.setEditorKitForContentType( "text/xml", new XmlEditorKit() );
+        this.setContentType( "text/xml" );
     }
-    
+
 }

@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>SoapHttpClient</artifactId>
+    <inceptionYear>2014</inceptionYear>
+    <version>1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+  
+    <parent>
+        <groupId>wsattacker.library</groupId>
+        <artifactId>wsattacker-libraries</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <name>SoapHttpClient</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    
+    <repositories>
+        <repository>
+            <id>smartbear-sweden-plugin-repository</id>
+            <url>http://www.soapui.org/repository/maven2/</url>
+        </repository>
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.smartbear.soapui</groupId>
+            <artifactId>soapui-maven-plugin</artifactId>
+            <version>4.6.4</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <!--
+                Use a Licence Header
+            -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <properties>
+                        <owner>Christian Mainka</owner>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

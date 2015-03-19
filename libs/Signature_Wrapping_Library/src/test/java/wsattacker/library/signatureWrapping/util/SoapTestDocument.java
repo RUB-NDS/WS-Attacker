@@ -39,148 +39,178 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
  * A simple SoapMessage Test document
- *
  */
-public class SoapTestDocument {
+public class SoapTestDocument
+{
 
     Document doc;
+
     String version;
+
     String soapPrefix = "soap";
+
     Element envelope;
 
-    public SoapTestDocument() {
-        this(URI_NS_SOAP_1_1);
+    public SoapTestDocument()
+    {
+        this( URI_NS_SOAP_1_1 );
     }
 
-    public SoapTestDocument(String soapURI) {
-        if (soapURI.equals(URI_NS_SOAP_1_2)) {
+    public SoapTestDocument( String soapURI )
+    {
+        if ( soapURI.equals( URI_NS_SOAP_1_2 ) )
+        {
             version = URI_NS_SOAP_1_2;
             soapPrefix = PREFIX_NS_SOAP_1_2;
-        } else {
+        }
+        else
+        {
             version = URI_NS_SOAP_1_1;
             soapPrefix = PREFIX_NS_SOAP_1_1;
         }
         doc = DomUtilities.createDomDocument();
-        envelope = doc.createElementNS(version, soapPrefix + ":Envelope");
+        envelope = doc.createElementNS( version, soapPrefix + ":Envelope" );
         // create Envelope
-        doc.appendChild(envelope);
+        doc.appendChild( envelope );
         // create Header and Body
         getHeader();
         getBody();
     }
 
-    public Document getDocument() {
+    public Document getDocument()
+    {
         return doc;
     }
 
-    public Element getOrCreateChild(Element parent,
-      String name,
-      String prefix,
-      String uri) {
-        List<Element> children = DomUtilities.findChildren(parent, name, uri);
-        if (children.size() > 0) {
-            return (Element) children.get(0);
+    public Element getOrCreateChild( Element parent, String name, String prefix, String uri )
+    {
+        List<Element> children = DomUtilities.findChildren( parent, name, uri );
+        if ( children.size() > 0 )
+        {
+            return children.get( 0 );
         }
-        Element newNode = parent.getOwnerDocument().createElementNS(uri, prefix + ":" + name);
-        parent.appendChild(newNode);
+        Element newNode = parent.getOwnerDocument().createElementNS( uri, prefix + ":" + name );
+        parent.appendChild( newNode );
         return newNode;
     }
 
-    public Attr getOrCreateAttribute(Element ele,
-      String name,
-      String prefix,
-      String uri,
-      String value) {
-        Attr a = ele.getAttributeNodeNS(uri, name);
-        if (null == a) {
+    public Attr getOrCreateAttribute( Element ele, String name, String prefix, String uri, String value )
+    {
+        Attr a = ele.getAttributeNodeNS( uri, name );
+        if ( null == a )
+        {
             // Add the Id Attribute
-            a = doc.createAttributeNS(uri, prefix + ":" + name);
-            a.setValue(value);
-            ele.setAttributeNode(a);
+            a = doc.createAttributeNS( uri, prefix + ":" + name );
+            a.setValue( value );
+            ele.setAttributeNode( a );
         }
         return a;
     }
 
-    public Element getEnvelope() {
+    public Element getEnvelope()
+    {
         return envelope;
     }
 
-    public Element getHeader() {
-        return getOrCreateChild(getEnvelope(), "Header", soapPrefix, version);
+    public Element getHeader()
+    {
+        return getOrCreateChild( getEnvelope(), "Header", soapPrefix, version );
     }
 
-    public Element getBody() {
-        return getOrCreateChild(getEnvelope(), "Body", soapPrefix, version);
+    public Element getBody()
+    {
+        return getOrCreateChild( getEnvelope(), "Body", soapPrefix, version );
     }
 
-    public Element getSucurity() {
-        return getOrCreateChild(getHeader(), "Security", PREFIX_NS_WSSE, URI_NS_WSSE_1_0);
+    public Element getSucurity()
+    {
+        return getOrCreateChild( getHeader(), "Security", PREFIX_NS_WSSE, URI_NS_WSSE_1_0 );
     }
 
-    public Element getTimestamp() {
-        return getOrCreateChild(getSucurity(), "Timestamp", PREFIX_NS_WSU, URI_NS_WSU);
+    public Element getTimestamp()
+    {
+        return getOrCreateChild( getSucurity(), "Timestamp", PREFIX_NS_WSU, URI_NS_WSU );
     }
 
-    public void setTimestamp() {
-        setTimestamp(false, true); // TTL=15min
+    public void setTimestamp()
+    {
+        setTimestamp( false, true ); // TTL=15min
     }
 
-    public void setTimestamp(boolean expired, boolean inMilliseconds) {
+    public void setTimestamp( boolean expired, boolean inMilliseconds )
+    {
         final String id = "timestampID";
-        String ms = (inMilliseconds ? ".100" : "");
+        String ms = ( inMilliseconds ? ".100" : "" );
         Element oldTimestamp = getTimestamp();
 
         Timestamp newTimestamp = null;
-        if (expired) {
-            final String old = "<wsu:Timestamp xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\" wsu:Id=\"+id+\"><wsu:Created>2011-11-28T21:01:12" + ms + "Z</wsu:Created><wsu:Expires>2011-11-28T21:06:12" + ms + "Z</wsu:Expires></wsu:Timestamp>";
-            try {
-                Element element = DomUtilities.stringToDom(old).getDocumentElement();
-                Element importedElement = (Element) oldTimestamp.getOwnerDocument().importNode(element, true);
-                newTimestamp = new Timestamp(importedElement);
-            } catch (WSSecurityException e) {
-                // Will never happen
-                e.printStackTrace();
-            } catch (SAXException e) {
+        if ( expired )
+        {
+            final String old =
+                "<wsu:Timestamp xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\" wsu:Id=\"+id+\"><wsu:Created>2011-11-28T21:01:12"
+                    + ms + "Z</wsu:Created><wsu:Expires>2011-11-28T21:06:12" + ms + "Z</wsu:Expires></wsu:Timestamp>";
+            try
+            {
+                Element element = DomUtilities.stringToDom( old ).getDocumentElement();
+                Element importedElement = (Element) oldTimestamp.getOwnerDocument().importNode( element, true );
+                newTimestamp = new Timestamp( importedElement );
+            }
+            catch ( WSSecurityException e )
+            {
                 // Will never happen
                 e.printStackTrace();
             }
-        } else {
-            final int TTL = 15 * 60; // TTL=15min
-            newTimestamp = new Timestamp(true, doc, TTL);
-            getOrCreateAttribute(getDummyPayloadHeader(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id);
+            catch ( SAXException e )
+            {
+                // Will never happen
+                e.printStackTrace();
+            }
         }
-        oldTimestamp.getParentNode().replaceChild(newTimestamp.getElement(), oldTimestamp);
+        else
+        {
+            final int TTL = 15 * 60; // TTL=15min
+            newTimestamp = new Timestamp( true, doc, TTL );
+            getOrCreateAttribute( getDummyPayloadHeader(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id );
+        }
+        oldTimestamp.getParentNode().replaceChild( newTimestamp.getElement(), oldTimestamp );
     }
 
-    public String getTimestampWsuId() {
+    public String getTimestampWsuId()
+    {
         final String id = "timestampID";
-        return getOrCreateAttribute(getTimestamp(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id).getValue();
+        return getOrCreateAttribute( getTimestamp(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id ).getValue();
     }
 
-    public Element getSignature() {
-        return getOrCreateChild(getSucurity(), "Signature", PREFIX_NS_DS, URI_NS_DS);
+    public Element getSignature()
+    {
+        return getOrCreateChild( getSucurity(), "Signature", PREFIX_NS_DS, URI_NS_DS );
     }
 
-    public Element getDummyPayloadBody() {
-        return getOrCreateChild(getBody(), "payloadBody", "ns1", "http://ns1-payload");
+    public Element getDummyPayloadBody()
+    {
+        return getOrCreateChild( getBody(), "payloadBody", "ns1", "http://ns1-payload" );
     }
 
-    public String getDummyPayloadBodyWsuId() {
+    public String getDummyPayloadBodyWsuId()
+    {
         final String id = "bodyToSign";
-        return getOrCreateAttribute(getDummyPayloadBody(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id).getValue();
+        return getOrCreateAttribute( getDummyPayloadBody(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id ).getValue();
     }
 
-    public Element getDummyPayloadHeader() {
-        return getOrCreateChild(getHeader(), "payloadHeader", "ns1", "http://ns1-payload");
+    public Element getDummyPayloadHeader()
+    {
+        return getOrCreateChild( getHeader(), "payloadHeader", "ns1", "http://ns1-payload" );
     }
 
-    public String getDummyPayloadHeaderWsuId() {
+    public String getDummyPayloadHeaderWsuId()
+    {
         String id = "headerToSign";
-        return getOrCreateAttribute(getDummyPayloadHeader(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id).getValue();
+        return getOrCreateAttribute( getDummyPayloadHeader(), "Id", PREFIX_NS_WSU, URI_NS_WSU, id ).getValue();
     }
 
     @Override
-    public String toString() {
-        return DomUtilities.domToString(doc, true);
+    public String toString()
+    {
+        return DomUtilities.domToString( doc, true );
     }
 }

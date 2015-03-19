@@ -20,104 +20,146 @@ package wsattacker.plugin.dos.dosExtension.attackThreads;
 
 import java.awt.EventQueue;
 import java.util.EmptyStackException;
+
+import org.apache.commons.lang3.StringUtils;
+
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;
 import wsattacker.plugin.dos.dosExtension.attackRunnables.LogRequestRunnable;
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberNetworktestProbesRunnable;
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberProbesRunnable;
-
 import wsattacker.plugin.dos.dosExtension.attackRunnables.UpdateNumberRequestsRunnable;
-
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
+import wsattacker.plugin.dos.dosExtension.requestSender.Http4RequestSenderImpl;
 import wsattacker.plugin.dos.dosExtension.requestSender.RequestSender;
+import wsattacker.plugin.dos.dosExtension.requestSender.RequestSenderImpl;
 
 /**
- * Send request to target depending on requestType 
- * various data regarding request gets logged
- *
+ * Send request to target depending on requestType various data regarding request gets logged
+ * 
  * @author af
- *
  */
-public class SendRequestThread extends Thread {  // implements Oberservable Subject
+public class SendRequestThread
+    extends Thread
+{
+    // Refernz auf Model -> hier syncronisieren!!
+    private final AttackModel model;
 
-    private AttackModel model; 		// Refernz auf Model -> hier syncronisieren!!
-    private long timeStart;	// ms
-    private long timeEnd;	// ms
-    private long durationStart;	// ns
-    private long durationEnd;	// ns
-    private long duration;	// ns
-    private int threadNumber;
-    private boolean timeOutFlag = false;
+    private final int threadNumber;
+
+    private final String requestType;
+
+    private long timeStart; // ms
+
+    private long timeEnd; // ms
+
+    private long duration; // ns
+
     private boolean faultFlag = false;
+
     private boolean errorFlag = false;
-    private String requestType;
+
     private String responseString = "";
 
+    private static final Boolean useNewMeasure = Boolean.getBoolean( "useNewMeasure" );
 
-    public SendRequestThread(AttackModel model, int threadNumber, String requestType) {
+    public SendRequestThread( AttackModel model, int threadNumber, String requestType )
+    {
 
-	this.model = model;
-	this.threadNumber = threadNumber;
-	this.requestType = requestType;
+        this.model = model;
+        this.threadNumber = threadNumber;
+        this.requestType = requestType;
 
-	// run Thread
-	start();
+        // run Thread
+        start();
+
+        // TODO [CHAL 2013-12-31] you shouldn't start a Thread in the
+        // constructor!!!
     }
 
     // new Request is send ONCE and logged!
-    public void run() {
+    @Override
+    public void run()
+    {
 
-	// Start time 
-	timeStart = System.currentTimeMillis();
-	durationStart = System.nanoTime();
+        // do actual sending depending on requestType
+        RequestSender requestSender;
+        if ( !useNewMeasure )
+        {
+            requestSender = new RequestSenderImpl( model );
+        }
+        else
+        {
+            requestSender = new Http4RequestSenderImpl( model );
+        }
 
-	// do actual sending depending on requestType
-	RequestSender requestSender = new RequestSender(model);
-	if (this.requestType.equals("tampered")){
-	    responseString = requestSender.sendTamperedRequest();
-	}else if (this.requestType.equals("untampered")){
-	    responseString = requestSender.sendUntamperedRequest();
-	}else if (this.requestType.equals("testProbe")){
-	    responseString = requestSender.sendTestProbeRequest();
-	}else{
-	    throw new EmptyStackException();
-	}
+        // Start time
+        timeStart = System.currentTimeMillis();
 
-	// Stop time
-	timeEnd = System.currentTimeMillis();
-	durationEnd = System.nanoTime();
-	duration = durationEnd - durationStart;	
-	
-	// Check for empty Response or SOAP-Fault
-	// - SOAP-Fault check by finding end of closing Tag "Fault>"
-	if (responseString.length()==0) {
-	    errorFlag = true;
-	}else if(responseString.contains("Fault>")){ 
-	    faultFlag = true;
-	}
+        // TODO [CHAL 2013-12-31] we have to use enumeration here
+        // TODO [CHAL 2013-12-31] where is the networkTest???
+        if ( this.requestType.equals( "tampered" ) )
+        {
+            responseString = requestSender.sendTamperedRequest();
+        }
+        else if ( this.requestType.equals( "untampered" ) )
+        {
+            responseString = requestSender.sendUntamperedRequest();
+        }
+        else if ( this.requestType.equals( "testProbe" ) )
+        {
+            responseString = requestSender.sendTestProbeRequest();
+        }
+        else
+        {
+            throw new EmptyStackException();
+        }
 
+        // Stop time
+        timeEnd = System.currentTimeMillis();
 
-	// Log time -> done in context of EDT
-	LogRequestRunnable log = new LogRequestRunnable(this.model, this.requestType, timeStart, timeEnd, duration, this.threadNumber, timeOutFlag, faultFlag, errorFlag, responseString);
-	EventQueue.invokeLater(log);
-	//System.out.println(this.requestType + "-Request of Thread " + this.threadNumber + ", in " + duration + " ns send");
+        // calculate the duration, the RequestSender knows its timing
+        duration = requestSender.getReceiveTime() - requestSender.getSendTime();
 
-	// Update GUI + Counter
-	// - since called via runnable, Method will be executed in EDT -> no Problems with Syncronization!
-	if (this.requestType.equals("tampered") || this.requestType.equals("untampered")) {
-	    UpdateNumberRequestsRunnable update = new UpdateNumberRequestsRunnable(model, requestType);
-	    EventQueue.invokeLater(update);
-	} else if (this.requestType.equals("testProbe")) {
-	    UpdateNumberProbesRunnable update = new UpdateNumberProbesRunnable(model);
-	    EventQueue.invokeLater(update);
-	} else if (this.requestType.equals("networkTest")) {
-	    UpdateNumberNetworktestProbesRunnable update = new UpdateNumberNetworktestProbesRunnable(model);
-	    EventQueue.invokeLater(update);
-	}
+        // Check for empty Response or SOAP-Fault
+        // - SOAP-Fault check by finding end of closing Tag "Fault>"
+        if ( StringUtils.isEmpty( responseString ) )
+        {
+            errorFlag = true;
+        }
+        else if ( responseString.contains( "Fault>" ) )
+        {
+            faultFlag = true;
+        }
 
-	// Log completion
-	Result.getGlobalResult().add(new ResultEntry(ResultLevel.Trace, getName(), "Done Sending "+this.requestType+"-Request in "+duration+" ns"));
+        // Log time -> done in context of EDT
+        LogRequestRunnable log =
+            new LogRequestRunnable( this.model, this.requestType, timeStart, timeEnd, duration, this.threadNumber,
+                                    faultFlag, errorFlag, responseString );
+        EventQueue.invokeLater( log );
+
+        // Update GUI + Counter
+        // - since called via runnable, Method will be executed in EDT -> no
+        // Problems with Syncronization!
+        if ( this.requestType.equals( "tampered" ) || this.requestType.equals( "untampered" ) )
+        {
+            UpdateNumberRequestsRunnable update = new UpdateNumberRequestsRunnable( model, requestType );
+            EventQueue.invokeLater( update );
+        }
+        else if ( this.requestType.equals( "testProbe" ) )
+        {
+            UpdateNumberProbesRunnable update = new UpdateNumberProbesRunnable( model );
+            EventQueue.invokeLater( update );
+        }
+        else if ( this.requestType.equals( "networkTest" ) )
+        {
+            UpdateNumberNetworktestProbesRunnable update = new UpdateNumberNetworktestProbesRunnable( model );
+            EventQueue.invokeLater( update );
+        }
+
+        // Log completion
+        Result.getGlobalResult().add( new ResultEntry( ResultLevel.Trace, getName(), "Done Sending " + this.requestType
+                                          + "-Request in " + duration + " ns" ) );
     }
 }

@@ -22,58 +22,70 @@ import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 
-public final class RandomIdGenerator {
+public final class RandomIdGenerator
+{
 
-    private RandomIdGenerator() {
+    private RandomIdGenerator()
+    {
     }
 
-    public static String generate_8_4_4_12_ID() {
-        String one = randomAlphanumeric(8);
-        String two = randomAlphanumeric(4);
-        String three = randomAlphanumeric(4);
-        String four = randomAlphanumeric(12);
-        return String.format("_%s-%s-%s-%s", one, two, three, four);
+    public static String generate_8_4_4_12_ID()
+    {
+        String one = randomAlphanumeric( 8 );
+        String two = randomAlphanumeric( 4 );
+        String three = randomAlphanumeric( 4 );
+        String four = randomAlphanumeric( 12 );
+        return String.format( "_%s-%s-%s-%s", one, two, three, four );
     }
 
-    public static String generate_8_4_4_4_12_ID() {
-        String one = randomAlphanumeric(8);
-        String two = randomAlphanumeric(4);
-        String three = randomAlphanumeric(4);
-        String four = randomAlphanumeric(4);
-        String five = randomAlphanumeric(12);
-        return String.format("_%s-%s-%s-%s-%s", one, two, three, four, five);
+    public static String generate_8_4_4_4_12_ID()
+    {
+        String one = randomAlphanumeric( 8 );
+        String two = randomAlphanumeric( 4 );
+        String three = randomAlphanumeric( 4 );
+        String four = randomAlphanumeric( 4 );
+        String five = randomAlphanumeric( 12 );
+        return String.format( "_%s-%s-%s-%s-%s", one, two, three, four, five );
     }
 
-    public static String generate_32_ID() {
-        return generate_ID(32);
+    public static String generate_32_ID()
+    {
+        return generate_ID( 32 );
     }
 
-    public static String generate_ID(int length) {
-        return randomAlphabetic(1) + randomAlphanumeric(length - 1);
+    public static String generate_ID( int length )
+    {
+        return randomAlphabetic( 1 ) + randomAlphanumeric( length - 1 );
     }
 
     /**
-     * Change a given ID String to a new one.
-     * Keeps format, which means, that numbers are substituted by numbers,
-     * small by small and capital by capital letters.
-     * Dots, dashes and other special chars are kept.
-     *
+     * Change a given ID String to a new one. Keeps format, which means, that numbers are substituted by numbers, small
+     * by small and capital by capital letters. Dots, dashes and other special chars are kept.
+     * 
      * @param originalID
-     *
      * @return
      */
-    public static String rotate_ID(String originalID) {
-        StringBuffer sb = new StringBuffer(originalID.length());
-        for (int i = 0; i < originalID.length(); ++i) {
-            char c = originalID.charAt(i);
-            if (c >= 'a' && c <= 'z') {
-                sb.append(random(1, 'a', 'z', true, true));
-            } else if (c >= 'A' && c <= 'Z') {
-                sb.append(random(1, 'A', 'Z', true, true));
-            } else if (c >= '0' && c <= '9') {
-                sb.append(random(1, '0', '9', true, true));
-            } else {
-                sb.append(c);
+    public static String rotate_ID( String originalID )
+    {
+        StringBuffer sb = new StringBuffer( originalID.length() );
+        for ( int i = 0; i < originalID.length(); ++i )
+        {
+            char c = originalID.charAt( i );
+            if ( c >= 'a' && c <= 'z' )
+            {
+                sb.append( random( 1, 'a', 'z', true, true ) );
+            }
+            else if ( c >= 'A' && c <= 'Z' )
+            {
+                sb.append( random( 1, 'A', 'Z', true, true ) );
+            }
+            else if ( c >= '0' && c <= '9' )
+            {
+                sb.append( random( 1, '0', '9', true, true ) );
+            }
+            else
+            {
+                sb.append( c );
             }
         }
         return sb.toString();

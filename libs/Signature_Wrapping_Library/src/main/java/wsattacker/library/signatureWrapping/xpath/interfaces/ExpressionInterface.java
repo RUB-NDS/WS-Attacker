@@ -21,7 +21,8 @@ package wsattacker.library.signatureWrapping.xpath.interfaces;
 /**
  * Simple Interface which describes an XPath expression.
  */
-public interface ExpressionInterface {
+public interface ExpressionInterface
+{
 
     public abstract String getExpression();
 

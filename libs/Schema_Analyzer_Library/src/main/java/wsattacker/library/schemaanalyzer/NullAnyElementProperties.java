@@ -19,67 +19,78 @@
 package wsattacker.library.schemaanalyzer;
 
 import org.w3c.dom.Element;
+
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
- * This class is a NullObject imeplementation of the
- * AnyElementProperties.
- * It is used if no XML Schema Validation shall be performed.
- * It always returns that any element can have any wrapper element.
+ * This class is a NullObject imeplementation of the AnyElementProperties. It is used if no XML Schema Validation shall
+ * be performed. It always returns that any element can have any wrapper element.
  */
-public class NullAnyElementProperties implements AnyElementProperties {
+public class NullAnyElementProperties
+    implements AnyElementProperties
+{
 
     private final Element documentElement;
 
     /**
-     * NullAnyElementProperties is used if no SchemaAnalyser should be used.
-     * Every documentElement is allowed to have any kind of child Elements.
-     *
+     * NullAnyElementProperties is used if no SchemaAnalyser should be used. Every documentElement is allowed to have
+     * any kind of child Elements.
+     * 
      * @param documentElement
      */
-    public NullAnyElementProperties(Element documentElement) {
+    public NullAnyElementProperties( Element documentElement )
+    {
         this.documentElement = documentElement;
     }
 
     @Override
-    public Element getDocumentElement() {
+    public Element getDocumentElement()
+    {
         return documentElement;
     }
 
     @Override
-    public String getProcessContentsAttribute() {
+    public String getProcessContentsAttribute()
+    {
         return "lax";
     }
 
     @Override
-    public String getNamespaceAttributeValue() {
+    public String getNamespaceAttributeValue()
+    {
         return "##any";
     }
 
     @Override
-    public boolean needsWrapper(String childNamespaceURI) {
+    public boolean needsWrapper( String childNamespaceURI )
+    {
         return false;
     }
 
     @Override
-    public int compareTo(AnyElementProperties other) {
-        return DomUtilities.getFastXPath(documentElement).compareTo(DomUtilities.getFastXPath(other.getDocumentElement()));
+    public int compareTo( AnyElementProperties other )
+    {
+        return DomUtilities.getFastXPath( documentElement ).compareTo( DomUtilities.getFastXPath( other.getDocumentElement() ) );
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals( Object other )
+    {
         boolean isEqual = false;
-        if (other instanceof AnyElementPropertiesImpl) {
-            isEqual = DomUtilities.getFastXPath(documentElement).equals(DomUtilities.getFastXPath(((AnyElementProperties) other)
-              .getDocumentElement()));
+        if ( other instanceof NullAnyElementProperties )
+        {
+            isEqual =
+                DomUtilities.getFastXPath( documentElement ).equals( DomUtilities.getFastXPath( ( (AnyElementProperties) other ).getDocumentElement() ) );
         }
         return isEqual;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 29 * hash + (this.documentElement != null ? DomUtilities.getFastXPath(documentElement).hashCode() : 0);
+        hash =
+            29 * hash + ( this.documentElement != null ? DomUtilities.getFastXPath( documentElement ).hashCode() : 0 );
         return hash;
     }
 }

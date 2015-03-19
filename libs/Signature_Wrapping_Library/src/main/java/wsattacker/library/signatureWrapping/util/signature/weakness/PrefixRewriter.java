@@ -23,29 +23,38 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
-public final class PrefixRewriter {
+public final class PrefixRewriter
+{
 
-    public static void rewritePrefix(Element element, String oldPrefix, String newPrefix) {
-        rewritePrefix(element, oldPrefix, newPrefix, new ArrayList<Element>(0));
+    public static void rewritePrefix( Element element, String oldPrefix, String newPrefix )
+    {
+        rewritePrefix( element, oldPrefix, newPrefix, new ArrayList<Element>( 0 ) );
     }
 
-    public static void rewritePrefix(Element element, String oldPrefix, String newPrefix, List<Element> untouchedElementList) {
-        List<Element> childElementList = DomUtilities.getAllChildElements(element);
+    public static void rewritePrefix( Element element, String oldPrefix, String newPrefix,
+                                      List<Element> untouchedElementList )
+    {
+        List<Element> childElementList = DomUtilities.getAllChildElements( element );
         Document doc = element.getOwnerDocument();
 
         // self rewriting
-        if (!untouchedElementList.contains(element)) {
-            if (element.getPrefix() != null && element.getPrefix().equals(oldPrefix)) {
-                doc.renameNode(element, element.getNamespaceURI(), newPrefix + ":" + element.getLocalName());
+        if ( !untouchedElementList.contains( element ) )
+        {
+            if ( element.getPrefix() != null && element.getPrefix().equals( oldPrefix ) )
+            {
+                doc.renameNode( element, element.getNamespaceURI(), newPrefix + ":" + element.getLocalName() );
             }
-            for (Element task : childElementList) {
-                if (!untouchedElementList.contains(task)) {
-                    rewritePrefix(task, oldPrefix, newPrefix, untouchedElementList);
+            for ( Element task : childElementList )
+            {
+                if ( !untouchedElementList.contains( task ) )
+                {
+                    rewritePrefix( task, oldPrefix, newPrefix, untouchedElementList );
                 }
             }
         }
     }
 
-    private PrefixRewriter() {
+    private PrefixRewriter()
+    {
     }
 }

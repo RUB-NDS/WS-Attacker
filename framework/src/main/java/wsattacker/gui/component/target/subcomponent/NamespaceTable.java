@@ -18,18 +18,21 @@
  */
 package wsattacker.gui.component.target.subcomponent;
 
-
 import javax.swing.JTable;
 
-public class NamespaceTable extends JTable {
+public class NamespaceTable
+    extends JTable
+{
 
     private static final long serialVersionUID = 1L;
+
     NamespaceTableModel model;
 
-    public NamespaceTable() {
+    public NamespaceTable()
+    {
         super();
-        setVisible(true);
+        setVisible( true );
         model = new NamespaceTableModel();
-        setModel(model);
+        setModel( model );
     }
 }

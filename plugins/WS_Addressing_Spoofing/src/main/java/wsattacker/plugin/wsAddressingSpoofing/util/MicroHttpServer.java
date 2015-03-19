@@ -26,79 +26,100 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public class MicroHttpServer {
-	private int port;
-	private HttpServer server;
-	private boolean incomingRequest;
-	private String requestBody;
+public class MicroHttpServer
+{
+    private int port;
 
-	public MicroHttpServer(int port) {
-		this.port = port;
-		this.incomingRequest = false;
-		this.requestBody = null;
-	}
+    private HttpServer server;
 
-	public int getPort() {
-		return port;
-	}
-	
-	public boolean hasIncomingRequest() {
-		return incomingRequest;
-	}
-	
-	public String getRequestBody() {
-		return requestBody;
-	}
-	
-	public void resetIncomingRequest() {
-		this.incomingRequest = false;
-		this.requestBody = null;
-	}
-	
-	public HttpServer getServer() {
-		return server;
-	}
+    private boolean incomingRequest;
 
-	public void start() {
-		InetSocketAddress addr = new InetSocketAddress(getPort());
-		try {
-			server = HttpServer.create(addr, 0);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		server.createContext("/", new HttpHandler() {
+    private String requestBody;
 
-			@Override
-			public void handle(HttpExchange exchange) throws IOException {
-				String line;
-				InputStream is = exchange.getRequestBody();
-				BufferedReader in = new BufferedReader(
-						new InputStreamReader(is));
-				StringBuffer buffer = new StringBuffer();
-				while ((line = in.readLine()) != null) {
-					buffer.append(line);
-				}
-				requestBody = buffer.toString();
-				incomingRequest = true;
-				exchange.sendResponseHeaders(200, 0); // send OK to the server
-				exchange.close();
-			}
-		});
-		server.setExecutor(SoapUI.getThreadPool());
-		server.start();
-	}
+    public MicroHttpServer( int port )
+    {
+        this.port = port;
+        this.incomingRequest = false;
+        this.requestBody = null;
+    }
 
-	/**
-	 * aborts the running server
-	 */
-	public void stop() {
-		try {
-			// closing server
-			server.stop(1);
-		} catch (Exception e) {
-			// only for safety
-		}
-	}
+    public int getPort()
+    {
+        return port;
+    }
+
+    public boolean hasIncomingRequest()
+    {
+        return incomingRequest;
+    }
+
+    public String getRequestBody()
+    {
+        return requestBody;
+    }
+
+    public void resetIncomingRequest()
+    {
+        this.incomingRequest = false;
+        this.requestBody = null;
+    }
+
+    public HttpServer getServer()
+    {
+        return server;
+    }
+
+    public void start()
+    {
+        InetSocketAddress addr = new InetSocketAddress( getPort() );
+        try
+        {
+            server = HttpServer.create( addr, 0 );
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+            return;
+        }
+
+        server.createContext( "/", new HttpHandler()
+        {
+
+            @Override
+            public void handle( HttpExchange exchange )
+                throws IOException
+            {
+                String line;
+                InputStream is = exchange.getRequestBody();
+                BufferedReader in = new BufferedReader( new InputStreamReader( is ) );
+                StringBuffer buffer = new StringBuffer();
+                while ( ( line = in.readLine() ) != null )
+                {
+                    buffer.append( line );
+                }
+                requestBody = buffer.toString();
+                incomingRequest = true;
+                exchange.sendResponseHeaders( 200, 0 ); // send OK to the server
+                exchange.close();
+            }
+        } );
+        server.setExecutor( SoapUI.getThreadPool() );
+        server.start();
+    }
+
+    /**
+     * aborts the running server
+     */
+    public void stop()
+    {
+        try
+        {
+            // closing server
+            server.stop( 1 );
+        }
+        catch ( Exception e )
+        {
+            // only for safety
+        }
+    }
 }

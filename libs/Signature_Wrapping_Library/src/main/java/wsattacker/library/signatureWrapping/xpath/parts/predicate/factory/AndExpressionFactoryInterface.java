@@ -20,7 +20,8 @@ package wsattacker.library.signatureWrapping.xpath.parts.predicate.factory;
 
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.AndExpression;
 
-public interface AndExpressionFactoryInterface {
+public interface AndExpressionFactoryInterface
+{
 
-    public AndExpression createAndExpression(String expression);
+    public AndExpression createAndExpression( String expression );
 }

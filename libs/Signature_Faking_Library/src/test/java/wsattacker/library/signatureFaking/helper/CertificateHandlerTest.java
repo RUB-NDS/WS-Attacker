@@ -31,46 +31,48 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import sun.security.x509.X509CertImpl;
-import wsattacker.library.signatureFaking.OpenSAMLTest;
 
 /**
- *
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class CertificateHandlerTest extends TestCase {
+public class CertificateHandlerTest
+    extends TestCase
+{
 
     public static final String DIR = "src/test/resources/test-certificates";
-    
-    Logger log = Logger.getLogger(CertificateHandlerTest.class);
-    
+
+    Logger log = Logger.getLogger( CertificateHandlerTest.class );
+
     private static String LOG_FILE = "logging.properties";
 
     /**
      * Create the test case
-     *
+     * 
      * @param testName name of the test case
      */
-    public CertificateHandlerTest(String testName) {
-        super(testName);
-        PropertyConfigurator.configure(LOG_FILE);
-    }    
-    
-    public static void testCertificateHandler() throws Exception {
-        String certificate = FileReader.readFile(DIR+"/test-cert");
-        CertificateHandler ch = new CertificateHandler(certificate);
+    public CertificateHandlerTest( String testName )
+    {
+        super( testName );
+        PropertyConfigurator.configure( LOG_FILE );
+    }
+
+    public static void testCertificateHandler()
+        throws Exception
+    {
+        String certificate = FileReader.readFile( DIR + "/test-cert" );
+        CertificateHandler ch = new CertificateHandler( certificate );
         ch.createFakedCertificate();
         X509CertImpl faked = ch.getFakedCertificate();
-        
-        CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
-        X509Certificate original = (X509Certificate) certFactory.generateCertificate(
-                new ByteArrayInputStream(Base64.decodeBase64(certificate)));
-        
-        assertEquals(faked.getIssuerDN().getName(), 
-                original.getIssuerDN().getName());
-        assertEquals(faked.getSigAlgOID(), original.getSigAlgOID());
-        assertEquals(faked.getSubjectDN().getName(), 
-                original.getSubjectDN().getName());
-        faked.verify(faked.getPublicKey());
+
+        CertificateFactory certFactory = CertificateFactory.getInstance( "X.509" );
+        X509Certificate original =
+            (X509Certificate) certFactory.generateCertificate( new ByteArrayInputStream(
+                                                                                         Base64.decodeBase64( certificate ) ) );
+
+        assertEquals( faked.getIssuerDN().getName(), original.getIssuerDN().getName() );
+        assertEquals( faked.getSigAlgOID(), original.getSigAlgOID() );
+        assertEquals( faked.getSubjectDN().getName(), original.getSubjectDN().getName() );
+        faked.verify( faked.getPublicKey() );
     }
 }

@@ -21,7 +21,9 @@ package wsattacker.main.composition.testsuite;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
 
-public interface RequestResponsePair {
-	public WsdlRequest getWsdlRequest();
-	public WsdlResponse getWsdlResponse();
+public interface RequestResponsePair
+{
+    public WsdlRequest getWsdlRequest();
+
+    public WsdlResponse getWsdlResponse();
 }

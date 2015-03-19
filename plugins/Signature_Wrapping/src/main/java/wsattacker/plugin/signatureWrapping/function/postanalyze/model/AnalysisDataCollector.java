@@ -25,41 +25,47 @@ package wsattacker.plugin.signatureWrapping.function.postanalyze.model;
 import java.util.*;
 
 /**
- *
  * @author christian
  */
-public class AnalysisDataCollector {
-	private Map<String, List<AnalysisData>>  dataMap;
+public class AnalysisDataCollector
+{
+    private Map<String, List<AnalysisData>> dataMap;
 
-	public AnalysisDataCollector() {
-		dataMap = new HashMap<String, List<AnalysisData>>();
-	}
+    public AnalysisDataCollector()
+    {
+        dataMap = new HashMap<String, List<AnalysisData>>();
+    }
 
-	/**
-	 * @return the data
-	 */
-	public Map<String, ? extends List<AnalysisData>> getData() {
-		return dataMap;
-	}
+    /**
+     * @return the data
+     */
+    public Map<String, ? extends List<AnalysisData>> getData()
+    {
+        return dataMap;
+    }
 
-	public List<AnalysisData> getDataEntry(String key) {
-		return getData().get(key);
-	}
+    public List<AnalysisData> getDataEntry( String key )
+    {
+        return getData().get( key );
+    }
 
-	public void add(String key, int index, String response) {
-		add(key, new AnalysisData(index, response));
-	}
+    public void add( String key, int index, String response )
+    {
+        add( key, new AnalysisData( index, response ) );
+    }
 
-	public void add(String key, AnalysisData data) {
-		if(dataMap.containsKey(key)) {
-			dataMap.get(key).add(data);
-		}
-		else {
-			List<AnalysisData> newIndexSet = new ArrayList<AnalysisData>();
-			newIndexSet.add(data);
-			dataMap.put(key, newIndexSet);
-		}
-	}
-
+    public void add( String key, AnalysisData data )
+    {
+        if ( dataMap.containsKey( key ) )
+        {
+            dataMap.get( key ).add( data );
+        }
+        else
+        {
+            List<AnalysisData> newIndexSet = new ArrayList<AnalysisData>();
+            newIndexSet.add( data );
+            dataMap.put( key, newIndexSet );
+        }
+    }
 
 }

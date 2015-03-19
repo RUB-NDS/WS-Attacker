@@ -18,64 +18,83 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackThreads;
 
-
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * Send tampered/untampered request N times sequentially to target Thread waits
- * X seconds between every request as defined in Model!
- *
+ * Send tampered/untampered request N times sequentially to target Thread waits X seconds between every request as
+ * defined in Model!
+ * 
  * @author af
- *
  */
-public class RepeatAttackRequestThread extends Thread {  // implements Oberservable Subject
+public class RepeatAttackRequestThread
+    extends Thread
+{ // implements
+  // Oberservable Subject
 
-    private AttackModel model; 		// Refernz auf Model -> hier syncronisieren!!
-    private int threadNumber;
-    private String requestType;
+    // Refernz auf Model -> hier syncronisieren!!
+    private final AttackModel model;
+
+    private final int threadNumber;
+
+    private final String requestType;
 
     /**
      * Constructor
-     *
+     * 
      * @param model
      * @param threadNumber
      * @param requestType -> send tampered or untampered request
      */
-    public RepeatAttackRequestThread(AttackModel model, int threadNumber, String requestType) {
+    public RepeatAttackRequestThread( AttackModel model, int threadNumber, String requestType )
+    {
 
-	this.model = model;
-	this.threadNumber = threadNumber;
-	this.requestType = requestType;
+        this.model = model;
+        this.threadNumber = threadNumber;
+        this.requestType = requestType;
 
-	// run Thread
-	start();
+        // run Thread
+        start();
+
+        // TODO [CHAL 2013-12-31] you shouldn't start a Thread in the
+        // constructor!!!
     }
 
     // a new Send-Request-Object is send N times sequentially
-    public void run() {
-	for (int i = 0; i < model.getNumberRequestsPerThread(); i++) {
-	    // Check if attack is aborted!
-	    if (model.getAttackAborted() == false) {
+    @Override
+    public void run()
+    {
+        for ( int i = 0; i < model.getNumberRequestsPerThread(); i++ )
+        {
+            // Check if attack is aborted!
+            if ( !model.isAttackAborted() )
+            {
 
-		try {
-		    // Open new Thread that sends new Request!
-		    new SendRequestThread(this.model, this.threadNumber, this.requestType);
+                try
+                {
+                    // Open new Thread that sends new Request!
+                    new SendRequestThread( this.model, this.threadNumber, this.requestType );
 
-		    // Wait for time period as defined in model!
-		    Thread.sleep(model.getSecondsBetweenRequests());
-		} catch (InterruptedException e) {
-		    // Fall MainThread interrupt in SleepPhase kommt wird diese Exception gelöst
-		    // ABER danach exception Flag wieder auf Null gesetzt, daher hier nochmal neu interupten!
-		    // Siehe: http://openbook.galileodesign.de/javainsel5/javainsel09_003.htm#t2t35
-		    System.out.println("interrupt in Send Tampered requests Thread");
-		    this.interrupt();
-		}
-	    } else {
-		return;
-	    }
-	}
-	// Todo: ugly - find better solution
-	model.setTsTamperedLastSend(System.currentTimeMillis());	
+                    // Wait for time period as defined in model!
+                    Thread.sleep( model.getSecondsBetweenRequests() );
+                }
+                catch ( InterruptedException e )
+                {
+                    // Fall MainThread interrupt in SleepPhase kommt wird diese
+                    // Exception gelöst
+                    // ABER danach exception Flag wieder auf Null gesetzt, daher
+                    // hier nochmal neu interupten!
+                    // Siehe:
+                    // http://openbook.galileodesign.de/javainsel5/javainsel09_003.htm#t2t35
+                    System.out.println( "interrupt in Send Tampered requests Thread" );
+                    this.interrupt();
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        // Todo: ugly - find better solution
+        model.setTsTamperedLastSend( System.currentTimeMillis() );
     }
 }

@@ -24,106 +24,128 @@ import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.util.SortedUniqueList;
 
 /**
- * A class for holding plugins
- * Can be seen as a kind of List<AbstractPlugin> but with less features
- * Each plugin can occur only once
+ * A class for holding plugins Can be seen as a kind of List<AbstractPlugin> but with less features Each plugin can
+ * occur only once
+ * 
  * @author Christian Mainka
- *
  */
-public class PluginContainer implements Iterable<AbstractPlugin>, Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private SortedUniqueList<AbstractPlugin> plugins;
+public class PluginContainer
+    implements Iterable<AbstractPlugin>, Serializable
+{
+    private static final long serialVersionUID = 1L;
 
-	public PluginContainer() {
-		plugins = new SortedUniqueList<AbstractPlugin>();
-	}
-	
-	/**
-	 * Get the index of a plugin
-	 * @param plugin
-	 * @return index
-	 */
-	public int indexOf(AbstractPlugin plugin) {
-		return plugins.indexOf(plugin);
-	}
-	
-	/**
-	 * Get plugin by its name
-	 * @param pluginName
-	 * @return AbstractPlugin
-	 */
-	public AbstractPlugin getByName(String pluginName) {
-		for(AbstractPlugin plugin : plugins) {
-			if(plugin.getName().equals(pluginName))
-				return plugin;
-		}
-		return null;
-	}
-	
-	/**
-	 * Get plugin by its index
-	 * @param index
-	 * @return AbstractPlugin
-	 */
-	public AbstractPlugin getByIndex(int index) {
-		return plugins.get(index);
-	}
+    private final SortedUniqueList<AbstractPlugin> plugins;
 
-	/**
-	 * Add a plugin to the container
-	 * @param plugin
-	 * @return true if container changed
-	 */
-	public boolean add(AbstractPlugin plugin) {
-		return plugins.add(plugin);
-	}
-	
-	/**
-	 * Remove a plugin from this container by its unique name
-	 * @param pluginName
-	 * @return true if container changed
-	 */
-	public boolean removeByName(String pluginName) {
-		AbstractPlugin toRemove = getByName(pluginName);
-		return remove(toRemove);
-	}
-	
-	/**
-	 * Remove a plugin from this container by its index
-	 * @param index
-	 * @return true if container changed
-	 */
-	public boolean removeByIndex(int index) {
-		AbstractPlugin toRemove = getByIndex(index);
-		return remove(toRemove);
-	}
-	
-	/**
-	 * Remove a plugin from this container
-	 * @param plugin
-	 * @return true if container changed
-	 */
-	public boolean remove(AbstractPlugin plugin) {
-		return plugins.remove(plugin);
-	}
-	
-	public void clear() {
-		plugins.clear();
-	}
-	
-	public int size() {
-		return plugins.size();
-	}
-	
-	public boolean contains(AbstractPlugin plugin) {
-		return plugins.contains(plugin);
-	}
+    public PluginContainer()
+    {
+        plugins = new SortedUniqueList<AbstractPlugin>();
+    }
 
-	@Override
-	public Iterator<AbstractPlugin> iterator() {
-		return plugins.iterator();
-	}
+    /**
+     * Get the index of a plugin
+     * 
+     * @param plugin
+     * @return index
+     */
+    public int indexOf( AbstractPlugin plugin )
+    {
+        return plugins.indexOf( plugin );
+    }
 
+    /**
+     * Get plugin by its name
+     * 
+     * @param pluginName
+     * @return AbstractPlugin
+     */
+    public AbstractPlugin getByName( String pluginName )
+    {
+        for ( AbstractPlugin plugin : plugins )
+        {
+            if ( plugin.getName().equals( pluginName ) )
+            {
+                return plugin;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get plugin by its index
+     * 
+     * @param index
+     * @return AbstractPlugin
+     */
+    public AbstractPlugin getByIndex( int index )
+    {
+        return plugins.get( index );
+    }
+
+    /**
+     * Add a plugin to the container
+     * 
+     * @param plugin
+     * @return true if container changed
+     */
+    public boolean add( AbstractPlugin plugin )
+    {
+        return plugins.add( plugin );
+    }
+
+    /**
+     * Remove a plugin from this container by its unique name
+     * 
+     * @param pluginName
+     * @return true if container changed
+     */
+    public boolean removeByName( String pluginName )
+    {
+        AbstractPlugin toRemove = getByName( pluginName );
+        return remove( toRemove );
+    }
+
+    /**
+     * Remove a plugin from this container by its index
+     * 
+     * @param index
+     * @return true if container changed
+     */
+    public boolean removeByIndex( int index )
+    {
+        AbstractPlugin toRemove = getByIndex( index );
+        return remove( toRemove );
+    }
+
+    /**
+     * Remove a plugin from this container
+     * 
+     * @param plugin
+     * @return true if container changed
+     */
+    public boolean remove( AbstractPlugin plugin )
+    {
+        return plugins.remove( plugin );
+    }
+
+    public void clear()
+    {
+        plugins.clear();
+    }
+
+    public int size()
+    {
+        return plugins.size();
+    }
+
+    public boolean contains( AbstractPlugin plugin )
+    {
+        return plugins.contains( plugin );
+    }
+
+    @Override
+    public Iterator<AbstractPlugin> iterator()
+    {
+        return plugins.iterator();
+    }
 
 }

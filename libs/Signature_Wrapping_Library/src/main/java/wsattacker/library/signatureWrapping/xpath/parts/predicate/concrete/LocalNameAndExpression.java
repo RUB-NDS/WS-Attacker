@@ -21,11 +21,14 @@ package wsattacker.library.signatureWrapping.xpath.parts.predicate.concrete;
 import wsattacker.library.signatureWrapping.util.exception.InvalidTypeException;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.factory.AbstractFunctionAndExpression;
 
-public class LocalNameAndExpression extends AbstractFunctionAndExpression {
+public class LocalNameAndExpression
+    extends AbstractFunctionAndExpression
+{
 
-    public LocalNameAndExpression(String expression)
-      throws InvalidTypeException {
-        super(expression, "local-name()");
+    public LocalNameAndExpression( String expression )
+        throws InvalidTypeException
+    {
+        super( expression, "local-name()" );
     }
 
 }

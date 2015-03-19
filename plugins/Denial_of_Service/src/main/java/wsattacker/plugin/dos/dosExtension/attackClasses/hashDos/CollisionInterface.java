@@ -18,11 +18,12 @@
  */
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
-public interface CollisionInterface {
+public interface CollisionInterface
+{
 
-    public int getHash(String s);
+    public int getHash( String s );
 
-    public void genNCollisions(int n, StringBuilder sb, boolean useNamespace);
+    public void genNCollisions( int n, StringBuilder sb, boolean useNamespace );
 
-    public String getCollisionString(int i, int n);
+    public String getCollisionString( int i, int n );
 }

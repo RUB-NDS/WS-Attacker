@@ -23,53 +23,64 @@ import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.plugin.PluginManager;
 
-public class PluginConfigurationController extends AbstractBean implements Serializable {
+public class PluginConfigurationController
+    extends AbstractBean
+    implements Serializable
+{
 
-	public static final String PROP_PLUGINMANAGER = "pluginManager";
-	private PluginManager pluginManager = PluginManager.getInstance();
-	private ControllerInterface controller;
-	public static final String PROP_CONTROLLER = "controller";
+    public static final String PROP_PLUGINMANAGER = "pluginManager";
 
-	/**
-	 * Get the value of controller
-	 *
-	 * @return the value of controller
-	 */
-	public ControllerInterface getController() {
-		return controller;
-	}
+    private PluginManager pluginManager = PluginManager.getInstance();
 
-	/**
-	 * Set the value of controller
-	 *
-	 * @param controller new value of controller
-	 */
-	public void setController(ControllerInterface controller) {
-		ControllerInterface oldController = this.controller;
-		this.controller = controller;
-		firePropertyChange(PROP_CONTROLLER, oldController, controller);
-	}
+    private ControllerInterface controller;
 
-	public PluginConfigurationController() {
-	}
+    public static final String PROP_CONTROLLER = "controller";
 
-	/**
-	 * Get the value of pluginManager
-	 *
-	 * @return the value of pluginManager
-	 */
-	public PluginManager getPluginManager() {
-		return pluginManager;
-	}
+    /**
+     * Get the value of controller
+     * 
+     * @return the value of controller
+     */
+    public ControllerInterface getController()
+    {
+        return controller;
+    }
 
-	/**
-	 * Set the value of pluginManager
-	 *
-	 * @param pluginManager new value of pluginManager
-	 */
-	public void setPluginManager(PluginManager pluginManager) {
-		PluginManager oldPluginManager = this.pluginManager;
-		this.pluginManager = pluginManager;
-		firePropertyChange(PROP_PLUGINMANAGER, oldPluginManager, pluginManager);
-	}
+    /**
+     * Set the value of controller
+     * 
+     * @param controller new value of controller
+     */
+    public void setController( ControllerInterface controller )
+    {
+        ControllerInterface oldController = this.controller;
+        this.controller = controller;
+        firePropertyChange( PROP_CONTROLLER, oldController, controller );
+    }
+
+    public PluginConfigurationController()
+    {
+    }
+
+    /**
+     * Get the value of pluginManager
+     * 
+     * @return the value of pluginManager
+     */
+    public PluginManager getPluginManager()
+    {
+        return pluginManager;
+    }
+
+    /**
+     * Set the value of pluginManager
+     * 
+     * @param pluginManager new value of pluginManager
+     */
+    public void setPluginManager( PluginManager pluginManager )
+    {
+        PluginManager oldPluginManager = this.pluginManager;
+        this.pluginManager = pluginManager;
+        firePropertyChange( PROP_PLUGINMANAGER, oldPluginManager, pluginManager );
+    }
 }

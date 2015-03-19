@@ -36,10 +36,13 @@ import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
 
-public class XPathNamespaceInjectionWeaknessTest {
+public class XPathNamespaceInjectionWeaknessTest
+{
 
     @Test
-    public void simpleTestBefore() throws Exception {
+    public void simpleTestBefore()
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
 
         String orgContent = "ORIGINAL CONTENT";
@@ -48,56 +51,59 @@ public class XPathNamespaceInjectionWeaknessTest {
         Document doc = soap.getDocument();
 
         Element signed = soap.getDummyPayloadBody();
-        signed = (Element) signed.appendChild(doc.createElementNS(soap.getDummyPayloadBody().getNamespaceURI(), "ns1:signed"));
-        signed = (Element) signed.appendChild(doc.createElementNS("http://test-ns", "ts:test"));
-        signed.setTextContent(orgContent);
+        signed =
+            (Element) signed.appendChild( doc.createElementNS( soap.getDummyPayloadBody().getNamespaceURI(),
+                                                               "ns1:signed" ) );
+        signed = (Element) signed.appendChild( doc.createElementNS( "http://test-ns", "ts:test" ) );
+        signed.setTextContent( orgContent );
 
-        String xpath = DomUtilities.getFastXPath(signed);
+        String xpath = DomUtilities.getFastXPath( signed );
         List<String> toSign = new ArrayList<String>();
-        toSign.add(xpath);
+        toSign.add( xpath );
 
-        Signer s = new Signer(new KeyInfoForTesting());
-        s.sign(soap.getDocument(), toSign);
+        Signer s = new Signer( new KeyInfoForTesting() );
+        s.sign( soap.getDocument(), toSign );
 
         SignatureManager sm = new SignatureManager();
-        sm.setDocument(doc);
+        sm.setDocument( doc );
 
         List<Payload> payloadList = sm.getPayloads();
 
-        payloadList.get(0).setValue(payloadList.get(0).getValue().replace(orgContent, atkContent));
+        payloadList.get( 0 ).setValue( payloadList.get( 0 ).getValue().replace( orgContent, atkContent ) );
 
-        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance(SchemaAnalyzerFactory.NULL);
-        WrappingOracle wo = new WrappingOracle(doc, payloadList, sa);
+        SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.NULL );
+        WrappingOracle wo = new WrappingOracle( doc, payloadList, sa );
 
-        assertEquals(9 * 2 * 3, wo.maxPossibilities());
+        assertEquals( 9 * 2 * 3, wo.maxPossibilities() );
 
         List<Element> bodyChilds;
-        bodyChilds = DomUtilities.getAllChildElements(soap.getBody());
-        assertEquals(1, bodyChilds.size());
+        bodyChilds = DomUtilities.getAllChildElements( soap.getBody() );
+        assertEquals( 1, bodyChilds.size() );
 
-        String docBefore = DomUtilities.domToString(doc);
+        String docBefore = DomUtilities.domToString( doc );
 
-        Document attackDocument = wo.getPossibility(9 * 2 * 1 + 4);
+        Document attackDocument = wo.getPossibility( 9 * 2 * 1 + 4 );
 
-        String docAfter = DomUtilities.domToString(doc);
-        assertEquals("Original document must be unchanged", docBefore, docAfter);
+        String docAfter = DomUtilities.domToString( doc );
+        assertEquals( "Original document must be unchanged", docBefore, docAfter );
 
-        String xml = DomUtilities.domToString(attackDocument, true);
-        System.out.println(xml);
-        System.out.println(WeaknessLog.representation());
+        String xml = DomUtilities.domToString( attackDocument, true );
+        System.out.println( xml );
 
-        bodyChilds = DomUtilities.getAllChildElements(DomUtilities.findCorrespondingElement(attackDocument, soap.getBody()));
-        assertEquals(2, bodyChilds.size());
+        bodyChilds =
+            DomUtilities.getAllChildElements( DomUtilities.findCorrespondingElement( attackDocument, soap.getBody() ) );
+        assertEquals( 2, bodyChilds.size() );
 
-        int orgPos = xml.indexOf(orgContent);
-        int atkPos = xml.indexOf(atkContent);
-        assertTrue(orgPos > 0);
-        assertTrue(atkPos > 0);
-        assertTrue(atkPos < orgPos);
+        int orgPos = xml.indexOf( orgContent );
+        int atkPos = xml.indexOf( atkContent );
+        assertTrue( orgPos > 0 );
+        assertTrue( atkPos > 0 );
+        assertTrue( atkPos < orgPos );
 
-        assertEquals("atkns1", bodyChilds.get(1).getPrefix());
-        assertEquals("ns1", bodyChilds.get(0).getPrefix());
+        assertEquals( "atkns1", bodyChilds.get( 1 ).getPrefix() );
+        assertEquals( "ns1", bodyChilds.get( 0 ).getPrefix() );
 
-        assertEquals(NamespaceConstants.URI_NS_WSATTACKER, DomUtilities.findChildren(attackDocument, "Transform", NamespaceConstants.URI_NS_DS, true).get(0).getAttribute("xmlns:ns1"));
+        assertEquals( NamespaceConstants.URI_NS_WSATTACKER,
+                      DomUtilities.findChildren( attackDocument, "Transform", NamespaceConstants.URI_NS_DS, true ).get( 0 ).getAttribute( "xmlns:ns1" ) );
     }
 }

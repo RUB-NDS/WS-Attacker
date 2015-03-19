@@ -22,22 +22,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-
 /**
  * close all AttackThreads, keep GUI open!
+ * 
  * @author af
- *
  */
-public class AbortController implements ActionListener
+public class AbortController
+    implements ActionListener
 {
     private AttackModel model;
 
-    public AbortController(AttackModel model)
+    public AbortController( AttackModel model )
     {
         this.model = model;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
         model.abortAttack();
     }

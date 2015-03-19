@@ -23,29 +23,23 @@ import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 
 /**
- * Interafce which defines an XPath Weakness.
- * Concrete implementations will be:
- * - AttribteWeakness
- * - DescendantWeakness
+ * Interafce which defines an XPath Weakness. Concrete implementations will be: - AttribteWeakness - DescendantWeakness
  * - Namespace Injection
  */
-public interface XPathWeaknessInterface {
+public interface XPathWeaknessInterface
+{
 
     public int getNumberOfPossibilities();
 
     /**
-     * abuse an XPath weakness. Important: The implementation is not allowed to
-     * change the references for signedElement or
-     * payloadElement. This is needed for the decorator pattern!
-     *
+     * abuse an XPath weakness. Important: The implementation is not allowed to change the references for signedElement
+     * or payloadElement. This is needed for the decorator pattern!
+     * 
      * @param index
      * @param signedElement
      * @param payloadElement
-     *
      * @throws InvalidWeaknessException
      */
-    public void abuseWeakness(int index,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException;
+    public void abuseWeakness( int index, SignedElement signedElement, PayloadElement payloadElement )
+        throws InvalidWeaknessException;
 }

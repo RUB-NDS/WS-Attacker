@@ -28,53 +28,60 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.CharBuffer;
 import java.util.LinkedList;
-import org.w3c.dom.Document;
 
 /**
- *
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class FileReader {
+public class FileReader
+{
 
-    public static String[] readFileContents(final String dir) {
-        File folder = new File(dir);
+    public static String[] readFileContents( final String dir )
+    {
+        File folder = new File( dir );
         File[] listOfFiles = folder.listFiles();
         LinkedList<String> results = new LinkedList<String>();
-        
-        for (File cur : listOfFiles) {
-            try {
-                if (cur.isFile() && !cur.isHidden()
-                        && cur.toString().endsWith("xml")) {
-                    results.add(readFile(cur.toString()));
+
+        for ( File cur : listOfFiles )
+        {
+            try
+            {
+                if ( cur.isFile() && !cur.isHidden() && cur.toString().endsWith( "xml" ) )
+                {
+                    results.add( readFile( cur.toString() ) );
                 }
-            } catch (Exception e) {
+            }
+            catch ( Exception e )
+            {
                 e.printStackTrace();
-                System.err.println("Could not read: " + cur.toString());
+                System.err.println( "Could not read: " + cur.toString() );
                 continue;
             }
         }
         String[] res = new String[results.size()];
-        for(int i=0; i<results.size(); i++ ) {
-            res[i] = results.get(i);
+        for ( int i = 0; i < results.size(); i++ )
+        {
+            res[i] = results.get( i );
         }
         return res;
     }
 
-    public static String readFile(final String fileName) throws IOException {
+    public static String readFile( final String fileName )
+        throws IOException
+    {
         StringBuilder sb = new StringBuilder();
 
-        FileInputStream fstream = new FileInputStream(fileName);
+        FileInputStream fstream = new FileInputStream( fileName );
         // Get the object of DataInputStream
-        DataInputStream in = new DataInputStream(fstream);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        DataInputStream in = new DataInputStream( fstream );
+        BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
         String strLine;
         // Read File Line By Line
-        while ((strLine = br.readLine()) != null) {
+        while ( ( strLine = br.readLine() ) != null )
+        {
             // Print the content on the console
-            sb.append(strLine + "\r\n");
+            sb.append( strLine + "\r\n" );
         }
         // Close the input stream
         in.close();

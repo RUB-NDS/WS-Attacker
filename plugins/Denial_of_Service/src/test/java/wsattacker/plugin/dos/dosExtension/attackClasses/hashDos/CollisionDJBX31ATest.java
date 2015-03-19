@@ -24,107 +24,124 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author ianyo
  */
-public class CollisionDJBX31ATest {
+public class CollisionDJBX31ATest
+{
 
-    public CollisionDJBX31ATest() {
+    public CollisionDJBX31ATest()
+    {
     }
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
     }
 
     /**
      * Test of getHash method, of class CollisionDJBX31A.
      */
     @Test
-    public void testGetHash() {
-	System.out.println("Test getHash-DJBX31A");
-	String s = "EzFY";
-	CollisionDJBX31A instance = new CollisionDJBX31A();
-	int expResult = 2175080;
-	int result = instance.getHash(s);
-	assertEquals(expResult, result);
+    public void testGetHash()
+    {
+        System.out.println( "Test getHash-DJBX31A" );
+        String s = "EzFY";
+        CollisionDJBX31A instance = new CollisionDJBX31A();
+        int expResult = 2175080;
+        int result = instance.getHash( s );
+        assertEquals( expResult, result );
     }
 
     @Test
-    public void testCollisionsFail() {
-	CollisionDJBX31A instance = new CollisionDJBX31A();
+    public void testCollisionsFail()
+    {
+        CollisionDJBX31A instance = new CollisionDJBX31A();
 
-	// Alle 4 erzeugen anderes Ergebnis, es gilt Ez <> FY
-	System.out.println("Test collision Fail-DJBX31A");
-	int t1 = instance.getHash("Ez");
-	int t2 = instance.getHash("Fy");
-	int t3 = instance.getHash("EzEz");
-	int t4 = instance.getHash("EzFY");
-	int t5 = instance.getHash("FYEz");
-	int t6 = instance.getHash("FYFY");
+        // Alle 4 erzeugen anderes Ergebnis, es gilt Ez <> FY
+        System.out.println( "Test collision Fail-DJBX31A" );
+        int t1 = instance.getHash( "Ez" );
+        int t2 = instance.getHash( "Fy" );
+        int t3 = instance.getHash( "EzEz" );
+        int t4 = instance.getHash( "EzFY" );
+        int t5 = instance.getHash( "FYEz" );
+        int t6 = instance.getHash( "FYFY" );
 
-	if (t1 != t2 && t2 != t3 && t3 != t4 && t4 != t5 && t5 != t6) {
-	    assertTrue(true);
-	}else{
-	    assertTrue(false);
-	}
+        if ( t1 != t2 && t2 != t3 && t3 != t4 && t4 != t5 && t5 != t6 )
+        {
+            assertTrue( true );
+        }
+        else
+        {
+            assertTrue( false );
+        }
     }
 
     @Test
-    public void testCollisionsOk() {
-	CollisionDJBX31A instance = new CollisionDJBX31A();
+    public void testCollisionsOk()
+    {
+        CollisionDJBX31A instance = new CollisionDJBX31A();
 
-	System.out.println("Test collision OK-DJBX31A");
-	int t1 = instance.getHash("tttt");
-	int t2 = instance.getHash("ttuU");
-	int t3 = instance.getHash("ttv6");
-	int t4 = instance.getHash("uUtt");
-	int t5 = instance.getHash("uUuU");
-	int t6 = instance.getHash("uUv6");
-	int t7 = instance.getHash("v6tt");
-	int t8 = instance.getHash("v6uU");
-	int t9 = instance.getHash("v6v6");
+        System.out.println( "Test collision OK-DJBX31A" );
+        int t1 = instance.getHash( "tttt" );
+        int t2 = instance.getHash( "ttuU" );
+        int t3 = instance.getHash( "ttv6" );
+        int t4 = instance.getHash( "uUtt" );
+        int t5 = instance.getHash( "uUuU" );
+        int t6 = instance.getHash( "uUv6" );
+        int t7 = instance.getHash( "v6tt" );
+        int t8 = instance.getHash( "v6uU" );
+        int t9 = instance.getHash( "v6v6" );
 
-	if (t1 == t2 && t2 == t3 && t3 == t4 && t4 == t5 && t5 == t6 && t6 == t7 && t7 == t8 && t8 == t9) {
-	    assertTrue(true);
-	}else{
-	    assertTrue(false);
-	}
+        if ( t1 == t2 && t2 == t3 && t3 == t4 && t4 == t5 && t5 == t6 && t6 == t7 && t7 == t8 && t8 == t9 )
+        {
+            assertTrue( true );
+        }
+        else
+        {
+            assertTrue( false );
+        }
     }
 
     /**
      * Test of gen3nCollisions method, of class CollisionDJBX31A.
      */
     @Test
-    public void testGenNCollisions() {
-	System.out.println("Test genNCollisions-DJBX31A");
-	int numberAttributes = 32;
-	StringBuilder sb = new StringBuilder();
-	CollisionDJBX31A instance = new CollisionDJBX31A();
-	instance.genNCollisions(numberAttributes, sb, false);
+    public void testGenNCollisions()
+    {
+        System.out.println( "Test genNCollisions-DJBX31A" );
+        int numberAttributes = 32;
+        StringBuilder sb = new StringBuilder();
+        CollisionDJBX31A instance = new CollisionDJBX31A();
+        instance.genNCollisions( numberAttributes, sb, false );
 
-	// We got here so no everthing OK
-	if (sb.toString().length() > 0) {
-	    assertTrue(true);
-	}else{
-	    assertTrue(false);
-	}
+        // We got here so no everthing OK
+        if ( sb.toString().length() > 0 )
+        {
+            assertTrue( true );
+        }
+        else
+        {
+            assertTrue( false );
+        }
     }
 
     /**
      * Test of getCollisionString method, of class CollisionDJBX31A.
      */
     @Test
-    public void testGetCollisionString() {
-	System.out.println("Test getCollisionString-DJBX31A");
-	int i = 9 - 1;
-	int n = 2;
-	CollisionDJBX31A instance = new CollisionDJBX31A();
-	String expResult = "v6v6";
-	String result = instance.getCollisionString(i, n);
-	assertEquals(expResult, result);
+    public void testGetCollisionString()
+    {
+        System.out.println( "Test getCollisionString-DJBX31A" );
+        int i = 9 - 1;
+        int n = 2;
+        CollisionDJBX31A instance = new CollisionDJBX31A();
+        String expResult = "v6v6";
+        String result = instance.getCollisionString( i, n );
+        assertEquals( expResult, result );
     }
 }

@@ -20,25 +20,27 @@ package wsattacker.plugin.dos.dosExtension.mvc.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
+import wsattacker.plugin.dos.dosExtension.result.ResultGenerator;
 
 /**
  * generate Results
+ * 
  * @author Andreas Falkenberg
- *
  */
-public class ReportController implements ActionListener
+public class ReportController
+    implements ActionListener
 {
-    private AttackModel model;
+    private ResultGenerator resultGenerator;
 
-    public ReportController(AttackModel model)
+    public ReportController( ResultGenerator resultGenerator )
     {
-        this.model = model;
+        this.resultGenerator = resultGenerator;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
-    	model.openResults();
+        resultGenerator.openResults();
     }
 }

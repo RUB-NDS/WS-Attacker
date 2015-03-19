@@ -28,66 +28,73 @@ import org.w3c.dom.Element;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.schemaanalyzer.TestfilePath.*;
 
-public class SchemaNullTest {
+public class SchemaNullTest
+{
 
     private static final String PATH_TO_XML = "src/test/resources/soap11_example_signed_message.xml";
 
     @Test
-    public void simpleTest() throws Exception {
-        Document soap = DomUtilities.readDocument(SOAP11_PATH_TO_SIGNED_XML);
+    public void simpleTest()
+        throws Exception
+    {
+        Document soap = DomUtilities.readDocument( SOAP11_PATH_TO_SIGNED_XML );
 
         SchemaAnalyzer sa = new NullSchemaAnalyzer();
         Element envelope = soap.getDocumentElement();
 
-        Set<AnyElementProperties> result = sa.findExpansionPoint(envelope);
+        Set<AnyElementProperties> result = sa.findExpansionPoint( envelope );
 
-        List<Element> childElementList = DomUtilities.getAllChildElements(envelope, true);
-        childElementList.add(0, envelope);
-        List<String> fastXPathList = DomUtilities.nodelistToFastXPathList(childElementList);
+        List<Element> childElementList = DomUtilities.getAllChildElements( envelope, true );
+        childElementList.add( 0, envelope );
+        List<String> fastXPathList = DomUtilities.nodelistToFastXPathList( childElementList );
 
-        assertEquals(childElementList.size(), result.size());
-        assertEquals(fastXPathList.size(), result.size());
+        assertEquals( childElementList.size(), result.size() );
+        assertEquals( fastXPathList.size(), result.size() );
 
         List<String> contained = new ArrayList<String>();
-        for (AnyElementProperties any : result) {
-            String fxp = DomUtilities.getFastXPath(any.getDocumentElement());
-            assertTrue(fastXPathList.contains(fxp));
-            assertTrue(!contained.contains(fxp));
-            contained.add(fxp);
+        for ( AnyElementProperties any : result )
+        {
+            String fxp = DomUtilities.getFastXPath( any.getDocumentElement() );
+            assertTrue( fastXPathList.contains( fxp ) );
+            assertTrue( !contained.contains( fxp ) );
+            contained.add( fxp );
         }
     }
 
     @Test
-    public void filterTest() throws Exception {
-        Document soap = DomUtilities.readDocument(SOAP11_PATH_TO_EXPANDED_XML);
+    public void filterTest()
+        throws Exception
+    {
+        Document soap = DomUtilities.readDocument( SOAP11_PATH_TO_EXPANDED_XML );
         Element envelope = soap.getDocumentElement();
-        Element header = DomUtilities.getFirstChildElementByNames(envelope, "Header");
-        Element body = DomUtilities.getFirstChildElementByNames(envelope, "Body");
+        Element header = DomUtilities.getFirstChildElementByNames( envelope, "Header" );
+        Element body = DomUtilities.getFirstChildElementByNames( envelope, "Body" );
 
         SchemaAnalyzer sa = new NullSchemaAnalyzer();
 
         // Filter...
         List<QName> filterList = new ArrayList<QName>();
-        filterList.add(new QName(body.getNamespaceURI(), body.getLocalName(), body.getPrefix()));
-        sa.setFilterList(filterList);
+        filterList.add( new QName( body.getNamespaceURI(), body.getLocalName(), body.getPrefix() ) );
+        sa.setFilterList( filterList );
 
-        Set<AnyElementProperties> result = sa.findExpansionPoint(envelope);
+        Set<AnyElementProperties> result = sa.findExpansionPoint( envelope );
 
         List<Element> childElementList = new ArrayList<Element>();
-        childElementList.add(envelope);
-        childElementList.add(header);
+        childElementList.add( envelope );
+        childElementList.add( header );
 
-        List<String> fastXPathList = DomUtilities.nodelistToFastXPathList(childElementList);
+        List<String> fastXPathList = DomUtilities.nodelistToFastXPathList( childElementList );
 
-        assertEquals(childElementList.size(), result.size());
-        assertEquals(fastXPathList.size(), result.size());
+        assertEquals( childElementList.size(), result.size() );
+        assertEquals( fastXPathList.size(), result.size() );
 
         List<String> contained = new ArrayList<String>();
-        for (AnyElementProperties any : result) {
-            String fxp = DomUtilities.getFastXPath(any.getDocumentElement());
-            assertTrue(fastXPathList.contains(fxp));
-            assertTrue(!contained.contains(fxp));
-            contained.add(fxp);
+        for ( AnyElementProperties any : result )
+        {
+            String fxp = DomUtilities.getFastXPath( any.getDocumentElement() );
+            assertTrue( fastXPathList.contains( fxp ) );
+            assertTrue( !contained.contains( fxp ) );
+            contained.add( fxp );
         }
     }
 }

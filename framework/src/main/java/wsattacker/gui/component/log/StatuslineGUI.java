@@ -27,24 +27,32 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 import wsattacker.gui.util.Colors;
 
-public class StatuslineGUI extends JLabel {
-	private static final long serialVersionUID = 1L;
-	Layout layout;
-	
-	public StatuslineGUI() {
-		super();
-		this.layout = new PatternLayout("[%p] %m%n");
-		this.setBackground(Colors.INVALID);
-		this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY), BorderFactory.createEmptyBorder(2,10,2,10)));
-	}
-	
-	public void setLog(LoggingEvent loggingEvent) {
-		this.setText(layout.format(loggingEvent));
-		if(loggingEvent.getLevel().isGreaterOrEqual(Level.WARN)) {
-			this.setOpaque(true);
-		}
-		else {
-			this.setOpaque(false);
-		}
-	}
+public class StatuslineGUI
+    extends JLabel
+{
+    private static final long serialVersionUID = 1L;
+
+    Layout layout;
+
+    public StatuslineGUI()
+    {
+        super();
+        this.layout = new PatternLayout( "[%p] %m%n" );
+        this.setBackground( Colors.INVALID );
+        this.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createLineBorder( Color.LIGHT_GRAY ),
+                                                            BorderFactory.createEmptyBorder( 2, 10, 2, 10 ) ) );
+    }
+
+    public void setLog( LoggingEvent loggingEvent )
+    {
+        this.setText( layout.format( loggingEvent ) );
+        if ( loggingEvent.getLevel().isGreaterOrEqual( Level.WARN ) )
+        {
+            this.setOpaque( true );
+        }
+        else
+        {
+            this.setOpaque( false );
+        }
+    }
 }

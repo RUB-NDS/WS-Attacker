@@ -26,42 +26,51 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 /**
  * Helper Class to remove an XML Signature from an XML message.
  */
-public class SignatureRemover {
+public class SignatureRemover
+{
 
     Document doc;
+
     SignatureManager signatureManager;
+
     private String xmlWithoutSignature;
 
     /**
-     * Constructor will throw an InvalidArgumentException in the following
-     * cases:
-     * 1) The argument is not valid XML
-     * 2) The XML does not contain an XML Signature
-     *
+     * Constructor will throw an InvalidArgumentException in the following cases: 1) The argument is not valid XML 2)
+     * The XML does not contain an XML Signature
+     * 
      * @param xml
-     *
      * @throws InvalidArgumentException
      */
-    public SignatureRemover(String xml) throws IllegalArgumentException {
-        try {
-            doc = DomUtilities.stringToDom(xml);
-        } catch (SAXException ex) {
-            throw new IllegalArgumentException("Could not Parse XML Document");
+    public SignatureRemover( String xml )
+        throws IllegalArgumentException
+    {
+        try
+        {
+            doc = DomUtilities.stringToDom( xml );
+        }
+        catch ( SAXException ex )
+        {
+            throw new IllegalArgumentException( "Could not Parse XML Document" );
         }
         signatureManager = new SignatureManager();
-        signatureManager.setDocument(doc);
-        if (signatureManager.getSignatureElements().isEmpty()) {
-            throw new IllegalArgumentException("XML Document does not contain any XML Signature");
+        signatureManager.setDocument( doc );
+        if ( signatureManager.getSignatureElements().isEmpty() )
+        {
+            throw new IllegalArgumentException( "XML Document does not contain any XML Signature" );
         }
 
     }
 
-    public SignatureRemover(Document xmlDoc) throws IllegalArgumentException {
-        doc = DomUtilities.createNewDomFromNode(xmlDoc);
+    public SignatureRemover( Document xmlDoc )
+        throws IllegalArgumentException
+    {
+        doc = DomUtilities.createNewDomFromNode( xmlDoc );
         signatureManager = new SignatureManager();
-        signatureManager.setDocument(doc);
-        if (signatureManager.getSignatureElements().isEmpty()) {
-            throw new IllegalArgumentException("XML Document does not contain any XML Signature");
+        signatureManager.setDocument( doc );
+        if ( signatureManager.getSignatureElements().isEmpty() )
+        {
+            throw new IllegalArgumentException( "XML Document does not contain any XML Signature" );
         }
 
     }
@@ -69,18 +78,22 @@ public class SignatureRemover {
     /**
      * @return the xmlWithoutSignature
      */
-    public String getXmlWithoutSignature() {
+    public String getXmlWithoutSignature()
+    {
         // Lazy Evaluation: Create Message on first access
-        if (xmlWithoutSignature == null) {
+        if ( xmlWithoutSignature == null )
+        {
             // Remove every Signature Element
-            for (SignatureElement signature : signatureManager.getSignatureElements()) {
+            for ( SignatureElement signature : signatureManager.getSignatureElements() )
+            {
                 Element element = signature.getSignature();
-                if (element.getParentNode() != null) {
-                    element.getParentNode().removeChild(element);
+                if ( element.getParentNode() != null )
+                {
+                    element.getParentNode().removeChild( element );
                 }
             }
             // Convert to String
-            xmlWithoutSignature = DomUtilities.domToString(doc);
+            xmlWithoutSignature = DomUtilities.domToString( doc );
         }
         return xmlWithoutSignature;
     }

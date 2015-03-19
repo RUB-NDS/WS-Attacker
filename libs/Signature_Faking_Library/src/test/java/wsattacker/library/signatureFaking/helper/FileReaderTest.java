@@ -27,21 +27,25 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- *
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class FileReaderTest extends TestCase {
+public class FileReaderTest
+    extends TestCase
+{
 
     public static final String DIR = "src/test/resources/test-files";
-    Logger log = Logger.getLogger(CertificateHandlerTest.class);
+
+    Logger log = Logger.getLogger( CertificateHandlerTest.class );
+
     private static String LOG_FILE = "logging.properties";
 
-    public static void testFileReader() {
-        PropertyConfigurator.configure(LOG_FILE);
-        String[] contents = FileReader.readFileContents(DIR);
-        System.out.println(contents.length);
+    public static void testFileReader()
+    {
+        PropertyConfigurator.configure( LOG_FILE );
+        String[] contents = FileReader.readFileContents( DIR );
+        System.out.println( contents.length );
 
-        assertTrue(contents.length == 2);
+        assertTrue( contents.length == 2 );
     }
 }

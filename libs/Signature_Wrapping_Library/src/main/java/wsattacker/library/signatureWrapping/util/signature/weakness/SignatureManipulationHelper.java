@@ -28,21 +28,25 @@ import org.w3c.dom.Element;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
-public final class SignatureManipulationHelper {
+public final class SignatureManipulationHelper
+{
 
-    public static void doubleSignature(Document msg, int whichToDouble, int whichToReplace) {
-        List<Element> signatures = DomUtilities.findChildren(msg, "Signature", NamespaceConstants.URI_NS_DS, true);
-        Element clone = (Element) signatures.get(whichToDouble).cloneNode(true);
-        Element toReplace = signatures.get(whichToReplace);
-        toReplace.getParentNode().replaceChild(clone, toReplace);
+    public static void doubleSignature( Document msg, int whichToDouble, int whichToReplace )
+    {
+        List<Element> signatures = DomUtilities.findChildren( msg, "Signature", NamespaceConstants.URI_NS_DS, true );
+        Element clone = (Element) signatures.get( whichToDouble ).cloneNode( true );
+        Element toReplace = signatures.get( whichToReplace );
+        toReplace.getParentNode().replaceChild( clone, toReplace );
     }
 
-    public static void removeSignature(Document msg, int which) {
-        List<Element> signatures = DomUtilities.findChildren(msg, "Signature", NamespaceConstants.URI_NS_DS, true);
-        Element toRemove = signatures.get(which);
-        toRemove.getParentNode().removeChild(toRemove);
+    public static void removeSignature( Document msg, int which )
+    {
+        List<Element> signatures = DomUtilities.findChildren( msg, "Signature", NamespaceConstants.URI_NS_DS, true );
+        Element toRemove = signatures.get( which );
+        toRemove.getParentNode().removeChild( toRemove );
     }
 
-    private SignatureManipulationHelper() {
+    private SignatureManipulationHelper()
+    {
     }
 }

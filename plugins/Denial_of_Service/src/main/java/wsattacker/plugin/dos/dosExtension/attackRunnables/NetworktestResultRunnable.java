@@ -20,19 +20,25 @@ package wsattacker.plugin.dos.dosExtension.attackRunnables;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-public class NetworktestResultRunnable implements Runnable {
-	private AttackModel model;
-	
-	// Constructor
-	public NetworktestResultRunnable(AttackModel model){
-		this.model = model;	
-	}
-	
-	// führe Thread aus!
-	public void run(){
-		// update Model + GUI
-		// - executed in EDT-context - don't have to worry about syncronization
-		// - Warning: has to run in very short period - otherwise might block GUI.
-		model.generateNetworktestResult();
-	}
+public class NetworktestResultRunnable
+    implements Runnable
+{
+    private AttackModel model;
+
+    // Constructor
+    public NetworktestResultRunnable( AttackModel model )
+    {
+        this.model = model;
+    }
+
+    // führe Thread aus!
+    @Override
+    public void run()
+    {
+        // update Model + GUI
+        // - executed in EDT-context - don't have to worry about syncronization
+        // - Warning: has to run in very short period - otherwise might block
+        // GUI.
+        model.generateNetworktestResult();
+    }
 }

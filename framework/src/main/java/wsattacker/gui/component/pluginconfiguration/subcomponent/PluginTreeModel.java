@@ -32,205 +32,251 @@ import wsattacker.main.plugin.PluginManager;
 import wsattacker.main.plugin.PluginState;
 import wsattacker.util.Category;
 
-public class PluginTreeModel extends AbstractTreeModel implements TreeModel, PluginManagerListener {
+public class PluginTreeModel
+    extends AbstractTreeModel
+    implements TreeModel, PluginManagerListener
+{
 
-	private static final Logger LOG = Logger.getLogger(PluginTreeCellRenderer.class);
-	public static final String PROP_TREE = "tree";
-	public static final String PROP_PLUGINMANAGER = "pluginManager";
-	Category<String, AbstractPlugin> rootCategory;
-	Category<String, AbstractPlugin> allCategory;
-	Category<String, AbstractPlugin> activeCategory;
-	Category<String, AbstractPlugin> abcCategory;
-	private CheckboxTree tree = new CheckboxTree();
-	private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-	private PluginManager pluginManager;
+    private static final Logger LOG = Logger.getLogger( PluginTreeCellRenderer.class );
 
-	public PluginTreeModel() {
-		rootCategory = new PluginCategory("root");
-		allCategory = new PluginCategory("All Plugins");
-		activeCategory = new PluginCategory("Active Plugins");
-		abcCategory = new PluginCategory("Alphabetical Sorted");
-		allCategory = rootCategory.addCategory(allCategory);
-		activeCategory = rootCategory.addCategory(activeCategory);
-		abcCategory = rootCategory.addCategory(abcCategory);
-		setPluginManager(PluginManager.getInstance());
-	}
+    public static final String PROP_TREE = "tree";
 
-	/**
-	 * Get the value of tree
-	 *
-	 * @return the value of tree
-	 */
-	public CheckboxTree getTree() {
-		return tree;
-	}
+    public static final String PROP_PLUGINMANAGER = "pluginManager";
 
-	/**
-	 * Set the value of tree
-	 *
-	 * @param tree new value of tree
-	 */
-	public void setTree(CheckboxTree tree) {
-		CheckboxTree oldTree = this.tree;
-		this.tree = tree;
-		propertyChangeSupport.firePropertyChange(PROP_TREE, oldTree, tree);
-	}
+    Category<String, AbstractPlugin> rootCategory;
 
-	/**
-	 * Add PropertyChangeListener.
-	 *
-	 * @param listener
-	 */
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
-	}
+    Category<String, AbstractPlugin> allCategory;
 
-	/**
-	 * Remove PropertyChangeListener.
-	 *
-	 * @param listener
-	 */
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.removePropertyChangeListener(listener);
-	}
+    Category<String, AbstractPlugin> activeCategory;
 
-	/**
-	 * Get the value of pluginManager
-	 *
-	 * @return the value of pluginManager
-	 */
-	public PluginManager getPluginManager() {
-		return pluginManager;
-	}
+    Category<String, AbstractPlugin> abcCategory;
 
-	/**
-	 * Set the value of pluginManager
-	 *
-	 * @param pluginManager new value of pluginManager
-	 */
-	public void setPluginManager(PluginManager pluginManager) {
-		PluginManager oldPluginManager = this.pluginManager;
-		this.pluginManager = pluginManager;
-		propertyChangeSupport.firePropertyChange(PROP_PLUGINMANAGER, oldPluginManager, pluginManager);
-		if (oldPluginManager != null) {
-			oldPluginManager.removeListener(this);
-		}
-		if (pluginManager != null) {
-			pluginManager.addListener(this);
-		}
-		pluginContainerChanged();
-	}
+    private CheckboxTree tree = new CheckboxTree();
 
-	@Override
-	public Object getChild(Object parent, int index) {
-		if (parent.getClass().isAssignableFrom(rootCategory.getClass())) {
-			return ((Category<String, AbstractPlugin>) parent).getNode(index);
-		}
-		return null;
-	}
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
-	@Override
-	public int getChildCount(Object node) {
-		int count = 0;
-		if (node.getClass().isAssignableFrom(rootCategory.getClass())) {
-			count = ((Category<String, AbstractPlugin>) node).countNodes();
-		}
-		return count;
-	}
+    private PluginManager pluginManager;
 
-	@Override
-	public int getIndexOfChild(Object parent, Object node) {
-		int result = 0;
-		if (parent.getClass().isAssignableFrom(rootCategory.getClass())) {
-			result = ((Category<String, AbstractPlugin>) parent).getIndexOfNode(node);
-		}
-		return result;
-	}
+    public PluginTreeModel()
+    {
+        rootCategory = new PluginCategory( "root" );
+        allCategory = new PluginCategory( "All Plugins" );
+        activeCategory = new PluginCategory( "Active Plugins" );
+        abcCategory = new PluginCategory( "Alphabetical Sorted" );
+        allCategory = rootCategory.addCategory( allCategory );
+        activeCategory = rootCategory.addCategory( activeCategory );
+        abcCategory = rootCategory.addCategory( abcCategory );
+        setPluginManager( PluginManager.getInstance() );
+    }
 
-	@Override
-	public Object getRoot() {
-		return rootCategory;
-	}
+    /**
+     * Get the value of tree
+     * 
+     * @return the value of tree
+     */
+    public CheckboxTree getTree()
+    {
+        return tree;
+    }
 
-	@Override
-	public boolean isLeaf(Object maybeLeaf) {
-		return (maybeLeaf instanceof AbstractPlugin);
-	}
+    /**
+     * Set the value of tree
+     * 
+     * @param tree new value of tree
+     */
+    public void setTree( CheckboxTree tree )
+    {
+        CheckboxTree oldTree = this.tree;
+        this.tree = tree;
+        propertyChangeSupport.firePropertyChange( PROP_TREE, oldTree, tree );
+    }
 
-	@Override
-	public void valueForPathChanged(TreePath path, Object newValue) {
-		LOG.warn("### WARNING ###");
-	}
+    /**
+     * Add PropertyChangeListener.
+     * 
+     * @param listener
+     */
+    public void addPropertyChangeListener( PropertyChangeListener listener )
+    {
+        propertyChangeSupport.addPropertyChangeListener( listener );
+    }
 
-	@Override
-	public void currentPointsChanged(AbstractPlugin plugin, int newPoints) {
-	}
+    /**
+     * Remove PropertyChangeListener.
+     * 
+     * @param listener
+     */
+    public void removePropertyChangeListener( PropertyChangeListener listener )
+    {
+        propertyChangeSupport.removePropertyChangeListener( listener );
+    }
 
-	@Override
-	public void pluginStateChanged(AbstractPlugin plugin, PluginState newState, PluginState oldState) {
-		tree.repaint();
-	}
+    /**
+     * Get the value of pluginManager
+     * 
+     * @return the value of pluginManager
+     */
+    public PluginManager getPluginManager()
+    {
+        return pluginManager;
+    }
 
-	@Override
-	public synchronized void pluginActiveStateChanged(AbstractPlugin plugin, boolean active) {
-		LOG.debug("### Checked Pre:");
-		for (TreePath x : tree.getCheckingPaths()) {
-			LOG.debug("    " + x);
-		}
-		Category<String, AbstractPlugin> zwerg = allCategory;
-		TreePath allPath = new TreePath(new Object[]{rootCategory, allCategory});
-		for (String key : plugin.getCategory()) {
-			zwerg = zwerg.getSubCategory(key);
-			if (zwerg == null) {
-				LOG.error("Error finding path");
-				return;
-			}
-			allPath = allPath.pathByAddingChild(zwerg);
-		}
-		allPath = allPath.pathByAddingChild(plugin);
-		TreePath activePath = new TreePath(new Object[]{rootCategory, activeCategory, plugin});
-		TreePath abcPath = new TreePath(new Object[]{rootCategory, abcCategory, plugin});
-		if (active) {
-			if (activeCategory.addLeaf(plugin)) {
-				fireChildAdded(activePath.getParentPath(), activeCategory.getIndexOfNode(plugin), plugin);
-				tree.addCheckingPath(allPath);
-				tree.addCheckingPath(activePath.getParentPath());
-				tree.addCheckingPath(abcPath);
-			}
-		} else {
-			int index = activeCategory.getIndexOfNode(plugin);
-			if (activeCategory.removeLeaf(plugin)) {
-				tree.removeCheckingPath(allPath);
-				tree.removeCheckingPath(activePath);
-				tree.removeCheckingPath(abcPath);
-				fireChildRemoved(activePath.getParentPath(), index, plugin);
-			}
-		}
-		LOG.debug("### Checked After:");
-		for (TreePath x : tree.getCheckingPaths()) {
-			LOG.debug(String.format("    %s %s", x, x.getLastPathComponent().getClass()));
-		}
-		//			rootCategory.print();
-		//			tree.repaint();
-		//			tree.updateUI();
-		for (int i = 0; i < tree.getRowCount(); ++i) {
-			TreePath x = tree.getPathForRow(i);
-			boolean checked = tree.getCheckingModel().isPathChecked(x);
-			boolean enabled = tree.getCheckingModel().isPathEnabled(x);
-			boolean greyed = tree.getCheckingModel().isPathGreyed(x);
-			LOG.debug(x + (checked ? " (Checked)" : "") + (enabled ? " (Enabled)" : "") + (greyed ? " (Greyed)" : ""));
-		}
-	}
+    /**
+     * Set the value of pluginManager
+     * 
+     * @param pluginManager new value of pluginManager
+     */
+    public void setPluginManager( PluginManager pluginManager )
+    {
+        PluginManager oldPluginManager = this.pluginManager;
+        this.pluginManager = pluginManager;
+        propertyChangeSupport.firePropertyChange( PROP_PLUGINMANAGER, oldPluginManager, pluginManager );
+        if ( oldPluginManager != null )
+        {
+            oldPluginManager.removeListener( this );
+        }
+        if ( pluginManager != null )
+        {
+            pluginManager.addListener( this );
+        }
+        pluginContainerChanged();
+    }
 
-	@Override
-	public synchronized void pluginContainerChanged() {
-		allCategory.removeAllNodes(true);
-		abcCategory.removeAllNodes(true);
-		activeCategory.removeAllNodes(true);
-		for (AbstractPlugin plugin : pluginManager) {
-			allCategory.createPath(plugin.getCategory()).addLeaf(plugin);
-			abcCategory.addLeaf(plugin);
-		}
-		fireNewRoot();
-	}
+    @Override
+    public Object getChild( Object parent, int index )
+    {
+        if ( parent.getClass().isAssignableFrom( rootCategory.getClass() ) )
+        {
+            return ( (Category<String, AbstractPlugin>) parent ).getNode( index );
+        }
+        return null;
+    }
+
+    @Override
+    public int getChildCount( Object node )
+    {
+        int count = 0;
+        if ( node.getClass().isAssignableFrom( rootCategory.getClass() ) )
+        {
+            count = ( (Category<String, AbstractPlugin>) node ).countNodes();
+        }
+        return count;
+    }
+
+    @Override
+    public int getIndexOfChild( Object parent, Object node )
+    {
+        int result = 0;
+        if ( parent.getClass().isAssignableFrom( rootCategory.getClass() ) )
+        {
+            result = ( (Category<String, AbstractPlugin>) parent ).getIndexOfNode( node );
+        }
+        return result;
+    }
+
+    @Override
+    public Object getRoot()
+    {
+        return rootCategory;
+    }
+
+    @Override
+    public boolean isLeaf( Object maybeLeaf )
+    {
+        return ( maybeLeaf instanceof AbstractPlugin );
+    }
+
+    @Override
+    public void valueForPathChanged( TreePath path, Object newValue )
+    {
+        LOG.warn( "### WARNING ###" );
+    }
+
+    @Override
+    public void currentPointsChanged( AbstractPlugin plugin, int newPoints )
+    {
+    }
+
+    @Override
+    public void pluginStateChanged( AbstractPlugin plugin, PluginState newState, PluginState oldState )
+    {
+        tree.repaint();
+    }
+
+    @Override
+    public synchronized void pluginActiveStateChanged( AbstractPlugin plugin, boolean active )
+    {
+        LOG.debug( "### Checked Pre:" );
+        for ( TreePath x : tree.getCheckingPaths() )
+        {
+            LOG.debug( "    " + x );
+        }
+        Category<String, AbstractPlugin> zwerg = allCategory;
+        TreePath allPath = new TreePath( new Object[] { rootCategory, allCategory } );
+        for ( String key : plugin.getCategory() )
+        {
+            zwerg = zwerg.getSubCategory( key );
+            if ( zwerg == null )
+            {
+                LOG.error( "Error finding path" );
+                return;
+            }
+            allPath = allPath.pathByAddingChild( zwerg );
+        }
+        allPath = allPath.pathByAddingChild( plugin );
+        TreePath activePath = new TreePath( new Object[] { rootCategory, activeCategory, plugin } );
+        TreePath abcPath = new TreePath( new Object[] { rootCategory, abcCategory, plugin } );
+        if ( active )
+        {
+            if ( activeCategory.addLeaf( plugin ) )
+            {
+                fireChildAdded( activePath.getParentPath(), activeCategory.getIndexOfNode( plugin ), plugin );
+                tree.addCheckingPath( allPath );
+                tree.addCheckingPath( activePath.getParentPath() );
+                tree.addCheckingPath( abcPath );
+            }
+        }
+        else
+        {
+            int index = activeCategory.getIndexOfNode( plugin );
+            if ( activeCategory.removeLeaf( plugin ) )
+            {
+                tree.removeCheckingPath( allPath );
+                tree.removeCheckingPath( activePath );
+                tree.removeCheckingPath( abcPath );
+                fireChildRemoved( activePath.getParentPath(), index, plugin );
+            }
+        }
+        LOG.debug( "### Checked After:" );
+        for ( TreePath x : tree.getCheckingPaths() )
+        {
+            LOG.debug( String.format( "    %s %s", x, x.getLastPathComponent().getClass() ) );
+        }
+        // rootCategory.print();
+        // tree.repaint();
+        // tree.updateUI();
+        for ( int i = 0; i < tree.getRowCount(); ++i )
+        {
+            TreePath x = tree.getPathForRow( i );
+            boolean checked = tree.getCheckingModel().isPathChecked( x );
+            boolean enabled = tree.getCheckingModel().isPathEnabled( x );
+            boolean greyed = tree.getCheckingModel().isPathGreyed( x );
+            LOG.debug( x + ( checked ? " (Checked)" : "" ) + ( enabled ? " (Enabled)" : "" )
+                + ( greyed ? " (Greyed)" : "" ) );
+        }
+    }
+
+    @Override
+    public synchronized void pluginContainerChanged()
+    {
+        allCategory.removeAllNodes( true );
+        abcCategory.removeAllNodes( true );
+        activeCategory.removeAllNodes( true );
+        for ( AbstractPlugin plugin : pluginManager )
+        {
+            allCategory.createPath( plugin.getCategory() ).addLeaf( plugin );
+            abcCategory.addLeaf( plugin );
+        }
+        fireNewRoot();
+    }
 }

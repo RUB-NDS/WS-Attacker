@@ -21,12 +21,13 @@ package wsattacker.library.signatureWrapping.util.signature;
 import org.w3c.dom.Element;
 
 /**
- * This interface represents a referring element. This can be either an ID-based
- * referring element or an XPath based referring element.
- *
+ * This interface represents a referring element. This can be either an ID-based referring element or an XPath based
+ * referring element.
+ * 
  * @author Christian Mainka
  */
-public interface ReferringElementInterface {
+public interface ReferringElementInterface
+{
 
     /**
      * @return The Reference element
@@ -34,13 +35,13 @@ public interface ReferringElementInterface {
     public Element getElementNode();
 
     /**
-     * @return The corresponding XPath Expression. Returns the tranformed ID
-     *         XPath in case of an ID Reference.
+     * @return The corresponding XPath Expression. Returns the tranformed ID XPath in case of an ID Reference.
      */
-    public String getXPath(); // as every ID Reference can be transformed to an XPath.
+    public String getXPath(); // as every ID Reference can be transformed to an
+                              // XPath.
 
     /**
      * Manually set an XPath which will be analyzed.
      */
-    public void setXPath(String workingXPath);
+    public void setXPath( String workingXPath );
 }

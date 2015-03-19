@@ -18,102 +18,105 @@
  */
 package wsattacker.plugin.dos.dosExtension.logEntry;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author ianyo
  */
-public class LogEntryIntervalTest {
-    
-    public LogEntryIntervalTest() {
+public class LogEntryIntervalTest
+{
+
+    public LogEntryIntervalTest()
+    {
     }
-    
 
     /**
      * Test of getIntervalNumber method, of class LogEntryInterval.
      */
     @Test
-    public void testGetIntervalNumber() {
-	System.out.println("getIntervalNumber");
-	LogEntryInterval instance = new LogEntryInterval();
-	int expResult = -1;
-	int result = instance.getIntervalNumber();
-	assertEquals(expResult, result);
+    public void testGetIntervalNumber()
+    {
+        System.out.println( "getIntervalNumber" );
+        LogEntryInterval instance = new LogEntryInterval();
+        int expResult = -1;
+        int result = instance.getIntervalNumber();
+        assertEquals( expResult, result );
     }
 
     /**
      * Test of setIntervalNumber method, of class LogEntryInterval.
      */
     @Test
-    public void testSetIntervalNumber() {
-	System.out.println("setIntervalNumber");
-	int intervalNumber = 0;
-	LogEntryInterval instance = new LogEntryInterval();
-	instance.setIntervalNumber(intervalNumber);
+    public void testSetIntervalNumber()
+    {
+        System.out.println( "setIntervalNumber" );
+        int intervalNumber = 0;
+        LogEntryInterval instance = new LogEntryInterval();
+        instance.setIntervalNumber( intervalNumber );
     }
 
     /**
      * Test of getNumberRequests method, of class LogEntryInterval.
      */
     @Test
-    public void testGetNumberRequests() {
-	System.out.println("getNumberRequests");
-	LogEntryInterval instance = new LogEntryInterval();
-	int expResult = 0;
-	int result = instance.getNumberRequests();
-	assertEquals(expResult, result);
+    public void testGetNumberRequests()
+    {
+        System.out.println( "getNumberRequests" );
+        LogEntryInterval instance = new LogEntryInterval();
+        int expResult = 0;
+        int result = instance.getNumberRequests();
+        assertEquals( expResult, result );
     }
 
     /**
      * Test of incNumberRequests method, of class LogEntryInterval.
      */
     @Test
-    public void testIncNumberRequests() {
-	System.out.println("incNumberRequests");
-	LogEntryInterval instance = new LogEntryInterval();
-	int expResult = instance.getNumberRequests() + 1;
-	instance.incNumberRequests();
-	int result = instance.getNumberRequests();
-	assertEquals(expResult, result);
+    public void testIncNumberRequests()
+    {
+        System.out.println( "incNumberRequests" );
+        LogEntryInterval instance = new LogEntryInterval();
+        int expResult = instance.getNumberRequests() + 1;
+        instance.incNumberRequests();
+        int result = instance.getNumberRequests();
+        assertEquals( expResult, result );
     }
 
     /**
      * Test of setNumberRequests method, of class LogEntryInterval.
      */
     @Test
-    public void testSetNumberRequests() {
-	System.out.println("setNumberRequests");
-	int numberRequests = 0;
-	LogEntryInterval instance = new LogEntryInterval();
-	instance.setNumberRequests(numberRequests);
+    public void testSetNumberRequests()
+    {
+        System.out.println( "setNumberRequests" );
+        int numberRequests = 0;
+        LogEntryInterval instance = new LogEntryInterval();
+        instance.setNumberRequests( numberRequests );
     }
 
     /**
      * Test of getMeanResponseTime method, of class LogEntryInterval.
      */
     @Test
-    public void testGetMeanResponseTime() {
-	System.out.println("getMeanResponseTime");
-	LogEntryInterval instance = new LogEntryInterval();
-	float expResult = 0.0F;
-	float result = instance.getMeanResponseTime();
-	assertEquals(expResult, result, 0.0);
+    public void testGetMeanResponseTime()
+    {
+        System.out.println( "getMeanResponseTime" );
+        LogEntryInterval instance = new LogEntryInterval();
+        float expResult = 0.0F;
+        float result = instance.getMeanResponseTime();
+        assertEquals( expResult, result, 0.0 );
     }
 
     /**
      * Test of setMeanResponseTime method, of class LogEntryInterval.
      */
     @Test
-    public void testSetMeanResponseTime() {
-	System.out.println("setMeanResponseTime");
-	float meanResponseTime = 0.0F;
-	LogEntryInterval instance = new LogEntryInterval();
-	instance.setMeanResponseTime(meanResponseTime);
+    public void testSetMeanResponseTime()
+    {
+        System.out.println( "setMeanResponseTime" );
+        float meanResponseTime = 0.0F;
+        LogEntryInterval instance = new LogEntryInterval();
+        instance.setMeanResponseTime( meanResponseTime );
     }
 }

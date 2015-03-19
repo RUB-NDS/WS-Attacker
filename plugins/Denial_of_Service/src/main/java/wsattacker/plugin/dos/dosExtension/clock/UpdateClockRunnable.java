@@ -21,32 +21,34 @@ package wsattacker.plugin.dos.dosExtension.clock;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * Siehe Buch S. 217
- * Objekt dieser Klasse wird einmal erzeugt und dann immer wieder an GUI-EventQueue übergeben!
- * Was passiert wenn ich ein Objekt der GUI-EventQueue übergebe?? wird automatisch run() ausgeführt??
- * -> JA, siehe Doko -> public static void invokeLater(Runnable runnable)
- * 	  Causes runnable to have its run method called in the dispatch thread of the EventQueue. This will happen after all pending events are processed. 
- * 
- * Ist ein Thread.. Lebt nur solange wie run() ausgeführt wird... hier also nur SEHR kurz!!
- * -> einmal Gui updaten = Tot!
- *
+ * Siehe Buch S. 217 Objekt dieser Klasse wird einmal erzeugt und dann immer wieder an GUI-EventQueue übergeben! Was
+ * passiert wenn ich ein Objekt der GUI-EventQueue übergebe?? wird automatisch run() ausgeführt?? -> JA, siehe Doko ->
+ * public static void invokeLater(Runnable runnable) Causes runnable to have its run method called in the dispatch
+ * thread of the EventQueue. This will happen after all pending events are processed. Ist ein Thread.. Lebt nur solange
+ * wie run() ausgeführt wird... hier also nur SEHR kurz!! -> einmal Gui updaten = Tot!
  */
-public class UpdateClockRunnable implements Runnable {
-	private AttackModel model;
-	private Clock clock; 
-	
-	// Constructor
-	public UpdateClockRunnable(AttackModel model){
-		this.model = model;		
-		this.clock = model.getClock();
-	}
-	
-	// führe Thread aus!
-	public void run(){
-		// WIR UPDATEN DAS MODELL!
-		// call method that updates label of Clock!
-		// trigger actionListener
-		String currentTime = clock.update();
-		model.updateClock(currentTime);
-	}
+public class UpdateClockRunnable
+    implements Runnable
+{
+    private AttackModel model;
+
+    private Clock clock;
+
+    // Constructor
+    public UpdateClockRunnable( AttackModel model )
+    {
+        this.model = model;
+        this.clock = model.getClock();
+    }
+
+    // führe Thread aus!
+    @Override
+    public void run()
+    {
+        // WIR UPDATEN DAS MODELL!
+        // call method that updates label of Clock!
+        // trigger actionListener
+        String currentTime = clock.update();
+        model.updateClock( currentTime );
+    }
 }

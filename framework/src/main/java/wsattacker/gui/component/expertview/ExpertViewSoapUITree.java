@@ -29,24 +29,31 @@ import javax.swing.JPanel;
 import wsattacker.main.testsuite.TestSuite;
 
 // TODO: Idea for a "better" Expert view
-public class ExpertViewSoapUITree {
-	Component servicePanel, operationPanel, requestPanel;
-	JPanel panel;
-	WsdlInterfacePanelBuilder serviceBuilder;
-	WsdlOperationPanelBuilder operationBuilder;
-	WsdlRequestPanelBuilder requestBuilder;
+public class ExpertViewSoapUITree
+{
+    Component servicePanel, operationPanel, requestPanel;
 
-	public ExpertViewSoapUITree(TestSuite testSuite) {
-		// returned component
-		WsdlProject project = testSuite.getProject();
-		Workspace workspace = project.getWorkspace();
-		panel = new Navigator(workspace);
-		panel.setName("Expert View");
-		panel.setPreferredSize(new java.awt.Dimension(368, 374));
-	}
+    JPanel panel;
 
-	public Component getView() {
-		return panel;
-	}
+    WsdlInterfacePanelBuilder serviceBuilder;
+
+    WsdlOperationPanelBuilder operationBuilder;
+
+    WsdlRequestPanelBuilder requestBuilder;
+
+    public ExpertViewSoapUITree( TestSuite testSuite )
+    {
+        // returned component
+        WsdlProject project = testSuite.getProject();
+        Workspace workspace = project.getWorkspace();
+        panel = new Navigator( workspace );
+        panel.setName( "Expert View" );
+        panel.setPreferredSize( new java.awt.Dimension( 368, 374 ) );
+    }
+
+    public Component getView()
+    {
+        return panel;
+    }
 
 }

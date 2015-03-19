@@ -28,75 +28,90 @@ import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools
 /**
  * An OrExpression is mainly a container for AndExpressions.
  */
-public class OrExpression implements XPathPartInterface, ExpressionInterface {
+public class OrExpression
+    implements XPathPartInterface, ExpressionInterface
+{
 
     /**
-     * Factory for creating special andExpressions. Global access.. can be
-     * changed to another implementation.
+     * Factory for creating special andExpressions. Global access.. can be changed to another implementation.
      */
     public static AndExpressionFactoryInterface andFactory = new AndExpressionFactory();
 
     private final String expression;
+
     private final List<AndExpression> andExpressions;
 
-    public OrExpression(String expression) {
+    public OrExpression( String expression )
+    {
         this.expression = expression;
         this.andExpressions = new ArrayList<AndExpression>();
         eval();
     }
 
-    public List<AndExpression> getAndExpressions() {
+    public List<AndExpression> getAndExpressions()
+    {
         return andExpressions;
     }
 
     @Override
-    public String getExpression() {
+    public String getExpression()
+    {
         return expression;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return expression;
     }
 
     @Override
-    public String toFullString() {
-        return XPathInspectorTools.implodeList(andExpressions, " ");
+    public String toFullString()
+    {
+        return XPathInspectorTools.implodeList( andExpressions, " " );
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String) {
-            return equals(new OrExpression((String) o));
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String )
+        {
+            return equals( new OrExpression( (String) o ) );
         }
-        if (o instanceof OrExpression) {
-            return expression.equals(((ExpressionInterface) o).getExpression());
+        if ( o instanceof OrExpression )
+        {
+            return expression.equals( ( (ExpressionInterface) o ).getExpression() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 47 * hash + (this.expression != null ? this.expression.hashCode() : 0);
+        hash = 47 * hash + ( this.expression != null ? this.expression.hashCode() : 0 );
         return hash;
     }
 
-    private void eval() {
+    private void eval()
+    {
         int prevAnd = 0;
-        int nextAnd = XPathInspectorTools.nextString(expression, " and ", prevAnd);
+        int nextAnd = XPathInspectorTools.nextString( expression, " and ", prevAnd );
         String andString;
-        while (nextAnd > 0) {
-            andString = expression.substring(prevAnd, nextAnd).trim();
-            if (!andString.isEmpty()) {
-                andExpressions.add(andFactory.createAndExpression(andString));
+        while ( nextAnd > 0 )
+        {
+            andString = expression.substring( prevAnd, nextAnd ).trim();
+            if ( !andString.isEmpty() )
+            {
+                andExpressions.add( andFactory.createAndExpression( andString ) );
             }
             prevAnd = nextAnd + 5; // = nextOr + " and ".length()
-            nextAnd = XPathInspectorTools.nextString(expression, " and ", prevAnd);
+            nextAnd = XPathInspectorTools.nextString( expression, " and ", prevAnd );
         }
-        andString = expression.substring(prevAnd).trim();
-        if (!andString.isEmpty()) {
-            andExpressions.add(andFactory.createAndExpression(andString));
+        andString = expression.substring( prevAnd ).trim();
+        if ( !andString.isEmpty() )
+        {
+            andExpressions.add( andFactory.createAndExpression( andString ) );
         }
     }
 }

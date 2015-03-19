@@ -18,12 +18,18 @@
  */
 package wsattacker.library.schemaanalyzer;
 
-public class TestfilePath {
+public class TestfilePath
+{
 
     public static final String SOAP11_PATH_TO_EXPANDED_XML = "src/test/resources/soap11_envelope_header_body.xml";
+
     public static final String SOAP11_PATH_TO_ENVELOPE_ELEMENT_XML = "src/test/resources/soap11_envelope_only.xml";
+
     public static final String SOAP11_PATH_TO_SIGNED_XML = "src/test/resources/soap11_example_signed_message.xml";
+
     public static final String SOAP12_PATH_TO_EXPANDED_XML = "src/test/resources/soap12_envelope_header_body.xml";
+
     public static final String SOAP12_PATH_TO_ENVELOPE_ELEMENT_XML = "src/test/resources/soap12_envelope_only.xml";
+
     public static final String SOAP12_PATH_TO_SIGNED_XML = "src/test/resources/soap12_example_signed_message.xml";
 }

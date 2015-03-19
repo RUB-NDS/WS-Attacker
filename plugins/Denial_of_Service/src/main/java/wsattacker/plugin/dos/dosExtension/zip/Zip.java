@@ -22,53 +22,59 @@ import java.io.*;
 import java.util.zip.*;
 
 /**
- *
  * @author ianyo
  */
-public class Zip {
+public class Zip
+{
 
     static final int BUFFER = 2048;
 
     /**
-     * Reades and Zips content of folder specified by inPath and writes it to
-     * outPathFile
-     *
+     * Reades and Zips content of folder specified by inPath and writes it to outPathFile
+     * 
      * @param inPath
      * @param outPathFile
      */
-    public static void createZip(String inPath, String filenameZip) {
-	try {
-	    System.out.println("Start generating zipfile");
-	    
-	    // get a list of files from current directory
-	    File f = new File(inPath); // "."
-	    String files[] = f.list();
-	    
-	    // create ZipFile in current Dir
-	    String outPathFile = inPath + filenameZip;
-	    BufferedInputStream origin = null;
-	    FileOutputStream dest = new FileOutputStream(outPathFile);
-	    ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-	    byte data[] = new byte[BUFFER];  
+    public static void createZip( String inPath, String filenameZip )
+    {
+        try
+        {
+            System.out.println( "Start generating zipfile" );
 
-	    // add files
-	    for (int i = 0; i < files.length; i++) {
-		// exclude Zipfile itself 
-		if(!files[i].equals(filenameZip)){
-		    FileInputStream fi = new FileInputStream(inPath + files[i]);
-		    origin = new BufferedInputStream(fi, BUFFER);
-		    ZipEntry entry = new ZipEntry(files[i]);
-		    out.putNextEntry(entry);
-		    int count;
-		    while ((count = origin.read(data, 0, BUFFER)) != -1) {
-			out.write(data, 0, count);
-		    }
-		    origin.close();
-		}
-	    }
-	    out.close();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+            // get a list of files from current directory
+            File f = new File( inPath ); // "."
+            File[] files = f.listFiles();
+
+            // create ZipFile in current Dir
+            String outPathFile = inPath + filenameZip;
+            BufferedInputStream origin = null;
+            FileOutputStream dest = new FileOutputStream( outPathFile );
+            ZipOutputStream out = new ZipOutputStream( new BufferedOutputStream( dest ) );
+            byte data[] = new byte[BUFFER];
+
+            // add files
+            for ( int i = 0; i < files.length; i++ )
+            {
+                // exclude Zipfile itself
+                if ( !files[i].equals( filenameZip ) )
+                {
+                    FileInputStream fi = new FileInputStream( files[i] );
+                    origin = new BufferedInputStream( fi, BUFFER );
+                    ZipEntry entry = new ZipEntry( files[i].getName() );
+                    out.putNextEntry( entry );
+                    int count;
+                    while ( ( count = origin.read( data, 0, BUFFER ) ) != -1 )
+                    {
+                        out.write( data, 0, count );
+                    }
+                    origin.close();
+                }
+            }
+            out.close();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
     }
 }

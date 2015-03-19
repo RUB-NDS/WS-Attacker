@@ -18,26 +18,29 @@
  */
 package wsattacker.main.composition.plugin;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import wsattacker.main.plugin.NullPlugin;
 
-public class TestAbstractPlugin {
-	
-	@Test
-	public void testEquals() {
-		AbstractPlugin a1 = new NullPlugin("a");
-		AbstractPlugin a2 = new NullPlugin("a");
-		AbstractPlugin b = new NullPlugin("b");
-		
-		assertTrue(a1.equals(a1));
-		assertTrue(a2.equals(a2));
-		assertTrue(b.equals(b));
-		
-		assertFalse(a1 == a2);
-		assertTrue(a1.equals(a2));
-		
-		assertFalse(a1.equals(b));
-		assertFalse(a2.equals(b));
-	}
+public class TestAbstractPlugin
+{
+
+    @Test
+    public void testEquals()
+    {
+        AbstractPlugin a1 = new NullPlugin( "a" );
+        AbstractPlugin a2 = new NullPlugin( "a" );
+        AbstractPlugin b = new NullPlugin( "b" );
+
+        assertTrue( a1.equals( a1 ) );
+        assertTrue( a2.equals( a2 ) );
+        assertTrue( b.equals( b ) );
+
+        assertFalse( a1 == a2 );
+        assertTrue( a1.equals( a2 ) );
+
+        assertFalse( a1.equals( b ) );
+        assertFalse( a2.equals( b ) );
+    }
 }

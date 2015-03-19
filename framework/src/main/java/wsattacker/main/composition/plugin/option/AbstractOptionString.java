@@ -24,53 +24,67 @@ import wsattacker.gui.component.pluginconfiguration.option.OptionStringGUI_NB;
 /**
  * WS-Attacker will represent this with a text input field for multiple lines.
  */
-public abstract class AbstractOptionString extends AbstractOption {
+public abstract class AbstractOptionString
+    extends AbstractOption
+{
 
-	private static final long serialVersionUID = 2L;
-	public static final String PROP_VALUE = "value";
-	private String value;
+    private static final long serialVersionUID = 2L;
 
-	// constructors
-	public AbstractOptionString(String name, String value) {
-		this(name, value, "");
-	}
+    public static final String PROP_VALUE = "value";
 
-	public AbstractOptionString(String name, String value, String description) {
-		super(name, description);
-		this.value = value;
-	}
+    private String value;
 
-	// IMPORTANT: Implementation needed
-	@Override
-	public abstract boolean isValid(String value);
+    // constructors
+    public AbstractOptionString( String name, String value )
+    {
+        this( name, value, "" );
+    }
 
-	@Override
-	public void parseValue(String value) {
-		setValue(value);
-	}
+    public AbstractOptionString( String name, String value, String description )
+    {
+        super( name, description );
+        this.value = value;
+    }
 
-	@Override
-	public String getValueAsString() {
-		return value;
-	}
+    // IMPORTANT: Implementation needed
+    @Override
+    public abstract boolean isValid( String value );
 
-	// String specific
-	public String getValue() {
-		return getValueAsString();
-	}
+    @Override
+    public void parseValue( String value )
+    {
+        setValue( value );
+    }
 
-	public void setValue(String value) {
-		if (isValid(value)) {
-			String oldValue = this.value;
-			this.value = value;
-			firePropertyChange(PROP_VALUE, oldValue, value);
-		} else {
-			throw new IllegalArgumentException(String.format("isValid(\"%s\") returned false", value));
-		}
-	}
+    @Override
+    public String getValueAsString()
+    {
+        return value;
+    }
 
-	@Override
-	public OptionGUI createOptionGUI() {
-		return new OptionStringGUI_NB(this);
-	}
+    // String specific
+    public String getValue()
+    {
+        return getValueAsString();
+    }
+
+    public void setValue( String value )
+    {
+        if ( isValid( value ) )
+        {
+            String oldValue = this.value;
+            this.value = value;
+            firePropertyChange( PROP_VALUE, oldValue, value );
+        }
+        else
+        {
+            throw new IllegalArgumentException( String.format( "isValid(\"%s\") returned false", value ) );
+        }
+    }
+
+    @Override
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionStringGUI_NB( this );
+    }
 }

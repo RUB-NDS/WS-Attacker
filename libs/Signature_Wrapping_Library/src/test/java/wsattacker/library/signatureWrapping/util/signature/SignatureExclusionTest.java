@@ -29,61 +29,72 @@ import wsattacker.library.signatureWrapping.util.SoapTestDocument;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
- *
  * @author christian
  */
-public class SignatureExclusionTest {
+public class SignatureExclusionTest
+{
 
-    public SignatureExclusionTest() {
+    public SignatureExclusionTest()
+    {
     }
 
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass()
+    {
     }
 
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass()
+    {
     }
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
     }
 
     @Test
-    public void removeSignatureTest() throws Exception {
-        Document preDoc = DomUtilities.readDocument("src/test/resources/saml_over_soap.xml");
+    public void removeSignatureTest()
+        throws Exception
+    {
+        Document preDoc = DomUtilities.readDocument( "src/test/resources/saml_over_soap.xml" );
 
         SignatureManager preManager = new SignatureManager();
-        preManager.setDocument(preDoc);
+        preManager.setDocument( preDoc );
 
-        String xml = DomUtilities.domToString(preDoc);
+        String xml = DomUtilities.domToString( preDoc );
 
-        assertEquals(2, preManager.getSignatureElements().size());
+        assertEquals( 2, preManager.getSignatureElements().size() );
 
-        SignatureRemover r = new SignatureRemover(xml);
+        SignatureRemover r = new SignatureRemover( xml );
 
         String result = r.getXmlWithoutSignature();
 
-        Document postDoc = DomUtilities.stringToDom(result);
+        Document postDoc = DomUtilities.stringToDom( result );
         SignatureManager postManager = new SignatureManager();
-        postManager.setDocument(postDoc);
+        postManager.setDocument( postDoc );
 
-        assertEquals(0, postManager.getSignatureElements().size());
+        assertEquals( 0, postManager.getSignatureElements().size() );
     }
 
-    public void noSignatureContainedTest() throws Exception {
+    public void noSignatureContainedTest()
+        throws Exception
+    {
         SoapTestDocument soap = new SoapTestDocument();
-        String xml = DomUtilities.domToString(soap.getDocument());
+        String xml = DomUtilities.domToString( soap.getDocument() );
 
-        new SignatureRemover(xml);
+        new SignatureRemover( xml );
     }
 
-    public void invalidXML() throws Exception {
-        new SignatureRemover("<a>");
+    public void invalidXML()
+        throws Exception
+    {
+        new SignatureRemover( "<a>" );
     }
 
 }

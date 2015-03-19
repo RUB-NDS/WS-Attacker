@@ -24,32 +24,36 @@ package wsattacker.main.plugin.option;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
- *
  * @author christian
  */
-public class OptionSimpleTextTest {
+public class OptionSimpleTextTest
+{
 
-	public OptionSimpleTextTest() {
-	}
+    public OptionSimpleTextTest()
+    {
+    }
 
-	@Test
-	public void propertyChangeListenerWorking() {
-		OptionSimpleText option = new OptionSimpleText("TestName", "TestDescription");
-		option.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent pce) {
-				System.out.println("PropertyChange detected: " + pce.getPropertyName());
-			}
-		});
-		option.setName("New TestName");
-		option.setValue("New TestValue");
+    @Test
+    public void propertyChangeListenerWorking()
+    {
+        OptionSimpleText option = new OptionSimpleText( "TestName", "TestDescription" );
+        option.addPropertyChangeListener( new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange( PropertyChangeEvent pce )
+            {
+                System.out.println( "PropertyChange detected: " + pce.getPropertyName() );
+            }
+        } );
+        option.setName( "New TestName" );
+        option.setValue( "New TestValue" );
 
-		assertThat(option.getName(), is("New TestName"));
-		assertThat(option.getValue(), is("New TestValue"));
-	}
+        assertThat( option.getName(), is( "New TestName" ) );
+        assertThat( option.getValue(), is( "New TestValue" ) );
+    }
 }

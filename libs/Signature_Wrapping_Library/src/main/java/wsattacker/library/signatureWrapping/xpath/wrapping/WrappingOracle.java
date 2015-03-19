@@ -37,36 +37,46 @@ import wsattacker.library.signatureWrapping.xpath.analysis.XPathAnalyser;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 
 /**
- * High Level Algorithm for creating XSW Messages. The WrappingOracle takes an
- * signed input message, a SignatureManager
+ * High Level Algorithm for creating XSW Messages. The WrappingOracle takes an signed input message, a SignatureManager
  * and the List of Payload to create it.
  */
-public class WrappingOracle {
+public class WrappingOracle
+{
 
     private final SchemaAnalyzer schemaAnalyser;
+
     private final Document originalDocument;
+
     private List<Payload> payloadList;
+
     private final List<QName> filterList;
+
     private final List<XPathAnalyser> analyserList;
+
     int maxPossibilites;
+
     // statistics
     private int countSignedElements;
+
     private int countElementsReferedByID;
+
     private int countElementsReferedByXPath;
+
     private int countElementsReferedByFastXPath;
+
     private int countElementsReferedByPrefixfreeTransformedFastXPath;
-    public final static Logger LOG = Logger.getLogger(WrappingOracle.class);
+
+    public final static Logger LOG = Logger.getLogger( WrappingOracle.class );
 
     /**
      * Constructor class.
-     *
+     * 
      * @param originalDocument
      * @param payloads
      * @param schemaAnalyser
      */
-    public WrappingOracle(Document originalDocument,
-      List<Payload> payloads,
-      SchemaAnalyzer schemaAnalyser) {
+    public WrappingOracle( Document originalDocument, List<Payload> payloads, SchemaAnalyzer schemaAnalyser )
+    {
         this.originalDocument = originalDocument;
         this.payloadList = payloads;
         this.schemaAnalyser = schemaAnalyser;
@@ -78,140 +88,181 @@ public class WrappingOracle {
     /**
      * @return The maximum number of possible XSW messages.
      */
-    public int maxPossibilities() {
+    public int maxPossibilities()
+    {
         return maxPossibilites;
     }
 
     /**
-     * Returns the i-th possible XSW message. The original document is not
-     * changed.
-     *
+     * Returns the i-th possible XSW message. The original document is not changed.
+     * 
      * @param index
-     *
      * @return XSW message
-     *
      * @throws InvalidWeaknessException
      */
-    public Document getPossibility(int index)
-      throws InvalidWeaknessException {
+    public Document getPossibility( int index )
+        throws InvalidWeaknessException
+    {
         WeaknessLog.clean();
-        Document attackDocument = DomUtilities.createNewDomFromNode(originalDocument.getDocumentElement());
-        LOG.info("Creating Wrapping Possibility " + index + " of (" + maxPossibilites + "-1)");
+        Document attackDocument = DomUtilities.createNewDomFromNode( originalDocument.getDocumentElement() );
+        LOG.info( "Creating Wrapping Possibility " + index + " of (" + maxPossibilites + "-1)" );
 
-        for (int i = 0; i < payloadList.size(); ++i) {
+        for ( int i = 0; i < payloadList.size(); ++i )
+        {
 
-            Payload payload = payloadList.get(i);
-            XPathAnalyser xpa = analyserList.get(i);
+            Payload payload = payloadList.get( i );
+            XPathAnalyser xpa = analyserList.get( i );
 
             int possibility = index % xpa.getMaxPossibilites();
             index /= xpa.getMaxPossibilites();
 
-            Element signedElement = DomUtilities.findCorrespondingElement(attackDocument, payload.getSignedElement());
+            Element signedElement = DomUtilities.findCorrespondingElement( attackDocument, payload.getSignedElement() );
             Element payloadElement;
-            try {
-                payloadElement = (Element) attackDocument.importNode(payload.getPayloadElement(), true);
-            } catch (Exception e) {
-                LOG.warn("Could not get Payload Element for " + signedElement.getNodeName() + " / Skipping.");
+            try
+            {
+                payloadElement = (Element) attackDocument.importNode( payload.getPayloadElement(), true );
+            }
+            catch ( Exception e )
+            {
+                LOG.warn( "Could not get Payload Element for " + signedElement.getNodeName() + " / Skipping." );
                 continue;
             }
 
-            // We must be carefull: The refferringElement commonly points to the original Document
+            // We must be carefull: The refferringElement commonly points to the
+            // original Document
             // but not to the newly created attackerDocument.
-//			// Thus we must use the findCorrespondingElement method.
-            Element refferingElement = DomUtilities.findCorrespondingElement(signedElement.getOwnerDocument(), payload.getReferringElement().getElementNode());
-            PayloadElement pay = new PayloadElement(payloadElement, refferingElement);
-            pay.setUseThisPayloadElement(!payload.isWrapOnly());
-            SignedElement sig = new SignedElement(signedElement, refferingElement);
-            xpa.abuseWeakness(possibility, sig, pay);
+            // // Thus we must use the findCorrespondingElement method.
+            Element refferingElement =
+                DomUtilities.findCorrespondingElement( signedElement.getOwnerDocument(),
+                                                       payload.getReferringElement().getElementNode() );
+            PayloadElement pay = new PayloadElement( payloadElement, refferingElement );
+            pay.setUseThisPayloadElement( !payload.isWrapOnly() );
+            SignedElement sig = new SignedElement( signedElement, refferingElement );
+            xpa.abuseWeakness( possibility, sig, pay );
         }
 
         return attackDocument;
     }
 
     /**
-     * Private init methods. Analyzes the referenced elements
-     * and estimates the number of possible XSW messages.
+     * Private init methods. Analyzes the referenced elements and estimates the number of possible XSW messages.
      */
-    private void init() {
-        filterList.add(new QName(URI_NS_DS, "SignedInfo"));
-        filterList.add(new QName(URI_NS_DS, "SignatureValue"));
-        schemaAnalyser.setFilterList(filterList);
+    private void init()
+    {
+        /*********************************************************************/
+        // 12042014dk: possibility to set filterlist before calling init method
+        /*********************************************************************/
+        if ( null != schemaAnalyser.getFilterList() )
+        {
+            if ( schemaAnalyser.getFilterList().isEmpty() )
+            {
+                filterList.add( new QName( URI_NS_DS, "SignedInfo" ) );
+                filterList.add( new QName( URI_NS_DS, "SignatureValue" ) );
+                schemaAnalyser.setFilterList( filterList );
+            }
+        }
+        /*********************************************************************/
 
         maxPossibilites = 0;
         List<Payload> usedPayloads = new ArrayList<Payload>();
         // Filter out unused payloads
-        for (Payload payload : payloadList) {
+        for ( Payload payload : payloadList )
+        {
             // statistics
             ++countSignedElements;
-            if (payload.getReferringElement() instanceof ReferenceElement) {
+            if ( payload.getReferringElement() instanceof ReferenceElement )
+            {
                 ++countElementsReferedByID;
-            } else if (payload.getReferringElement() instanceof XPathElement) {
+            }
+            else if ( payload.getReferringElement() instanceof XPathElement )
+            {
                 ++countElementsReferedByXPath;
             }
 
-            if (payload.hasPayload() || payload.isTimestamp()) {
+            if ( payload.hasPayload() || payload.isTimestamp() )
+            {
                 Element payloadElement;
-                try {
+                try
+                {
                     payloadElement = payload.getPayloadElement();
-                } catch (InvalidPayloadException e) {
-                    LOG.warn("Could not get Payload Element for " + payload.getSignedElement().getNodeName() + " / Skipping.");
+                }
+                catch ( InvalidPayloadException e )
+                {
+                    LOG.warn( "Could not get Payload Element for " + payload.getSignedElement().getNodeName()
+                        + " / Skipping." );
                     continue;
                 }
-                // We must be carefull: The refferringElement commonly points to the original Document
+                // We must be carefull: The refferringElement commonly points to
+                // the original Document
                 // but not to the newly created attackerDocument.
                 // Thus we must use the findCorrespondingElement method.
                 // TODO: I think this is not necessary for the init() Method.
-//			    Element refferingElement = DomUtilities.findCorrespondingElement(payload.getSignedElement().getOwnerDocument(), payload.getReferringElement().getElementNode());
+                // Element refferingElement =
+                // DomUtilities.findCorrespondingElement(payload.getSignedElement().getOwnerDocument(),
+                // payload.getReferringElement().getElementNode());
                 Element refferingElement = payload.getReferringElement().getElementNode();
-                PayloadElement pay = new PayloadElement(payloadElement, refferingElement);
-                SignedElement sig = new SignedElement(payload.getSignedElement(), refferingElement);
+                PayloadElement pay = new PayloadElement( payloadElement, refferingElement );
+                SignedElement sig = new SignedElement( payload.getSignedElement(), refferingElement );
                 XPathAnalyser xpa;
-                xpa = new XPathAnalyser(payload.getReferringElement(), sig, pay, schemaAnalyser);
+                xpa = new XPathAnalyser( payload.getReferringElement(), sig, pay, schemaAnalyser );
                 // statistics
-                if (xpa.isFastXPath()) {
+                if ( xpa.isFastXPath() )
+                {
                     ++countElementsReferedByFastXPath;
-                } else if (xpa.isPrefixfreeTransformedFastXPath()) {
+                }
+                else if ( xpa.isPrefixfreeTransformedFastXPath() )
+                {
                     ++countElementsReferedByPrefixfreeTransformedFastXPath;
                 }
 
                 int possibilities = xpa.getMaxPossibilites();
-                if (possibilities > 0) {
-                    maxPossibilites = (maxPossibilites == 0 ? possibilities : maxPossibilites * possibilities);
-                    analyserList.add(xpa);
-                    usedPayloads.add(payload);
+                if ( possibilities > 0 )
+                {
+                    maxPossibilites = ( maxPossibilites == 0 ? possibilities : maxPossibilites * possibilities );
+                    analyserList.add( xpa );
+                    usedPayloads.add( payload );
                 }
-            } else {
-                LOG.info("No payload for " + payload.getSignedElement().getNodeName() + " detected / Skipping.");
+            }
+            else
+            {
+                LOG.info( "No payload for " + payload.getSignedElement().getNodeName() + " detected / Skipping." );
             }
         }
         this.payloadList = usedPayloads;
     }
 
-    public List<Payload> getUsedPayloads() {
+    public List<Payload> getUsedPayloads()
+    {
         return payloadList;
     }
 
-    public List<XPathAnalyser> getAnalyserList() {
+    public List<XPathAnalyser> getAnalyserList()
+    {
         return analyserList;
     }
 
-    public int getCountSignedElements() {
+    public int getCountSignedElements()
+    {
         return countSignedElements;
     }
 
-    public int getCountElementsReferedByID() {
+    public int getCountElementsReferedByID()
+    {
         return countElementsReferedByID;
     }
 
-    public int getCountElementsReferedByXPath() {
+    public int getCountElementsReferedByXPath()
+    {
         return countElementsReferedByXPath;
     }
 
-    public int getCountElementsReferedByFastXPath() {
+    public int getCountElementsReferedByFastXPath()
+    {
         return countElementsReferedByFastXPath;
     }
 
-    public int getCountElementsReferedByPrefixfreeTransformedFastXPath() {
+    public int getCountElementsReferedByPrefixfreeTransformedFastXPath()
+    {
         return countElementsReferedByPrefixfreeTransformedFastXPath;
     }
 }

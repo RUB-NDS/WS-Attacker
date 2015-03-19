@@ -20,26 +20,28 @@ package wsattacker.plugin.dos.dosExtension.mvc.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
+import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
 
 /**
  * set Attack to finished + go back to WS-ATtacker
+ * 
  * @author af
- *
  */
-public class CloseAttackFinishedController implements ActionListener
+public class CloseAttackFinishedController
+    implements ActionListener
 {
-    private AttackModel model;
+    private DosResultJFrame dosResultJFrame;
 
-    public CloseAttackFinishedController(AttackModel model)
+    public CloseAttackFinishedController( DosResultJFrame dosResultJFrame )
     {
-        this.model = model;
+        this.dosResultJFrame = dosResultJFrame;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
-	// Close Finished Attack + go back to WSAttacker
-	model.closeAttackFinished();
+        // Close Finished Attack + go back to WSAttacker
+        dosResultJFrame.dispose();
     }
 }

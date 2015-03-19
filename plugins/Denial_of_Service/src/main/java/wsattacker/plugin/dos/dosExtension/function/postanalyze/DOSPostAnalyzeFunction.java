@@ -18,59 +18,70 @@
  */
 package wsattacker.plugin.dos.dosExtension.function.postanalyze;
 
-//import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDialog;
 import java.awt.Window;
+
 import javax.swing.JDialog;
+
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
+import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
-public class DOSPostAnalyzeFunction implements PluginFunctionInterface {
+public class DOSPostAnalyzeFunction
+    implements PluginFunctionInterface
+{
 
-    AttackModel model;
+    private AttackModel model;
 
-    public DOSPostAnalyzeFunction() {
-	this.model = null;
+    private DosResultJFrame dosResultFrame;
+
+    public DOSPostAnalyzeFunction()
+    {
+        this.model = null;
+        this.dosResultFrame = null;
     }
 
-    public DOSPostAnalyzeFunction(AttackModel model) {
-	this.model = model;
+    public void setAttackModel( AttackModel model )
+    {
+        this.model = model;
     }
 
-    public void setAttackModel(AttackModel model) {
-	this.model = model;
-    }
-
-    @Override
-    public String getName() {
-	return "View Attack Result";
-    }
-
-    @Override
-    public boolean isEnabled() {
-	if (model != null && model.getAttackFinished()) {
-	    return true;
-	} else {
-	    return false;
-	}
+    public void setAttackResultJFrame( DosResultJFrame dosResultFrame )
+    {
+        this.dosResultFrame = dosResultFrame;
     }
 
     @Override
-    public Window getGuiWindow() {
-	System.out.println(model.getAttackName());
-	if (model != null) {
-	    if( this.model.getAttackResultJFrame() == null){
-		System.err.println("no ResultJFrame set...");
-	    }
-	    return model.getAttackResultJFrame();
-	} else {
-	    JDialog resultDialog = new JDialog();
-	    resultDialog.setTitle(
-		    "The attack is not in a finished state!\n"
-		    + "Therefore no result GUI is available yet.");
-	    resultDialog.setSize(200,200);
-	    resultDialog.setModal(true);
-	    resultDialog.setVisible(true);	    
-	    return resultDialog;
-	}	
+    public String getName()
+    {
+        return "View Attack Result";
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return model != null && model.isAttackFinished();
+    }
+
+    @Override
+    public Window getGuiWindow()
+    {
+        if ( model != null )
+        {
+            if ( dosResultFrame == null )
+            {
+                System.err.println( "no ResultJFrame set..." );
+            }
+            return dosResultFrame;
+        }
+        else
+        {
+            JDialog resultDialog = new JDialog();
+            resultDialog.setTitle( "The attack is not in a finished state!\n"
+                + "Therefore no result GUI is available yet." );
+            resultDialog.setSize( 200, 200 );
+            resultDialog.setModal( true );
+            resultDialog.setVisible( true );
+            return resultDialog;
+        }
     }
 }

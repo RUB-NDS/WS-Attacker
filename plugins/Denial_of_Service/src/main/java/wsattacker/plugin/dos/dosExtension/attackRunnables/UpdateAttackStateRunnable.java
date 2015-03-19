@@ -21,30 +21,33 @@ package wsattacker.plugin.dos.dosExtension.attackRunnables;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
- * Siehe Buch S. 217
- * Objekt dieser Klasse wird einmal erzeugt und dann immer wieder an GUI-EventQueue übergeben!
- * Was passiert wenn ich ein Objekt der GUI-EventQueue übergebe?? wird automatisch run() ausgeführt??
- * -> JA, siehe Doko -> public static void invokeLater(Runnable runnable)
- * 	  Causes runnable to have its run method called in the dispatch thread of the EventQueue. This will happen after all pending events are processed. 
- * 
- * Ist ein Thread.. Lebt nur solange wie run() ausgeführt wird... hier also nur SEHR kurz!!
- * -> einmal Gui updaten = Tot!
- *
+ * Siehe Buch S. 217 Objekt dieser Klasse wird einmal erzeugt und dann immer wieder an GUI-EventQueue übergeben! Was
+ * passiert wenn ich ein Objekt der GUI-EventQueue übergebe?? wird automatisch run() ausgeführt?? -> JA, siehe Doko ->
+ * public static void invokeLater(Runnable runnable) Causes runnable to have its run method called in the dispatch
+ * thread of the EventQueue. This will happen after all pending events are processed. Ist ein Thread.. Lebt nur solange
+ * wie run() ausgeführt wird... hier also nur SEHR kurz!! -> einmal Gui updaten = Tot!
  */
-public class UpdateAttackStateRunnable implements Runnable {
-	private AttackModel model;
-	private int state;
-	
-	// Constructor
-	public UpdateAttackStateRunnable(AttackModel model, int state){
-		this.model = model;	
-		this.state = state;
-	}
-	
-	public void run(){
-		// update Model + GUI
-		// - executed in EDT-context - don't have to worry about syncronization
-		// - Warning: has to run in very short period - otherwise might block GUI
-		this.model.setCurrentAttackState(this.state);
-	}
+public class UpdateAttackStateRunnable
+    implements Runnable
+{
+    private AttackModel model;
+
+    private int state;
+
+    // Constructor
+    public UpdateAttackStateRunnable( AttackModel model, int state )
+    {
+        this.model = model;
+        this.state = state;
+    }
+
+    @Override
+    public void run()
+    {
+        // update Model + GUI
+        // - executed in EDT-context - don't have to worry about syncronization
+        // - Warning: has to run in very short period - otherwise might block
+        // GUI
+        this.model.setCurrentAttackState( this.state );
+    }
 }

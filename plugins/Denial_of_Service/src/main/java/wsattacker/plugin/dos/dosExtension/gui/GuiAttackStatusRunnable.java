@@ -18,29 +18,53 @@
  */
 package wsattacker.plugin.dos.dosExtension.gui;
 
-import wsattacker.plugin.dos.dosExtension.mvc.controller.AbortController;
-import wsattacker.plugin.dos.dosExtension.mvc.controller.FinalizeController;
-import wsattacker.plugin.dos.dosExtension.mvc.controller.ReportController;
-import wsattacker.plugin.dos.dosExtension.mvc.controller.StartController;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
+import wsattacker.plugin.dos.dosExtension.mvc.view.AttackListener;
 
 /**
- * opens the DosAttackJFrame once run() is executed!
- * is called via invokeLater(passed via runnable) = threadSave!
+ * opens the DosAttackJFrame once run() is executed! is called via invokeLater(passed via runnable) = threadSave!
+ * 
  * @author Andreas Falkenberg
  */
-public class GuiAttackStatusRunnable implements Runnable
+public class GuiAttackStatusRunnable
+    implements Runnable
 {
-    private AttackModel model;
+    private final AttackModel model;
 
-    public GuiAttackStatusRunnable(AttackModel model){
-	this.model = model;
+    public GuiAttackStatusRunnable( AttackModel model )
+    {
+        this.model = model;
     }
-	
+
     @Override
-    public void run() {
-	DosStatusJFrameNew inst = new DosStatusJFrameNew(model);
-	inst.setLocationRelativeTo(null);
-	inst.setVisible(true);
-    }	
+    public void run()
+    {
+        final DosStatusFrame dosStatusFrame = new DosStatusFrame( model );
+        dosStatusFrame.setLocationRelativeTo( null );
+        dosStatusFrame.setVisible( true );
+
+        // if autoFinalize is turned on directly start attack!
+        if ( this.model.isAutoFinalizeSwitch() )
+        {
+            this.model.startAttack();
+        }
+
+        model.addAttackListener( new AttackListener()
+        {
+
+            @Override
+            public void valueChanged( AttackModel model )
+            {
+                if ( model.isAttackFinished() )
+                {
+                    // DosStatusJFrameNew Fenster schließen (und Resourcen
+                    // freigeben)
+                    if ( dosStatusFrame.isVisible() )
+                    {
+                        dosStatusFrame.dispose();
+                    }
+                }
+            }
+        } );
+    }
 }

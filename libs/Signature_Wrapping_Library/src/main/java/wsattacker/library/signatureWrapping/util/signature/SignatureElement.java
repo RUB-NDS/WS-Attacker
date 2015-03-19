@@ -24,53 +24,64 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
-public class SignatureElement {
+public class SignatureElement
+{
 
     private final Element signature;
+
     private List<ReferenceElement> references;
 
-    public SignatureElement(Element signature) {
+    public SignatureElement( Element signature )
+    {
         this.signature = signature;
 
-        List<Element> signedInfo = DomUtilities.findChildren(signature, "SignedInfo", XMLSignature.XMLNS);
+        List<Element> signedInfo = DomUtilities.findChildren( signature, "SignedInfo", XMLSignature.XMLNS );
 
-        if (signedInfo.size() == 1) {
+        if ( signedInfo.size() == 1 )
+        {
 
-            log().trace("Searching for Reference Elements");
-            List<Element> list = DomUtilities.findChildren(signedInfo.get(0), "Reference", XMLSignature.XMLNS);
+            log().trace( "Searching for Reference Elements" );
+            List<Element> list = DomUtilities.findChildren( signedInfo.get( 0 ), "Reference", XMLSignature.XMLNS );
             references = new ArrayList<ReferenceElement>();
-            for (Element ele : list) {
-                references.add(new ReferenceElement(ele));
+            for ( Element ele : list )
+            {
+                references.add( new ReferenceElement( ele ) );
             }
-            log().trace("Found: " + references);
+            log().trace( "Found: " + references );
         }
     }
 
-    public Element getSignature() {
+    public Element getSignature()
+    {
         return signature;
     }
 
-    private Logger log() {
-        return Logger.getLogger(getClass());
+    private Logger log()
+    {
+        return Logger.getLogger( getClass() );
     }
 
-    public List<ReferenceElement> getReferences() {
+    public List<ReferenceElement> getReferences()
+    {
         return references;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof SignatureElement) {
+    public boolean equals( Object o )
+    {
+        if ( o instanceof SignatureElement )
+        {
             SignatureElement sig = (SignatureElement) o;
-            return sig.getReferences().equals(getReferences());
+            return sig.getReferences().equals( getReferences() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 67 * hash + (this.references != null ? this.references.hashCode() : 0);
+        hash = 67 * hash + ( this.references != null ? this.references.hashCode() : 0 );
         return hash;
     }
 

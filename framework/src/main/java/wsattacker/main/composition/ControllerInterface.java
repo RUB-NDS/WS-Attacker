@@ -25,49 +25,49 @@ import wsattacker.main.testsuite.TestSuite;
 
 /**
  * The controller interface
- *
+ * 
  * @author Christian Mainka
- *
  */
-public interface ControllerInterface {
+public interface ControllerInterface
+{
 
-	public PluginManager getPluginManager();
+    public PluginManager getPluginManager();
 
-	public void reloadPlugins();
+    public void reloadPlugins();
 
-	public void setPluginActive(String pluginName, boolean active);
+    public void setPluginActive( String pluginName, boolean active );
 
-	public void setPluginActive(int index, boolean active);
+    public void setPluginActive( int index, boolean active );
 
-	public void setAllPluginActive(boolean active);
+    public void setAllPluginActive( boolean active );
 
-	public void setOptionValue(AbstractPlugin plugin, String optionName, String optionValue);
+    public void setOptionValue( AbstractPlugin plugin, String optionName, String optionValue );
 
-	public void startActivePlugins();
+    public void startActivePlugins();
 
-	public void stopActivePlugins();
+    public void stopActivePlugins();
 
-	public void cleanPlugins();
+    public void cleanPlugins();
 
-	public TestSuite getTestSuite();
+    public TestSuite getTestSuite();
 
-	public void setWsdl(String uri);
+    public void setWsdl( String uri );
 
-	public boolean setCurrentService(int index);
+    public boolean setCurrentService( int index );
 
-	public boolean setCurrentService(String name);
+    public boolean setCurrentService( String name );
 
-	public boolean setCurrentOperation(String operationString);
+    public boolean setCurrentOperation( String operationString );
 
-	public boolean setCurrentOperation(int index);
+    public boolean setCurrentOperation( int index );
 
-	public void resetRequestContent();
+    public void resetRequestContent();
 
-	public void setRequestContent(String content);
+    public void setRequestContent( String content );
 
-	public void doTestRequest();
+    public void doTestRequest();
 
-	public void savePluginConfiguration(File file);
+    public void savePluginConfiguration( File file );
 
-	public void loadPluginConfiguration(File file);
+    public void loadPluginConfiguration( File file );
 }

@@ -24,28 +24,34 @@ import wsattacker.main.composition.plugin.option.AbstractOption;
 /**
  * Simple option which just offers a button to view all possible XSW messages.
  */
-public class OptionViewButton extends AbstractOption {
+public class OptionViewButton
+    extends AbstractOption
+{
 
-    public OptionViewButton() {
-        this("View", "Display the wrapping messages.");
+    public OptionViewButton()
+    {
+        this( "View", "Display the wrapping messages." );
     }
 
-    protected OptionViewButton(String name,
-      String description) {
-        super(name, description);
+    protected OptionViewButton( String name, String description )
+    {
+        super( name, description );
     }
+
     private static final long serialVersionUID = 1L;
 
     @Override
-    public OptionGUI createOptionGUI() {
-        return new OptionViewButtonGUI(getCollection().getOwnerPlugin(), this);
+    public OptionGUI createOptionGUI()
+    {
+        return new OptionViewButtonGUI( getCollection().getOwnerPlugin(), this );
     }
 
     @Override
     /**
      * Nothing to do
      */
-    public boolean isValid(String value) {
+    public boolean isValid( String value )
+    {
         return true;
     }
 
@@ -53,14 +59,16 @@ public class OptionViewButton extends AbstractOption {
     /**
      * Nothing to do
      */
-    public void parseValue(String value) {
+    public void parseValue( String value )
+    {
     }
 
     @Override
     /**
      * Nothing to do
      */
-    public String getValueAsString() {
+    public String getValueAsString()
+    {
         return getName();
     }
 }

@@ -22,46 +22,56 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class SortedUniqueList<T extends Comparable<T>> extends ArrayList<T>  {
-	private static final long serialVersionUID = 1L;
-	
-	/***
-	 * Creates a new Sorted Unique List.
-	 * Comparator will be used to for sorting and detecting duplicates
-	 * @param comparator
-	 */
-	public SortedUniqueList() {
-		super();
-	}
-	
-	/***
-	 * Does nothing.
-	 * Inserting at specific positions is not allowed in sorted lists 
-	 */
-	@Override
-	public void add(int index, T element) {
-		return;
-	}
-	@Override
-	public boolean addAll(int index, Collection<? extends T> c) {
-		return false;
-	}
-	
-	@Override
-	public boolean add(T element) {
-		if(contains(element))
-			return false;
-		boolean tf = super.add(element); // should be always true
-		Collections.sort(this);
-		return tf;
-	}
-	
-	@Override
-	public boolean addAll(Collection<? extends T> c) {
-		boolean ret = false;
-		for(T element : c) {
-			ret |= add(element);
-		}
-		return ret;
-	}
+public class SortedUniqueList<T extends Comparable<T>>
+    extends ArrayList<T>
+{
+    private static final long serialVersionUID = 1L;
+
+    /***
+     * Creates a new Sorted Unique List. Comparator will be used to for sorting and detecting duplicates
+     * 
+     * @param comparator
+     */
+    public SortedUniqueList()
+    {
+        super();
+    }
+
+    /***
+     * Does nothing. Inserting at specific positions is not allowed in sorted lists
+     */
+    @Override
+    public void add( int index, T element )
+    {
+        return;
+    }
+
+    @Override
+    public boolean addAll( int index, Collection<? extends T> c )
+    {
+        return false;
+    }
+
+    @Override
+    public boolean add( T element )
+    {
+        if ( contains( element ) )
+        {
+            return false;
+        }
+        boolean tf = super.add( element ); // should be always true
+        Collections.sort( this );
+        return tf;
+    }
+
+    @Override
+    public boolean addAll( Collection<? extends T> c )
+    {
+        boolean ret = false;
+        for ( T element : c )
+        {
+            ret |= add( element );
+        }
+        return ret;
+    }
 }

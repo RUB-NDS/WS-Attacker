@@ -20,31 +20,39 @@ package wsattacker.main.plugin.option;
 
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 
-public class OptionSimpleInteger extends AbstractOptionInteger {
-	private static final long serialVersionUID = 1L;
+public class OptionSimpleInteger
+    extends AbstractOptionInteger
+{
+    private static final long serialVersionUID = 1L;
 
-	public OptionSimpleInteger(String name, int value) {
-		super(name, value);
-	}
+    public OptionSimpleInteger( String name, int value )
+    {
+        super( name, value );
+    }
 
-	public OptionSimpleInteger(String name, int value, String description) {
-		super(name, value, description);
-	}
+    public OptionSimpleInteger( String name, int value, String description )
+    {
+        super( name, value, description );
+    }
 
-	@Override
-	public boolean isValid(int value) {
-		return true;
-	}
+    @Override
+    public boolean isValid( int value )
+    {
+        return true;
+    }
 
-	@Override
-	public boolean isValid(String value) {
-		try {
-			int i = Integer.parseInt(value);
-			return isValid(i);
-		}
-		catch(Exception e) {
-			return false;
-		}
-	}
+    @Override
+    public boolean isValid( String value )
+    {
+        try
+        {
+            int i = Integer.parseInt( value );
+            return isValid( i );
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+    }
 
 }

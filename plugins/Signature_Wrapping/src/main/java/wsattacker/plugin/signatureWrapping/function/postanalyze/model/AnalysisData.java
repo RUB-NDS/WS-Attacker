@@ -23,30 +23,34 @@
 package wsattacker.plugin.signatureWrapping.function.postanalyze.model;
 
 /**
- *
  * @author christian
  */
-public class AnalysisData {
-	private int index;
-	private String response;
+public class AnalysisData
+{
+    private int index;
 
-	public AnalysisData(int index, String response) {
-		this.index = index;
-		this.response = response;
-	}
+    private String response;
 
-	/**
-	 * @return the index
-	 */
-	public int getIndex() {
-		return index;
-	}
+    public AnalysisData( int index, String response )
+    {
+        this.index = index;
+        this.response = response;
+    }
 
-	/**
-	 * @return the response
-	 */
-	public String getResponse() {
-		return response;
-	}
+    /**
+     * @return the index
+     */
+    public int getIndex()
+    {
+        return index;
+    }
+
+    /**
+     * @return the response
+     */
+    public String getResponse()
+    {
+        return response;
+    }
 
 }

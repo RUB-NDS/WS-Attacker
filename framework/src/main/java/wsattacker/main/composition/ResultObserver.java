@@ -20,7 +20,9 @@ package wsattacker.main.composition;
 
 import wsattacker.main.plugin.result.ResultEntry;
 
-public interface ResultObserver {
-	public void logUpdate(ResultEntry log);
-	public void logClear();
+public interface ResultObserver
+{
+    public void logUpdate( ResultEntry log );
+
+    public void logClear();
 }

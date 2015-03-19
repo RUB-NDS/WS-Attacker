@@ -20,11 +20,12 @@ package wsattacker.library.schemaanalyzer;
 
 import org.w3c.dom.Element;
 
-public interface AnyElementProperties extends Comparable<AnyElementProperties> {
+public interface AnyElementProperties
+    extends Comparable<AnyElementProperties>
+{
 
     /**
-     * @return the element which has <xs:any> child element within the current
-     *         working Document.
+     * @return the element which has <xs:any> child element within the current working Document.
      */
     public abstract Element getDocumentElement();
 
@@ -39,12 +40,10 @@ public interface AnyElementProperties extends Comparable<AnyElementProperties> {
     public abstract String getNamespaceAttributeValue();
 
     /**
-     * Compares the namespace of the parent element with the one of the child
-     * element.
-     * If they are the same and the namespace attribute is ##other, it returns
-     * true.
-     *
+     * Compares the namespace of the parent element with the one of the child element. If they are the same and the
+     * namespace attribute is ##other, it returns true.
+     * 
      * @return if the child elements needs a wrapper.
      */
-    public abstract boolean needsWrapper(String childNamespaceURI);
+    public abstract boolean needsWrapper( String childNamespaceURI );
 }

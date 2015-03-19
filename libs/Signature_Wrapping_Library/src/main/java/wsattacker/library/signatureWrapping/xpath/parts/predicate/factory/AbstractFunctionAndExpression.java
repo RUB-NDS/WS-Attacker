@@ -22,41 +22,52 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidTypeException;
 import wsattacker.library.signatureWrapping.xpath.parts.predicate.AndExpression;
 import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools;
 
-public abstract class AbstractFunctionAndExpression extends AndExpression {
+public abstract class AbstractFunctionAndExpression
+    extends AndExpression
+{
 
     protected String functionName, value;
 
-    public AbstractFunctionAndExpression(String expression, String functionName) throws InvalidTypeException {
-        super(expression);
+    public AbstractFunctionAndExpression( String expression, String functionName )
+        throws InvalidTypeException
+    {
+        super( expression );
         this.functionName = functionName;
         String functionNameEq = functionName + "=";
 
-        if (expression.startsWith(functionNameEq)) {
+        if ( expression.startsWith( functionNameEq ) )
+        {
             int start = functionNameEq.length();
 
             // detect if correct quote is used
-            char quote = expression.charAt(start);
-            if (quote != '"' && quote != '\'') {
+            char quote = expression.charAt( start );
+            if ( quote != '"' && quote != '\'' )
+            {
                 throw new InvalidTypeException();
             }
 
-            int end = XPathInspectorTools.nextChar(expression, quote, start + 1);
-            if (end < 0) {
+            int end = XPathInspectorTools.nextChar( expression, quote, start + 1 );
+            if ( end < 0 )
+            {
                 throw new InvalidTypeException();
             }
 
-            this.value = expression.substring(start + 1, end);
+            this.value = expression.substring( start + 1, end );
 
-        } else {
+        }
+        else
+        {
             throw new InvalidTypeException();
         }
     }
 
-    public String getFunctionName() {
+    public String getFunctionName()
+    {
         return functionName;
     }
 
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 

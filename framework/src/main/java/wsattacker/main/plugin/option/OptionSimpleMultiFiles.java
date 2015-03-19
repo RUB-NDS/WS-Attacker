@@ -21,16 +21,20 @@ package wsattacker.main.plugin.option;
 import java.io.File;
 import wsattacker.main.composition.plugin.option.AbstractOptionMultiFiles;
 
-public class OptionSimpleMultiFiles extends AbstractOptionMultiFiles {
+public class OptionSimpleMultiFiles
+    extends AbstractOptionMultiFiles
+{
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public OptionSimpleMultiFiles(String name, String description) {
-		super(name, description);
-	}
+    public OptionSimpleMultiFiles( String name, String description )
+    {
+        super( name, description );
+    }
 
-	@Override
-	public boolean isValid(File file) {
-		return file != null && file.exists() && file.isFile();
-	}
+    @Override
+    public boolean isValid( File file )
+    {
+        return file != null && file.exists() && file.isFile();
+    }
 }

@@ -19,13 +19,15 @@
 package wsattacker.main.composition.plugin;
 
 /**
- * The success interface
- * Each plugin must implement it, as AbstractPlugin implements it
+ * The success interface Each plugin must implement it, as AbstractPlugin implements it
+ * 
  * @author Christian Mainka
- *
  */
-public interface SuccessInterface {
-	public int getMaxPoints();
-	public int getCurrentPoints();
-	public boolean wasSuccessful();
+public interface SuccessInterface
+{
+    public int getMaxPoints();
+
+    public int getCurrentPoints();
+
+    public boolean wasSuccessful();
 }

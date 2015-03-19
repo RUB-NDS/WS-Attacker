@@ -21,8 +21,11 @@ package wsattacker.gui.util;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.util.Category;
 
-public class PluginCategory extends Category<String, AbstractPlugin> {
-	public PluginCategory(String name) {
-		super(name);
-	}	
+public class PluginCategory
+    extends Category<String, AbstractPlugin>
+{
+    public PluginCategory( String name )
+    {
+        super( name );
+    }
 }

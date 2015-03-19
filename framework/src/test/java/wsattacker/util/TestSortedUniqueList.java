@@ -25,68 +25,81 @@ import org.junit.Test;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.plugin.NullPlugin;
 
-public class TestSortedUniqueList {
+public class TestSortedUniqueList
+{
 
-	private static SortedUniqueList<AbstractPlugin> list;
-	private static NullPlugin p1,p2,p3,p4;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		list = new SortedUniqueList<AbstractPlugin>();
-		p1 = new NullPlugin("Eins", "Erstes eingefügtes Plugin", 1);
-		p2 = new NullPlugin("Zwei", "Zweites eingefügtes Plugin", 1);
-		p3 = new NullPlugin("Drei", "Drittes eingefügtes Plugin", 1);
-		p4 = new NullPlugin("Eins", "Dublikat vom ersten Plugin", 1);
-	}
+    private static SortedUniqueList<AbstractPlugin> list;
 
-	@Before
-	public void setUp() throws Exception {
-		list.clear();
-	}
-	
-	@Test
-	public void clear() {
-		assertTrue("List should be empty", list.size() == 0);
-	}
-	
-	@Test
-	public void add() {
-		list.add(p1);
-		assertTrue("List should contain 1 Element", list.size() == 1);
-		list.add(p2);
-		assertTrue("List should contain 2 Elements", list.size() == 2);
-		list.add(p3);
-		assertTrue("List should contain 3 Elements", list.size() == 3);
-	}
-	
-	@Test
-	public void unique() {
-		list.add(p1);
-		assertTrue("List should contain 1 Element", list.size() == 1);
-		list.add(p3);
-		assertTrue("List should contain 2 Elements", list.size() == 2);
-		list.add(p4);
-		assertTrue("List not should contain double Elements", list.size() == 2);
-	}
-	
-	@Test
-	public void addAll() {
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.addAll(list);
-		assertTrue("List not should contain double Elements" + list, list.size() == 3);
-	}
-	
-	@Test
-	public void sorted() {
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		
-		for(int i=0; i < (list.size()-1); ++i) {
-			assertTrue("Elements should be sorted", list.get(i).getName().compareTo(list.get(i+1).getName()) < 0);
-		}
-	}
+    private static NullPlugin p1, p2, p3, p4;
+
+    @BeforeClass
+    public static void setUpBeforeClass()
+        throws Exception
+    {
+        list = new SortedUniqueList<AbstractPlugin>();
+        p1 = new NullPlugin( "Eins", "Erstes eingefügtes Plugin", 1 );
+        p2 = new NullPlugin( "Zwei", "Zweites eingefügtes Plugin", 1 );
+        p3 = new NullPlugin( "Drei", "Drittes eingefügtes Plugin", 1 );
+        p4 = new NullPlugin( "Eins", "Dublikat vom ersten Plugin", 1 );
+    }
+
+    @Before
+    public void setUp()
+        throws Exception
+    {
+        list.clear();
+    }
+
+    @Test
+    public void clear()
+    {
+        assertTrue( "List should be empty", list.size() == 0 );
+    }
+
+    @Test
+    public void add()
+    {
+        list.add( p1 );
+        assertTrue( "List should contain 1 Element", list.size() == 1 );
+        list.add( p2 );
+        assertTrue( "List should contain 2 Elements", list.size() == 2 );
+        list.add( p3 );
+        assertTrue( "List should contain 3 Elements", list.size() == 3 );
+    }
+
+    @Test
+    public void unique()
+    {
+        list.add( p1 );
+        assertTrue( "List should contain 1 Element", list.size() == 1 );
+        list.add( p3 );
+        assertTrue( "List should contain 2 Elements", list.size() == 2 );
+        list.add( p4 );
+        assertTrue( "List not should contain double Elements", list.size() == 2 );
+    }
+
+    @Test
+    public void addAll()
+    {
+        list.add( p1 );
+        list.add( p2 );
+        list.add( p3 );
+        list.addAll( list );
+        assertTrue( "List not should contain double Elements" + list, list.size() == 3 );
+    }
+
+    @Test
+    public void sorted()
+    {
+        list.add( p1 );
+        list.add( p2 );
+        list.add( p3 );
+
+        for ( int i = 0; i < ( list.size() - 1 ); ++i )
+        {
+            assertTrue( "Elements should be sorted",
+                        list.get( i ).getName().compareTo( list.get( i + 1 ).getName() ) < 0 );
+        }
+    }
 
 }

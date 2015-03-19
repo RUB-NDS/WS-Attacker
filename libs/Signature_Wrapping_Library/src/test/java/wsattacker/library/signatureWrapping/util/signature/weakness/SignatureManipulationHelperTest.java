@@ -30,113 +30,120 @@ import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_N
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SAML20P;
 
 /**
- *
  * @author christian
  */
-public class SignatureManipulationHelperTest {
+public class SignatureManipulationHelperTest
+{
 
-    public static Document generateDummySamlDocument(boolean signedResponse, boolean signedAssertion, boolean prepend) {
+    public static Document generateDummySamlDocument( boolean signedResponse, boolean signedAssertion, boolean prepend )
+    {
         Document doc = DomUtilities.createDomDocument();
-        Element response = doc.createElementNS(URI_NS_SAML20P, "samlp:Response");
-        doc.appendChild(response);
-        Element assertion = doc.createElementNS(URI_NS_SAML20, "saml:Assertion");
-        response.appendChild(assertion);
-        if (signedResponse) {
-            Element sig = doc.createElementNS(URI_NS_DS, "ds:Signature");
-            if (prepend) {
-                response.insertBefore(sig, assertion);
-            } else {
-                response.appendChild(sig);
+        Element response = doc.createElementNS( URI_NS_SAML20P, "samlp:Response" );
+        doc.appendChild( response );
+        Element assertion = doc.createElementNS( URI_NS_SAML20, "saml:Assertion" );
+        response.appendChild( assertion );
+        if ( signedResponse )
+        {
+            Element sig = doc.createElementNS( URI_NS_DS, "ds:Signature" );
+            if ( prepend )
+            {
+                response.insertBefore( sig, assertion );
+            }
+            else
+            {
+                response.appendChild( sig );
             }
         }
-        if (signedAssertion) {
-            Element sig = doc.createElementNS(URI_NS_DS, "ds:Signature");
-            assertion.appendChild(sig);
+        if ( signedAssertion )
+        {
+            Element sig = doc.createElementNS( URI_NS_DS, "ds:Signature" );
+            assertion.appendChild( sig );
         }
         return doc;
     }
 
     @Test
-    public void testDoubleSignature() {
+    public void testDoubleSignature()
+    {
     }
 
     @Test
-    public void testRemoveSignature_one_contained() {
-        Document doc = generateDummySamlDocument(true, false, false);
-        Element sig = (Element) doc.getDocumentElement().getLastChild();
-        List<Element> sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(1, sigList.size());
+    public void testRemoveSignature_one_contained()
+    {
+        Document doc = generateDummySamlDocument( true, false, false );
+        List<Element> sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 1, sigList.size() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertTrue(sigList.isEmpty());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertTrue( sigList.isEmpty() );
     }
 
     @Test
-    public void testRemoveSignature_0_two_contained() {
-        Document doc = generateDummySamlDocument(true, true, false);
-        Element sig = (Element) doc.getDocumentElement().getLastChild();
-        List<Element> sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(2, sigList.size());
+    public void testRemoveSignature_0_two_contained()
+    {
+        Document doc = generateDummySamlDocument( true, true, false );
+        List<Element> sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 2, sigList.size() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(1, sigList.size());
-        assertEquals("Assertion", sigList.get(0).getParentNode().getLocalName());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 1, sigList.size() );
+        assertEquals( "Assertion", sigList.get( 0 ).getParentNode().getLocalName() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertTrue(sigList.isEmpty());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertTrue( sigList.isEmpty() );
     }
 
     @Test
-    public void testRemoveSignature_1_two_contained() {
-        Document doc = generateDummySamlDocument(true, true, false);
-        Element sig = (Element) doc.getDocumentElement().getLastChild();
-        List<Element> sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(2, sigList.size());
+    public void testRemoveSignature_1_two_contained()
+    {
+        Document doc = generateDummySamlDocument( true, true, false );
+        List<Element> sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 2, sigList.size() );
 
-        SignatureManipulationHelper.removeSignature(doc, 1);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(1, sigList.size());
-        assertEquals("Response", sigList.get(0).getParentNode().getLocalName());
+        SignatureManipulationHelper.removeSignature( doc, 1 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 1, sigList.size() );
+        assertEquals( "Response", sigList.get( 0 ).getParentNode().getLocalName() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertTrue(sigList.isEmpty());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertTrue( sigList.isEmpty() );
     }
 
     @Test
-    public void testRemoveSignature_0_two_contained_prepended() {
-        Document doc = generateDummySamlDocument(true, true, true);
-        Element sig = (Element) doc.getDocumentElement().getLastChild();
-        List<Element> sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(2, sigList.size());
+    public void testRemoveSignature_0_two_contained_prepended()
+    {
+        Document doc = generateDummySamlDocument( true, true, true );
+        List<Element> sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 2, sigList.size() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(1, sigList.size());
-        assertEquals("Assertion", sigList.get(0).getParentNode().getLocalName());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 1, sigList.size() );
+        assertEquals( "Assertion", sigList.get( 0 ).getParentNode().getLocalName() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertTrue(sigList.isEmpty());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertTrue( sigList.isEmpty() );
     }
 
     @Test
-    public void testRemoveSignature_1_two_contained_prepended() {
-        Document doc = generateDummySamlDocument(true, true, true);
-        Element sig = (Element) doc.getDocumentElement().getLastChild();
-        List<Element> sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(2, sigList.size());
+    public void testRemoveSignature_1_two_contained_prepended()
+    {
+        Document doc = generateDummySamlDocument( true, true, true );
+        List<Element> sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 2, sigList.size() );
 
-        SignatureManipulationHelper.removeSignature(doc, 1);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertEquals(1, sigList.size());
-        assertEquals("Response", sigList.get(0).getParentNode().getLocalName());
+        SignatureManipulationHelper.removeSignature( doc, 1 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertEquals( 1, sigList.size() );
+        assertEquals( "Response", sigList.get( 0 ).getParentNode().getLocalName() );
 
-        SignatureManipulationHelper.removeSignature(doc, 0);
-        sigList = DomUtilities.findChildren(doc.getDocumentElement(), "Signature", URI_NS_DS, true);
-        assertTrue(sigList.isEmpty());
+        SignatureManipulationHelper.removeSignature( doc, 0 );
+        sigList = DomUtilities.findChildren( doc.getDocumentElement(), "Signature", URI_NS_DS, true );
+        assertTrue( sigList.isEmpty() );
     }
 }

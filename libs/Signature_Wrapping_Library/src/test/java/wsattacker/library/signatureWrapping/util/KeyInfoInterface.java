@@ -19,11 +19,10 @@
 package wsattacker.library.signatureWrapping.util;
 
 /**
- * This Interace is used to get the needed Key Information for Signature
- * creation/verification!
- *
+ * This Interace is used to get the needed Key Information for Signature creation/verification!
  */
-public interface KeyInfoInterface {
+public interface KeyInfoInterface
+{
 
     public abstract String getKeyStoreFileName();
 

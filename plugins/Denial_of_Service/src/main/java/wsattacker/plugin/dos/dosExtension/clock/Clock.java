@@ -18,15 +18,10 @@
  */
 package wsattacker.plugin.dos.dosExtension.clock;
 
-
 /**
- * Cheap Clock
- * calculates based on "startTime" elapsed time, once reset is called...
- * via update() new time is returned via String!
- * 
- * WARNING: Requires clock Object to be persistent during runtime!
- * 			Kein Problem, wird bei StartAttack erzeugt wird Ticker übergeben, und dort auch referenziert!
- *
+ * Cheap Clock calculates based on "startTime" elapsed time, once reset is called... via update() new time is returned
+ * via String! WARNING: Requires clock Object to be persistent during runtime! Kein Problem, wird bei StartAttack
+ * erzeugt wird Ticker übergeben, und dort auch referenziert!
  */
 public class Clock
 {
@@ -43,11 +38,11 @@ public class Clock
         long seconds = elapsedTime / 1000;
         long milliSecs = elapsedTime % 1000; // 1000
         String prefix;
-        if(milliSecs < 10)
+        if ( milliSecs < 10 )
         {
             prefix = "00";
         }
-        else if(milliSecs < 100)
+        else if ( milliSecs < 100 )
         {
             prefix = "0";
         }
@@ -55,7 +50,7 @@ public class Clock
         {
             prefix = "";
         }
-        return seconds+""; //+ ":" + prefix + milliSecs;
+        return seconds + ""; // + ":" + prefix + milliSecs;
     }
 
     public void reset()

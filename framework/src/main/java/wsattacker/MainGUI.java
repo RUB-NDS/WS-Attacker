@@ -18,11 +18,20 @@
  */
 package wsattacker;
 
+import javax.swing.SwingUtilities;
 import wsattacker.gui.GuiController;
 
-public class MainGUI {
+public class MainGUI
+{
 
-	public static void main(String[] args) {
-		GuiController.getInstance();
-	}
+    public static void main( String[] args )
+    {
+        SwingUtilities.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                GuiController.getInstance();
+            }
+        } );
+    }
 }

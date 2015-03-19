@@ -20,22 +20,28 @@ package wsattacker.plugin.dos.dosExtension.attackRunnables;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
+public class UpdateNumberRequestsRunnable
+    implements Runnable
+{
+    private AttackModel model;
 
-public class UpdateNumberRequestsRunnable implements Runnable {
-	private AttackModel model;
-	private String requestType;
-	
-	// Constructor
-	public UpdateNumberRequestsRunnable(AttackModel model, String requestType){
-		this.model = model;		
-		this.requestType = requestType;
-	}
-	
-	// run it!
-	public void run(){
-		// update Model + GUI
-		// - executed in EDT-context - don't have to worry about syncronization
-		// - Warning: has to run in very short period - otherwise might block GUI
-		model.incNumberRequests(requestType);
-	}
+    private String requestType;
+
+    // Constructor
+    public UpdateNumberRequestsRunnable( AttackModel model, String requestType )
+    {
+        this.model = model;
+        this.requestType = requestType;
+    }
+
+    // run it!
+    @Override
+    public void run()
+    {
+        // update Model + GUI
+        // - executed in EDT-context - don't have to worry about syncronization
+        // - Warning: has to run in very short period - otherwise might block
+        // GUI
+        model.incNumberRequests( requestType );
+    }
 }

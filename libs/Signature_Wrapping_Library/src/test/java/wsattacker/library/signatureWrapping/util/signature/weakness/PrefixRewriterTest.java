@@ -30,72 +30,74 @@ import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_N
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SAML20P;
 
 /**
- *
  * @author christian
  */
-public class PrefixRewriterTest {
+public class PrefixRewriterTest
+{
 
-    public static Element generatePayloadElementOfDummySamlDocument() {
+    public static Element generatePayloadElementOfDummySamlDocument()
+    {
         Document doc = DomUtilities.createDomDocument();
-        Element response = doc.createElementNS(URI_NS_SAML20P, "samlp:Response");
-        doc.appendChild(response);
+        Element response = doc.createElementNS( URI_NS_SAML20P, "samlp:Response" );
+        doc.appendChild( response );
 
-        response.appendChild(doc.createElementNS(URI_NS_SAML20P, "samlp:Status"));
-        response.appendChild(doc.createElementNS(URI_NS_SAML20P, "samlp:Irgendwas"));
+        response.appendChild( doc.createElementNS( URI_NS_SAML20P, "samlp:Status" ) );
+        response.appendChild( doc.createElementNS( URI_NS_SAML20P, "samlp:Irgendwas" ) );
 
-        Element responseCopy = (Element) response.cloneNode(true);
+        Element responseCopy = (Element) response.cloneNode( true );
 
-        Element assertion = doc.createElementNS(URI_NS_SAML20, "saml:Assertion");
-        response.appendChild(assertion);
+        Element assertion = doc.createElementNS( URI_NS_SAML20, "saml:Assertion" );
+        response.appendChild( assertion );
 
-        Element sigResp = doc.createElementNS(URI_NS_DS, "ds:Signature");
-        response.insertBefore(sigResp, assertion);
-        Element sigAss = doc.createElementNS(URI_NS_DS, "ds:Signature");
-        assertion.appendChild(sigAss);
+        Element sigResp = doc.createElementNS( URI_NS_DS, "ds:Signature" );
+        response.insertBefore( sigResp, assertion );
+        Element sigAss = doc.createElementNS( URI_NS_DS, "ds:Signature" );
+        assertion.appendChild( sigAss );
 
-        sigAss.appendChild(responseCopy);
+        sigAss.appendChild( responseCopy );
         return responseCopy;
     }
 
     @Test
-    public void testRewritePrefix() {
+    public void testRewritePrefix()
+    {
         Document saml = generatePayloadElementOfDummySamlDocument().getOwnerDocument();
-        String docString = DomUtilities.domToString(saml, true);
+        String docString = DomUtilities.domToString( saml, true );
 
-        assertFalse(docString.contains("<xyz:"));
-        assertTrue(docString.contains("<samlp:"));
+        assertFalse( docString.contains( "<xyz:" ) );
+        assertTrue( docString.contains( "<samlp:" ) );
 
-        PrefixRewriter.rewritePrefix(saml.getDocumentElement(), "samlp", "xyz");
-        docString = DomUtilities.domToString(saml, true);
-        assertTrue(docString.contains("<xyz:"));
-        assertFalse(docString.contains("<samlp:"));
+        PrefixRewriter.rewritePrefix( saml.getDocumentElement(), "samlp", "xyz" );
+        docString = DomUtilities.domToString( saml, true );
+        assertTrue( docString.contains( "<xyz:" ) );
+        assertFalse( docString.contains( "<samlp:" ) );
     }
 
     @Test
-    public void testRewritePrefix_with_untouched_Elements() {
+    public void testRewritePrefix_with_untouched_Elements()
+    {
         Element payload = generatePayloadElementOfDummySamlDocument();
         Document saml = payload.getOwnerDocument();
-        String docString = DomUtilities.domToString(saml, true);
+        String docString = DomUtilities.domToString( saml, true );
 
-        assertFalse(docString.contains("<xyz:"));
-        assertTrue(docString.contains("<samlp:"));
+        assertFalse( docString.contains( "<xyz:" ) );
+        assertTrue( docString.contains( "<samlp:" ) );
 
-        List<Element> untouchedList = new ArrayList<Element>(1);
-        untouchedList.add(payload);
-        PrefixRewriter.rewritePrefix(saml.getDocumentElement(), "samlp", "xyz", untouchedList);
+        List<Element> untouchedList = new ArrayList<Element>( 1 );
+        untouchedList.add( payload );
+        PrefixRewriter.rewritePrefix( saml.getDocumentElement(), "samlp", "xyz", untouchedList );
 
-        System.out.println("### Final:");
-        System.out.println(DomUtilities.domToString(saml, true));
+        System.out.println( "### Final:" );
 
-        String payloadString = DomUtilities.domToString(payload, true);
-        assertFalse(payloadString.contains("<xyz:"));
-        assertTrue(payloadString.contains("<samlp:"));
+        String payloadString = DomUtilities.domToString( payload, true );
+        assertFalse( payloadString.contains( "<xyz:" ) );
+        assertTrue( payloadString.contains( "<samlp:" ) );
 
         // remove the payload
-        payload.getParentNode().removeChild(payload);
+        payload.getParentNode().removeChild( payload );
 
-        docString = DomUtilities.domToString(saml, true);
-        assertTrue(docString.contains("<xyz:"));
-        assertFalse(docString.contains("<samlp:"));
+        docString = DomUtilities.domToString( saml, true );
+        assertTrue( docString.contains( "<xyz:" ) );
+        assertFalse( docString.contains( "<samlp:" ) );
     }
 }

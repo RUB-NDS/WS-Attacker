@@ -20,25 +20,27 @@ package wsattacker.plugin.dos.dosExtension.mvc.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
+import wsattacker.plugin.dos.dosExtension.result.ResultGenerator;
 
 /**
  * open Helpmenu in Browser
+ * 
  * @author af
- *
  */
-public class HelpController implements ActionListener
+public class HelpController
+    implements ActionListener
 {
-    private AttackModel model;
+    private ResultGenerator resultGenerator;
 
-    public HelpController(AttackModel model)
+    public HelpController( ResultGenerator resultGenerator )
     {
-        this.model = model;
+        this.resultGenerator = resultGenerator;
     }
 
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public void actionPerformed( ActionEvent e )
     {
-    	model.openHelpmenu();
+        resultGenerator.openHelpmenu();
     }
 }

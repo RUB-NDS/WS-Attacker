@@ -28,101 +28,124 @@ import wsattacker.main.composition.plugin.PluginManagerListener;
 import wsattacker.main.plugin.PluginManager;
 import wsattacker.main.plugin.PluginState;
 
-public class EnabledPluginTable extends JTable {
+public class EnabledPluginTable
+    extends JTable
+{
 
-	public EnabledPluginTable() {
-		setModel(new AttackOverviewTableModel());
-		getColumnModel().getColumn(0).setCellRenderer(new CenteredTableCellRenderer());
-		getColumnModel().getColumn(1).setCellRenderer(new ColoredPluginStateTableCellRenderer());
-		getColumnModel().getColumn(2).setCellRenderer(new CenteredTableCellRenderer());
-		getColumnModel().getColumn(3).setCellRenderer(new VulnerableTableCellRenderer());
-		setComponentPopupMenu(new EnabledPluginTablePopup());
-	}
+    public EnabledPluginTable()
+    {
+        setModel( new AttackOverviewTableModel() );
+        getColumnModel().getColumn( 0 ).setCellRenderer( new CenteredTableCellRenderer() );
+        getColumnModel().getColumn( 1 ).setCellRenderer( new ColoredPluginStateTableCellRenderer() );
+        getColumnModel().getColumn( 2 ).setCellRenderer( new CenteredTableCellRenderer() );
+        getColumnModel().getColumn( 3 ).setCellRenderer( new VulnerableTableCellRenderer() );
+        setComponentPopupMenu( new EnabledPluginTablePopup() );
+    }
 
-	@SuppressWarnings("serial")
-	public class AttackOverviewTableModel extends AbstractTableModel implements
-			PluginManagerListener {
+    @SuppressWarnings( "serial" )
+    public class AttackOverviewTableModel
+        extends AbstractTableModel
+        implements PluginManagerListener
+    {
 
-		final private String[] columnNames = {"Name", "Status", "Rating", "Vulnerable?"};
-		final PluginManager pluginManager;
+        final private String[] columnNames = { "Name", "Status", "Rating", "Vulnerable?" };
 
-		public AttackOverviewTableModel() {
-			this.pluginManager = PluginManager.getInstance();
-			this.pluginManager.addListener(this);
-		}
+        final PluginManager pluginManager;
 
-		@Override
-		public int getColumnCount() {
-			return columnNames.length;
-		}
+        public AttackOverviewTableModel()
+        {
+            this.pluginManager = PluginManager.getInstance();
+            this.pluginManager.addListener( this );
+        }
 
-		@Override
-		public String getColumnName(int num) {
-			return this.columnNames[num];
-		}
+        @Override
+        public int getColumnCount()
+        {
+            return columnNames.length;
+        }
 
-		@Override
-		public boolean isCellEditable(int y, int x) {
-			return false;
-		}
+        @Override
+        public String getColumnName( int num )
+        {
+            return this.columnNames[num];
+        }
 
-		@Override
-		public int getRowCount() {
-			return pluginManager.countActivePlugins();
-		}
+        @Override
+        public boolean isCellEditable( int y, int x )
+        {
+            return false;
+        }
 
-		@Override
-		public Object getValueAt(int row, int col) {
-			final AbstractPlugin plugin = pluginManager.getActive(row);
-			switch (col) {
-				case 0:
-					return plugin.getName();
-				case 1:
-					return plugin.getState();
-				case 2:
-					return String.format("%d%%", 100 * plugin.getCurrentPoints() / plugin.getMaxPoints());
-				case 3:
-					return new Boolean(plugin.wasSuccessful());
-			}
-			return null;
-		}
+        @Override
+        public int getRowCount()
+        {
+            return pluginManager.countActivePlugins();
+        }
 
-		@SuppressWarnings({"rawtypes", "unchecked"})
-		@Override
-		public Class getColumnClass(int c) {
-			return getValueAt(0, c).getClass();
-		}
+        @Override
+        public Object getValueAt( int row, int col )
+        {
+            final AbstractPlugin plugin = pluginManager.getActive( row );
+            switch ( col )
+            {
+                case 0:
+                    return plugin.getName();
+                case 1:
+                    return plugin.getState();
+                case 2:
+                    return String.format( "%d%%", 100 * plugin.getCurrentPoints() / plugin.getMaxPoints() );
+                case 3:
+                    return new Boolean( plugin.wasSuccessful() );
+            }
+            return null;
+        }
 
-		@Override
-		public void currentPointsChanged(AbstractPlugin plugin, int newPoints) {
-			int row = pluginManager.indexOfActive(plugin);
-			this.fireTableCellUpdated(row, 2);
-		}
+        @SuppressWarnings( { "rawtypes", "unchecked" } )
+        @Override
+        public Class getColumnClass( int c )
+        {
+            return getValueAt( 0, c ).getClass();
+        }
 
-		@Override
-		public void pluginStateChanged(AbstractPlugin plugin,
-				PluginState newState, PluginState oldState) {
-			if (pluginManager.isActive(plugin)) {
-				int row = pluginManager.indexOfActive(plugin);
-				this.fireTableCellUpdated(row, 1);
-				this.fireTableCellUpdated(row, 3);
-			}
-		}
+        @Override
+        public void currentPointsChanged( AbstractPlugin plugin, int newPoints )
+        {
+            if ( pluginManager.isActive( plugin ) )
+            {
+                int row = pluginManager.indexOfActive( plugin );
+                this.fireTableCellUpdated( row, 2 );
+            }
+        }
 
-		@Override
-		public void pluginActiveStateChanged(AbstractPlugin plugin,
-				boolean active) {
-			if (active) {
-				int row = pluginManager.indexOf(plugin);
-				fireTableRowsInserted(row, row);
-			} else {
-				fireTableDataChanged(); // no chance to detect row
-			}
-		}
+        @Override
+        public void pluginStateChanged( AbstractPlugin plugin, PluginState newState, PluginState oldState )
+        {
+            if ( pluginManager.isActive( plugin ) )
+            {
+                int row = pluginManager.indexOfActive( plugin );
+                this.fireTableCellUpdated( row, 1 );
+                this.fireTableCellUpdated( row, 3 );
+            }
+        }
 
-		@Override
-		public void pluginContainerChanged() {
-			fireTableDataChanged();
-		}
-	}
+        @Override
+        public void pluginActiveStateChanged( AbstractPlugin plugin, boolean active )
+        {
+            if ( active )
+            {
+                int row = pluginManager.indexOf( plugin );
+                fireTableRowsInserted( row, row );
+            }
+            else
+            {
+                fireTableDataChanged(); // no chance to detect row
+            }
+        }
+
+        @Override
+        public void pluginContainerChanged()
+        {
+            fireTableDataChanged();
+        }
+    }
 }

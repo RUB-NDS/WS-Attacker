@@ -23,9 +23,10 @@ package wsattacker.main.composition.testsuite;
  * This method will be removed in future version. Use the propertyChangeSupport
  * instead.
  */
-public interface CurrentRequestContentChangeObserver {
+public interface CurrentRequestContentChangeObserver
+{
 
-	public void currentRequestContentChanged(String newContent, String oldContent);
+    public void currentRequestContentChanged( String newContent, String oldContent );
 
-	public void noCurrentRequestcontent();
+    public void noCurrentRequestcontent();
 }

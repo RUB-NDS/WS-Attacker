@@ -23,47 +23,55 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JList;
-import static org.easymock.EasyMock.*;
-import static org.hamcrest.Matchers.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import wsattacker.main.composition.plugin.option.AbstractOptionMultiFiles;
 
 /**
- *
  * @author christian
  */
-public class OptionMultiFileGUI_NBTest {
+public class OptionMultiFileGUI_NBTest
+{
 
-	final private static int FILES_TO_CREATE = 3;
-	final private static String FILENAME = "FILE_";
+    final private static int FILES_TO_CREATE = 3;
 
-	public OptionMultiFileGUI_NBTest() {
-	}
+    final private static String FILENAME = "FILE_";
 
-	@Test
-	public void testOptionMultiFile() {
-		List<File> fileList = new ArrayList<File>();
-		for (int i = 0; i < FILES_TO_CREATE; ++i) {
-			File fileMock = createMock(File.class);
-			String path = String.format("%s%d", FILENAME, i);
-			expect(fileMock.getName()).andReturn(path);
-			fileList.add(fileMock);
-		}
-		replay(fileList.toArray());
-		OptionMultiFileGUI_NB multiFile = new OptionMultiFileGUI_NB();
-		JList jList = multiFile.getFileList();
-		JButton jButton = multiFile.getRemoveButton();
+    public OptionMultiFileGUI_NBTest()
+    {
+    }
 
-		AbstractOptionMultiFiles option = multiFile.getOption();
-		option.setFiles(fileList);
-		assertThat(fileList, hasSize(FILES_TO_CREATE));
-		assertThat(jList.getModel().getSize(), is(FILES_TO_CREATE));
-		jList.setSelectedIndex(FILES_TO_CREATE - 1);
-		jButton.doClick();
-		assertThat(jList.getModel().getSize(), is(FILES_TO_CREATE - 1));
+    @Test
+    public void testOptionMultiFile()
+    {
+        List<File> fileList = new ArrayList<File>();
+        for ( int i = 0; i < FILES_TO_CREATE; ++i )
+        {
+            File fileMock = createMock( File.class );
+            String path = String.format( "%s%d", FILENAME, i );
+            expect( fileMock.getName() ).andReturn( path );
+            fileList.add( fileMock );
+        }
+        replay( fileList.toArray() );
+        OptionMultiFileGUI_NB multiFile = new OptionMultiFileGUI_NB();
+        JList jList = multiFile.getFileList();
+        JButton jButton = multiFile.getRemoveButton();
 
-		multiFile.bindingDoUnbind();
-		verify(fileList.toArray());
-	}
+        AbstractOptionMultiFiles option = multiFile.getOption();
+        option.setFiles( fileList );
+        assertThat( fileList, hasSize( FILES_TO_CREATE ) );
+        assertThat( jList.getModel().getSize(), is( FILES_TO_CREATE ) );
+        jList.setSelectedIndex( FILES_TO_CREATE - 1 );
+        jButton.doClick();
+        assertThat( jList.getModel().getSize(), is( FILES_TO_CREATE - 1 ) );
+
+        multiFile.bindingDoUnbind();
+        verify( fileList.toArray() );
+    }
 }

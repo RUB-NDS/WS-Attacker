@@ -19,20 +19,21 @@
 package wsattacker.gui.component.pluginconfiguration.composition;
 
 import java.awt.Color;
-import java.awt.Component;
 import javax.swing.JPanel;
 import wsattacker.main.composition.plugin.option.AbstractOption;
 
 /**
- *
  * @author christian
  */
-public abstract class OptionGUI extends JPanel {
+public abstract class OptionGUI
+    extends JPanel
+{
 
-	final public static Color COLOR_ERROR = new Color(255, 153, 153);
-	final public static Color COLOR_OK = Color.WHITE;
+    final public static Color COLOR_ERROR = new Color( 255, 153, 153 );
 
-	public abstract void bindingDoUnbind();
+    final public static Color COLOR_OK = Color.WHITE;
 
-	public abstract AbstractOption getUsedOption();
+    public abstract void bindingDoUnbind();
+
+    public abstract AbstractOption getUsedOption();
 }

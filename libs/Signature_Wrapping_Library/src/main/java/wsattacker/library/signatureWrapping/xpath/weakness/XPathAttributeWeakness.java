@@ -29,28 +29,31 @@ import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
 
 /**
- * This Weakness is a Wrapper for the XPathAttributeWeaknessPostProcess.
- * Unlike XPathDescendantWeakness, this Weakness just clones the signed part
- * and places it directly before or after this element.
- * Afterwards, the XPathAttributeWeaknessPostProcess is used to modify
- * the attribute values.
+ * This Weakness is a Wrapper for the XPathAttributeWeaknessPostProcess. Unlike XPathDescendantWeakness, this Weakness
+ * just clones the signed part and places it directly before or after this element. Afterwards, the
+ * XPathAttributeWeaknessPostProcess is used to modify the attribute values.
  */
-public class XPathAttributeWeakness implements XPathWeaknessInterface {
+public class XPathAttributeWeakness
+    implements XPathWeaknessInterface
+{
 
     private final XPathWeaknessInterface postProcess;
+
     private final Step step;
+
     private final int matches;
 
-    public XPathAttributeWeakness(Step step,
-      SignedElement signedElement,
-      PayloadElement payloadElement) throws InvalidWeaknessException {
+    public XPathAttributeWeakness( Step step, SignedElement signedElement, PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
         this.step = step;
-        this.matches = XPathWeaknessTools.getSignedPostPart(step, signedElement.getSignedElement()).size();
-        this.postProcess = new XPathAttributeWeaknessPostProcess(step);
+        this.matches = XPathWeaknessTools.getSignedPostPart( step, signedElement.getSignedElement() ).size();
+        this.postProcess = new XPathAttributeWeaknessPostProcess( step );
     }
 
     @Override
-    public int getNumberOfPossibilities() {
+    public int getNumberOfPossibilities()
+    {
         // *2 : Place Payload before and after Signed Element
         // *matches : If XPath matches multiple Elements
         // *postProcess.getNumberOfPossibilities() : self explaining
@@ -58,37 +61,42 @@ public class XPathAttributeWeakness implements XPathWeaknessInterface {
     }
 
     /**
-     * Simply detects the affected element and clones it before or after the
-     * signed element.
-     * Afterwards, the XPathAttributeWeaknessPostProcess is called.
+     * Simply detects the affected element and clones it before or after the signed element. Afterwards, the
+     * XPathAttributeWeaknessPostProcess is called.
      */
     @Override
-    public void abuseWeakness(int index,
-      SignedElement signedElement,
-      PayloadElement payloadElement)
-      throws InvalidWeaknessException {
-        boolean before = (index % 2) == 0;
+    public void abuseWeakness( int index, SignedElement signedElement, PayloadElement payloadElement )
+        throws InvalidWeaknessException
+    {
+        boolean before = ( index % 2 ) == 0;
         index /= 2;
         int useMatch = index % matches;
         index /= matches;
         int abuseIndex = index % postProcess.getNumberOfPossibilities();
 
-        List<Element> signedPostPartMatches = XPathWeaknessTools.getSignedPostPart(step, signedElement.getSignedElement());
-        if (useMatch > signedPostPartMatches.size()) {
-            throw new InvalidWeaknessException("Could not find index " + useMatch + " in attribute XPath matches.");
+        List<Element> signedPostPartMatches =
+            XPathWeaknessTools.getSignedPostPart( step, signedElement.getSignedElement() );
+        if ( useMatch > signedPostPartMatches.size() )
+        {
+            throw new InvalidWeaknessException( "Could not find index " + useMatch + " in attribute XPath matches." );
         }
-        Element signedPostPart = signedPostPartMatches.get(useMatch);
+        Element signedPostPart = signedPostPartMatches.get( useMatch );
         // Use subfunction from XPathDescendantWeakness to create the payload
-        Element payloadPostPart = XPathWeaknessTools.createPayloadPostPart(signedPostPart, signedElement.getSignedElement(), payloadElement.getPayloadElement());
-        if (before) {
-            WeaknessLog.append("Inserted Payload just before " + signedPostPart.getNodeName());
-            signedPostPart.getParentNode().insertBefore(payloadPostPart, signedPostPart);
-        } else {
-            WeaknessLog.append("Inserted Payload after " + signedPostPart.getNodeName());
-            signedPostPart.getParentNode().appendChild(payloadPostPart);
+        Element payloadPostPart =
+            XPathWeaknessTools.createPayloadPostPart( signedPostPart, signedElement.getSignedElement(),
+                                                      payloadElement.getPayloadElement() );
+        if ( before )
+        {
+            WeaknessLog.append( "Inserted Payload just before " + signedPostPart.getNodeName() );
+            signedPostPart.getParentNode().insertBefore( payloadPostPart, signedPostPart );
+        }
+        else
+        {
+            WeaknessLog.append( "Inserted Payload after " + signedPostPart.getNodeName() );
+            signedPostPart.getParentNode().appendChild( payloadPostPart );
         }
         // call post process
-        postProcess.abuseWeakness(abuseIndex, signedElement, payloadElement);
+        postProcess.abuseWeakness( abuseIndex, signedElement, payloadElement );
     }
 
 }

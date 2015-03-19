@@ -20,20 +20,26 @@ package wsattacker.plugin.dos.dosExtension.attackRunnables;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
+public class AutoFinalizeAttackRunnable
+    implements Runnable
+{
+    private AttackModel model;
 
-public class AutoFinalizeAttackRunnable implements Runnable {
-	private AttackModel model;
-	private int state;
-	
-	// Constructor
-	public AutoFinalizeAttackRunnable(AttackModel model){
-		this.model = model;	
-	}
-	
-	public void run(){
-		// update Model + GUI
-		// - executed in EDT-context - don't have to worry about syncronization
-		// - Warning: has to run in very short period - otherwise might block GUI
-		this.model.finalizeAttackAuto();
-	}
+    private int state;
+
+    // Constructor
+    public AutoFinalizeAttackRunnable( AttackModel model )
+    {
+        this.model = model;
+    }
+
+    @Override
+    public void run()
+    {
+        // update Model + GUI
+        // - executed in EDT-context - don't have to worry about syncronization
+        // - Warning: has to run in very short period - otherwise might block
+        // GUI
+        this.model.finalizeAttackAuto();
+    }
 }

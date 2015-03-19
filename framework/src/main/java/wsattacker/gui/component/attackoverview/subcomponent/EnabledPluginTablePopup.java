@@ -22,94 +22,116 @@ import java.awt.AWTEvent;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenu;
+
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.main.plugin.PluginManager;
 
-class EnabledPluginTablePopup extends JPopupMenu {
+class EnabledPluginTablePopup
+    extends JPopupMenu
+{
 
-	class ActionListenerHelper implements ActionListener {
+    class ActionListenerHelper
+        implements ActionListener
+    {
 
-		final private PluginFunctionInterface function;
+        final private PluginFunctionInterface function;
 
-		public ActionListenerHelper(PluginFunctionInterface function) {
-			this.function = function;
-		}
+        public ActionListenerHelper( PluginFunctionInterface function )
+        {
+            this.function = function;
+        }
 
-		@Override
-		public void actionPerformed(ActionEvent ae) {
-			function.getGuiWindow().setVisible(true);
-		}
-	}
+        @Override
+        public void actionPerformed( ActionEvent ae )
+        {
+            function.getGuiWindow().setVisible( true );
+        }
+    }
 
-	public EnabledPluginTablePopup() {
-		addPopupMenuListener(new PopupMenuListener() {
-			private void maybeUpdateSelection(PopupMenuEvent e) {
-				final AWTEvent awtEvent = EventQueue.getCurrentEvent();
-				final MouseEvent me;
-				if (!(awtEvent instanceof MouseEvent)
-					|| !(me = (MouseEvent) awtEvent).isPopupTrigger()) {
-					return;
-				}
-				final JPopupMenu menu = (JPopupMenu) e.getSource();
-				final Component invoker = menu.getInvoker();
+    public EnabledPluginTablePopup()
+    {
+        addPopupMenuListener( new PopupMenuListener()
+        {
+            private void maybeUpdateSelection( PopupMenuEvent e )
+            {
+                final AWTEvent awtEvent = EventQueue.getCurrentEvent();
+                final MouseEvent me;
+                if ( !( awtEvent instanceof MouseEvent ) || !( me = (MouseEvent) awtEvent ).isPopupTrigger() )
+                {
+                    return;
+                }
+                final JPopupMenu menu = (JPopupMenu) e.getSource();
+                final Component invoker = menu.getInvoker();
 
-				if (!(invoker instanceof JTable)) {
-					return;
-				}
-				final JTable table = (JTable) invoker;
-				final Point p = me.getPoint();
-				final int row = table.rowAtPoint(p);
-				final int col = table.columnAtPoint(p);
-				if (row == -1 || col == -1) {
-					return;
-				}
-				// EventUtils.isCtrlOrMetaDown(me) am besten machst hier noch so eine methode, da bei MAC
-				// die Metda down Taste verwendet wird...
-//				table.changeSelection(row, col, me.CtrlDown(), me.isShiftDown());
-				removeAll();
-				AbstractPlugin plugin = PluginManager.getInstance().getActive(row);
-//				JMenu pluginmenu = new JMenu(plugin.getName());
-				add(new JMenuItem(plugin.getName()));
-				add(new JSeparator());
-				if (plugin.getPluginFunctions().length == 0) {
-					JMenuItem item = new JMenuItem("- No additional functions -");
-					item.setEnabled(false);
-					add(item);
-				}
-				for (PluginFunctionInterface function : plugin.getPluginFunctions()) {
-					if (function != null) {
-						JMenuItem item = new JMenuItem(function.getName());
-						item.addActionListener(new ActionListenerHelper(function));
-						item.setEnabled(function.isEnabled());
-//						pluginmenu.add(item);
-						add(item);
-					}
-				}
-//				add(pluginmenu);
-			}
+                if ( !( invoker instanceof JTable ) )
+                {
+                    return;
+                }
+                final JTable table = (JTable) invoker;
+                final Point p = me.getPoint();
+                final int row = table.rowAtPoint( p );
+                final int col = table.columnAtPoint( p );
+                if ( row == -1 || col == -1 )
+                {
+                    return;
+                }
+                // EventUtils.isCtrlOrMetaDown(me) am besten machst hier noch so
+                // eine methode, da bei MAC
+                // die Metda down Taste verwendet wird...
+                // table.changeSelection(row, col, me.CtrlDown(),
+                // me.isShiftDown());
+                removeAll();
+                AbstractPlugin plugin = PluginManager.getInstance().getActive( row );
+                // JMenu pluginmenu = new JMenu(plugin.getName());
+                add( new JMenuItem( plugin.getName() ) );
+                add( new JSeparator() );
+                if ( plugin.getPluginFunctions().length == 0 )
+                {
+                    JMenuItem item = new JMenuItem( "- No additional functions -" );
+                    item.setEnabled( false );
+                    add( item );
+                }
+                for ( PluginFunctionInterface function : plugin.getPluginFunctions() )
+                {
+                    if ( function != null )
+                    {
+                        JMenuItem item = new JMenuItem( function.getName() );
+                        item.addActionListener( new ActionListenerHelper( function ) );
+                        item.setEnabled( function.isEnabled() );
+                        // pluginmenu.add(item);
+                        add( item );
+                    }
+                }
+                // add(pluginmenu);
+            }
 
-			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-				maybeUpdateSelection(e);
-			}
+            public void popupMenuWillBecomeVisible( PopupMenuEvent e )
+            {
+                maybeUpdateSelection( e );
+            }
 
-			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-				maybeUpdateSelection(e);
-			}
+            public void popupMenuWillBecomeInvisible( PopupMenuEvent e )
+            {
+                maybeUpdateSelection( e );
+            }
 
-			public void popupMenuCanceled(PopupMenuEvent e) {
-				maybeUpdateSelection(e);
-			}
-		});
-	}
+            public void popupMenuCanceled( PopupMenuEvent e )
+            {
+                maybeUpdateSelection( e );
+            }
+        } );
+    }
 }

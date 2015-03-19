@@ -30,106 +30,133 @@ import wsattacker.main.composition.testsuite.CurrentInterfaceObserver;
 
 /**
  * Holds a references to the currently used interface
- *
+ * 
  * @author Christian Mainka
- *
  */
-public class CurrentInterface extends AbstractBean implements PropertyChangeListener {
+public class CurrentInterface
+    extends AbstractBean
+    implements PropertyChangeListener
+{
 
-	final private static Logger LOG = Logger.getLogger(CurrentInterface.class);
-	public static final String PROP_WSDLINTERFACE = "wsdlInterface";
-	private TestSuite testsuite;
-	private WsdlInterface wsdlInterface;
-	private TestSuite testSuite;
-	final private List<CurrentInterfaceObserver> observers = new ArrayList<CurrentInterfaceObserver>();
+    final private static Logger LOG = Logger.getLogger( CurrentInterface.class );
 
-	public CurrentInterface() {
-	}
+    public static final String PROP_WSDLINTERFACE = "wsdlInterface";
 
-	public TestSuite getTestsuite() {
-		return testsuite;
-	}
+    private TestSuite testsuite;
 
-	public void setTestsuite(TestSuite testsuite) {
-		this.testsuite = testsuite;
-	}
+    private WsdlInterface wsdlInterface;
 
-	public TestSuite getTestSuite() {
-		return testSuite;
-	}
+    private TestSuite testSuite;
 
-	public void setTestSuite(TestSuite newTestSuite) {
-		final TestSuite oldTestSuite = this.testSuite;
-		if (oldTestSuite != null) {
-			oldTestSuite.removePropertyChangeListener(this);
-		}
-		this.testSuite = newTestSuite;
-		if (newTestSuite != null) {
-			newTestSuite.addPropertyChangeListener(TestSuite.PROP_PROJECT, this);
-		}
-	}
+    final private List<CurrentInterfaceObserver> observers = new ArrayList<CurrentInterfaceObserver>();
 
-	/**
-	 * Get the value of wsdlInterface
-	 *
-	 * @return the value of wsdlInterface
-	 */
-	public WsdlInterface getWsdlInterface() {
-		return wsdlInterface;
-	}
+    public CurrentInterface()
+    {
+    }
 
-	/**
-	 * Set the value of wsdlInterface
-	 *
-	 * @param newWsdlInterface new value of wsdlInterface
-	 */
-	public void setWsdlInterface(WsdlInterface newWsdlInterface) {
-		WsdlInterface oldWsdlInterface = this.wsdlInterface;
-		this.wsdlInterface = newWsdlInterface;
-		firePropertyChange(PROP_WSDLINTERFACE, oldWsdlInterface, newWsdlInterface);
-		notifyCurrentServiceObservers(newWsdlInterface, oldWsdlInterface);
-	}
+    public TestSuite getTestsuite()
+    {
+        return testsuite;
+    }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent pce) {
-		final String propName = pce.getPropertyName();
-		if (TestSuite.PROP_PROJECT.equals(propName)) {
-			WsdlProject newProject = (WsdlProject) pce.getNewValue();
-			if (newProject != null && newProject.getInterfaceCount() > 0) {
-				WsdlInterface service = (WsdlInterface) newProject.getInterfaceAt(0);
-				LOG.info("Set default Service to: " + service.getName());
-				setWsdlInterface(wsdlInterface);
-			}
-		}
-	}
+    public void setTestsuite( TestSuite testsuite )
+    {
+        this.testsuite = testsuite;
+    }
 
-	@Deprecated
-	/**
-	 * This method will be removed in future version. Use the
-	 * propertyChangeSupport instead.
-	 */
-	public void addCurrentServiceObserver(CurrentInterfaceObserver o) {
-		observers.add(o);
-	}
+    public TestSuite getTestSuite()
+    {
+        return testSuite;
+    }
 
-	@Deprecated
-	/**
-	 * This method will be removed in future version. Use the
-	 * propertyChangeSupport instead.
-	 */
-	public void removeCurrentServiceObserver(CurrentInterfaceObserver o) {
-		observers.remove(o);
-	}
+    public void setTestSuite( TestSuite newTestSuite )
+    {
+        final TestSuite oldTestSuite = this.testSuite;
+        if ( oldTestSuite != null )
+        {
+            oldTestSuite.removePropertyChangeListener( this );
+        }
+        this.testSuite = newTestSuite;
+        if ( newTestSuite != null )
+        {
+            newTestSuite.addPropertyChangeListener( TestSuite.PROP_PROJECT, this );
+        }
+    }
 
-	private void notifyCurrentServiceObservers(WsdlInterface newService, WsdlInterface oldService) {
-		if (newService == null) {
-			for (CurrentInterfaceObserver o : observers) {
-				o.noCurrentInterface();
-			}
-		} else {
-			for (CurrentInterfaceObserver o : observers) {
-				o.currentInterfaceChanged(newService, oldService);
-			}
-		}
-	}
+    /**
+     * Get the value of wsdlInterface
+     * 
+     * @return the value of wsdlInterface
+     */
+    public WsdlInterface getWsdlInterface()
+    {
+        return wsdlInterface;
+    }
+
+    /**
+     * Set the value of wsdlInterface
+     * 
+     * @param newWsdlInterface new value of wsdlInterface
+     */
+    public void setWsdlInterface( WsdlInterface newWsdlInterface )
+    {
+        WsdlInterface oldWsdlInterface = this.wsdlInterface;
+        this.wsdlInterface = newWsdlInterface;
+        firePropertyChange( PROP_WSDLINTERFACE, oldWsdlInterface, newWsdlInterface );
+        notifyCurrentServiceObservers( newWsdlInterface, oldWsdlInterface );
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent pce )
+    {
+        final String propName = pce.getPropertyName();
+        if ( TestSuite.PROP_PROJECT.equals( propName ) )
+        {
+            WsdlProject newProject = (WsdlProject) pce.getNewValue();
+            if ( newProject != null && newProject.getInterfaceCount() > 0 )
+            {
+                WsdlInterface service = (WsdlInterface) newProject.getInterfaceAt( 0 );
+                LOG.info( "Set default Service to: " + service.getName() );
+                setWsdlInterface( wsdlInterface );
+            }
+        }
+    }
+
+    @Deprecated
+    /**
+     * This method will be removed in future version. Use the
+     * propertyChangeSupport instead.
+     */
+    public void addCurrentServiceObserver( CurrentInterfaceObserver o )
+    {
+        observers.add( o );
+    }
+
+    @Deprecated
+    /**
+     * This method will be removed in future version. Use the
+     * propertyChangeSupport instead.
+     */
+    public void removeCurrentServiceObserver( CurrentInterfaceObserver o )
+    {
+        observers.remove( o );
+    }
+
+    private void notifyCurrentServiceObservers( WsdlInterface newService, WsdlInterface oldService )
+    {
+        if ( newService == null )
+        {
+            for ( CurrentInterfaceObserver o : observers )
+            {
+                o.noCurrentInterface();
+            }
+        }
+        else
+        {
+            for ( CurrentInterfaceObserver o : observers )
+            {
+                o.currentInterfaceChanged( newService, oldService );
+            }
+        }
+    }
 }

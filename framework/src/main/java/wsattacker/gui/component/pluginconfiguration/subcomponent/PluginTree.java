@@ -30,70 +30,85 @@ import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.util.Category;
 
-public class PluginTree extends CheckboxTree {
+public class PluginTree
+    extends CheckboxTree
+{
 
-	private static final Logger LOG = Logger.getLogger(PluginTree.class);
-	private static final long serialVersionUID = 1L;
-	public static final String PROP_CONTROLLER = "controller";
-	private ControllerInterface controller;
-	private PluginTreeModel model;
-	private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+    private static final Logger LOG = Logger.getLogger( PluginTree.class );
 
-	public PluginTree(ControllerInterface controller) {
-		super();
-//		setController(controller);
-		this.controller = controller;
-//		setModel(new PluginTreeModel());
-		this.model = new PluginTreeModel();
-		setRootVisible(false);
-		PluginTreeCellRenderer cellRenderer = new PluginTreeCellRenderer();
-		cellRenderer.setPluginTree(this);
-		setCellRenderer(cellRenderer);
-		getCheckingModel().setCheckingMode(TreeCheckingModel.CheckingMode.PROPAGATE_PRESERVING_CHECK);
-		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		addTreeCheckingListener(new TreeCheckingListener() {
-			@Override
-			public void valueChanged(TreeCheckingEvent e) {
-				LOG.info(String.format("PluginTree value changed: " + e.toString()));
-				Object o = e.getPath().getLastPathComponent();
-				if (o instanceof AbstractPlugin) {
-					getController().setPluginActive(((AbstractPlugin) o).getName(),
-							e.isCheckedPath());
-				} else if (o.getClass().isAssignableFrom(
-						getModel().getRoot().getClass())) {
-					Object node = getModel().getRoot();
-					Object[] path = e.getPath().getPath();
-					for (int i = 1; i < path.length; ++i) {
-						node = getModel().getChild(node,
-								getModel().getIndexOfChild(node, path[i]));
-					}
-					if (node instanceof Category<?, ?>) {
-						Category<String, AbstractPlugin> category;
-						category = (Category<String, AbstractPlugin>) node;
-						List<AbstractPlugin> list;
-						list = category.getLeafsRecursive();
-						for (AbstractPlugin plugin : list) {
-							getController().setPluginActive(plugin.getName(),
-									e.isCheckedPath());
-						}
-					}
-				}
-				repaint();
-			}
-		});
-	}
+    private static final long serialVersionUID = 1L;
 
-	public ControllerInterface getController() {
-		return controller;
-	}
+    public static final String PROP_CONTROLLER = "controller";
 
-	public void setController(ControllerInterface controller) {
-		ControllerInterface oldController = this.controller;
-		this.controller = controller;
-		propertyChangeSupport.firePropertyChange(PROP_CONTROLLER, oldController, controller);
-	}
+    private ControllerInterface controller;
 
-	public PluginTreeModel getModel() {
-		return model;
-	}
+    private final PluginTreeModel model;
+
+    private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport( this );
+
+    public PluginTree( ControllerInterface controller )
+    {
+        super();
+        // setController(controller);
+        this.controller = controller;
+        // setModel(new PluginTreeModel());
+        this.model = new PluginTreeModel();
+        setRootVisible( false );
+        PluginTreeCellRenderer cellRenderer = new PluginTreeCellRenderer();
+        cellRenderer.setPluginTree( this );
+        setCellRenderer( cellRenderer );
+        getCheckingModel().setCheckingMode( TreeCheckingModel.CheckingMode.PROPAGATE_PRESERVING_CHECK );
+        getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
+        addTreeCheckingListener( new TreeCheckingListener()
+        {
+            @Override
+            public void valueChanged( TreeCheckingEvent e )
+            {
+                LOG.info( String.format( "PluginTree value changed: " + e.toString() ) );
+                Object o = e.getPath().getLastPathComponent();
+                if ( o instanceof AbstractPlugin )
+                {
+                    getController().setPluginActive( ( (AbstractPlugin) o ).getName(), e.isCheckedPath() );
+                }
+                else if ( o.getClass().isAssignableFrom( getModel().getRoot().getClass() ) )
+                {
+                    Object node = getModel().getRoot();
+                    Object[] path = e.getPath().getPath();
+                    for ( int i = 1; i < path.length; ++i )
+                    {
+                        node = getModel().getChild( node, getModel().getIndexOfChild( node, path[i] ) );
+                    }
+                    if ( node instanceof Category<?, ?> )
+                    {
+                        Category<String, AbstractPlugin> category;
+                        category = (Category<String, AbstractPlugin>) node;
+                        List<AbstractPlugin> list;
+                        list = category.getLeafsRecursive();
+                        for ( AbstractPlugin plugin : list )
+                        {
+                            getController().setPluginActive( plugin.getName(), e.isCheckedPath() );
+                        }
+                    }
+                }
+                repaint();
+            }
+        } );
+    }
+
+    public ControllerInterface getController()
+    {
+        return controller;
+    }
+
+    public void setController( ControllerInterface controller )
+    {
+        ControllerInterface oldController = this.controller;
+        this.controller = controller;
+        propertyChangeSupport.firePropertyChange( PROP_CONTROLLER, oldController, controller );
+    }
+
+    public PluginTreeModel getModel()
+    {
+        return model;
+    }
 }

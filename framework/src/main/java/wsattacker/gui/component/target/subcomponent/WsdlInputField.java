@@ -26,65 +26,83 @@ import wsattacker.main.composition.ControllerInterface;
 import wsattacker.main.testsuite.CurrentInterface;
 import wsattacker.main.testsuite.TestSuite;
 
-public class WsdlInputField extends JTextField implements PropertyChangeListener {
+public class WsdlInputField
+    extends JTextField
+    implements PropertyChangeListener
+{
 
-	private static final long serialVersionUID = 1L;
-	public static final String PROP_CONTROLLER = "controller";
-	private ControllerInterface controller;
+    private static final long serialVersionUID = 1L;
 
-	public WsdlInputField() {
-		setText("http://192.168.254.201:8080/axis2/services/WebserviceOperations?wsdl");
-//		TestSuite.getInstance().getCurrentService().addCurrentServiceObserver(this);
-	}
+    public static final String PROP_CONTROLLER = "controller";
 
-	public void currentInterfaceChanged(WsdlInterface newService,
-		WsdlInterface oldService) {
-		String newUri = newService.getDefinition();
-		if (newUri != null) {
-			setText(newUri);
-		}
-	}
+    private ControllerInterface controller;
 
-	public void noCurrentInterface() {
-	}
+    public WsdlInputField()
+    {
+        setText( "http://192.168.254.201:8080/axis2/services/WebserviceOperations?wsdl" );
+        setText( "http://bender.fritz.box:8080/WebServiceTest/wsdl/Addition.wsdl" );
+        // TestSuite.getInstance().getCurrentService().addCurrentServiceObserver(this);
+    }
 
-	/**
-	 * @return the controller
-	 */
-	public ControllerInterface getController() {
-		return controller;
-	}
+    public void currentInterfaceChanged( WsdlInterface newService, WsdlInterface oldService )
+    {
+        String newUri = newService.getDefinition();
+        if ( newUri != null )
+        {
+            setText( newUri );
+        }
+    }
 
-	/**
-	 * @param controller the controller to set
-	 */
-	public void setController(ControllerInterface controller) {
-		wsattacker.main.composition.ControllerInterface oldController = controller;
-		this.controller = controller;
-		if (oldController != null) {
-			final TestSuite testSuite = this.controller.getTestSuite();
-//			testSuite.getCurrentInterface().removeCurrentServiceObserver(this);
-			testSuite.getCurrentInterface().removePropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
-		}
-		if (this.controller != null) {
-			final TestSuite testSuite = this.controller.getTestSuite();
-//			testSuite.getCurrentInterface().addCurrentServiceObserver(this);
-			testSuite.getCurrentInterface().addPropertyChangeListener(CurrentInterface.PROP_WSDLINTERFACE, this);
-		}
-		firePropertyChange(PROP_CONTROLLER, oldController, controller);
-	}
+    public void noCurrentInterface()
+    {
+    }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent pce) {
-		final String propName = pce.getPropertyName();
-		if (propName.equals(CurrentInterface.PROP_WSDLINTERFACE)) {
-			final WsdlInterface newInterface = (WsdlInterface) pce.getNewValue();
-			final WsdlInterface oldInterface = (WsdlInterface) pce.getOldValue();
-			if (newInterface == null) {
-				noCurrentInterface();
-			} else {
-				currentInterfaceChanged(newInterface, oldInterface);
-			}
-		}
-	}
+    /**
+     * @return the controller
+     */
+    public ControllerInterface getController()
+    {
+        return controller;
+    }
+
+    /**
+     * @param controller the controller to set
+     */
+    public void setController( ControllerInterface controller )
+    {
+        wsattacker.main.composition.ControllerInterface oldController = controller;
+        this.controller = controller;
+        if ( oldController != null )
+        {
+            final TestSuite testSuite = this.controller.getTestSuite();
+            // testSuite.getCurrentInterface().removeCurrentServiceObserver(this);
+            testSuite.getCurrentInterface().removePropertyChangeListener( CurrentInterface.PROP_WSDLINTERFACE, this );
+        }
+        if ( this.controller != null )
+        {
+            final TestSuite testSuite = this.controller.getTestSuite();
+            // testSuite.getCurrentInterface().addCurrentServiceObserver(this);
+            testSuite.getCurrentInterface().addPropertyChangeListener( CurrentInterface.PROP_WSDLINTERFACE, this );
+        }
+        firePropertyChange( PROP_CONTROLLER, oldController, controller );
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent pce )
+    {
+        final String propName = pce.getPropertyName();
+        if ( propName.equals( CurrentInterface.PROP_WSDLINTERFACE ) )
+        {
+            final WsdlInterface newInterface = (WsdlInterface) pce.getNewValue();
+            final WsdlInterface oldInterface = (WsdlInterface) pce.getOldValue();
+            if ( newInterface == null )
+            {
+                noCurrentInterface();
+            }
+            else
+            {
+                currentInterfaceChanged( newInterface, oldInterface );
+            }
+        }
+    }
 }

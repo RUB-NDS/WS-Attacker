@@ -25,26 +25,33 @@ import wsattacker.main.composition.testsuite.RequestResponsePair;
 /**
  * Never used in production, just a util class for Testsetup!
  */
-public class RequestResponsePairTest implements RequestResponsePair {
-    
+public class RequestResponsePairTest
+    implements RequestResponsePair
+{
+
     private WsdlRequest request;
+
     private WsdlResponse response;
-    
+
     @Override
-    public WsdlRequest getWsdlRequest(){
-	return request;
+    public WsdlRequest getWsdlRequest()
+    {
+        return request;
     }
-    
+
     @Override
-    public WsdlResponse getWsdlResponse(){
-	return response;
+    public WsdlResponse getWsdlResponse()
+    {
+        return response;
     }
-    
-    public void setWsdlRequest(WsdlRequest request){
-	this.request = request;
+
+    public void setWsdlRequest( WsdlRequest request )
+    {
+        this.request = request;
     }
-    
-    public void setWsdlResponse(WsdlResponse response){
-	this.response = response;
-    }    
+
+    public void setWsdlResponse( WsdlResponse response )
+    {
+        this.response = response;
+    }
 }

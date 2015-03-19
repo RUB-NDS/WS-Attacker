@@ -22,35 +22,44 @@ import org.jdesktop.beans.AbstractBean;
 import wsattacker.gui.component.pluginconfiguration.subcomponent.DummyPlugin;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 
-public class SelectedPluginController extends AbstractBean {
+public class SelectedPluginController
+    extends AbstractBean
+{
 
-	private static final AbstractPlugin DUMMYPLUGIN = new DummyPlugin();
-	public static final String PROP_SELECTEDPLUGIN = "selectedPlugin";
-	private AbstractPlugin selectedPlugin = DUMMYPLUGIN;
+    private static final AbstractPlugin DUMMYPLUGIN = new DummyPlugin();
 
-	/**
-	 * Get the value of selectedPlugin
-	 *
-	 * @return the value of selectedPlugin
-	 */
-	public AbstractPlugin getSelectedPlugin() {
-		return selectedPlugin;
-	}
+    public static final String PROP_SELECTEDPLUGIN = "selectedPlugin";
 
-	/**
-	 * Set the value of selectedPlugin
-	 *
-	 * @param selectedPlugin new value of selectedPlugin
-	 */
-	public void setSelectedPlugin(AbstractPlugin selectedPlugin) {
-		AbstractPlugin newPlugin;
-		if (selectedPlugin == null) {
-			newPlugin = DUMMYPLUGIN;
-		} else {
-			newPlugin = selectedPlugin;
-		}
-		AbstractPlugin oldSelectedPlugin = this.selectedPlugin;
-		this.selectedPlugin = newPlugin;
-		firePropertyChange(PROP_SELECTEDPLUGIN, oldSelectedPlugin, newPlugin);
-	}
+    private AbstractPlugin selectedPlugin = DUMMYPLUGIN;
+
+    /**
+     * Get the value of selectedPlugin
+     * 
+     * @return the value of selectedPlugin
+     */
+    public AbstractPlugin getSelectedPlugin()
+    {
+        return selectedPlugin;
+    }
+
+    /**
+     * Set the value of selectedPlugin
+     * 
+     * @param selectedPlugin new value of selectedPlugin
+     */
+    public void setSelectedPlugin( AbstractPlugin selectedPlugin )
+    {
+        AbstractPlugin newPlugin;
+        if ( selectedPlugin == null )
+        {
+            newPlugin = DUMMYPLUGIN;
+        }
+        else
+        {
+            newPlugin = selectedPlugin;
+        }
+        AbstractPlugin oldSelectedPlugin = this.selectedPlugin;
+        this.selectedPlugin = newPlugin;
+        firePropertyChange( PROP_SELECTEDPLUGIN, oldSelectedPlugin, newPlugin );
+    }
 }

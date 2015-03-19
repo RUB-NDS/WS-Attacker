@@ -21,24 +21,28 @@ package wsattacker.library.signatureWrapping.option;
 import org.w3c.dom.Element;
 
 /**
- *
  * @author christian
  */
-public class SignedElement {
+public class SignedElement
+{
 
     private final Element signedElement;
+
     private final Element refferringElement;
 
-    public SignedElement(Element signedElement, Element refferingElement) {
+    public SignedElement( Element signedElement, Element refferingElement )
+    {
         this.signedElement = signedElement;
         this.refferringElement = refferingElement;
     }
 
-    public Element getSignedElement() {
+    public Element getSignedElement()
+    {
         return signedElement;
     }
 
-    public Element getRefferringElement() {
+    public Element getRefferringElement()
+    {
         return refferringElement;
     }
 

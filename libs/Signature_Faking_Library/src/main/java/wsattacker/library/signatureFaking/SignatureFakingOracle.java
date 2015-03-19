@@ -49,226 +49,276 @@ import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**
- * Creates faked signatures by issuing a new certificate and resigning
- * the original signature value
- *
+ * Creates faked signatures by issuing a new certificate and resigning the original signature value
+ * 
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class SignatureFakingOracle {
+public class SignatureFakingOracle
+{
 
     private Document doc;
+
     private List<Node> signatureValueElements;
+
     private List<Node> keyInfoElements;
+
     private List<String> certificates;
+
     private List<CertificateHandler> certHandlers;
-    private Logger log = Logger.getLogger(SignatureFakingOracle.class);
+
+    private Logger log = Logger.getLogger( SignatureFakingOracle.class );
 
     /**
-     * Creates SignatureWrappingOracle, parses the document and searches
-     * for all the SignatureValue and KeyInfo elements
-     *
+     * Creates SignatureWrappingOracle, parses the document and searches for all the SignatureValue and KeyInfo elements
+     * 
      * @param documentString
-     *
      * @throws SignatureFakingException
      */
-    public SignatureFakingOracle(final String documentString) throws
-      SignatureFakingException {
-        Security.addProvider(new BouncyCastleProvider());
+    public SignatureFakingOracle( final String documentString )
+        throws SignatureFakingException
+    {
+        Security.addProvider( new BouncyCastleProvider() );
         signatureValueElements = new LinkedList<Node>();
         keyInfoElements = new LinkedList<Node>();
         certificates = new LinkedList<String>();
         certHandlers = new LinkedList<CertificateHandler>();
-        try {
-            doc = DomUtilities.stringToDom(documentString);
+        try
+        {
+            doc = DomUtilities.stringToDom( documentString );
             crawlSignatureElements();
-            log.debug("found " + signatureValueElements.size()
-              + " SignatureValue elements");
+            log.debug( "found " + signatureValueElements.size() + " SignatureValue elements" );
             crawlKeyInfoElements();
-            log.debug("found " + keyInfoElements.size()
-              + " KeyInfo elements containing X509 certificates");
-        } catch (SAXException e) {
-            throw new SignatureFakingException(e);
+            log.debug( "found " + keyInfoElements.size() + " KeyInfo elements containing X509 certificates" );
+        }
+        catch ( SAXException e )
+        {
+            throw new SignatureFakingException( e );
         }
     }
 
     /**
      * Creates fake signatures
-     *
+     * 
      * @throws SignatureFakingException
      */
-    public void fakeSignatures() throws SignatureFakingException {
-        try {
+    public void fakeSignatures()
+        throws SignatureFakingException
+    {
+        try
+        {
             createFakedCertificates();
-            for (int i = 0; i < signatureValueElements.size(); i++) {
-                fakeSignature(i);
+            for ( int i = 0; i < signatureValueElements.size(); i++ )
+            {
+                fakeSignature( i );
             }
 
-        } catch (CertificateHandlerException e) {
-            throw new SignatureFakingException(e);
+        }
+        catch ( CertificateHandlerException e )
+        {
+            throw new SignatureFakingException( e );
         }
     }
 
-    public void fakeSignature(int i) throws CertificateHandlerException,
-      SignatureFakingException {
-        if (signatureValueElements.size() != certHandlers.size()) {
+    public void fakeSignature( int i )
+        throws CertificateHandlerException, SignatureFakingException
+    {
+        if ( signatureValueElements.size() != certHandlers.size() )
+        {
             createFakedCertificates();
         }
-        String signature = signatureValueElements.get(i).getTextContent();
-        CertificateHandler ch = certHandlers.get(i);
-        byte[] newSignature = resignValue(Base64.
-          decodeBase64(signature), ch);
-        signatureValueElements.get(i).setTextContent(
-          new String(Base64.encodeBase64(newSignature)));
-        appendCertificate(keyInfoElements.get(i),
-          ch.getFakedCertificateString());
+        String signature = signatureValueElements.get( i ).getTextContent();
+        CertificateHandler ch = certHandlers.get( i );
+        byte[] newSignature = resignValue( Base64.decodeBase64( signature ), ch );
+        signatureValueElements.get( i ).setTextContent( new String( Base64.encodeBase64( newSignature ) ) );
+        appendCertificate( keyInfoElements.get( i ), ch.getFakedCertificateString() );
     }
 
-    private void createFakedCertificates() throws
-      CertificateHandlerException {
-        for (String cert : certificates) {
-            CertificateHandler ch = new CertificateHandler(cert);
+    private void createFakedCertificates()
+        throws CertificateHandlerException
+    {
+        for ( String cert : certificates )
+        {
+            CertificateHandler ch = new CertificateHandler( cert );
             ch.createFakedCertificate();
-            certHandlers.add(ch);
+            certHandlers.add( ch );
         }
     }
 
     /**
-     *
-     * @return True if the signature contains public key information (X509
-     *         certificate in the KeyInfo element)
+     * @return True if the signature contains public key information (X509 certificate in the KeyInfo element)
      */
-    public boolean certificateProvided() {
-        if (certificates.size() > 0) {
+    public boolean certificateProvided()
+    {
+        if ( certificates.size() > 0 )
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
-    public void setCertificate(String cert) {
+    public void setCertificate( String cert )
+    {
         certificates.clear();
         // we want to have so many certificates as many signature values
-        for (int i = 0; i < signatureValueElements.size(); i++) {
-            certificates.add(cert);
+        for ( int i = 0; i < signatureValueElements.size(); i++ )
+        {
+            certificates.add( cert );
         }
     }
 
     /**
      * Crawls all the collected KeyInfo elements and extracts certificates
      */
-    private void crawlKeyInfoElements() {
-        for (Node ki : keyInfoElements) {
-            List<Element> l = DomUtilities.findChildren(ki, "X509Certificate",
-              NamespaceConstants.URI_NS_DS, true);
-            if (l.size() > 0) {
-                Node x509cert = l.get(0);
-                if (x509cert != null && x509cert.getLocalName().equals("X509Certificate")) {
-                    certificates.add(x509cert.getTextContent());
+    private void crawlKeyInfoElements()
+    {
+        for ( Node ki : keyInfoElements )
+        {
+            List<Element> l = DomUtilities.findChildren( ki, "X509Certificate", NamespaceConstants.URI_NS_DS, true );
+            if ( l.size() > 0 )
+            {
+                Node x509cert = l.get( 0 );
+                if ( x509cert != null && x509cert.getLocalName().equals( "X509Certificate" ) )
+                {
+                    certificates.add( x509cert.getTextContent() );
                 }
             }
         }
     }
 
-    private void crawlSignatureElements() throws SignatureFakingException {
+    private void crawlSignatureElements()
+        throws SignatureFakingException
+    {
         // TODO replace with DOMUtilities
         NodeList nl = getSignatureElements();
-        for (int i = 0; i < nl.getLength(); i++) {
-            Node n = nl.item(i);
+        for ( int i = 0; i < nl.getLength(); i++ )
+        {
+            Node n = nl.item( i );
             NodeList children = n.getChildNodes();
-            for (int j = 0; j < children.getLength(); j++) {
-                Node current = children.item(j);
-                if (current.getNodeType() == Node.ELEMENT_NODE) {
-                    if (current.getLocalName().equals("SignedInfo")) {
-                        Element signatureMethod = DomUtilities.findChildren(
-                          current, "SignatureMethod", NamespaceConstants.URI_NS_DS,
-                          false).get(0);
-                        if (signatureMethod != null
-                          && (!isSignatureMethodSupported(signatureMethod))) {
-                            throw new SignatureFakingException("Signature "
-                              + "Algorithm not yet supported");
+            for ( int j = 0; j < children.getLength(); j++ )
+            {
+                Node current = children.item( j );
+                if ( current.getNodeType() == Node.ELEMENT_NODE )
+                {
+                    if ( current.getLocalName().equals( "SignedInfo" ) )
+                    {
+                        Element signatureMethod =
+                            DomUtilities.findChildren( current, "SignatureMethod", NamespaceConstants.URI_NS_DS, false ).get( 0 );
+                        if ( signatureMethod != null && ( !isSignatureMethodSupported( signatureMethod ) ) )
+                        {
+                            throw new SignatureFakingException( "Signature " + "Algorithm not yet supported" );
                         }
-                    } else if (current.getLocalName().equals("SignatureValue")) {
-                        signatureValueElements.add(current);
-                    } else if (current.getLocalName().equals("KeyInfo")) {
-                        keyInfoElements.add(current);
+                    }
+                    else if ( current.getLocalName().equals( "SignatureValue" ) )
+                    {
+                        signatureValueElements.add( current );
+                    }
+                    else if ( current.getLocalName().equals( "KeyInfo" ) )
+                    {
+                        keyInfoElements.add( current );
                     }
                 }
             }
         }
     }
 
-    private boolean isSignatureMethodSupported(Node signatureMethodElement) {
+    private boolean isSignatureMethodSupported( Node signatureMethodElement )
+    {
         NamedNodeMap nl = signatureMethodElement.getAttributes();
-        Node n = nl.getNamedItem("Algorithm");
-        if (n != null) {
+        Node n = nl.getNamedItem( "Algorithm" );
+        if ( n != null )
+        {
             String algorithm = n.getTextContent();
-            if (algorithm.contains("rsa-sha")) {
+            if ( algorithm.contains( "rsa-sha" ) )
+            {
                 return true;
             }
         }
         return false;
     }
 
-    private void appendCertificate(Node keyInfo, String certificate) {
-        keyInfo.setTextContent("");
+    private void appendCertificate( Node keyInfo, String certificate )
+    {
+        keyInfo.setTextContent( "" );
         String prefix = keyInfo.getPrefix();
-        if (prefix == null) {
+        if ( prefix == null )
+        {
             prefix = "";
-        } else {
+        }
+        else
+        {
             prefix = prefix + ":";
         }
-        Node data = keyInfo.getOwnerDocument().createElementNS(
-          NamespaceConstants.URI_NS_DS, prefix + "X509Data");
-        keyInfo.appendChild(data);
-        Node cert = keyInfo.getOwnerDocument().createElementNS(
-          NamespaceConstants.URI_NS_DS, prefix + "X509Certificate");
-        data.appendChild(cert);
-        cert.setTextContent(certificate);
-        log.debug("Appending Certificate \r\n" + certificate + "\r\nto the"
-          + prefix + "X509Certificate element");
+        Node data = keyInfo.getOwnerDocument().createElementNS( NamespaceConstants.URI_NS_DS, prefix + "X509Data" );
+        keyInfo.appendChild( data );
+        Node cert =
+            keyInfo.getOwnerDocument().createElementNS( NamespaceConstants.URI_NS_DS, prefix + "X509Certificate" );
+        data.appendChild( cert );
+        cert.setTextContent( certificate );
+        log.debug( "Appending Certificate \r\n" + certificate + "\r\nto the" + prefix + "X509Certificate element" );
     }
 
-    private byte[] resignValue(byte[] signatureValue, CertificateHandler ch)
-      throws SignatureFakingException {
+    private byte[] resignValue( byte[] signatureValue, CertificateHandler ch )
+        throws SignatureFakingException
+    {
         PrivateKey privKey = ch.getFakedKeyPair().getPrivate();
         PublicKey pubKey = ch.getOriginalPublicKey();
         String alg = ch.getFakedCertificate().getSigAlgName();
-        if (alg.contains("RSA")) {
-            try {
-                Cipher cipher = Cipher.getInstance("RSA/None/NoPadding");
-                cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-                byte[] unsigend = cipher.doFinal(signatureValue);
+        if ( alg.contains( "RSA" ) )
+        {
+            try
+            {
+                Cipher cipher = Cipher.getInstance( "RSA/None/NoPadding" );
+                cipher.init( Cipher.ENCRYPT_MODE, pubKey );
+                byte[] unsigend = cipher.doFinal( signatureValue );
 
-                cipher = Cipher.getInstance("RSA/None/NoPadding");
-                cipher.init(Cipher.DECRYPT_MODE, privKey);
-                log.debug("New Signature value computed");
-                return cipher.doFinal(unsigend);
-            } catch (BadPaddingException e) {
-                throw new SignatureFakingException(e);
-            } catch (IllegalBlockSizeException e) {
-                throw new SignatureFakingException(e);
-            } catch (InvalidKeyException e) {
-                throw new SignatureFakingException(e);
-            } catch (NoSuchAlgorithmException e) {
-                throw new SignatureFakingException(e);
-            } catch (NoSuchPaddingException e) {
-                throw new SignatureFakingException(e);
+                cipher = Cipher.getInstance( "RSA/None/NoPadding" );
+                cipher.init( Cipher.DECRYPT_MODE, privKey );
+                log.debug( "New Signature value computed" );
+                return cipher.doFinal( unsigend );
             }
-        } else {
+            catch ( BadPaddingException e )
+            {
+                throw new SignatureFakingException( e );
+            }
+            catch ( IllegalBlockSizeException e )
+            {
+                throw new SignatureFakingException( e );
+            }
+            catch ( InvalidKeyException e )
+            {
+                throw new SignatureFakingException( e );
+            }
+            catch ( NoSuchAlgorithmException e )
+            {
+                throw new SignatureFakingException( e );
+            }
+            catch ( NoSuchPaddingException e )
+            {
+                throw new SignatureFakingException( e );
+            }
+        }
+        else
+        {
             return null;
         }
     }
 
-    private NodeList getSignatureElements() {
-        return doc.getElementsByTagNameNS(NamespaceConstants.URI_NS_DS, "Signature");
+    private NodeList getSignatureElements()
+    {
+        return doc.getElementsByTagNameNS( NamespaceConstants.URI_NS_DS, "Signature" );
     }
 
-    public List<String> getCertificates() {
+    public List<String> getCertificates()
+    {
         return certificates;
     }
 
-    public String getDocument() {
-        return DomUtilities.domToString(doc);
+    public String getDocument()
+    {
+        return DomUtilities.domToString( doc );
     }
 }

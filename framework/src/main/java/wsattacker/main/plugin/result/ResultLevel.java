@@ -25,12 +25,11 @@ package wsattacker.main.plugin.result;
  */
 
 /**
- * ResultLevel:
- * Critical: This shall be used as a summary to give a final result, if the attack was successfull
- * Important: This can be used to report important attack steps, e.g. if a part of a plugin was successful
- * Info: Just any information messages
- * Trace: This is for request/response content
+ * ResultLevel: Critical: This shall be used as a summary to give a final result, if the attack was successfull
+ * Important: This can be used to report important attack steps, e.g. if a part of a plugin was successful Info: Just
+ * any information messages Trace: This is for request/response content
  */
-public enum ResultLevel {
-	Critical, Important, Info, Trace;
+public enum ResultLevel
+{
+    Critical, Important, Info, Trace;
 }

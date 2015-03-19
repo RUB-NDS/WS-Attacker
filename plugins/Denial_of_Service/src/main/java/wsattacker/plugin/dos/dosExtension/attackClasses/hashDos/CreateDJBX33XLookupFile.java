@@ -19,24 +19,24 @@
 package wsattacker.plugin.dos.dosExtension.attackClasses.hashDos;
 
 /**
- * Run this file to create a new file with colliding attributenames of DJBX33X
- * Output file with colliding attributenames will be placed in rootfolder of this project
- * WARNING: might run long!
- *
+ * Run this file to create a new file with colliding attributenames of DJBX33X Output file with colliding attributenames
+ * will be placed in rootfolder of this project WARNING: might run long!
  */
-public class CreateDJBX33XLookupFile {
+public class CreateDJBX33XLookupFile
+{
 
-    public static void main(String[] args) {
-	
-	CollisionDJBX31A collision = new CollisionDJBX31A();
-	System.out.println(collision.getHash("tt"));
-	System.out.println(collision.getHash("uU"));
-	System.out.println(collision.getHash("uUuU"));
-	System.out.println(collision.getHash("uUtt"));
-	System.out.println(collision.getHash("ttuU"));
-	System.out.println(collision.getHash("tttt"));
-	
-	//CollisionDJBX33X collision = new CollisionDJBX33X();
-	//collision.generateCollionsMeetInTheMiddle(1000000);
+    public static void main( String[] args )
+    {
+
+        CollisionDJBX31A collision = new CollisionDJBX31A();
+        System.out.println( collision.getHash( "tt" ) );
+        System.out.println( collision.getHash( "uU" ) );
+        System.out.println( collision.getHash( "uUuU" ) );
+        System.out.println( collision.getHash( "uUtt" ) );
+        System.out.println( collision.getHash( "ttuU" ) );
+        System.out.println( collision.getHash( "tttt" ) );
+
+        // CollisionDJBX33X collision = new CollisionDJBX33X();
+        // collision.generateCollionsMeetInTheMiddle(1000000);
     }
 }

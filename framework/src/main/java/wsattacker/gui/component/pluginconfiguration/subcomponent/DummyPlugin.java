@@ -21,30 +21,37 @@ package wsattacker.gui.component.pluginconfiguration.subcomponent;
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.testsuite.RequestResponsePair;
 
-public class DummyPlugin extends AbstractPlugin {
+public class DummyPlugin
+    extends AbstractPlugin
+{
 
-	public DummyPlugin() {
-		super();
-		setName("Select a Plugin from the Tree");
-		setAuthor("");
-		setVersion("");
-		setDescription("");
-	}
+    public DummyPlugin()
+    {
+        super();
+        setName( "Select a Plugin from the Tree" );
+        setAuthor( "" );
+        setVersion( "" );
+        setDescription( "" );
+    }
 
-	@Override
-	protected void attackImplementationHook(RequestResponsePair original) {
-	}
+    @Override
+    protected void attackImplementationHook( RequestResponsePair original )
+    {
+    }
 
-	@Override
-	public void clean() {
-	}
+    @Override
+    public void clean()
+    {
+    }
 
-	@Override
-	public boolean wasSuccessful() {
-		return false;
-	}
+    @Override
+    public boolean wasSuccessful()
+    {
+        return false;
+    }
 
-	@Override
-	public void initializePlugin() {
-	}
+    @Override
+    public void initializePlugin()
+    {
+    }
 }

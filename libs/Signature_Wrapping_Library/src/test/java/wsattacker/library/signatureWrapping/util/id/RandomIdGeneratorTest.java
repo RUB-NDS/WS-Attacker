@@ -24,46 +24,54 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- *
  * @author christian
  */
-public class RandomIdGeneratorTest {
+public class RandomIdGeneratorTest
+{
 
     @Test
-    public void testRotate_ID() {
+    public void testRotate_ID()
+    {
         String originalID, generatedID;
 
         originalID = "abcmnxyz";
-        for (int i = 0; i < 100; ++i) {
-            generatedID = RandomIdGenerator.rotate_ID(originalID);
-            assertEquals(originalID.length(), generatedID.length());
-            assertTrue(String.format("Error: '%s' ==> '%s'", originalID, generatedID), generatedID.matches("[a-z]{8}"));
-            assertFalse(String.format("Error: Strings are equal '%s'", originalID), originalID.equals(generatedID));
+        for ( int i = 0; i < 100; ++i )
+        {
+            generatedID = RandomIdGenerator.rotate_ID( originalID );
+            assertEquals( originalID.length(), generatedID.length() );
+            assertTrue( String.format( "Error: '%s' ==> '%s'", originalID, generatedID ),
+                        generatedID.matches( "[a-z]{8}" ) );
+            assertFalse( String.format( "Error: Strings are equal '%s'", originalID ), originalID.equals( generatedID ) );
         }
 
         originalID = "ABCMNXYZ";
-        for (int i = 0; i < 100; ++i) {
-            generatedID = RandomIdGenerator.rotate_ID(originalID);
-            assertEquals(originalID.length(), generatedID.length());
-            assertTrue(String.format("Error: '%s' ==> '%s'", originalID, generatedID), generatedID.matches("[A-Z]{8}"));
-            assertFalse(String.format("Error: Strings are equal '%s'", originalID), originalID.equals(generatedID));
+        for ( int i = 0; i < 100; ++i )
+        {
+            generatedID = RandomIdGenerator.rotate_ID( originalID );
+            assertEquals( originalID.length(), generatedID.length() );
+            assertTrue( String.format( "Error: '%s' ==> '%s'", originalID, generatedID ),
+                        generatedID.matches( "[A-Z]{8}" ) );
+            assertFalse( String.format( "Error: Strings are equal '%s'", originalID ), originalID.equals( generatedID ) );
         }
 
         originalID = "0123456789";
-        for (int i = 0; i < 100; ++i) {
-            generatedID = RandomIdGenerator.rotate_ID(originalID);
-            assertEquals(originalID.length(), generatedID.length());
-            assertTrue(String.format("Error: '%s' ==> '%s'", originalID, generatedID), generatedID.matches("[0-9]{10}"));
-            assertFalse(String.format("Error: Strings are equal '%s'", originalID), originalID.equals(generatedID));
+        for ( int i = 0; i < 100; ++i )
+        {
+            generatedID = RandomIdGenerator.rotate_ID( originalID );
+            assertEquals( originalID.length(), generatedID.length() );
+            assertTrue( String.format( "Error: '%s' ==> '%s'", originalID, generatedID ),
+                        generatedID.matches( "[0-9]{10}" ) );
+            assertFalse( String.format( "Error: Strings are equal '%s'", originalID ), originalID.equals( generatedID ) );
         }
 
         originalID = "_ab-12.XY";
-        for (int i = 0; i < 100; ++i) {
-            generatedID = RandomIdGenerator.rotate_ID(originalID);
-            assertEquals(originalID.length(), generatedID.length());
-            assertTrue(String.format("Error: '%s' ==> '%s'", originalID, generatedID), generatedID.matches("_[a-z]{2}-[0-9]{2}.[A-Z]{2}"));
-            assertFalse(String.format("Error: Strings are equal '%s'", originalID), originalID.equals(generatedID));
-            System.out.println(generatedID);
+        for ( int i = 0; i < 100; ++i )
+        {
+            generatedID = RandomIdGenerator.rotate_ID( originalID );
+            assertEquals( originalID.length(), generatedID.length() );
+            assertTrue( String.format( "Error: '%s' ==> '%s'", originalID, generatedID ),
+                        generatedID.matches( "_[a-z]{2}-[0-9]{2}.[A-Z]{2}" ) );
+            assertFalse( String.format( "Error: Strings are equal '%s'", originalID ), originalID.equals( generatedID ) );
         }
     }
 }

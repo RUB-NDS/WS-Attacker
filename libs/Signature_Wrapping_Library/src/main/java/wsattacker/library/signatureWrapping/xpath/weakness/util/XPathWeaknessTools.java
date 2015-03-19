@@ -37,98 +37,111 @@ import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 /**
  * Collecion of usefull helper methods for creating XSW messages.
  */
-public final class XPathWeaknessTools {
+public final class XPathWeaknessTools
+{
 
-    private final static Logger LOG = Logger.getLogger(XPathWeaknessTools.class);
+    private final static Logger LOG = Logger.getLogger( XPathWeaknessTools.class );
 
     /**
-     * Returns a clone of the signedPostPart Element but instead of the
-     * decendant-or-self signedElement, the payloadElement is placed.
-     *
+     * Returns a clone of the signedPostPart Element but instead of the decendant-or-self signedElement, the
+     * payloadElement is placed.
+     * 
      * @param signedPostPart is an ancestor-or-self of signedElement
-     * @param signedElement  is a decendant-or-self of signedPostPart
+     * @param signedElement is a decendant-or-self of signedPostPart
      * @param payloadElement
-     *
      * @return
      */
-    public static Element createPayloadPostPart(Element signedPostPart,
-      Element signedElement,
-      Element payloadElement) {
+    public static Element createPayloadPostPart( Element signedPostPart, Element signedElement, Element payloadElement )
+    {
 
         // special case = signedElement = signedPostPart
-        if (signedElement == signedPostPart) {
+        if ( signedElement == signedPostPart )
+        {
             return payloadElement;
         }
 
-        // 1) Get "fast xpath position" of the signed Element beginning at signedPostPart
+        // 1) Get "fast xpath position" of the signed Element beginning at
+        // signedPostPart
         List<Element> parentElements = new ArrayList<Element>();
         List<Integer> parentIndex = new ArrayList<Integer>();
         // First: Add each parent node to a temporary list
         // (Go upstairs to signedPostPart beginning with element)
         Node theParent = signedElement;
-        while (theParent != null && theParent.getNodeType() == Node.ELEMENT_NODE && theParent != signedPostPart) {
-            parentElements.add((Element) theParent);
-            parentIndex.add(DomUtilities.getElementIndex((Element) theParent));
+        while ( theParent != null && theParent.getNodeType() == Node.ELEMENT_NODE && theParent != signedPostPart )
+        {
+            parentElements.add( (Element) theParent );
+            parentIndex.add( DomUtilities.getElementIndex( (Element) theParent ) );
             theParent = theParent.getParentNode();
         }
 
         // 2) Clone the signedPostPart
-        Element payloadPostPart = (Element) signedPostPart.cloneNode(true);
+        Element payloadPostPart = (Element) signedPostPart.cloneNode( true );
 
         // 3) Detect signedElement in clone via "fast xpath" method
         Element tmp = payloadPostPart;
-        for (int i = parentElements.size() - 1; i >= 0; --i) {
-            Element child = parentElements.get(i);
-            int index = parentIndex.get(i);
-//      NodeList children = tmp.getElementsByTagNameNS(child.getNamespaceURI(), child.getLocalName());
-//      tmp = (Element) children.item(index - 1); // Index of Node is 1 based, lists start with element 0
-            List<Element> children = DomUtilities.findChildren(tmp, child.getLocalName(), child.getNamespaceURI());
-            tmp = children.get(index - 1);
+        for ( int i = parentElements.size() - 1; i >= 0; --i )
+        {
+            Element child = parentElements.get( i );
+            int index = parentIndex.get( i );
+            // NodeList children =
+            // tmp.getElementsByTagNameNS(child.getNamespaceURI(),
+            // child.getLocalName());
+            // tmp = (Element) children.item(index - 1); // Index of Node is 1
+            // based, lists start with element 0
+            List<Element> children = DomUtilities.findChildren( tmp, child.getLocalName(), child.getNamespaceURI() );
+            tmp = children.get( index - 1 );
         }
 
         // 4) Append payloadElement and remove signedElementCopy=tmp
-        tmp.getParentNode().replaceChild(payloadElement, tmp);
+        tmp.getParentNode().replaceChild( payloadElement, tmp );
 
         return payloadPostPart;
     }
 
     /**
-     * Detects the minimal Elements protected by the postXPath.
-     * Therefore, the postXPath is evaluated from the signedElement
-     * and step by step by its parents until the postXPath
-     * matches exactly one Element. This one is returned.
-     *
+     * Detects the minimal Elements protected by the postXPath. Therefore, the postXPath is evaluated from the
+     * signedElement and step by step by its parents until the postXPath matches exactly one Element. This one is
+     * returned.
+     * 
      * @param signedElement
      * @param postXPath
-     *
      * @return
      */
-    public static Element detectHashedPostTree(Element signedElement,
-      String postXPath) {
+    public static Element detectHashedPostTree( Element signedElement, String postXPath )
+    {
         Element signedPostPart = signedElement;
-        Node signedPostPartParent = (Element) signedPostPart.getParentNode();
+        Node signedPostPartParent = signedPostPart.getParentNode();
         final XPathFactory factory = XPathFactory.newInstance();
         final XPath xpath = factory.newXPath();
         final Document ownerDocument = signedElement.getOwnerDocument();
-        final NamespaceResolver nsr = new NamespaceResolver(ownerDocument);
-        xpath.setNamespaceContext(nsr);
+        final NamespaceResolver nsr = new NamespaceResolver( ownerDocument );
+        xpath.setNamespaceContext( nsr );
         XPathExpression expr = null;
-        try {
-            expr = xpath.compile(postXPath);
-        } catch (XPathExpressionException e1) {
-            LOG.warn("No valid PostXPath: " + postXPath);
+        try
+        {
+            expr = xpath.compile( postXPath );
+        }
+        catch ( XPathExpressionException e1 )
+        {
+            LOG.warn( "No valid PostXPath: " + postXPath );
             return null;
         }
         NodeList nodes;
-        while (signedPostPartParent != null && signedPostPartParent.getNodeType() == Node.ELEMENT_NODE) {
-            try {
-                nodes = (NodeList) expr.evaluate(signedPostPartParent, XPathConstants.NODESET);
-            } catch (XPathExpressionException e) {
+        while ( signedPostPartParent != null && signedPostPartParent.getNodeType() == Node.ELEMENT_NODE )
+        {
+            try
+            {
+                nodes = (NodeList) expr.evaluate( signedPostPartParent, XPathConstants.NODESET );
+            }
+            catch ( XPathExpressionException e )
+            {
                 continue;
             }
-            if (nodes.getLength() == 1) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Matched with postXPath from Element: " + signedPostPart.getNodeName());
+            if ( nodes.getLength() == 1 )
+            {
+                if ( LOG.isDebugEnabled() )
+                {
+                    LOG.debug( "Matched with postXPath from Element: " + signedPostPart.getNodeName() );
                 }
                 break;
             }
@@ -139,38 +152,45 @@ public final class XPathWeaknessTools {
     }
 
     /**
-     * Evaluates the XPaths up to the Step step and returns a List of Elements
-     * which contain the signedElement as a descendant-or-self.
-     *
+     * Evaluates the XPaths up to the Step step and returns a List of Elements which contain the signedElement as a
+     * descendant-or-self.
+     * 
      * @param step
      * @param signedElement
-     *
      * @return
-     *
      * @throws InvalidWeaknessException
      */
-    public static List<Element> getSignedPostPart(Step step, Element signedElement) throws InvalidWeaknessException {
+    public static List<Element> getSignedPostPart( Step step, Element signedElement )
+        throws InvalidWeaknessException
+    {
 
         // get extended PreXPath
         String xpath = step.getPreXPath() + "/" + step.getStep();
-        if (xpath.equals("/")) {
-            throw new InvalidWeaknessException("Reached root of Document.");
+        if ( xpath.equals( "/" ) )
+        {
+            throw new InvalidWeaknessException( "Reached root of Document." );
         }
         List<Element> matchList;
-        try {
-            matchList = (List<Element>) DomUtilities.evaluateXPath(signedElement.getOwnerDocument(), xpath);
-        } catch (XPathExpressionException e) {
-            LOG.warn(e.getLocalizedMessage());
-            throw new InvalidWeaknessException(e);
+        try
+        {
+            matchList = (List<Element>) DomUtilities.evaluateXPath( signedElement.getOwnerDocument(), xpath );
+        }
+        catch ( XPathExpressionException e )
+        {
+            LOG.warn( e.getLocalizedMessage() );
+            throw new InvalidWeaknessException( e );
         }
 
-        if (matchList.isEmpty()) {
-            throw new InvalidWeaknessException("XPath does not match any Element");
+        if ( matchList.isEmpty() )
+        {
+            throw new InvalidWeaknessException( "XPath does not match any Element" );
         }
         List<Element> haveSignedDecendant = new ArrayList<Element>();
-        for (Element match : matchList) {
-            if (isAncestorOf(match, signedElement) >= 0) {
-                haveSignedDecendant.add(match);
+        for ( Element match : matchList )
+        {
+            if ( isAncestorOf( match, signedElement ) >= 0 )
+            {
+                haveSignedDecendant.add( match );
             }
         }
         return haveSignedDecendant;
@@ -178,36 +198,36 @@ public final class XPathWeaknessTools {
 
     /**
      * Checks if ancestor-Element is an ancestor of maybeChild Element
-     *
-     * @param the
-     *            ancestor-Element
-     * @param the
-     *            maybeChild-Element
-     *
-     * @return -1 if not an ancestor, 0 if ancestor==maybeChild, otherwise the
-     *         number of Elements to go up from maybeChild
-     *         to reach the ancestor.
+     * 
+     * @param the ancestor-Element
+     * @param the maybeChild-Element
+     * @return -1 if not an ancestor, 0 if ancestor==maybeChild, otherwise the number of Elements to go up from
+     *         maybeChild to reach the ancestor.
      */
-    public static int isAncestorOf(Element ancestor,
-      Element maybeChild) {
+    public static int isAncestorOf( Element ancestor, Element maybeChild )
+    {
         int ret = -1;
-        if (ancestor == maybeChild) {
+        if ( ancestor == maybeChild )
+        {
             ret = 0;
         }
         Node parent = maybeChild.getParentNode();
 
         int i = 1;
-        while (parent != null && parent != ancestor) {
+        while ( parent != null && parent != ancestor )
+        {
             parent = parent.getParentNode();
             ++i;
         }
 
-        if (parent == ancestor) {
+        if ( parent == ancestor )
+        {
             ret = i;
         }
         return ret;
     }
 
-    private XPathWeaknessTools() {
+    private XPathWeaknessTools()
+    {
     }
 }

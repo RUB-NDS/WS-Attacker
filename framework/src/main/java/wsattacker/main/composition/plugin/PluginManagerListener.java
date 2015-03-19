@@ -20,10 +20,13 @@ package wsattacker.main.composition.plugin;
 
 /**
  * Interface to observe the plugin manager
+ * 
  * @author Christian Mainka
- *
  */
-public interface PluginManagerListener extends PluginObserver {
-	public void pluginActiveStateChanged(AbstractPlugin plugin, boolean active);
-	public void pluginContainerChanged();
+public interface PluginManagerListener
+    extends PluginObserver
+{
+    public void pluginActiveStateChanged( AbstractPlugin plugin, boolean active );
+
+    public void pluginContainerChanged();
 }

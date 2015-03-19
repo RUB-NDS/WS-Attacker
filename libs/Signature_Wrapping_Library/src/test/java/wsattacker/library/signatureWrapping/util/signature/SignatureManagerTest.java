@@ -34,113 +34,124 @@ import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
-public class SignatureManagerTest {
+public class SignatureManagerTest
+{
 
     private Logger log;
 
     @BeforeClass
     public static void setUpBeforeClass()
-      throws Exception {
-        Logger.getLogger("wsattacker.plugin.signatureWrapping").setLevel(Level.ALL);
+        throws Exception
+    {
+        Logger.getLogger( "wsattacker.plugin.signatureWrapping" ).setLevel( Level.ALL );
     }
 
     @AfterClass
     public static void tearDownAfterClass()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Before
     public void setUp()
-      throws Exception {
-        log = Logger.getLogger(getClass());
+        throws Exception
+    {
+        log = Logger.getLogger( getClass() );
     }
 
     @After
     public void tearDown()
-      throws Exception {
+        throws Exception
+    {
     }
 
     @Test
     public void referenceTest()
-      throws Exception {
-        log.info("### Reading Rampart message, 2 Refereneces 0 XPaths");
+        throws Exception
+    {
+        log.info( "### Reading Rampart message, 2 Refereneces 0 XPaths" );
         SignatureManager manager = new SignatureManager();
-        Document doc = DomUtilities.readDocument("src/test/resources/signed_rampart_message.xml");
-        manager.setDocument(doc);
-        assertEquals(1, manager.getSignatureElements().size());
-        SignatureElement sig = manager.getSignatureElements().get(0);
-        assertNotNull(sig);
+        Document doc = DomUtilities.readDocument( "src/test/resources/signed_rampart_message.xml" );
+        manager.setDocument( doc );
+        assertEquals( 1, manager.getSignatureElements().size() );
+        SignatureElement sig = manager.getSignatureElements().get( 0 );
+        assertNotNull( sig );
         List<ReferenceElement> refs = sig.getReferences();
-        assertEquals(2, refs.size());
-        assertEquals("#id-42", refs.get(0).getURI());
-        assertEquals("soapenv:Body", refs.get(0).getReferencedElement().getNodeName());
-        assertEquals("#Timestamp-40", refs.get(1).getURI());
-        assertEquals("wsu:Timestamp", refs.get(1).getReferencedElement().getNodeName());
+        assertEquals( 2, refs.size() );
+        assertEquals( "#id-42", refs.get( 0 ).getURI() );
+        assertEquals( "soapenv:Body", refs.get( 0 ).getReferencedElement().getNodeName() );
+        assertEquals( "#Timestamp-40", refs.get( 1 ).getURI() );
+        assertEquals( "wsu:Timestamp", refs.get( 1 ).getReferencedElement().getNodeName() );
     }
 
     @Test
     public void xpathTest()
-      throws Exception {
-        log.info("### Reading XSpRES message, 1 Reference 2 XPaths");
+        throws Exception
+    {
+        log.info( "### Reading XSpRES message, 1 Reference 2 XPaths" );
         SignatureManager manager = new SignatureManager();
-        Document doc = DomUtilities.readDocument("src/test/resources/signed_xspres_message.xml");
-        manager.setDocument(doc);
-        assertEquals(1, manager.getSignatureElements().size());
-        SignatureElement sig = manager.getSignatureElements().get(0);
-        assertNotNull(sig);
+        Document doc = DomUtilities.readDocument( "src/test/resources/signed_xspres_message.xml" );
+        manager.setDocument( doc );
+        assertEquals( 1, manager.getSignatureElements().size() );
+        SignatureElement sig = manager.getSignatureElements().get( 0 );
+        assertNotNull( sig );
         List<ReferenceElement> refs = sig.getReferences();
-        assertEquals(1, refs.size());
-        assertTrue(refs.get(0).getURI().isEmpty());
-        List<XPathElement> xpaths = refs.get(0).getXPaths();
-        assertNotNull(xpaths);
-        assertEquals(2, xpaths.size());
-        assertEquals("intersect", xpaths.get(0).getFilter());
-        assertEquals("/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Body\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]", xpaths
-          .get(0).getExpression());
-        assertEquals(1, xpaths.get(0).getReferencedElements().size());
-        assertEquals("soapenv:Body", xpaths.get(0).getReferencedElements().get(0).getNodeName());
-        assertEquals("union", xpaths.get(1).getFilter());
-        assertEquals("/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Header\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Security\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"][1]/*[local-name()=\"Timestamp\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"][1]", xpaths
-          .get(1).getExpression());
-        assertEquals(1, xpaths.get(1).getReferencedElements().size());
-        assertEquals("wsu:Timestamp", xpaths.get(1).getReferencedElements().get(0).getNodeName());
+        assertEquals( 1, refs.size() );
+        assertTrue( refs.get( 0 ).getURI().isEmpty() );
+        List<XPathElement> xpaths = refs.get( 0 ).getXPaths();
+        assertNotNull( xpaths );
+        assertEquals( 2, xpaths.size() );
+        assertEquals( "intersect", xpaths.get( 0 ).getFilter() );
+        assertEquals( "/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Body\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]",
+                      xpaths.get( 0 ).getExpression() );
+        assertEquals( 1, xpaths.get( 0 ).getReferencedElements().size() );
+        assertEquals( "soapenv:Body", xpaths.get( 0 ).getReferencedElements().get( 0 ).getNodeName() );
+        assertEquals( "union", xpaths.get( 1 ).getFilter() );
+        assertEquals( "/*[local-name()=\"Envelope\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Header\" and namespace-uri()=\"http://schemas.xmlsoap.org/soap/envelope/\"][1]/*[local-name()=\"Security\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"][1]/*[local-name()=\"Timestamp\" and namespace-uri()=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"][1]",
+                      xpaths.get( 1 ).getExpression() );
+        assertEquals( 1, xpaths.get( 1 ).getReferencedElements().size() );
+        assertEquals( "wsu:Timestamp", xpaths.get( 1 ).getReferencedElements().get( 0 ).getNodeName() );
     }
 
     @Test
     public void samlOverSoapTest()
-      throws Exception {
-        log.info("### Reading XSpRES message, 1 Reference 2 XPaths");
+        throws Exception
+    {
+        log.info( "### Reading XSpRES message, 1 Reference 2 XPaths" );
         SignatureManager manager = new SignatureManager();
-        Document doc = DomUtilities.readDocument("src/test/resources/saml_over_soap.xml");
-        manager.setDocument(doc);
-        assertEquals(2, manager.getSignatureElements().size());
-        assertEquals(3, manager.getPayloads().size());
+        Document doc = DomUtilities.readDocument( "src/test/resources/saml_over_soap.xml" );
+        manager.setDocument( doc );
+        assertEquals( 2, manager.getSignatureElements().size() );
+        assertEquals( 3, manager.getPayloads().size() );
 
         Set<String> expectedFastXPaths = new HashSet<String>();
         Set<String> foundFastXPaths = new HashSet<String>();
 
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/Assertion[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[1]");
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[1]");
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[2]");
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/Assertion[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[1]" );
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[1]" );
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/ds:Signature[1]/ds:SignedInfo[1]/ds:Reference[2]" );
 
-        for (Payload option : manager.getPayloads()) {
-            foundFastXPaths.add(DomUtilities.getFastXPath(option.getReferringElement().getElementNode()));
+        for ( Payload option : manager.getPayloads() )
+        {
+            foundFastXPaths.add( DomUtilities.getFastXPath( option.getReferringElement().getElementNode() ) );
         }
-        assertEquals(expectedFastXPaths, foundFastXPaths);
+        assertEquals( expectedFastXPaths, foundFastXPaths );
 
         expectedFastXPaths.clear();
         foundFastXPaths.clear();
 
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/Assertion[1]");
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/wsu:Timestamp[1]");
-        expectedFastXPaths.add("/soapenv:Envelope[1]/soapenv:Body[1]");
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/Assertion[1]" );
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Header[1]/wsse:Security[1]/wsu:Timestamp[1]" );
+        expectedFastXPaths.add( "/soapenv:Envelope[1]/soapenv:Body[1]" );
 
-        for (Payload option : manager.getPayloads()) {
+        for ( Payload option : manager.getPayloads() )
+        {
             Element signedElement = option.getSignedElement();
-            assertNotNull("Does not refer anything: " + option.getReferringElement().getElementNode().getAttribute("URI"), signedElement);
-            foundFastXPaths.add(DomUtilities.getFastXPath(signedElement));
+            assertNotNull( "Does not refer anything: "
+                               + option.getReferringElement().getElementNode().getAttribute( "URI" ), signedElement );
+            foundFastXPaths.add( DomUtilities.getFastXPath( signedElement ) );
         }
-        assertEquals(expectedFastXPaths, foundFastXPaths);
+        assertEquals( expectedFastXPaths, foundFastXPaths );
 
     }
 }

@@ -28,29 +28,33 @@ import org.apache.log4j.PropertyConfigurator;
 import wsattacker.library.signatureFaking.helper.FileReader;
 
 /**
- *
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class SignatureFakingOracleTest extends TestCase {
-    
+public class SignatureFakingOracleTest
+    extends TestCase
+{
+
     public static final String DIR = "src/test/resources/test-files";
-    
-    Logger log = Logger.getLogger(SignatureFakingOracleTest.class);
-    
+
+    Logger log = Logger.getLogger( SignatureFakingOracleTest.class );
+
     private static String LOG_FILE = "logging.properties";
-    
-    public SignatureFakingOracleTest() {
-        PropertyConfigurator.configure(LOG_FILE);
+
+    public SignatureFakingOracleTest()
+    {
+        PropertyConfigurator.configure( LOG_FILE );
     }
 
-    public void testSignatures() throws Exception {
+    public void testSignatures()
+        throws Exception
+    {
 
-        String[] contents = FileReader.readFileContents(DIR);
-//        for (String c : contents) {
-            SignatureFakingOracle sfo = new SignatureFakingOracle(contents[0]);
-            sfo.fakeSignatures();
-            System.out.println(sfo.getDocument());
-//        }
+        String[] contents = FileReader.readFileContents( DIR );
+        // for (String c : contents) {
+        SignatureFakingOracle sfo = new SignatureFakingOracle( contents[0] );
+        sfo.fakeSignatures();
+        System.out.println( sfo.getDocument() );
+        // }
     }
 }

@@ -23,28 +23,34 @@ import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.plugin.signatureWrapping.SignatureWrapping;
 import wsattacker.plugin.signatureWrapping.function.postanalyze.gui.AnalysisDialog;
 
-public class SignatureWrappingAnalyzeFunction implements PluginFunctionInterface {
+public class SignatureWrappingAnalyzeFunction
+    implements PluginFunctionInterface
+{
 
     SignatureWrapping plugin;
 
-    public SignatureWrappingAnalyzeFunction(SignatureWrapping plugin) {
+    public SignatureWrappingAnalyzeFunction( SignatureWrapping plugin )
+    {
         this.plugin = plugin;
     }
 
     @Override
-    public String getName() {
+    public String getName()
+    {
         return "Analyze XSW Responses";
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isEnabled()
+    {
         return plugin.isFinished();
     }
 
     @Override
-    public Window getGuiWindow() {
-        AnalysisDialog dialog = new AnalysisDialog(null, true);
-        dialog.setSignatureWrappingPlugin(plugin);
+    public Window getGuiWindow()
+    {
+        AnalysisDialog dialog = new AnalysisDialog( null, true );
+        dialog.setSignatureWrappingPlugin( plugin );
         return dialog;
     }
 }

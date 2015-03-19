@@ -21,16 +21,20 @@ package wsattacker.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateFormater {
-	private final static SimpleDateFormat TIMEONLY = new SimpleDateFormat("HH:mm:ss.S");
-	private final static SimpleDateFormat FULL = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
-	
-	public static String timeonly(Date date) {
-		return TIMEONLY.format(date);
-	}
-	
-	public static String full(Date date) {
-		return FULL.format(date);
-	}
-	
+public class DateFormater
+{
+    private final static SimpleDateFormat TIMEONLY = new SimpleDateFormat( "HH:mm:ss.S" );
+
+    private final static SimpleDateFormat FULL = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss.S" );
+
+    public static String timeonly( Date date )
+    {
+        return TIMEONLY.format( date );
+    }
+
+    public static String full( Date date )
+    {
+        return FULL.format( date );
+    }
+
 }

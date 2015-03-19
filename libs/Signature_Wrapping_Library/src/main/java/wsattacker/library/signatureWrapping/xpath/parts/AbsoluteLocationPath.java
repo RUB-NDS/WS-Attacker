@@ -24,114 +24,134 @@ import wsattacker.library.signatureWrapping.xpath.interfaces.XPathPartInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.util.XPathInspectorTools;
 
 /**
- * An AbsoluteLocationPath is what is commonly called an XPath. It is mainly a
- * container for Steps.
+ * An AbsoluteLocationPath is what is commonly called an XPath. It is mainly a container for Steps.
  */
-public class AbsoluteLocationPath implements XPathPartInterface {
+public class AbsoluteLocationPath
+    implements XPathPartInterface
+{
 
     private String absoluteLocationPath;
+
     private List<Step> relativeLocationPaths;
+
     private ReferringElementInterface referringElement = null;
 
-    public AbsoluteLocationPath(ReferringElementInterface ref) {
-        this(ref.getXPath());
+    public AbsoluteLocationPath( ReferringElementInterface ref )
+    {
+        this( ref.getXPath() );
         this.referringElement = ref;
     }
 
-    public AbsoluteLocationPath(String absoluteLocationPath) {
+    public AbsoluteLocationPath( String absoluteLocationPath )
+    {
         this.absoluteLocationPath = absoluteLocationPath;
         this.relativeLocationPaths = new ArrayList<Step>();
         eval();
     }
 
-    public String getAbsoluteLocationPath() {
+    public String getAbsoluteLocationPath()
+    {
         return absoluteLocationPath;
     }
 
-    public List<Step> getRelativeLocationPaths() {
+    public List<Step> getRelativeLocationPaths()
+    {
         return relativeLocationPaths;
     }
 
-    public ReferringElementInterface getReferringElement() {
+    public ReferringElementInterface getReferringElement()
+    {
         return referringElement;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return absoluteLocationPath;
     }
 
     @Override
-    public String toFullString() {
-        return "/" + XPathInspectorTools.implodeList(relativeLocationPaths, "/");
+    public String toFullString()
+    {
+        return "/" + XPathInspectorTools.implodeList( relativeLocationPaths, "/" );
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof String) {
-            return equals(new AbsoluteLocationPath((String) o));
+    public boolean equals( Object o )
+    {
+        if ( o instanceof String )
+        {
+            return equals( new AbsoluteLocationPath( (String) o ) );
         }
-        if (o instanceof AbsoluteLocationPath) {
+        if ( o instanceof AbsoluteLocationPath )
+        {
             AbsoluteLocationPath abs = (AbsoluteLocationPath) o;
-            return abs.getAbsoluteLocationPath().equals(getAbsoluteLocationPath());
+            return abs.getAbsoluteLocationPath().equals( getAbsoluteLocationPath() );
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
-        hash = 97 * hash + (this.absoluteLocationPath != null ? this.absoluteLocationPath.hashCode() : 0);
+        hash = 97 * hash + ( this.absoluteLocationPath != null ? this.absoluteLocationPath.hashCode() : 0 );
         return hash;
     }
 
     /*
      * Evaluation Methods
      */
-    private void eval() {
+    private void eval()
+    {
         int prev = 0, next;
-        if (absoluteLocationPath.charAt(0) != '/') {
+        if ( absoluteLocationPath.charAt( 0 ) != '/' )
+        {
             return;
         } // not an absoluteLocationPath
 
-        next = nextSlash(prev + 1);
+        next = nextSlash( prev + 1 );
         String relString;
         Step previousStep, currentStep;
         previousStep = null;
-        while (next > 0) {
-            relString = absoluteLocationPath.substring(prev + 1, next);
+        while ( next > 0 )
+        {
+            relString = absoluteLocationPath.substring( prev + 1, next );
             // new current step
-            currentStep = new Step(relString);
+            currentStep = new Step( relString );
 
-            if (previousStep != null) {
+            if ( previousStep != null )
+            {
                 // curent.prev = prev
-                currentStep.setPreviousStep(previousStep);
+                currentStep.setPreviousStep( previousStep );
                 // prev.next = current
-                previousStep.setNextStep(currentStep);
+                previousStep.setNextStep( currentStep );
             }
             // add to list
-            relativeLocationPaths.add(currentStep);
+            relativeLocationPaths.add( currentStep );
             // for next iteration: prev = current
             previousStep = currentStep;
 
             prev = next;
-            next = nextSlash(prev + 1);
+            next = nextSlash( prev + 1 );
         }
         // Last Step = Rest of String
-        relString = absoluteLocationPath.substring(prev + 1, absoluteLocationPath.length());
-        currentStep = new Step(relString);
+        relString = absoluteLocationPath.substring( prev + 1, absoluteLocationPath.length() );
+        currentStep = new Step( relString );
 
-        if (previousStep != null) {
+        if ( previousStep != null )
+        {
             // curent.prev = prev
-            currentStep.setPreviousStep(previousStep);
+            currentStep.setPreviousStep( previousStep );
             // prev.next = current
-            previousStep.setNextStep(currentStep);
+            previousStep.setNextStep( currentStep );
         }
         // add to list
-        relativeLocationPaths.add(currentStep);
+        relativeLocationPaths.add( currentStep );
     }
 
-    private int nextSlash(int startIndex) {
-        return XPathInspectorTools.nextChar(absoluteLocationPath, '/', startIndex);
+    private int nextSlash( int startIndex )
+    {
+        return XPathInspectorTools.nextChar( absoluteLocationPath, '/', startIndex );
     }
 }

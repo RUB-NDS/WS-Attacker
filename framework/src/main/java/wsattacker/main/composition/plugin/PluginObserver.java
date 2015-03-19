@@ -22,11 +22,13 @@ import wsattacker.main.plugin.PluginState;
 
 /**
  * Interface to observe a plugin
+ * 
  * @see AbstractPlugin
  * @author Christian Mainka
- *
  */
-public interface PluginObserver {
-	public void currentPointsChanged(AbstractPlugin plugin, int newPoints);
-	public void pluginStateChanged(AbstractPlugin plugin, PluginState newState, PluginState oldState);
+public interface PluginObserver
+{
+    public void currentPointsChanged( AbstractPlugin plugin, int newPoints );
+
+    public void pluginStateChanged( AbstractPlugin plugin, PluginState newState, PluginState oldState );
 }
