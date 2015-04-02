@@ -40,7 +40,7 @@
     <repositories>
         <repository>
             <id>libs</id>
-            <url>https://repo.nds.rub.de:8443/archiva/repository/libs/</url>
+            <url>https://repo.nds.rub.de:8443/repository/libs/</url>
         </repository>
     </repositories>
 
