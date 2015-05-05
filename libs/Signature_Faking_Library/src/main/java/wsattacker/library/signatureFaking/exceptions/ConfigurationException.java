@@ -16,22 +16,23 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 package wsattacker.library.signatureFaking.exceptions;
 
 /**
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class CertificateHandlerException
+public class ConfigurationException
     extends Exception
 {
 
-    public CertificateHandlerException( String message )
+    public ConfigurationException( String message )
     {
         super( message );
     }
 
-    public CertificateHandlerException( Exception e )
+    public ConfigurationException( Exception e )
     {
         super( e );
     }
