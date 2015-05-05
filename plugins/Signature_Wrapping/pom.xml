@@ -51,7 +51,7 @@
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>SoapHttpClient</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.6-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>
