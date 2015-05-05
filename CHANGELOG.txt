@@ -9,7 +9,7 @@ New XML-Encryption Attack Plugin (by Dennis Kupser):
     - Attacks asymmetric XML-Encryption via Bleichenbacher Fault Oracle (http://nds.rub.de/media/nds/veroeffentlichungen/2012/12/19/XMLencBleichenbacher.pdf)
 
 ===============
-19. March 2014
+19. March 2015
 ===============
 
 Framework Changes:
