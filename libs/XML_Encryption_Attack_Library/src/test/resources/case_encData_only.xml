@@ -1,0 +1,25 @@
+<soapenv:Envelope xmlns:nds="http://nds.rub.de" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"></wsse:Security></soapenv:Header>
+   <soapenv:Body>
+      <nds:pay>
+         <!--Optional:-->
+         <nds:name>XML-Security</nds:name>
+         <!--Optional:-->
+         <nds:amount>4000</nds:amount>
+         <!--Optional:-->
+         <nds:bankAccountNumber Id="1">
+		 <xenc:EncryptedData Id="ED-1" Type="http://www.w3.org/2001/04/xmlenc#Content" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+		 <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+		 <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+		 <wsse:SecurityTokenReference wsse11:TokenType="http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#EncryptedKey" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsse11="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd">
+		 <wsse:Reference URI="#EK-782356B8ACEEE6CE0713584322009261"/>
+		 </wsse:SecurityTokenReference>
+		 </ds:KeyInfo>
+		 <xenc:CipherData>
+		 <xenc:CipherValue>UM2LlzEpNjpgdupv3Kd6ELb4q2HxR4ligF9WOIIbXMU=</xenc:CipherValue>
+		 </xenc:CipherData>
+		 </xenc:EncryptedData>
+		 </nds:bankAccountNumber>
+      </nds:pay>
+   </soapenv:Body>
+</soapenv:Envelope>
