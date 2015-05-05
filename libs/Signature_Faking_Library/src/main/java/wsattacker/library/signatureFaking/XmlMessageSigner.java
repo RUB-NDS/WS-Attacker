@@ -71,7 +71,8 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de
  * @version 0.1
  */
-public class XmlMessageSigner {
+public class XmlMessageSigner
+{
 
     private KeyStore keyStore;
 
@@ -83,7 +84,8 @@ public class XmlMessageSigner {
 
     private String signatureNamespacePrefix;
 
-    public XmlMessageSigner() {
+    public XmlMessageSigner()
+    {
         signatureNamespacePrefix = DEFAULT_NAMESPACE_PREFIX;
     }
 
@@ -160,119 +162,144 @@ public class XmlMessageSigner {
         }
     }
 
-    public boolean verifyMessage(String message) throws SAXException, MarshalException, XMLSignatureException, XPathExpressionException {
+    public boolean verifyMessage( String message )
+        throws SAXException, MarshalException, XMLSignatureException, XPathExpressionException
+    {
 
-        Document doc = DomUtilities.stringToDom(message);
-        setAllIdAttributesInDocument(doc, "Id");
-        setAllIdAttributesInDocument(doc, "ID");
+        Document doc = DomUtilities.stringToDom( message );
+        setAllIdAttributesInDocument( doc, "Id" );
+        setAllIdAttributesInDocument( doc, "ID" );
 
         // Find Signature element.
-        NodeList nl
-                = doc.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
-        if (nl.getLength() == 0) {
-            throw new RuntimeException("Cannot find Signature element");
+        NodeList nl = doc.getElementsByTagNameNS( XMLSignature.XMLNS, "Signature" );
+        if ( nl.getLength() == 0 )
+        {
+            throw new RuntimeException( "Cannot find Signature element" );
         }
 
         boolean valid = true;
-        XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
-        for (int i = 0; i < nl.getLength(); i++) {
-            DOMValidateContext valContext = new DOMValidateContext(new X509KeySelector(), nl.item(i));
+        XMLSignatureFactory fac = XMLSignatureFactory.getInstance( "DOM" );
+        for ( int i = 0; i < nl.getLength(); i++ )
+        {
+            DOMValidateContext valContext = new DOMValidateContext( new X509KeySelector(), nl.item( i ) );
 
             // Unmarshal the XMLSignature.
-            XMLSignature signature = fac.unmarshalXMLSignature(valContext);
+            XMLSignature signature = fac.unmarshalXMLSignature( valContext );
 
             // Validate the XMLSignature.
-            boolean coreValidity = signature.validate(valContext);
-            System.out.println("Signature " + i + "validity: " + coreValidity);
-            if (coreValidity == false) {
+            boolean coreValidity = signature.validate( valContext );
+            System.out.println( "Signature " + i + "validity: " + coreValidity );
+            if ( coreValidity == false )
+            {
                 valid = false;
             }
         }
         return valid;
     }
 
-    public static void setAllIdAttributesInDocument(Document doc, String idName) throws XPathExpressionException {
-        List<? extends Node> result = DomUtilities.evaluateXPath(doc, "//*/@" + idName);
-        for (int i = 0; i < result.size(); ++i) {
-            Attr attribute = (Attr) result.get(i);
-            attribute.getOwnerElement().setIdAttributeNode(attribute, true);
+    public static void setAllIdAttributesInDocument( Document doc, String idName )
+        throws XPathExpressionException
+    {
+        List<? extends Node> result = DomUtilities.evaluateXPath( doc, "//*/@" + idName );
+        for ( int i = 0; i < result.size(); ++i )
+        {
+            Attr attribute = (Attr) result.get( i );
+            attribute.getOwnerElement().setIdAttributeNode( attribute, true );
         }
     }
 
-    public String getSignatureNamespacePrefix() {
+    public String getSignatureNamespacePrefix()
+    {
         return signatureNamespacePrefix;
     }
 
-    public void setSignatureNamespacePrefix(String signatureNamespacePrefix) {
+    public void setSignatureNamespacePrefix( String signatureNamespacePrefix )
+    {
         this.signatureNamespacePrefix = signatureNamespacePrefix;
     }
 
-    public KeyStore getKeyStore() {
+    public KeyStore getKeyStore()
+    {
         return keyStore;
     }
 
-    public void setKeyStore(KeyStore keyStore) {
+    public void setKeyStore( KeyStore keyStore )
+    {
         this.keyStore = keyStore;
     }
 
-    public String getKeyAlias() {
+    public String getKeyAlias()
+    {
         return keyAlias;
     }
 
-    public void setKeyAlias(String keyAlias) {
+    public void setKeyAlias( String keyAlias )
+    {
         this.keyAlias = keyAlias;
     }
 
-    public char[] getPassword() {
+    public char[] getPassword()
+    {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword( char[] password )
+    {
         this.password = password;
     }
 
-    public class X509KeySelector extends KeySelector {
+    public class X509KeySelector
+        extends KeySelector
+    {
 
-        public KeySelectorResult select(KeyInfo keyInfo,
-                KeySelector.Purpose purpose,
-                AlgorithmMethod method,
-                XMLCryptoContext context)
-                throws KeySelectorException {
+        public KeySelectorResult select( KeyInfo keyInfo, KeySelector.Purpose purpose, AlgorithmMethod method,
+                                         XMLCryptoContext context )
+            throws KeySelectorException
+        {
             Iterator ki = keyInfo.getContent().iterator();
-            while (ki.hasNext()) {
+            while ( ki.hasNext() )
+            {
                 XMLStructure info = (XMLStructure) ki.next();
-                if (!(info instanceof X509Data)) {
+                if ( !( info instanceof X509Data ) )
+                {
                     continue;
                 }
                 X509Data x509Data = (X509Data) info;
                 Iterator xi = x509Data.getContent().iterator();
-                while (xi.hasNext()) {
+                while ( xi.hasNext() )
+                {
                     Object o = xi.next();
-                    if (!(o instanceof X509Certificate)) {
+                    if ( !( o instanceof X509Certificate ) )
+                    {
                         continue;
                     }
-                    final PublicKey key = ((X509Certificate) o).getPublicKey();
+                    final PublicKey key = ( (X509Certificate) o ).getPublicKey();
                     // Make sure the algorithm is compatible
                     // with the method.
-                    if (algEquals(method.getAlgorithm(), key.getAlgorithm())) {
-                        return new KeySelectorResult() {
-                            public Key getKey() {
+                    if ( algEquals( method.getAlgorithm(), key.getAlgorithm() ) )
+                    {
+                        return new KeySelectorResult()
+                        {
+                            public Key getKey()
+                            {
                                 return key;
                             }
                         };
                     }
                 }
             }
-            throw new KeySelectorException("No key found!");
+            throw new KeySelectorException( "No key found!" );
         }
 
-        boolean algEquals(String algURI, String algName) {
-            if ((algName.equalsIgnoreCase("DSA")
-                    && algURI.equalsIgnoreCase(SignatureMethod.DSA_SHA1))
-                    || (algName.equalsIgnoreCase("RSA")
-                    && algURI.equalsIgnoreCase(SignatureMethod.RSA_SHA1))) {
+        boolean algEquals( String algURI, String algName )
+        {
+            if ( ( algName.equalsIgnoreCase( "DSA" ) && algURI.equalsIgnoreCase( SignatureMethod.DSA_SHA1 ) )
+                || ( algName.equalsIgnoreCase( "RSA" ) && algURI.equalsIgnoreCase( SignatureMethod.RSA_SHA1 ) ) )
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
