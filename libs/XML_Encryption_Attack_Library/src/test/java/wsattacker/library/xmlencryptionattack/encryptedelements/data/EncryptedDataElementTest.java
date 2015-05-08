@@ -22,9 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.xpath.XPathExpressionException;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,6 +42,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
  */
 public class EncryptedDataElementTest
 {
+	private static final Logger LOG = Logger.getLogger( EncryptedDataElementTest.class );
 
     public EncryptedDataElementTest()
     {
@@ -99,7 +99,7 @@ public class EncryptedDataElementTest
         }
         catch ( IOException ex )
         {
-            Logger.getLogger( EncryptedDataElementTest.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
     }
 

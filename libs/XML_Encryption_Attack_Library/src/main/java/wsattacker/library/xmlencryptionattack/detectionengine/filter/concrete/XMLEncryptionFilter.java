@@ -20,8 +20,6 @@
 package wsattacker.library.xmlencryptionattack.detectionengine.filter.concrete;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -61,7 +59,7 @@ public class XMLEncryptionFilter
         }
         catch ( XPathExpressionException ex )
         {
-            Logger.getLogger( XMLEncryptionFilter.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
 
         return (EncryptionInfo) this.m_OutputFilter;

@@ -20,8 +20,6 @@
 package wsattacker.library.xmlencryptionattack.timestampelement;
 
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.ws.security.WSConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -111,7 +109,7 @@ public final class TimestampElement
                 }
                 catch ( InvalidPayloadException ex1 )
                 {
-                    Logger.getLogger( TimestampElement.class.getName() ).log( Level.SEVERE, null, ex1 );
+                    LOG.error(ex);
                 }
             }
             ceatedPay.setTextContent( helper.getStart() );

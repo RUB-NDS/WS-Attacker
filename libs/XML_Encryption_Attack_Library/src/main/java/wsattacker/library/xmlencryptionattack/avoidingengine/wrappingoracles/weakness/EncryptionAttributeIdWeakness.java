@@ -20,7 +20,6 @@
 package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness;
 
 import java.util.List;
-import java.util.logging.Level;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.DOMException;
@@ -97,7 +96,7 @@ public class EncryptionAttributeIdWeakness
     /**
      * There are different possibilites for every encrypted signed mode. Adjusts the attribute of the affected elements.
      * There are depends on the mode.
-     * 
+     *
      * @param index
      * @param encKey
      * @param payloadElement
@@ -129,8 +128,7 @@ public class EncryptionAttributeIdWeakness
         }
         catch ( XPathExpressionException ex )
         {
-            java.util.logging.Logger.getLogger( EncryptionAttributeIdWeakness.class.getName() ).log( Level.SEVERE,
-                                                                                                     null, ex );
+            LOG.error(ex);
         }
 
     }

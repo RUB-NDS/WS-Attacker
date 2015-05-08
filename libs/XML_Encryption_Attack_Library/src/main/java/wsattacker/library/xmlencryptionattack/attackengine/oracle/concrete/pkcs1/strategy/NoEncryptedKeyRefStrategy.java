@@ -19,8 +19,7 @@
 
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
@@ -38,6 +37,7 @@ import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 public class NoEncryptedKeyRefStrategy
     extends AbstractPKCS1Strategy
 {
+	private static final Logger LOG = Logger.getLogger( NoEncryptedKeyRefStrategy.class );
 
     public NoEncryptedKeyRefStrategy( final PKCS1Oracle pkcs1Oracle )
     {
@@ -68,7 +68,7 @@ public class NoEncryptedKeyRefStrategy
         }
         catch ( InvalidPayloadException ex )
         {
-            Logger.getLogger( NoEncryptedKeyRefStrategy.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
         responseServer = serverSendCmnd.send( domToString( attackDocument ) );
         resp.setResponse( responseServer );

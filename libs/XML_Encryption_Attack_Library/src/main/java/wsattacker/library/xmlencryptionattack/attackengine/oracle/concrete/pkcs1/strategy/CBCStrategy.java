@@ -19,8 +19,7 @@
 
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
@@ -70,7 +69,7 @@ public class CBCStrategy
             {
                 encDataOfEncKey = encData.getEncryptedElement();
                 if ( null != attackProps.getSignedPart() )
-                    LOG.warning( "EncData signed but no wrapping attacks executed" );
+                    LOG.warn( "EncData signed but no wrapping attacks executed" );
             }
 
             m_DmyAttackDoc = DomUtilities.createNewDomFromNode( m_PKSC1Oracle.getAvoidedFile().getDocumentElement() );
@@ -109,7 +108,7 @@ public class CBCStrategy
             }
             catch ( InvalidPayloadException ex )
             {
-                Logger.getLogger( CBCStrategy.class.getName() ).log( Level.SEVERE, null, ex );
+                LOG.warn(ex);
             }
 
             responseServer = serverSendCmnd.send( DomUtilities.domToString( m_DmyAttackDoc ) );

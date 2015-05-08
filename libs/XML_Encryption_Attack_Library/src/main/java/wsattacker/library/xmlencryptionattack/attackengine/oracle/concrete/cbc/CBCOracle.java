@@ -19,8 +19,7 @@
 
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.cbc;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
@@ -45,6 +44,8 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 public class CBCOracle
     extends AOracle
 {
+    private static final Logger LOG = Logger.getLogger( CBCOracle.class );
+
     private final EncryptedDataElement m_AttackPayloadDmy;
 
     public CBCOracle( final DetectionReport detectRep, AbstractOracleBehaviour oracleBehave,
@@ -103,7 +104,7 @@ public class CBCOracle
         }
         catch ( InvalidPayloadException ex )
         {
-            Logger.getLogger( CBCOracle.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
 
         responseServer = m_ServerCommand.send( DomUtilities.domToString( attackOwnerDoc ) );

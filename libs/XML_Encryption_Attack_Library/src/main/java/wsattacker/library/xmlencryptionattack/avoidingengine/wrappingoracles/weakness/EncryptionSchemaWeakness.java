@@ -22,7 +22,6 @@ package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.we
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -164,7 +163,7 @@ public class EncryptionSchemaWeakness
         }
         catch ( InvalidWeaknessException ex )
         {
-            java.util.logging.Logger.getLogger( EncryptionSchemaWeakness.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
     }
 

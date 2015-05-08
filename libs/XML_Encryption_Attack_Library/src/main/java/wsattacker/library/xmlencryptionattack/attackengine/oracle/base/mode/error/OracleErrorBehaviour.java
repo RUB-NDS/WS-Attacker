@@ -19,7 +19,6 @@
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.error;
 
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.OracleResponseCollector;
-import java.util.logging.Level;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -78,14 +77,10 @@ public class OracleErrorBehaviour
                     return resp;
                 }
             }
-            catch ( SAXException ex )
+            catch ( SAXException | XPathExpressionException ex )
             {
-                java.util.logging.Logger.getLogger( OracleErrorBehaviour.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( XPathExpressionException ex )
-            {
-                java.util.logging.Logger.getLogger( OracleErrorBehaviour.class.getName() ).log( Level.SEVERE, null, ex );
-            }
+                LOG.error(ex);
+	    }
         }
 
         for ( int i = 0; m_ErrorResponseTab.getData().size() > i; i++ )

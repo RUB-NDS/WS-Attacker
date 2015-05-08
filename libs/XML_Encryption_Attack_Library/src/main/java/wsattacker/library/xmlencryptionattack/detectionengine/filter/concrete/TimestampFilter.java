@@ -25,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.util.XmlSchemaDateFormat;
@@ -61,7 +59,7 @@ public class TimestampFilter
         }
         catch ( ParseException ex )
         {
-            Logger.getLogger( TimestampFilter.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
 
         return (TimestampInfo) this.m_OutputFilter;

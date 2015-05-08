@@ -21,7 +21,6 @@ package wsattacker.library.xmlencryptionattack.avoidingengine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
@@ -240,7 +239,7 @@ public class AvoidingManager
             }
             catch ( SAXException ex )
             {
-                java.util.logging.Logger.getLogger( AvoidingManager.class.getName() ).log( Level.SEVERE, null, ex );
+                LOG.error( ex );
             }
         }
         // encryption wrapping attack
@@ -260,7 +259,7 @@ public class AvoidingManager
             }
             catch ( SAXException ex )
             {
-                java.util.logging.Logger.getLogger( AvoidingManager.class.getName() ).log( Level.SEVERE, null, ex );
+                LOG.error(ex);
             }
         }
 
