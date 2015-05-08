@@ -73,13 +73,19 @@ public class XMLEncryptionAttack
 
     private static final Logger LOG = Logger.getLogger( XMLEncryptionAttack.class );
 
-    private static final String NAME = "XML-Encryption Attack";
+    private static final String NAME = "XML Encryption Attack";
 
-    private static final String DESCRIPTION = "Short description of XMl-Encryption attack";
+    private static final String DESCRIPTION =
+        "Contains adaptive chosen ciphertext attacks on XML Encryption. "
+            + "\n\nCurrently supported techniques:"
+            + "\n  (1) Attack on CBC Ciphertexts ."
+            + "\n  (2) Attack on RSA-PKCS#1 Ciphertexts using direct error messages ."
+            + "\n  (3) Attack on RSA-PKCS#1 Ciphertexts using a CBC weakness."
+            + "\n\nTo overcome XML Signature protection, XML Signature and XML Encryption Wrapping attacks are implemented.";
 
     private static final String AUTHOR = "Dennis Kupser";
 
-    private static final String VERSION = "1.0 / 2013-12-31";
+    private static final String VERSION = "1.0 / 2015-05-08";
 
     private static final String[] CATEGORY = new String[] { "Security", "Encryption" };
 
@@ -355,14 +361,22 @@ public class XMLEncryptionAttack
             {
                 resultString = new String( plainText, "UTF-8" );
             }
+            setCurrentPoints( 100 );
+            critical( ( "Plaintext of encrypted data: " + resultString + "\nNumber of Oracle Queries: " + attackManager.getOracleofCCAAttacker().getNumberOfQueries() ) );
+            info( "Bytes decrypted: " + plainText.length );
         }
         catch ( CryptoAttackException ex )
         {
+            LOG.error( ex );
             info( "Error: Attack has not successfully executed:\n" + ex.toString() );
+            setCurrentPoints( 0 );
         }
-        setCurrentPoints( 100 );
-        critical( ( "Plaintext of encrypted data: " + resultString + "\nNumber of Oracle Queries: " + attackManager.getOracleofCCAAttacker().getNumberOfQueries() ) );
-        info( "Bytes decrypted: " + plainText.length );
+        catch ( Exception ex )
+        {
+            LOG.error( ex );
+            info( "Error: Attack has not successfully executed:\n" + ex.toString() );
+            setCurrentPoints( 0 );
+        }
     }
 
     public void setUsedSchemaFiles( List<File> fileList )

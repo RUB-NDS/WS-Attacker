@@ -50,13 +50,14 @@ public class FindByteMethod
      * 
      * @param i byte position in IV
      * @return the byte in the plain text
+     * @throws NoColumnFoundException
      */
     public byte executeAttack( int i )
         throws NoColumnFoundException
     {
 
-        errorBytes = new LinkedList<Byte>();
-        correctBytes = new LinkedList<Byte>();
+        errorBytes = new LinkedList<>();
+        correctBytes = new LinkedList<>();
 
         final byte originalByte = iv[i];
 

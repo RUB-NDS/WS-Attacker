@@ -20,7 +20,6 @@ package wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.CBCOracleRequest;
