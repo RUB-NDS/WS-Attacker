@@ -163,7 +163,7 @@ public class EncryptionSchemaWeakness
         }
         catch ( InvalidWeaknessException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
     }
 

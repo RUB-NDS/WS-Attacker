@@ -44,7 +44,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
  */
 public class EncryptedKeyElementTest
 {
-	private static final Logger LOG = Logger.getLogger( EncryptedKeyElementTest.class );
+    private static final Logger LOG = Logger.getLogger( EncryptedKeyElementTest.class );
 
     public EncryptedKeyElementTest()
     {
@@ -120,7 +120,7 @@ public class EncryptedKeyElementTest
         }
         catch ( IOException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
     }
 

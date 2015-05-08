@@ -108,7 +108,7 @@ public class CBCStrategy
             }
             catch ( InvalidPayloadException ex )
             {
-                LOG.warn(ex);
+                LOG.warn( ex );
             }
 
             responseServer = serverSendCmnd.send( DomUtilities.domToString( m_DmyAttackDoc ) );

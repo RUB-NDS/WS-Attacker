@@ -59,7 +59,7 @@ public class TimestampFilter
         }
         catch ( ParseException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
 
         return (TimestampInfo) this.m_OutputFilter;

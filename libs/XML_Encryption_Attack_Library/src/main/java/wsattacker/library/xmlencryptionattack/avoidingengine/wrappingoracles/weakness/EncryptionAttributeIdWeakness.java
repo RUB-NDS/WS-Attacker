@@ -96,7 +96,7 @@ public class EncryptionAttributeIdWeakness
     /**
      * There are different possibilites for every encrypted signed mode. Adjusts the attribute of the affected elements.
      * There are depends on the mode.
-     *
+     * 
      * @param index
      * @param encKey
      * @param payloadElement
@@ -128,7 +128,7 @@ public class EncryptionAttributeIdWeakness
         }
         catch ( XPathExpressionException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
 
     }

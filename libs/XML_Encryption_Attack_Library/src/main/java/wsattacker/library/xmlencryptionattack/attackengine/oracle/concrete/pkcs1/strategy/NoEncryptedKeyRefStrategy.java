@@ -37,7 +37,7 @@ import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 public class NoEncryptedKeyRefStrategy
     extends AbstractPKCS1Strategy
 {
-	private static final Logger LOG = Logger.getLogger( NoEncryptedKeyRefStrategy.class );
+    private static final Logger LOG = Logger.getLogger( NoEncryptedKeyRefStrategy.class );
 
     public NoEncryptedKeyRefStrategy( final PKCS1Oracle pkcs1Oracle )
     {
@@ -68,7 +68,7 @@ public class NoEncryptedKeyRefStrategy
         }
         catch ( InvalidPayloadException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
         responseServer = serverSendCmnd.send( domToString( attackDocument ) );
         resp.setResponse( responseServer );

@@ -109,7 +109,7 @@ public final class TimestampElement
                 }
                 catch ( InvalidPayloadException ex1 )
                 {
-                    LOG.error(ex);
+                    LOG.error( ex );
                 }
             }
             ceatedPay.setTextContent( helper.getStart() );

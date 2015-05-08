@@ -42,7 +42,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
  */
 public class EncryptedDataElementTest
 {
-	private static final Logger LOG = Logger.getLogger( EncryptedDataElementTest.class );
+    private static final Logger LOG = Logger.getLogger( EncryptedDataElementTest.class );
 
     public EncryptedDataElementTest()
     {
@@ -99,7 +99,7 @@ public class EncryptedDataElementTest
         }
         catch ( IOException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
     }
 

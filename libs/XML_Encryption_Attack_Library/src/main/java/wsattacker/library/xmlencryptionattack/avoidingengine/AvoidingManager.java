@@ -259,7 +259,7 @@ public class AvoidingManager
             }
             catch ( SAXException ex )
             {
-                LOG.error(ex);
+                LOG.error( ex );
             }
         }
 

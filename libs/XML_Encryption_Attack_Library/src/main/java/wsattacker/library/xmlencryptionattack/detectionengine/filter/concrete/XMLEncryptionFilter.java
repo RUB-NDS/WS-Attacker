@@ -59,7 +59,7 @@ public class XMLEncryptionFilter
         }
         catch ( XPathExpressionException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
 
         return (EncryptionInfo) this.m_OutputFilter;

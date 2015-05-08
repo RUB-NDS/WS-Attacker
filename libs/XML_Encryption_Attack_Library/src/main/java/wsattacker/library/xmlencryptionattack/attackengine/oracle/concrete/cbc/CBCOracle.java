@@ -104,7 +104,7 @@ public class CBCOracle
         }
         catch ( InvalidPayloadException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
 
         responseServer = m_ServerCommand.send( DomUtilities.domToString( attackOwnerDoc ) );
