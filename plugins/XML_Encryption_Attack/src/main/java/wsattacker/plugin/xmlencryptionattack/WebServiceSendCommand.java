@@ -37,7 +37,8 @@ import wsattacker.main.plugin.result.ResultLevel;
 public class WebServiceSendCommand
     implements ServerSendCommandIF
 {
-    private static final Logger LOG = Logger.getLogger(WebServiceSendCommand.class);
+    private static final Logger LOG = Logger.getLogger( WebServiceSendCommand.class );
+
     private SoapHttpClient m_SoapHttpClient;
 
     public WebServiceSendCommand( WsdlRequest oracleRequest )
@@ -57,7 +58,7 @@ public class WebServiceSendCommand
         }
         catch ( IOException ex )
         {
-	    LOG.log(Level.ERROR, ex);
+            LOG.log( Level.ERROR, ex );
 
         }
 

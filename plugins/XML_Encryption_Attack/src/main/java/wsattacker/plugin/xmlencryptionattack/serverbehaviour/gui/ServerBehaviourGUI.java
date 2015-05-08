@@ -60,7 +60,7 @@ public class ServerBehaviourGUI
     extends OptionGUI
 {
 
-	private static final Logger LOG = Logger.getLogger(ServerBehaviourGUI.class);
+    private static final Logger LOG = Logger.getLogger( ServerBehaviourGUI.class );
 
     private final OptionServerErrorBehaviour m_Option;
 
@@ -68,7 +68,7 @@ public class ServerBehaviourGUI
 
     /**
      * Creates new form ServerBehaviourGUI
-     *
+     * 
      * @param plugin
      * @param option
      */

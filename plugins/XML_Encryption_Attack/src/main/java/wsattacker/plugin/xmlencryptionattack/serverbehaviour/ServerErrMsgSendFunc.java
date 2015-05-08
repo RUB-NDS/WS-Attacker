@@ -67,7 +67,7 @@ public class ServerErrMsgSendFunc
     extends Observable
     implements Runnable
 {
-    private static final Logger LOG = Logger.getLogger(ServerErrMsgSendFunc.class);
+    private static final Logger LOG = Logger.getLogger( ServerErrMsgSendFunc.class );
 
     private final AttackConfig m_AttackCfg;
 

@@ -36,7 +36,7 @@ public class MultiLinesCellRenderer
     extends JTextArea
     implements TableCellRenderer
 {
-    private static final Logger LOG = Logger.getLogger(MultiLinesCellRenderer.class);
+    private static final Logger LOG = Logger.getLogger( MultiLinesCellRenderer.class );
 
     @Override
     public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -51,7 +51,7 @@ public class MultiLinesCellRenderer
             }
             catch ( SAXException ex )
             {
-                LOG.error(ex);
+                LOG.error( ex );
             }
 
             if ( null != resp )

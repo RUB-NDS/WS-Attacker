@@ -59,7 +59,7 @@ import wsattacker.plugin.xmlencryptionattack.XMLEncryptionAttack;
 public final class OptionManagerEncryption
     implements CurrentRequestContentChangeObserver, PropertyChangeListener
 {
-    private static final Logger LOG = Logger.getLogger(OptionManagerEncryption.class);
+    private static final Logger LOG = Logger.getLogger( OptionManagerEncryption.class );
 
     private XMLEncryptionAttack m_Plugin;
 
@@ -320,7 +320,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     *
+     * 
      * @param needle
      * @return
      */
@@ -350,7 +350,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     *
+     * 
      * @param needle
      * @return
      */
@@ -442,7 +442,7 @@ public final class OptionManagerEncryption
         }
         catch ( InvalidPayloadException ex )
         {
-            LOG.error(ex);
+            LOG.error( ex );
         }
         return detectManager;
     }
