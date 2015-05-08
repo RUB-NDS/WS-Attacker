@@ -20,11 +20,10 @@
 package wsattacker.plugin.xmlencryptionattack.serverbehaviour.gui;
 
 import java.awt.Component;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
@@ -37,6 +36,8 @@ public class MultiLinesCellRenderer
     extends JTextArea
     implements TableCellRenderer
 {
+    private static final Logger LOG = Logger.getLogger(MultiLinesCellRenderer.class);
+
     @Override
     public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus,
                                                     int row, int column )
@@ -50,7 +51,7 @@ public class MultiLinesCellRenderer
             }
             catch ( SAXException ex )
             {
-                Logger.getLogger( MultiLinesCellRenderer.class.getName() ).log( Level.SEVERE, null, ex );
+                LOG.error(ex);
             }
 
             if ( null != resp )

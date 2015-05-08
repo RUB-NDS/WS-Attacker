@@ -21,7 +21,6 @@ package wsattacker.plugin.xmlencryptionattack.option;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -60,6 +59,8 @@ import wsattacker.plugin.xmlencryptionattack.XMLEncryptionAttack;
 public final class OptionManagerEncryption
     implements CurrentRequestContentChangeObserver, PropertyChangeListener
 {
+    private static final Logger LOG = Logger.getLogger(OptionManagerEncryption.class);
+
     private XMLEncryptionAttack m_Plugin;
 
     private DetectionManager m_DetectionManager;
@@ -319,7 +320,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     * 
+     *
      * @param needle
      * @return
      */
@@ -349,7 +350,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     * 
+     *
      * @param needle
      * @return
      */
@@ -441,7 +442,7 @@ public final class OptionManagerEncryption
         }
         catch ( InvalidPayloadException ex )
         {
-            java.util.logging.Logger.getLogger( XMLEncryptionAttack.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
         return detectManager;
     }

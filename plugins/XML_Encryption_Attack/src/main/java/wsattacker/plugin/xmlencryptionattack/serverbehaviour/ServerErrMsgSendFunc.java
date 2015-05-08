@@ -21,10 +21,9 @@ package wsattacker.plugin.xmlencryptionattack.serverbehaviour;
 
 import java.io.IOException;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import javax.xml.xpath.XPathExpressionException;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -68,6 +67,8 @@ public class ServerErrMsgSendFunc
     extends Observable
     implements Runnable
 {
+    private static final Logger LOG = Logger.getLogger(ServerErrMsgSendFunc.class);
+
     private final AttackConfig m_AttackCfg;
 
     private final DetectionReport m_DetectionReport;
@@ -100,21 +101,9 @@ public class ServerErrMsgSendFunc
             ( (OptionServerErrorBehaviour) m_Option ).setGUIButtonState( false );
             ( (XMLEncryptionAttack) m_Option.getCollection().getOwnerPlugin() ).getAvoidedAttackRequest( m_DetectionReport );
         }
-        catch ( InvalidWeaknessException ex )
+        catch ( InvalidWeaknessException | InvalidPayloadException | SAXException | XPathExpressionException ex)
         {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( InvalidPayloadException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( SAXException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( XPathExpressionException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
         AvoidedDocErrorInfo errorInfo =
             (AvoidedDocErrorInfo) m_DetectionReport.getDetectionInfo( DetectFilterEnum.AVOIDDOCFILTER );
@@ -137,7 +126,7 @@ public class ServerErrMsgSendFunc
             }
             catch ( CryptoAttackException ex )
             {
-                Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
+		    LOG.error(ex);
             }
         }
         else if ( XMLEncryptionAttackMode.CBC_ATTACK == m_AttackCfg.getXMLEncryptionAttack() )
@@ -149,21 +138,9 @@ public class ServerErrMsgSendFunc
         {
             preparePayloadForServer( generateVectors, errorInfo );
         }
-        catch ( InterruptedException ex )
+        catch ( InterruptedException | InvalidPayloadException | SAXException | XPathExpressionException ex )
         {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( InvalidPayloadException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( SAXException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        catch ( XPathExpressionException ex )
-        {
-            Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
+            LOG.error(ex);
         }
     }
 
@@ -264,18 +241,10 @@ public class ServerErrMsgSendFunc
             {
                 ( (OptionServerErrorBehaviour) m_Option ).getServerBehaviour();
             }
-            catch ( IOException ex )
+            catch ( IOException | CryptoAttackException | JAXBException ex )
             {
-                Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( JAXBException ex )
-            {
-                Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( CryptoAttackException ex )
-            {
-                Logger.getLogger( ServerErrMsgSendFunc.class.getName() ).log( Level.SEVERE, null, ex );
-            }
+                LOG.error(ex);
+	    }
         }
         else
         {

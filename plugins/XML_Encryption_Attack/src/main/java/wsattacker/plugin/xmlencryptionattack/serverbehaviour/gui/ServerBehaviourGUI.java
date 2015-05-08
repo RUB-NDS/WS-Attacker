@@ -27,8 +27,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -38,6 +36,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.xml.bind.JAXBException;
+import org.apache.log4j.Logger;
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.library.xmlencryptionattack.attackengine.CryptoAttackException;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
@@ -61,13 +60,15 @@ public class ServerBehaviourGUI
     extends OptionGUI
 {
 
+	private static final Logger LOG = Logger.getLogger(ServerBehaviourGUI.class);
+
     private final OptionServerErrorBehaviour m_Option;
 
     private final XMLEncryptionAttack m_EncryptionPlugin;
 
     /**
      * Creates new form ServerBehaviourGUI
-     * 
+     *
      * @param plugin
      * @param option
      */
@@ -324,18 +325,10 @@ public class ServerBehaviourGUI
             {
                 m_Option.getServerBehaviour();
             }
-            catch ( IOException ex )
+            catch ( IOException | CryptoAttackException | JAXBException | AbstractMethodError ex )
             {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( JAXBException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( CryptoAttackException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
+                LOG.error(ex);
+	    }
         }
     }// GEN-LAST:event_NewMsgsBtnActionPerformed
 
@@ -406,14 +399,10 @@ public class ServerBehaviourGUI
             {
                 m_Option.SaveDataToFile( file );
             }
-            catch ( IOException ex )
+            catch ( IOException | JAXBException ex )
             {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( JAXBException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
+                LOG.error(ex);
+	    }
             initTable();
         }
     }// GEN-LAST:event_SaveFileChooserActionPerformed
@@ -430,25 +419,9 @@ public class ServerBehaviourGUI
                 cbPKCS1GenWithEncData.setEnabled( true );
                 // m_EncryptionPlugin.checkState();
             }
-            catch ( IOException ex )
+            catch ( IOException | CertificateException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchProviderException ex )
             {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( NoSuchAlgorithmException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( InvalidKeySpecException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( NoSuchProviderException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( CertificateException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
+		    LOG.error(ex);
             }
         }
     }// GEN-LAST:event_LoadCertChooserActionPerformed
@@ -475,25 +448,9 @@ public class ServerBehaviourGUI
                 cbPKCS1GenWithEncData.setEnabled( true );
                 // m_EncryptionPlugin.checkState();
             }
-            catch ( IOException ex )
+            catch ( IOException | CertificateException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchProviderException ex )
             {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( NoSuchAlgorithmException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( InvalidKeySpecException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( NoSuchProviderException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
-            }
-            catch ( CertificateException ex )
-            {
-                Logger.getLogger( ServerBehaviourGUI.class.getName() ).log( Level.SEVERE, null, ex );
+		    LOG.error(ex);
             }
         }
     }// GEN-LAST:event_LoadPubKeyChooserActionPerformed

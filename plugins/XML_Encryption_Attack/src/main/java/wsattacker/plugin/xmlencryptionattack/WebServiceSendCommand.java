@@ -21,8 +21,8 @@ package wsattacker.plugin.xmlencryptionattack;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import wsattacker.http.transport.SoapHttpClient;
 import wsattacker.http.transport.SoapHttpClientFactory;
 import wsattacker.http.transport.SoapResponse;
@@ -37,6 +37,7 @@ import wsattacker.main.plugin.result.ResultLevel;
 public class WebServiceSendCommand
     implements ServerSendCommandIF
 {
+    private static final Logger LOG = Logger.getLogger(WebServiceSendCommand.class);
     private SoapHttpClient m_SoapHttpClient;
 
     public WebServiceSendCommand( WsdlRequest oracleRequest )
@@ -56,7 +57,7 @@ public class WebServiceSendCommand
         }
         catch ( IOException ex )
         {
-            Logger.getLogger( WebServiceSendCommand.class.getName() ).log( Level.SEVERE, null, ex );
+	    LOG.log(Level.ERROR, ex);
 
         }
 
