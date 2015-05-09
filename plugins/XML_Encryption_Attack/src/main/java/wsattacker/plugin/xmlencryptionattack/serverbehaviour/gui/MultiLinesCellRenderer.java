@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 import org.apache.log4j.Logger;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
@@ -33,7 +34,7 @@ import static wsattacker.library.xmlutilities.dom.DomUtilities.stringToDom;
  * @author Dennis
  */
 public class MultiLinesCellRenderer
-    extends JTextArea
+    extends RSyntaxTextArea
     implements TableCellRenderer
 {
     private static final Logger LOG = Logger.getLogger( MultiLinesCellRenderer.class );
@@ -55,13 +56,20 @@ public class MultiLinesCellRenderer
             }
 
             if ( null != resp )
+            {
                 setText( domToString( resp, true ) );
-            else
-                setText( value.toString() );
 
+            }
+            else
+            {
+                setText( value.toString() );
+            }
+            setSyntaxEditingStyle( "text/xml" );
         }
         else
+        {
             setText( "" );
+        }
         return this;
     }
 
