@@ -19,13 +19,8 @@
 package wsattacker.gui.component.testrequest;
 
 import com.eviware.soapui.model.iface.Request;
-import com.eviware.soapui.support.types.StringToStringsMap;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import wsattacker.http.transport.SoapHttpClient;
-import wsattacker.http.transport.SoapHttpClientFactory;
-import wsattacker.http.transport.SoapResponse;
 
 /**
  * @author dev

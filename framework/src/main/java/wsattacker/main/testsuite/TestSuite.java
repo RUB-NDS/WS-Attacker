@@ -18,7 +18,6 @@
  */
 package wsattacker.main.testsuite;
 
-import com.eviware.soapui.SoapUICore;
 import com.eviware.soapui.impl.WsdlInterfaceFactory;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.WsdlProjectFactory;

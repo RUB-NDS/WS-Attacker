@@ -18,9 +18,6 @@
  */
 package wsattacker.gui.component.config;
 
-import wsattacker.http.transport.HttpHeader;
-import wsattacker.http.transport.SoapHttpClientFactory;
-
 /**
  * @author dev
  */

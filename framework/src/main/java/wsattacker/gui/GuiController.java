@@ -18,7 +18,6 @@
  */
 package wsattacker.gui;
 
-import com.eviware.soapui.DefaultSoapUICore;
 import com.eviware.soapui.impl.wsdl.WsdlInterface;
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
@@ -28,13 +27,7 @@ import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-
-import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.gui.component.target.WsdlLoaderGUI_NB;
 import wsattacker.main.Preferences;
 import wsattacker.main.composition.ControllerInterface;
