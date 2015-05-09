@@ -89,8 +89,6 @@ public class XMLEncryptionAttack
 
     private static final String[] CATEGORY = new String[] { "Security", "Encryption" };
 
-    private WsdlRequest m_AttackRequest = null;
-
     private static SchemaAnalyzer m_SchemaAnalyser = null;
 
     private static SchemaAnalyzer m_UsedSchemaAnalyser = null;
@@ -122,7 +120,6 @@ public class XMLEncryptionAttack
     @Override
     public void clean()
     {
-        removeAttackRequest();
         setCurrentPoints( 0 );
         checkState();
     }
@@ -167,7 +164,6 @@ public class XMLEncryptionAttack
 			info("XML Encryption attack is not possible");
 		}
 
-		removeAttackRequest();
 	}
 
     public void getAvoidedAttackRequest( DetectionReport detectReport )
@@ -178,16 +174,9 @@ public class XMLEncryptionAttack
         // 1. which is the payload element => for modifying ciphervalue
         // 2. the valid wrapping document (result of wrapping attacks)
         // => information saved in errorInfo-object of AVOIDDOCFILTER
-        WebServiceSendCommand serSendCmnd = null;
 
-        if ( null == m_AttackRequest )
-        {
-            m_AttackRequest =
-                TestSuite.getInstance().getCurrentRequest().getWsdlRequest().getOperation().addNewRequest( getName()
-                                                                                                               + "Wrapping ATTACK" );
-        }
-
-        serSendCmnd = new WebServiceSendCommand( m_AttackRequest );
+        final WsdlRequest wsdlRequest = TestSuite.getInstance().getCurrentRequest().getWsdlRequest();
+        WebServiceSendCommand serSendCmnd = new WebServiceSendCommand( wsdlRequest );
 
         if ( NO_WRAP != m_AttackCfg.getWrappingMode() )
         {
@@ -279,19 +268,11 @@ public class XMLEncryptionAttack
         throws IllegalArgumentException, UnsupportedEncodingException
     {
         AOracle oracle = null;
-        WebServiceSendCommand serSendCmnd = null;
 
-        if ( null == m_AttackRequest )
-        {
-            m_AttackRequest =
-                TestSuite.getInstance().getCurrentRequest().getWsdlRequest().getOperation().addNewRequest( getName()
-                                                                                                               + "ATTACK" );
-        }
-
-        serSendCmnd = new WebServiceSendCommand( m_AttackRequest );
+        final WsdlRequest wsdlRequest = TestSuite.getInstance().getCurrentRequest().getWsdlRequest();
+        WebServiceSendCommand serSendCmnd = new WebServiceSendCommand( wsdlRequest );
         oracle = initAttackOracle( detectReport, serSendCmnd );
         executeAttack( detectReport, oracle );
-        removeAttackRequest();
     }
 
     private AOracle initAttackOracle( DetectionReport detectReport, WebServiceSendCommand serSendCmnd )
@@ -430,25 +411,11 @@ public class XMLEncryptionAttack
     }
 
     /**
-     * Observer function which is called if the attack request is removed.
-     */
-    public void removeAttackRequest()
-    {
-        // remove attack request
-        if ( m_AttackRequest != null )
-        {
-            m_AttackRequest.getOperation().removeRequest( m_AttackRequest );
-            m_AttackRequest = null;
-        }
-    }
-
-    /**
      * If the plugin is stopped by user interaction, the attack request must be removed.
      */
     @Override
     public void stopHook()
     {
-        removeAttackRequest();
     }
 
     public void setSchemaAnalyzerDepdingOnOption()

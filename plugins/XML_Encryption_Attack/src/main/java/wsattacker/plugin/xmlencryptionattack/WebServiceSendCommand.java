@@ -77,7 +77,7 @@ public class WebServiceSendCommand
 
     public void log( String logMessage )
     {
-        Result.getGlobalResult().add( new ResultEntry( ResultLevel.Trace, "XMLEncryptionAttack", logMessage ) );
+        Result.getGlobalResult().add( new ResultEntry( ResultLevel.Trace, "X2MLEncryptionAttack", logMessage ) );
     }
 
 }
