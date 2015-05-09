@@ -21,6 +21,7 @@ package wsattacker.main.composition.plugin;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.composition.plugin.option.AbstractOption;
@@ -83,7 +84,7 @@ public abstract class AbstractPlugin
 
     /**
      * Creates a new Plugin, needs an OptionFactory for creating PluginOptions
-     * 
+     *
      * @param optionFactory
      */
     public AbstractPlugin()
@@ -96,7 +97,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of maxPoints
-     * 
+     *
      * @param maxPoints new value of maxPoints
      */
     public void setMaxPoints( int maxPoints )
@@ -110,7 +111,7 @@ public abstract class AbstractPlugin
 
     /**
      * returns the plugin name
-     * 
+     *
      * @return String
      */
     public String getName()
@@ -120,7 +121,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of name
-     * 
+     *
      * @param name new value of name
      */
     public void setName( final String name )
@@ -132,7 +133,7 @@ public abstract class AbstractPlugin
 
     /**
      * returns a plugin description
-     * 
+     *
      * @return String
      */
     public String getDescription()
@@ -142,7 +143,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of description
-     * 
+     *
      * @param description new value of description
      */
     public void setDescription( final String description )
@@ -154,7 +155,7 @@ public abstract class AbstractPlugin
 
     /**
      * returns the plugin author
-     * 
+     *
      * @return
      */
     public String getAuthor()
@@ -164,7 +165,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of author
-     * 
+     *
      * @param author new value of author
      */
     public void setAuthor( final String author )
@@ -176,7 +177,7 @@ public abstract class AbstractPlugin
 
     /**
      * Get the of version the plugin
-     * 
+     *
      * @return the value of version
      */
     public String getVersion()
@@ -186,7 +187,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the version of the plugin
-     * 
+     *
      * @param version new value of version
      */
     public void setVersion( final String version )
@@ -198,7 +199,7 @@ public abstract class AbstractPlugin
 
     /**
      * Returns a container with all needed options
-     * 
+     *
      * @return PluginOptionContainer
      */
     final public PluginOptionContainer getPluginOptions()
@@ -208,7 +209,7 @@ public abstract class AbstractPlugin
 
     /**
      * *
-     * 
+     *
      * @return the maximum number of possible points
      */
     public int getMaxPoints()
@@ -219,7 +220,7 @@ public abstract class AbstractPlugin
     /**
      * returns the currently reached number of points this will be used at the end to calculate, how successful an
      * attack was
-     * 
+     *
      * @return currently reached number of points
      */
     final public int getCurrentPoints()
@@ -229,7 +230,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the current points to the specified number
-     * 
+     *
      * @param currentPoints
      */
     final protected void setCurrentPoints( final int currentPoints )
@@ -253,7 +254,7 @@ public abstract class AbstractPlugin
 
     /**
      * Returns the plugin state
-     * 
+     *
      * @return the state
      */
     final public PluginState getState()
@@ -277,7 +278,7 @@ public abstract class AbstractPlugin
 
     /**
      * A wrapper function for easy logging using log4j
-     * 
+     *
      * @param level
      * @param content
      */
@@ -288,18 +289,19 @@ public abstract class AbstractPlugin
 
     /**
      * A wrapper function for easy making results
-     * 
+     *
      * @param level
      * @param content
      */
     final protected void result( ResultLevel level, String content )
     {
         Result.getGlobalResult().add( new ResultEntry( level, getName(), content ) );
+	LOG.log(Level.INFO, content);
     }
 
     /**
      * A wrapper function for easy making a critical result
-     * 
+     *
      * @param content
      */
     final protected void critical( final String content )
@@ -309,7 +311,7 @@ public abstract class AbstractPlugin
 
     /**
      * A wrapper function for easy making important results This should be only a few, e.g. conclusion
-     * 
+     *
      * @param content
      */
     final protected void important( final String content )
@@ -320,7 +322,7 @@ public abstract class AbstractPlugin
     /**
      * A wrapper function for easy making info results This can be status information, e.g. what the plugins does at the
      * moment
-     * 
+     *
      * @param content
      */
     final protected void info( final String content )
@@ -330,7 +332,7 @@ public abstract class AbstractPlugin
 
     /**
      * A wrapper function for easy tracing This can contain request contents or any internals
-     * 
+     *
      * @param content
      */
     final protected void trace( final String content )
@@ -340,7 +342,7 @@ public abstract class AbstractPlugin
 
     /**
      * * returns whether the attack is running
-     * 
+     *
      * @return is the attack running? true/false
      */
     final public boolean isRunning()
@@ -350,7 +352,7 @@ public abstract class AbstractPlugin
 
     /**
      * * return whether the plugin is ready to run or still need some configuration
-     * 
+     *
      * @return boolean ready
      */
     final public boolean isReady()
@@ -360,7 +362,7 @@ public abstract class AbstractPlugin
 
     /**
      * * return whether the plugin is finished
-     * 
+     *
      * @return boolean finished
      */
     final public boolean isFinished()
@@ -370,7 +372,7 @@ public abstract class AbstractPlugin
 
     /**
      * * return whether the plugin is finished
-     * 
+     *
      * @return boolean finished
      */
     final public boolean isFailed()
@@ -380,7 +382,7 @@ public abstract class AbstractPlugin
 
     /**
      * * return whether the plugin is requested to abort by the user
-     * 
+     *
      * @return boolean finished
      */
     final public boolean isAborting()
@@ -390,7 +392,7 @@ public abstract class AbstractPlugin
 
     /**
      * * return whether the plugin is stopped by the user
-     * 
+     *
      * @return boolean finished
      */
     final public boolean isStopped()
@@ -400,7 +402,7 @@ public abstract class AbstractPlugin
 
     /**
      * * starts the Attack
-     * 
+     *
      * @return wasSuccessfull() or false, if plugin not ready
      */
     final public boolean startAttack()
@@ -438,7 +440,7 @@ public abstract class AbstractPlugin
     /**
      * * Implement your Attack here Note: Do not edit the request response pair Take it as in information pool. If you
      * want to send exactly the same request, you have to copy it!
-     * 
+     *
      * @param request
      */
     protected abstract void attackImplementationHook( final RequestResponsePair original );
@@ -478,14 +480,14 @@ public abstract class AbstractPlugin
     /**
      * * returns whether the attack was successful should return false if attack is not finished your implementation
      * must decide, how many points must be reached for an successful attack
-     * 
+     *
      * @return true if finished and successful
      */
     public abstract boolean wasSuccessful();
 
     /**
      * Get the value of pluginFunctions
-     * 
+     *
      * @return the value of pluginFunctions
      */
     public PluginFunctionInterface[] getPluginFunctions()
@@ -495,7 +497,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of pluginFunctions
-     * 
+     *
      * @param pluginFunctions new value of pluginFunctions
      */
     public void setPluginFunctions( PluginFunctionInterface[] pluginFunctions )
@@ -507,7 +509,7 @@ public abstract class AbstractPlugin
 
     /**
      * Get the value of pluginFunctions at specified index
-     * 
+     *
      * @param index
      * @return the value of pluginFunctions at specified index
      */
@@ -518,7 +520,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of pluginFunctions at specified index.
-     * 
+     *
      * @param index
      * @param newPluginFunctions new value of pluginFunctions at specified index
      */
@@ -560,7 +562,7 @@ public abstract class AbstractPlugin
      * very basic plugins: for each plugin option from $plugin set the corresponding option to the same value You have
      * to override this method if you use special options, e.g. options which depend on the current wsdl or if your
      * plugin uses dynamic options (e.g. getPluginOptions() will not return every plugin option).
-     * 
+     *
      * @param plugin
      */
     public void restoreConfiguration( AbstractPlugin plugin )
@@ -594,7 +596,7 @@ public abstract class AbstractPlugin
 
     /**
      * Get the value of category
-     * 
+     *
      * @return the value of category
      */
     public String[] getCategory()
@@ -604,7 +606,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of category
-     * 
+     *
      * @param category new value of category
      */
     public void setCategory( String[] category )
@@ -616,7 +618,7 @@ public abstract class AbstractPlugin
 
     /**
      * Get the value of category at specified index
-     * 
+     *
      * @param index
      * @return the value of category at specified index
      */
@@ -627,7 +629,7 @@ public abstract class AbstractPlugin
 
     /**
      * Set the value of category at specified index.
-     * 
+     *
      * @param index
      * @param newCategory new value of category at specified index
      */
