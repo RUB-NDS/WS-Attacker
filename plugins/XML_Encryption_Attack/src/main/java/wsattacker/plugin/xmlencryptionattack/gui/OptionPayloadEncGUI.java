@@ -245,9 +245,13 @@ public class OptionPayloadEncGUI
         jPanelEncKey = new javax.swing.JPanel();
         jScrollPane1 = new org.fife.ui.rtextarea.RTextScrollPane();
         tbEncryptedKey = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
+        tbEncryptedKey.setLineWrap( true );
+        tbEncryptedKey.setWrapStyleWord( false );
         jPanelEncData = new javax.swing.JPanel();
         jScrollPane3 = new org.fife.ui.rtextarea.RTextScrollPane();
         tbEncryptedData = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
+        tbEncryptedData.setLineWrap( true );
+        tbEncryptedData.setWrapStyleWord( false );
         jScrollPane2 = new javax.swing.JScrollPane();
         final ListModel<AbstractEncryptionElement> listModel = new PayloadListModel( m_Option.getPayloads() );
         listEncryptedEl = new JList<AbstractEncryptionElement>( listModel );

@@ -383,6 +383,7 @@
                 <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="tbEncryptedKey.setLineWrap(true);&#xa;tbEncryptedKey.setWrapStyleWord(false);&#xa;"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="OptionPayloadGUI_EncryptedKeyText"/>
               </AuxValues>
             </Component>
@@ -434,6 +435,9 @@
                 </Property>
                 <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="tbEncryptedData.setLineWrap(true);&#xa;tbEncryptedData.setWrapStyleWord(false);&#xa;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
