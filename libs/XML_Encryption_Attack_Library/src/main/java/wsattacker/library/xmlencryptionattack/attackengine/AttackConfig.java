@@ -33,6 +33,10 @@ import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.Crypto
  */
 public final class AttackConfig
 {
+    public static final double DEFAULT_STRING_CMP_THRESHOLD = 0.9;
+
+    public static final double DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD = 0.9;
+
     private OracleMode m_OracleMode = null;
 
     private SimStringStrategy m_SimStringStrategyType = null;
@@ -45,9 +49,9 @@ public final class AttackConfig
 
     private AbstractEncryptionElement m_ChosenWrapPayload = null;
 
-    private double m_StringCmpThresHold = 1.0;
+    private double m_StringCmpThresHold = DEFAULT_STRING_CMP_THRESHOLD;
 
-    private double m_StringCmpWrappErrThreshold = 1.0;
+    private double m_StringCmpWrappErrThreshold = DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD;
 
     private PKCS1AttackConfig m_PKCS1AttackCfg;
 

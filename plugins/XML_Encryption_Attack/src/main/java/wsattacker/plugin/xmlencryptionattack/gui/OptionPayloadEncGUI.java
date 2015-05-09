@@ -426,7 +426,7 @@ public class OptionPayloadEncGUI
         lbStringCmpTresh.setText( "Threshold General Error:" );
 
         tbCmpThres.setHorizontalAlignment( javax.swing.JTextField.CENTER );
-        tbCmpThres.setText( "1.0" );
+        tbCmpThres.setText( Double.toString( AttackConfig.DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD ) );
         tbCmpThres.setToolTipText( "" );
         tbCmpThres.addFocusListener( new java.awt.event.FocusAdapter()
         {
@@ -448,7 +448,7 @@ public class OptionPayloadEncGUI
             }
         } );
 
-        tbThresHoldWrap.setText( "1.0" );
+        tbThresHoldWrap.setText( Double.toString( AttackConfig.DEFAULT_STRING_CMP_THRESHOLD ) );
         tbThresHoldWrap.addFocusListener( new java.awt.event.FocusAdapter()
         {
             public void focusLost( java.awt.event.FocusEvent evt )

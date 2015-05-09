@@ -478,7 +478,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&lt;"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Standardcursor"/>
+          <Color id="Default Cursor"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="10"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
@@ -494,7 +494,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&gt;"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Standardcursor"/>
+          <Color id="Default Cursor"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="10"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
@@ -511,7 +511,9 @@
     <Component class="javax.swing.JTextField" name="tbCmpThres">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="1.0"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Double.toString(AttackConfig.DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD)&#xa;" type="code"/>
+        </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
@@ -534,7 +536,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tbThresHoldWrap">
       <Properties>
-        <Property name="text" type="java.lang.String" value="1.0"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Double.toString(AttackConfig.DEFAULT_STRING_CMP_THRESHOLD)" type="code"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tbThresHoldWrapFocusLost"/>
