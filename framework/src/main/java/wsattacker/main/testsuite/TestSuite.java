@@ -18,6 +18,7 @@
  */
 package wsattacker.main.testsuite;
 
+import com.eviware.soapui.SoapUICore;
 import com.eviware.soapui.impl.WsdlInterfaceFactory;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.WsdlProjectFactory;
@@ -25,16 +26,18 @@ import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.xmlbeans.XmlException;
 import org.jdesktop.beans.AbstractBean;
 import wsattacker.main.composition.testsuite.WsdlChangeObserver;
 
 /**
  * TestSuite for WS-Attacker Provides methods for loading a WSDL and selection operations
- * 
+ *
  * @author Christian Mainka
  */
 final public class TestSuite
@@ -101,6 +104,11 @@ final public class TestSuite
         {
             LOG.fatal( "Could not Instanciate WsdlProject: " + e.getMessage() );
         }
+	// Reload log4j properties, because SoapUI has overwritten them with
+	// project = fac.createNew();
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource("log4j.properties");
+        PropertyConfigurator.configure(url);
         return project;
     }
 
