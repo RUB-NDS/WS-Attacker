@@ -243,11 +243,11 @@ public class OptionPayloadEncGUI
         lbStringComp = new javax.swing.JLabel();
         cboxStringComp = new javax.swing.JComboBox();
         jPanelEncKey = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbEncryptedKey = new javax.swing.JTextPane();
+        jScrollPane1 = new org.fife.ui.rtextarea.RTextScrollPane();
+        tbEncryptedKey = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         jPanelEncData = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tbEncryptedData = new javax.swing.JTextPane();
+        jScrollPane3 = new org.fife.ui.rtextarea.RTextScrollPane();
+        tbEncryptedData = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         final ListModel<AbstractEncryptionElement> listModel = new PayloadListModel( m_Option.getPayloads() );
         listEncryptedEl = new JList<AbstractEncryptionElement>( listModel );
@@ -348,6 +348,7 @@ public class OptionPayloadEncGUI
         tbEncryptedKey.setMinimumSize( new java.awt.Dimension( 700, 133 ) );
         tbEncryptedKey.setName( "" ); // NOI18N
         tbEncryptedKey.setPreferredSize( new java.awt.Dimension( 700, 133 ) );
+        tbEncryptedKey.setSyntaxEditingStyle( "text/xml" );
         jScrollPane1.setViewportView( tbEncryptedKey );
 
         javax.swing.GroupLayout jPanelEncKeyLayout = new javax.swing.GroupLayout( jPanelEncKey );
@@ -368,6 +369,7 @@ public class OptionPayloadEncGUI
         tbEncryptedData.setMinimumSize( new java.awt.Dimension( 701, 200 ) );
         tbEncryptedData.setName( "" ); // NOI18N
         tbEncryptedData.setPreferredSize( new java.awt.Dimension( 701, 200 ) );
+        tbEncryptedData.setSyntaxEditingStyle( "text/xml" );
         jScrollPane3.setViewportView( tbEncryptedData );
 
         javax.swing.GroupLayout jPanelEncDataLayout = new javax.swing.GroupLayout( jPanelEncData );
@@ -1028,11 +1030,11 @@ public class OptionPayloadEncGUI
 
     private javax.swing.JPanel jPanelEncKey;
 
-    private javax.swing.JScrollPane jScrollPane1;
+    private org.fife.ui.rtextarea.RTextScrollPane jScrollPane1;
 
     private javax.swing.JScrollPane jScrollPane2;
 
-    private javax.swing.JScrollPane jScrollPane3;
+    private org.fife.ui.rtextarea.RTextScrollPane jScrollPane3;
 
     private javax.swing.JLabel lbAttackCombo;
 
@@ -1062,9 +1064,9 @@ public class OptionPayloadEncGUI
 
     private javax.swing.JTextField tbEncDataCount;
 
-    private javax.swing.JTextPane tbEncryptedData;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea tbEncryptedData;
 
-    private javax.swing.JTextPane tbEncryptedKey;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea tbEncryptedKey;
 
     private javax.swing.JTextField tbThresHoldWrap;
 

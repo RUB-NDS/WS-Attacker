@@ -359,14 +359,14 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="org.fife.ui.rtextarea.RTextScrollPane" name="jScrollPane1">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="tbEncryptedKey">
+            <Component class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" name="tbEncryptedKey">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -380,6 +380,7 @@
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[700, 133]"/>
                 </Property>
+                <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="OptionPayloadGUI_EncryptedKeyText"/>
@@ -411,14 +412,14 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+        <Container class="org.fife.ui.rtextarea.RTextScrollPane" name="jScrollPane3">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="tbEncryptedData">
+            <Component class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" name="tbEncryptedData">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -431,6 +432,7 @@
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[701, 200]"/>
                 </Property>
+                <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -478,7 +480,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&lt;"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Default Cursor"/>
+          <Color id="Standardcursor"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="10"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
@@ -494,7 +496,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&gt;"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Default Cursor"/>
+          <Color id="Standardcursor"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="10"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
