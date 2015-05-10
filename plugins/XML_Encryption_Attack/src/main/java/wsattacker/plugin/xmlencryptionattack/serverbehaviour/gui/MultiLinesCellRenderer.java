@@ -21,7 +21,6 @@ package wsattacker.plugin.xmlencryptionattack.serverbehaviour.gui;
 
 import java.awt.Component;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 import org.apache.log4j.Logger;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -49,22 +48,16 @@ public class MultiLinesCellRenderer
             try
             {
                 resp = stringToDom( value.toString() );
+                // Set pretty printed document in table
+                setText( domToString( resp, true ) );
+                // enable XML Syntax highlighting
+                setSyntaxEditingStyle( "text/xml" );
             }
             catch ( SAXException ex )
             {
-                LOG.error( ex );
-            }
-
-            if ( null != resp )
-            {
-                setText( domToString( resp, true ) );
-
-            }
-            else
-            {
+                // Could not parse XML, setting simple text
                 setText( value.toString() );
             }
-            setSyntaxEditingStyle( "text/xml" );
         }
         else
         {
