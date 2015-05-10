@@ -42,6 +42,7 @@ import org.apache.log4j.Logger;
  */
 public class SoapHttpClient
 {
+
     /**
      * if the connection is closed, the client tries to send the soap message again, max MAX_RETRY_NUMBER times
      */
@@ -82,19 +83,25 @@ public class SoapHttpClient
         final String[] protocols = { "http", "https" };
         for ( String protocol : protocols )
         {
-            try
+            final String httpProxyHost = System.getProperty( protocol + ".proxyHost" );
+            final String proxyPortAsString = System.getProperty( protocol + ".proxyPort" );
+            if ( httpProxyHost != null && !httpProxyHost.isEmpty() && proxyPortAsString != null
+                && !proxyPortAsString.isEmpty() )
             {
-                final String httpProxyHost = System.getProperty( protocol + ".proxyHost" );
-                final int httpProxyPort = Integer.parseInt( System.getProperty( protocol + ".proxyPort" ) );
-                if ( httpProxyHost != null && !httpProxyHost.isEmpty() )
+                try
                 {
-                    final HttpHost proxy = new HttpHost( httpProxyHost, httpProxyPort, protocol );
-                    client.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxy );
+                    final int httpProxyPort = Integer.parseInt( proxyPortAsString );
+                    if ( httpProxyHost != null && !httpProxyHost.isEmpty() )
+                    {
+                        final HttpHost proxy = new HttpHost( httpProxyHost, httpProxyPort, protocol );
+                        client.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxy );
+                    }
                 }
-            }
-            catch ( NumberFormatException e )
-            {
-                Logger.getLogger( SoapHttpClient.class ).warn( "Could not set Proxy for " + protocol, e );
+                catch ( NumberFormatException e )
+                {
+                    Logger.getLogger( SoapHttpClient.class ).warn( String.format( "Could not set Proxy for %s with value with value '%s'",
+                                                                                  protocol, proxyPortAsString ), e );
+                }
             }
         }
     }
