@@ -263,6 +263,9 @@
                 <Property name="rows" type="int" value="5"/>
                 <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="requestViewer.setLineWrap(true);&#xa;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -282,6 +285,9 @@
                 <Property name="rows" type="int" value="5"/>
                 <Property name="syntaxEditingStyle" type="java.lang.String" value="text/xml"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="responseViewer.setLineWrap(bln);&#xa;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
