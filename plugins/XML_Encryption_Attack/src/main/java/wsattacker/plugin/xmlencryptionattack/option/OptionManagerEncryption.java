@@ -143,8 +143,8 @@ public final class OptionManagerEncryption
         m_AttackCfg.setSimStringStrategyType( SimStringStrategy.DICE_COEFF );
         m_AttackCfg.setChosenAttackPayload( null );
         m_AttackCfg.setChosenWrapPayload( null );
-        m_AttackCfg.setStringCmpThresHold( 1.0 );
-        m_AttackCfg.setStringCmpWrappThreshold( 1.0 );
+        m_AttackCfg.setStringCmpThresHold( AttackConfig.DEFAULT_STRING_CMP_THRESHOLD );
+        m_AttackCfg.setStringCmpWrappThreshold( AttackConfig.DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD );
         m_AttackCfg.getPKCS1AttackCfg().setServerRSAPubKey( null );
         m_AttackCfg.getPKCS1AttackCfg().setPKCS1Strategy( CBC_WEAK );
 
