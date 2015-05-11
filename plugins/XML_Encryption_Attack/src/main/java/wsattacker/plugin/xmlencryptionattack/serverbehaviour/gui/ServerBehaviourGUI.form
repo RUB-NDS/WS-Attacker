@@ -139,6 +139,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ServerBehaviourGUI_tableOracleResponse"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -19,8 +19,8 @@
 package wsattacker.main.composition.plugin.option;
 
 import java.io.Serializable;
-import org.jdesktop.beans.AbstractBean;
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
+import wsattacker.main.composition.AbstractBean;
 import wsattacker.main.plugin.PluginOptionContainer;
 
 /**

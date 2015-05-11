@@ -22,25 +22,12 @@
         <module>XML_Encryption_Attack</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>eviware</id>
-            <url>http://www.eviware.com/repository/maven2/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>wsattacker.framework</groupId>
             <artifactId>wsattacker-framework</artifactId>
             <version>1.6-SNAPSHOT</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>eviware</groupId>
-            <artifactId>maven-soapui-plugin</artifactId>
-            <version>4.5.1</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

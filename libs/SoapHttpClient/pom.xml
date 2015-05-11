@@ -32,8 +32,19 @@
         <dependency>
             <groupId>com.smartbear.soapui</groupId>
             <artifactId>soapui-maven-plugin</artifactId>
-            <version>4.6.4</version>
+            <version>5.1.2</version>
             <scope>compile</scope>
+            <exclusions>
+                <!-- 
+                    We do not use javafx because so that we can compile with
+                    OpenJDK.
+                    javafx is used for OAuth, which is not part of WS-Attacker
+                -->
+                <exclusion>
+                    <groupId>javafx</groupId>
+                    <artifactId>jfxrt</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     

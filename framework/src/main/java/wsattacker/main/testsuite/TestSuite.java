@@ -36,7 +36,7 @@ import wsattacker.main.composition.testsuite.WsdlChangeObserver;
 
 /**
  * TestSuite for WS-Attacker Provides methods for loading a WSDL and selection operations
- *
+ * 
  * @author Christian Mainka
  */
 final public class TestSuite
@@ -103,11 +103,11 @@ final public class TestSuite
         {
             LOG.fatal( "Could not Instanciate WsdlProject: " + e.getMessage() );
         }
-	// Reload log4j properties, because SoapUI has overwritten them with
-	// project = fac.createNew();
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("log4j.properties");
-        PropertyConfigurator.configure(url);
+        // Reload log4j properties, because SoapUI has overwritten them with
+        // project = fac.createNew();
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource( "log4j.properties" );
+        PropertyConfigurator.configure( url );
         return project;
     }
 

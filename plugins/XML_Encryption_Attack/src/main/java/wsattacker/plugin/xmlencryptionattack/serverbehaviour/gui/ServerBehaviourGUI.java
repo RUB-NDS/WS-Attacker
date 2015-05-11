@@ -68,7 +68,7 @@ public class ServerBehaviourGUI
 
     /**
      * Creates new form ServerBehaviourGUI
-     * 
+     *
      * @param plugin
      * @param option
      */
@@ -532,19 +532,27 @@ public class ServerBehaviourGUI
 
     private void updateRowHeights()
     {
-        for ( int row = 0; row < tableOracleResponse.getRowCount(); row++ )
+        final int rowCount = tableOracleResponse.getRowCount();
+        int rowHeight = tableOracleResponse.getRowHeight();
+        final int columnCount = tableOracleResponse.getColumnCount();
+        for ( int row = 0; row < rowCount; row++ )
         {
-            int rowHeight = tableOracleResponse.getRowHeight();
-
-            for ( int column = 0; column < tableOracleResponse.getColumnCount(); column++ )
+            for ( int column = 0; column < columnCount; column++ )
             {
-                Component comp =
-                    tableOracleResponse.prepareRenderer( tableOracleResponse.getCellRenderer( row, column ), row,
-                                                         column );
-                rowHeight = Math.max( rowHeight, comp.getPreferredSize().height );
-            }
+                try
+                {
+                    Component comp =
+                        tableOracleResponse.prepareRenderer( tableOracleResponse.getCellRenderer( row, column ), row,
+                                                             column );
+                    rowHeight = Math.max( rowHeight, comp.getPreferredSize().height );
+                }
+                catch ( Exception e )
+                {
+                    LOG.error( "### Error: This should not happen, catched " + e.getMessage() );
+                }
 
-            tableOracleResponse.setRowHeight( row, rowHeight );
+                tableOracleResponse.setRowHeight( row, rowHeight );
+            }
         }
     }
 
