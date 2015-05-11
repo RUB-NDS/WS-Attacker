@@ -69,7 +69,7 @@ public class ServerBehaviourGUI
 
     /**
      * Creates new form ServerBehaviourGUI
-     * 
+     *
      * @param plugin
      * @param option
      */
@@ -608,16 +608,14 @@ public class ServerBehaviourGUI
             @Override
             public void valueChanged( ListSelectionEvent e )
             {
-                int selectedRow = e.getFirstIndex();
+                int selectedRow = e.getLastIndex();
                 final List<OracleResponse> responseData = m_Option.getResponseData();
                 if ( selectedRow < responseData.size() )
                 {
                     String response = responseData.get( selectedRow ).getResponse();
                     String request = responseData.get( selectedRow ).getRequest();
                     requestViewer.setText( request );
-                    requestViewer.repaint();
                     responseViewer.setText( response );
-                    responseViewer.repaint();
                 }
             }
         } );
