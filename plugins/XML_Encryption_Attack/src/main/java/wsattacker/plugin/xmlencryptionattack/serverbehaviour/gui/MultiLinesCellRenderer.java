@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.TableCellRenderer;
 import org.apache.log4j.Logger;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -31,7 +32,7 @@ import org.xml.sax.SAXException;
  * @author Dennis
  */
 public class MultiLinesCellRenderer
-    extends JTextPane
+    extends RSyntaxTextArea
     implements TableCellRenderer
 {
     private static final Logger LOG = Logger.getLogger( MultiLinesCellRenderer.class );
@@ -58,6 +59,8 @@ public class MultiLinesCellRenderer
             // setText( value.toString() );
             // }
 
+            setSyntaxEditingStyle( "text/xml" );
+            setLineWrap( true );
             setText( value.toString() );
             // enable XML Syntax highlighting
             // try
