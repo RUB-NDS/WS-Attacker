@@ -38,7 +38,7 @@ public class OptionIpChooser
     extends OptionSimpleChoice
 {
 
-    private static final String URL = "http://checkip.dyndns.org";
+    private static final String URL = "http://showip.net";
 
     public static final String AUTO = String.format( "Detect your IP via %s", URL );
 
