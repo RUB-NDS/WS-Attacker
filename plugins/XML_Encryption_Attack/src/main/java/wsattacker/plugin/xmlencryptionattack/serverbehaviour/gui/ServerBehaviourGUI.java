@@ -97,6 +97,28 @@ public class ServerBehaviourGUI
         chooseLoadPubKey = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableOracleResponse = new javax.swing.JTable();
+        tableOracleResponse.getSelectionModel().addListSelectionListener( new ListSelectionListener()
+        {
+
+            @Override
+            public void valueChanged( ListSelectionEvent e )
+            {
+                int selectedRow = tableOracleResponse.getSelectedRow();
+                final List<OracleResponse> responseData = m_Option.getResponseData();
+                if ( selectedRow >= 0 && selectedRow < responseData.size() )
+                {
+                    String response = responseData.get( selectedRow ).getResponse();
+                    String request = responseData.get( selectedRow ).getRequest();
+                    requestViewer.setText( request );
+                    responseViewer.setText( response );
+                }
+                else
+                {
+                    requestViewer.setText( "" );
+                    responseViewer.setText( "" );
+                }
+            }
+        } );
         btnLoadFile = new javax.swing.JButton();
         btnSaveFile = new javax.swing.JButton();
         btnNewMsgs = new javax.swing.JButton();
@@ -616,24 +638,8 @@ public class ServerBehaviourGUI
         fixWidth( COLUMN_IDX_ROW, 40 );
         fixWidth( COLUMN_IDX_ORACLERESULT, 100 );
         tbRowCount.setText( String.valueOf( tableOracleResponse.getRowCount() ) );
-
-        tableOracleResponse.getSelectionModel().addListSelectionListener( new ListSelectionListener()
-        {
-
-            @Override
-            public void valueChanged( ListSelectionEvent e )
-            {
-                int selectedRow = tableOracleResponse.getSelectedRow();
-                final List<OracleResponse> responseData = m_Option.getResponseData();
-                if ( selectedRow < responseData.size() )
-                {
-                    String response = responseData.get( selectedRow ).getResponse();
-                    String request = responseData.get( selectedRow ).getRequest();
-                    requestViewer.setText( request );
-                    responseViewer.setText( response );
-                }
-            }
-        } );
+        requestViewer.setText( "" );
+        responseViewer.setText( ( "" ) );
     }
 
     public void updateTable( OracleResponse oracResp )

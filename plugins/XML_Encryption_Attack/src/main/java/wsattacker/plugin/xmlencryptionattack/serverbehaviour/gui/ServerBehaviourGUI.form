@@ -145,6 +145,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="tableOracleResponse.getSelectionModel().addListSelectionListener( new ListSelectionListener()&#xa;{&#xa;&#xa;    @Override&#xa;&#x9;public void valueChanged( ListSelectionEvent e )&#xa;    {&#xa;        int selectedRow = tableOracleResponse.getSelectedRow();&#xa;        final List&lt;OracleResponse&gt; responseData = m_Option.getResponseData();&#xa;        if ( selectedRow &gt;= 0 &amp;&amp; selectedRow &lt; responseData.size() )&#xa;        {&#xa;            String response = responseData.get( selectedRow ).getResponse();&#xa;            String request = responseData.get( selectedRow ).getRequest();&#xa;            requestViewer.setText( request );&#xa;            responseViewer.setText( response );&#xa;        } else {&#xa;            requestViewer.setText( &quot;&quot; );&#xa;            responseViewer.setText( &quot;&quot; );&#xa;        }&#xa;    }&#xa;} );&#xa;"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ServerBehaviourGUI_tableOracleResponse"/>
           </AuxValues>
         </Component>
