@@ -54,29 +54,26 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lbServerError" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnNewMsgs" max="32767" attributes="0"/>
-                              <Component id="btnLoadServerKey" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnSaveFile" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnLoadFile" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbTableRows" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="tbRowCount" min="-2" pref="43" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="ServErrMsgProgressBar" pref="0" max="32767" attributes="0"/>
-                              <Component id="btnAbort" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnLoadPubKey" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnNewMsgs" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnLoadFile" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnSaveFile" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnLoadServerKey" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnLoadPubKey" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cbPKCS1GenWithEncData" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="cbIgnorePayResponse" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lbTableRows" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tbRowCount" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cbPKCS1GenWithEncData" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbIgnorePayResponse" min="-2" max="-2" attributes="0"/>
+                          <Component id="ServErrMsgProgressBar" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnAbort" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="145" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="requestResponseSplitPane" pref="126" max="32767" attributes="0"/>
+                      <Component id="requestResponseSplitPane" pref="159" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -102,8 +99,8 @@
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Component id="cbIgnorePayResponse" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cbPKCS1GenWithEncData" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      <Component id="cbPKCS1GenWithEncData" min="-2" pref="33" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnNewMsgs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ServErrMsgProgressBar" min="-2" pref="6" max="-2" attributes="0"/>
@@ -224,7 +221,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbPKCS1GenWithEncData">
       <Properties>
-        <Property name="text" type="java.lang.String" value="With EncryptedData"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p&gt;With EncryptedData&lt;/p&gt;&lt;/html&gt;"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -233,8 +230,11 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbIgnorePayResponse">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ignore Payload Response"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p&gt;Ignore Payload &lt;br&gt;Response&lt;/p&gt;&lt;/html&gt;"/>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="&lt;html&gt;&lt;p&gt;Ignore Payload Response&lt;/p&gt;&lt;/html&gt;"/>
+      </AccessibilityProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbIgnorePayResponseActionPerformed"/>
       </Events>
