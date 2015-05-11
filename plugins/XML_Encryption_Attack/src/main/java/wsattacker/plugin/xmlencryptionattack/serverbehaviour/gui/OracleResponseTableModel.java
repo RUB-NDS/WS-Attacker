@@ -31,18 +31,14 @@ public class OracleResponseTableModel
     extends AbstractTableModel
 {
     // names of columns
-    private static final String[] COLUMN_NAMES = { "Row", "Oracle Request", "Server Response", "Oracle Result" };
+    private static final String[] COLUMN_NAMES = { "Row", "Oracle Result" };
 
-    private static final Class<?>[] COLUMN_CLASSES = { int.class, String.class, Object.class, Result.class };
+    private static final Class<?>[] COLUMN_CLASSES = { int.class, Result.class };
 
     // index columns
     protected static final int COLUMN_IDX_ROW = 0;
 
-    protected static final int COLUMN_IDX_ORACLEREQUEST = 1; // not visible
-
-    protected static final int COLUMN_IDX_ORACLERESPONSE = 2;
-
-    protected static final int COLUMN_IDX_ORACLERESULT = 3;
+    protected static final int COLUMN_IDX_ORACLERESULT = 1;
 
     private final List<OracleResponse> m_Responses;
 
@@ -73,20 +69,9 @@ public class OracleResponseTableModel
             return ( rowIndex + 1 );
         }
 
-        if ( COLUMN_IDX_ORACLERESPONSE == columnIndex )
-        {
-            return (String) response.getResponse();
-        }
-
         if ( COLUMN_IDX_ORACLERESULT == columnIndex )
         {
             return (Result) response.getResult();
-        }
-
-        // this column is not visible => only for tooltip
-        if ( COLUMN_IDX_ORACLEREQUEST == columnIndex )
-        {
-            return response.getRequest();
         }
 
         throw new IllegalArgumentException( "Invalid column index: " + columnIndex );
@@ -97,12 +82,6 @@ public class OracleResponseTableModel
     public void setValueAt( final Object value, final int rowIndex, final int columnIndex )
     {
         final OracleResponse response = this.m_Responses.get( rowIndex );
-
-        if ( COLUMN_IDX_ROW == columnIndex || COLUMN_IDX_ORACLERESPONSE == columnIndex
-            || COLUMN_IDX_ORACLEREQUEST == columnIndex )
-        {
-            return;
-        }
 
         if ( COLUMN_IDX_ORACLERESULT == columnIndex )
         {
