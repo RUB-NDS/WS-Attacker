@@ -593,7 +593,7 @@ public class ServerBehaviourGUI
     {
         OracleResponseTableModel tabModel = (OracleResponseTableModel) tableOracleResponse.getModel();
         tabModel.update();
-        updateRowHeights();
+        // updateRowHeights();
         tbRowCount.setText( String.valueOf( tableOracleResponse.getRowCount() ) );
         fixWidth( COLUMN_IDX_ROW, 40 );
         fixWidth( COLUMN_IDX_ORACLERESULT, 100 );
