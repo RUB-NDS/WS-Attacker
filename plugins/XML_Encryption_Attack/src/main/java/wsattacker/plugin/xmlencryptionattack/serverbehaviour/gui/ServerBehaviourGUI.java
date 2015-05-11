@@ -68,7 +68,7 @@ public class ServerBehaviourGUI
 
     /**
      * Creates new form ServerBehaviourGUI
-     *
+     * 
      * @param plugin
      * @param option
      */

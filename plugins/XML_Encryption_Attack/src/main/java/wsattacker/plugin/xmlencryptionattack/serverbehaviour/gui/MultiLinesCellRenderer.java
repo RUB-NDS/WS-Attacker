@@ -21,19 +21,17 @@ package wsattacker.plugin.xmlencryptionattack.serverbehaviour.gui;
 
 import java.awt.Component;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.table.TableCellRenderer;
 import org.apache.log4j.Logger;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.stringToDom;
 
 /**
  * @author Dennis
  */
 public class MultiLinesCellRenderer
-    extends RSyntaxTextArea
+    extends JTextPane
     implements TableCellRenderer
 {
     private static final Logger LOG = Logger.getLogger( MultiLinesCellRenderer.class );
@@ -70,7 +68,7 @@ public class MultiLinesCellRenderer
             // {
             // LOG.error( "### GOTCHA " );
             // }
-            setLineWrap( true );
+            // setLineWrap( true );
         }
         else
         {
