@@ -615,7 +615,9 @@ public class ServerBehaviourGUI
                     String response = responseData.get( selectedRow ).getResponse();
                     String request = responseData.get( selectedRow ).getRequest();
                     requestViewer.setText( request );
+                    requestViewer.repaint();
                     responseViewer.setText( response );
+                    responseViewer.repaint();
                 }
             }
         } );
