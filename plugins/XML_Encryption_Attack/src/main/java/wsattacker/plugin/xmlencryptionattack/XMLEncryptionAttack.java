@@ -323,14 +323,7 @@ public class XMLEncryptionAttack
         {
             // init attackmanager who executes the configured attack parameters
             attackManager = new AttackManager( detectReport, m_AttackCfg, oracle );
-        }
-        catch ( CryptoAttackException ex )
-        {
-            info( "Error: Attackmanager could not init:\n" + ex.toString() );
-        }
 
-        try
-        {
             info( "Starting " + m_AttackCfg.getXMLEncryptionAttack() );
             plainText = attackManager.executeAttack();
 
