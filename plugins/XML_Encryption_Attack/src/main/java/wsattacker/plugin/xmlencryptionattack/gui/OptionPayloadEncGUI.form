@@ -16,76 +16,28 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                  <Component id="lbTitleEncElements" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbEncElements" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbEncKeyPay" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jPanelEncKey" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cboxPKSC1Strategy" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbEncKeyAddWrapp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbPKCS1Strategy" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbEncKeyAttack" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbEncKeyIsSigned" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="110" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cbIsTimeStamp" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lbThresWrap" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbWrappingAttack" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbAttackCombo" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="tbThresHoldWrap" min="-2" pref="28" max="-2" attributes="0"/>
-                                          <Component id="cboxAttack" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cboxWrappingAttack" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lbStringCmpTresh" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbStringComp" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbOracleCombo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                              <Component id="cboxOracle" min="-2" max="-2" attributes="0"/>
-                                              <Component id="tbCmpThres" min="-2" pref="27" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="cboxStringComp" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
+                                  <Component id="lbEncElements" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbEncKeyPay" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cbEncKeyAttack" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEncKeyIsSigned" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEncKeyAddWrapp" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="cboxPKSC1Strategy" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbPKCS1Strategy" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="tbEncDataCount" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="btnPrevEncData" min="-2" max="-2" attributes="0"/>
@@ -94,134 +46,152 @@
                               </Group>
                           </Group>
                           <Component id="lbEncryptedData" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="jPanelEncData" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbEncDataAddWrapp" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbEncTypeWeak" min="-2" max="-2" attributes="0"/>
                           <Component id="cbEncDataAttack" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbEncDataIsSigned" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEncDataIsSigned" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEncDataAddWrapp" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEncTypeWeak" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lbTitleEncElements" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="601" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="jPanelEncKey" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jPanelEncData" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lbThresWrap" linkSize="2" max="32767" attributes="0"/>
+                                          <Component id="lbAttackCombo" linkSize="2" max="32767" attributes="0"/>
+                                          <Component id="lbWrappingAttack" linkSize="2" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="cboxWrappingAttack" linkSize="4" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tbThresHoldWrap" linkSize="4" alignment="0" pref="28" max="32767" attributes="0"/>
+                                          <Component id="cboxAttack" linkSize="4" pref="140" max="32767" attributes="0"/>
+                                          <Component id="cbIsTimeStamp" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lbStringComp" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="cboxStringComp" linkSize="5" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lbOracleCombo" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="cboxOracle" linkSize="5" min="-2" pref="140" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lbStringCmpTresh" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="tbCmpThres" linkSize="5" min="-2" pref="27" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="lbTitleEncElements" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane2" min="-2" pref="65" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="cbIsTimeStamp" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lbAttackCombo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="cboxAttack" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lbWrappingAttack" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="cboxWrappingAttack" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="tbThresHoldWrap" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbThresWrap" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lbEncElements" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbIsTimeStamp" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbAttackCombo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="cboxAttack" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbOracleCombo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="cboxOracle" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lbOracleCombo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="cboxOracle" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lbStringComp" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="cboxStringComp" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lbStringCmpTresh" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tbCmpThres" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                  </Group>
-                  <Component id="lbEncElements" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanelEncKey" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="lbEncKeyPay" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="cbEncKeyAttack" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="cbEncKeyIsSigned" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lbWrappingAttack" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="cboxWrappingAttack" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbEncKeyAddWrapp" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lbThresWrap" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tbThresHoldWrap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="lbEncKeyPay" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="cbEncKeyAttack" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="cbEncKeyIsSigned" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbEncKeyAddWrapp" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbPKCS1Strategy" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="cboxPKSC1Strategy" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jPanelEncKey" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Component id="lbEncryptedData" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanelEncData" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
-                              <Component id="lbEncryptedData" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="tbEncDataCount" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="btnNextEncData" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnPrevEncData" min="-2" pref="19" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="cbEncDataIsSigned" min="-2" pref="20" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbEncDataAttack" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbEncDataAddWrapp" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Component id="tbEncDataCount" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnNextEncData" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPrevEncData" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbEncDataAttack" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbEncDataIsSigned" min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbEncDataAddWrapp" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbEncTypeWeak" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jPanelEncData" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -338,9 +308,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -348,7 +318,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="159" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="105" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -393,7 +363,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -402,7 +372,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="159" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="113" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -512,7 +482,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tbCmpThres">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Double.toString(AttackConfig.DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD)&#xa;" type="code"/>
         </Property>
@@ -538,6 +508,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tbThresHoldWrap">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Double.toString(AttackConfig.DEFAULT_STRING_CMP_THRESHOLD)" type="code"/>
         </Property>
@@ -591,6 +562,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEncTypeWeakActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Configuration:"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
