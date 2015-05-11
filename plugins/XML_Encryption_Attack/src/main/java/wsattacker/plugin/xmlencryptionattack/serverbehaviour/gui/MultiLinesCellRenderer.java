@@ -44,34 +44,9 @@ public class MultiLinesCellRenderer
         Document resp = null;
         if ( null != value )
         {
-            // try
-            // {
-            // resp = stringToDom( value.toString() );
-            // // Set pretty printed document in table
-            // setText( domToString( resp, true ) );
-            // // enable XML Syntax highlighting
-            // setSyntaxEditingStyle( "text/xml" );
-            // setLineWrap(true);
-            // }
-            // catch ( SAXException ex )
-            // {
-            // // Could not parse XML, setting simple text
-            // setText( value.toString() );
-            // }
-
             setSyntaxEditingStyle( "text/xml" );
             setLineWrap( true );
             setText( value.toString() );
-            // enable XML Syntax highlighting
-            // try
-            // {
-            // setSyntaxEditingStyle( "text/xml" );
-            // }
-            // catch ( Exception e )
-            // {
-            // LOG.error( "### GOTCHA " );
-            // }
-            // setLineWrap( true );
         }
         else
         {
