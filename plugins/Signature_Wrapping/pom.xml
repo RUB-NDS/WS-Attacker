@@ -25,7 +25,7 @@
     <parent>
         <groupId>wsattacker.plugin</groupId>
         <artifactId>wsattacker-plugins</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.6</version>
     </parent>
 
     <!-- For WsuURIDereferencer: XMLSignatureInput, ApacheOctetStreamData, ApacheNodeSetData -->
@@ -34,24 +34,24 @@
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>Schema_Analyzer_Library</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>XML_Utilities_Library</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>Signature_Wrapping_Library</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
         </dependency>
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>SoapHttpClient</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <type>jar</type>
         </dependency>
     </dependencies>
