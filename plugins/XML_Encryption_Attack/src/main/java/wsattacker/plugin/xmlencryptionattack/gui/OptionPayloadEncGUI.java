@@ -660,7 +660,7 @@ public class OptionPayloadEncGUI
 
     private void tbCmpThresFocusLost( java.awt.event.FocusEvent evt )
     {// GEN-FIRST:event_tbCmpThresFocusLost
-        double dValue = 1.0;
+        double dValue;
         try
         {
             dValue = Double.parseDouble( tbCmpThres.getText() );
@@ -684,7 +684,7 @@ public class OptionPayloadEncGUI
 
     private void tbThresHoldWrapFocusLost( java.awt.event.FocusEvent evt )
     {// GEN-FIRST:event_tbThresHoldWrapFocusLost
-        double dValue = 1.0;
+        double dValue;
         try
         {
             dValue = Double.parseDouble( tbThresHoldWrap.getText() );
