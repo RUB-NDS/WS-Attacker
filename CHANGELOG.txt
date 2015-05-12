@@ -1,5 +1,5 @@
 ===============
-5. May 2015
+12. May 2015
 ===============
 
 
@@ -7,6 +7,7 @@ New XML-Encryption Attack Plugin (by Dennis Kupser):
     - Automatically detects XML-Encryption Attack countermeasures
     - Attacks symmetric XML-Encryption (http://nds.rub.de/media/nds/veroeffentlichungen/2011/10/22/HowToBreakXMLenc.pdf)
     - Attacks asymmetric XML-Encryption via Bleichenbacher Fault Oracle (http://nds.rub.de/media/nds/veroeffentlichungen/2012/12/19/XMLencBleichenbacher.pdf)
+Many Bugfixes
 
 ===============
 19. March 2015
