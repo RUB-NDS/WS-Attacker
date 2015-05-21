@@ -19,15 +19,10 @@
 package wsattacker.plugin.signatureWrapping;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapVersion;
-import com.eviware.soapui.model.iface.Request.SubmitException;
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.xmlbeans.XmlException;
 import org.w3c.dom.Document;
@@ -76,7 +71,7 @@ public class SignatureWrapping
 
     private static final String[] CATEGORY = new String[] { "Security", "Signature" };
 
-    private static final String VERSION = "1.4 / 2013-07-26";
+    private static final String VERSION = "1.6 / 2015-05-20";
 
     private SignatureManager signatureManager;
 
@@ -91,8 +86,6 @@ public class SignatureWrapping
     private AnalysisDataCollector analysisData;
 
     private final int successThreashold = 70;
-
-    private WsdlRequest attackRequest = null;
 
     private String originalSoapAction = null;
 
@@ -177,15 +170,13 @@ public class SignatureWrapping
     @Override
     protected void attackImplementationHook( RequestResponsePair original )
     {
-        // save needed pointers
-        attackRequest = original.getWsdlRequest().getOperation().addNewRequest( getName() + " ATTACK" );
-
         // should the soapaction be changed?
-        if ( optionManager.getOptionSoapAction().getSelectedIndex() > 0 )
-        {
-            originalSoapAction = attackRequest.getOperation().getAction();
-            attackRequest.getOperation().setAction( optionManager.getOptionSoapAction().getValueAsString() );
-        }
+        // TODO: Fixme
+        // if ( optionManager.getOptionSoapAction().getSelectedIndex() > 0 )
+        // {
+        // originalSoapAction = attackRequest.getOperation().getAction();
+        // attackRequest.getOperation().setAction( optionManager.getOptionSoapAction().getValueAsString() );
+        // }
 
         analysisData = new AnalysisDataCollector();
 
@@ -207,7 +198,7 @@ public class SignatureWrapping
         String searchString = optionManager.getOptionTheContainedString().getValue();
         boolean search = ( !searchString.isEmpty() && optionManager.getOptionMustContainString().isOn() );
 
-        SoapHttpClient client = SoapHttpClientFactory.createSoapHttpClient( attackRequest );
+        SoapHttpClient client = SoapHttpClientFactory.createSoapHttpClient( original.getWsdlRequest() );
 
         // start attacking
         int successCounter = 0;
@@ -266,7 +257,7 @@ public class SignatureWrapping
 
             try
             {
-                SoapVersion soapVersion = attackRequest.getOperation().getInterface().getSoapVersion();
+                SoapVersion soapVersion = original.getWsdlRequest().getOperation().getInterface().getSoapVersion();
                 if ( SoapUtils.isSoapFault( responseContent, soapVersion ) )
                 {
                     trace( "Request:\n" + DomUtilities.showOnlyImportant( attackDocumentAsString ) );
@@ -415,7 +406,6 @@ public class SignatureWrapping
             important( String.format( "Found %d of %d working XSW messages.", successCounter, max ) );
         }
 
-        removeAttackReqeust();
     }
 
     /**
@@ -458,31 +448,11 @@ public class SignatureWrapping
     }
 
     /**
-     * Observer function which is called if the attack request is removed.
-     */
-    public void removeAttackReqeust()
-    {
-
-        if ( originalSoapAction != null && attackRequest != null )
-        {
-            attackRequest.getOperation().setAction( originalSoapAction );
-            originalSoapAction = null;
-        }
-        // remove attack request
-        if ( attackRequest != null )
-        {
-            attackRequest.getOperation().removeRequest( attackRequest );
-            attackRequest = null;
-        }
-    }
-
-    /**
      * Clean means to remove the attack request, set the current points to zero and check the plugin state.
      */
     @Override
     public void clean()
     {
-        removeAttackReqeust();
         setCurrentPoints( 0 );
         checkState();
     }
@@ -493,7 +463,6 @@ public class SignatureWrapping
     @Override
     public void stopHook()
     {
-        removeAttackReqeust();
     }
 
     public SignatureManager getSignatureManager()
