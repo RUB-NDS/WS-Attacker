@@ -6,7 +6,7 @@
     <name>WS-Attacker</name>
     <groupId>wsattacker.basis</groupId>
     <artifactId>wsattacker-basis</artifactId>
-    <version>1.6</version>
+    <version>1.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/ws-attacker/</url>
     <ciManagement>

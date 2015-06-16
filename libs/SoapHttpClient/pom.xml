@@ -4,13 +4,13 @@
 
     <artifactId>SoapHttpClient</artifactId>
     <inceptionYear>2014</inceptionYear>
-    <version>1.6</version>
+    <version>1.7-SNAPSHOT</version>
     <packaging>jar</packaging>
   
     <parent>
         <groupId>wsattacker.library</groupId>
         <artifactId>wsattacker-libraries</artifactId>
-        <version>1.6</version>
+        <version>1.7-SNAPSHOT</version>
     </parent>
 
     <name>SoapHttpClient</name>
