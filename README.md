@@ -8,6 +8,7 @@ In the current version, WS-Attacker supports the following attacks:
 - WS-Addressing spoofing: see http://www.ws-attacks.org/index.php/WS-Addressing_spoofing
 - XML Signature Wrapping: see http://nds.rub.de/media/nds/arbeiten/2012/07/24/ws-attacker-ma.pdf
 - XML-based DoS attacks: see https://www.nds.rub.de/research/publications/ICWS_DoS
+- New Adaptive and Intelligent Denial-of-Service Attacks (AdIDoS)
 - XML Encryption attacks: see this blogpost (http://web-in-security.blogspot.de/2015/05/how-to-attack-xml-encryption-in-ibm.html) for a general overview on the attacks and on further references to the scientific papers
 
 ## Obtaining Runnable File
