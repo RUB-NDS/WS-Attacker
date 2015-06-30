@@ -19,6 +19,7 @@
         <module>OptionsTesterPlugin</module>
         <module>Signature_Wrapping</module>
         <module>Denial_of_Service</module>
+        <module>Intelligent_Denial_of_Service</module>
         <module>XML_Encryption_Attack</module>
     </modules>
 

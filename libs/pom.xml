@@ -18,6 +18,7 @@
         <module>Schema_Analyzer_Library</module>
         <module>Signature_Wrapping_Library</module>
         <module>Signature_Faking_Library</module>
+        <module>Intelligent_Denial_of_Service_Library</module>
         <module>XML_Encryption_Attack_Library</module>
         <module>SoapHttpClient</module>
     </modules>
