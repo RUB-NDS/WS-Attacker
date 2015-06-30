@@ -61,10 +61,10 @@ public class IntelligentDoS
 
     private static final Logger logger = Logger.getLogger( IntelligentDoS.class );
 
-    private static final String NAME = "Intelligent Denial-of-Service";
+    private static final String NAME = "Adaptive Intelligent Denial-of-Service";
 
     private static final String DESCRIPTION =
-        "The Intelligent Denial-of-Service attack is a composite of various "
+        "The Adaptive Intelligent Denial-of-Service (AdIDoS) attack is a composite of various "
             + "DoS attacks. With these attack a given Web service can be fully-automatically testes for DoS weaknesses."
             + "The following DoS attacks can be chosen and configured individually:\n"
             + " - CoerciveParsing\n"
