@@ -191,7 +191,7 @@ public abstract class AbstractDosPlugin
     // Mandatory Init operations for DoS extesnion- Do NOT change!
     public void preInitPlugin()
     {
-        setCategory( new String[] { "Denial of Service" } );
+        setCategory( new String[] { "Denial of Service", "Manual Attacks" } );
         setAuthor( "Andreas Falkenberg" );
         setVersion( "1.1 / 2013-07-26" );
         // DOS Options - MANDATORY FOR DOS-PLUGIN TO WORK
