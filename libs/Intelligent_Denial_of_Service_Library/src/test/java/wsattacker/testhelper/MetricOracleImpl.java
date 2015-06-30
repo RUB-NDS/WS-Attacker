@@ -50,7 +50,7 @@ public class MetricOracleImpl
 
     private double maxRequestsPerSecond;
 
-	private int maxDocumentSize;
+    private int maxDocumentSize;
 
     private MetricOracleImpl()
     {
@@ -71,7 +71,7 @@ public class MetricOracleImpl
         }
         else if ( isDocumentSizeExpired( attackModel ) )
         {
-        	fillInFault(attackModel, duration);
+            fillInFault( attackModel, duration );
         }
         else if ( isAThresholdAttack( attackModel ) )
         {
@@ -115,10 +115,10 @@ public class MetricOracleImpl
     {
         return maxRequestsPerSecond > 0 && attackModel.getParamItem().getReuqestsPerSecond() > maxRequestsPerSecond;
     }
-    
+
     private boolean isDocumentSizeExpired( AttackModel attackModel )
     {
-    	return maxDocumentSize > 0 && attackModel.getRequestContent().length() > maxDocumentSize;
+        return maxDocumentSize > 0 && attackModel.getRequestContent().length() > maxDocumentSize;
     }
 
     private boolean isAThresholdAttack( AttackModel attackModel )
@@ -203,7 +203,7 @@ public class MetricOracleImpl
 
         private double maxRequestsPerSecond;
 
-		private int maxDocumentSize;
+        private int maxDocumentSize;
 
         private MetricOracleBuilder()
         {
@@ -268,11 +268,11 @@ public class MetricOracleImpl
             this.maxRequestsPerSecond = maxRequestsPerSecond;
             return this;
         }
-        
-        public MetricOracleBuilder withMaxDocumentSize( int maxDocumentSize)
+
+        public MetricOracleBuilder withMaxDocumentSize( int maxDocumentSize )
         {
-        	this.maxDocumentSize = maxDocumentSize;
-        	return this;
+            this.maxDocumentSize = maxDocumentSize;
+            return this;
         }
 
         public MetricOracle build()

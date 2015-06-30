@@ -283,19 +283,19 @@ public class IntelligentDoSBehaviorTest
         assertThat( th.getMinimum().getCurrentParams().get( 0 ).getValueAsString(), is( "9984" ) );
         assertThat( th.getMaximum().getCurrentParams().get( 0 ).getValueAsString(), is( "10368" ) );
     }
-    
+
     @Test
     public void maxDocumentSizeTest()
     {
-    	int maxDocumentSize = 4 * 1024; // 4 KB
-		MetricOracle vulnerableOracle =
-                MetricOracleBuilder.create().withCount( 24 ).withDuration( 1000 ).withContent( "OK" ).withMaxDocumentSize(maxDocumentSize).build();
-    	
-    	HashCollision hashCollision = new HashCollision();
-    	
-    	DoSAttack[] attacks = new DoSAttack[] { hashCollision };
-    	
-    	IntelligentDoSLibraryImpl impl = new IntelligentDoSLibraryImpl( xmlMessage, positionIterator );
+        int maxDocumentSize = 4 * 1024; // 4 KB
+        MetricOracle vulnerableOracle =
+            MetricOracleBuilder.create().withCount( 24 ).withDuration( 1000 ).withContent( "OK" ).withMaxDocumentSize( maxDocumentSize ).build();
+
+        HashCollision hashCollision = new HashCollision();
+
+        DoSAttack[] attacks = new DoSAttack[] { hashCollision };
+
+        IntelligentDoSLibraryImpl impl = new IntelligentDoSLibraryImpl( xmlMessage, positionIterator );
         impl.setAttacks( attacks );
 
         // initialize
@@ -305,7 +305,7 @@ public class IntelligentDoSBehaviorTest
         impl.initialize();
 
         IDoSTestHelper.iterate( vulnerableOracle, attacks, impl );
-        
+
         List<Threshold> thList = impl.getThresholds();
         assertThat( thList.size(), is( 1 ) );
     }
