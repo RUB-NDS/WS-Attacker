@@ -21,19 +21,23 @@ The second option is to build it directly from the Github sources. For this purp
 
 You procede as follows. You first need to clone WS-Attacker sources (you can of course also download a ZIP file):
 
+```bash
 $ git clone https://github.com/RUB-NDS/WS-Attacker.git 
+```
 
 Then you go to the WS-Attacker directory and use maven to build and package the files:
 
+```bash
 $ cd WS-Attacker
-
 $ mvn clean package -DskipTests
+```
 
 Afterwards, you are able to go to the runnable directory and execute WS-Attacker:
 
+```bash
 $ cd runnable
-
 $ java -jar WS-Attacker-1.6-SNAPSHOT.jar
+```
 
 
 ## WS-Attacker Usage
