@@ -26,7 +26,7 @@
     <parent>
         <groupId>wsattacker.basis</groupId>
         <artifactId>wsattacker-basis</artifactId>
-        <version>1.7-SNAPSHOT</version>
+        <version>1.7</version>
     </parent>
 
     <repositories>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>SoapHttpClient</artifactId>
-            <version>1.7-SNAPSHOT</version>
+            <version>1.7</version>
         </dependency>
     </dependencies>
 
