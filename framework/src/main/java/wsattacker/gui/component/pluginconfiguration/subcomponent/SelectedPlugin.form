@@ -28,20 +28,27 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="nameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="authorLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="authorValue" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="versionLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="versionValue" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="descriptionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="optionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="descriptionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="authorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="versionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="versionValue" max="32767" attributes="0"/>
+                                  <Component id="authorValue" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="pluginIcon" min="-2" pref="107" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -54,23 +61,28 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="authorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="authorValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="authorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="authorValue" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="versionLabel" max="32767" attributes="0"/>
+                          <Component id="versionValue" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="descriptionLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="pluginIcon" min="-2" pref="57" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="versionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="versionValue" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="descriptionLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="descriptionScrollPane" min="-2" pref="149" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="optionLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="optionScrollPane" pref="104" max="32767" attributes="0"/>
+              <Component id="optionScrollPane" pref="1108" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -133,6 +145,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ee" green="ee" red="ee" type="rgb"/>
             </Property>
+            <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
           </Properties>
           <BindingProperties>
             <BindingProperty name="text" source="selectedPluginController" sourcePath="${selectedPlugin.description}" target="descriptionValue" targetPath="text" updateStrategy="0" immediately="false">
@@ -169,5 +182,23 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="pluginIcon">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
+        <Property name="iconTextGap" type="int" value="0"/>
+      </Properties>
+      <BindingProperties>
+        <BindingProperty name="icon" source="selectedPluginController" sourcePath="${selectedPlugin.icon}" target="pluginIcon" targetPath="icon" updateStrategy="1" immediately="false">
+          <Property name="nullValue" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+            <Image iconType="0" name="null"/>
+          </Property>
+          <Property name="incompletePathValue" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+            <Image iconType="0" name="null"/>
+          </Property>
+          <Property name="name" type="java.lang.String" value="iconBinding"/>
+        </BindingProperty>
+        <BindingProperty name="toolTipText" source="selectedPluginController" sourcePath="${selectedPlugin.name}" target="pluginIcon" targetPath="toolTipText" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+    </Component>
   </SubComponents>
 </Form>

@@ -21,6 +21,7 @@ package wsattacker.main.composition.plugin;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.ImageIcon;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jdesktop.beans.AbstractBean;
@@ -38,7 +39,7 @@ public abstract class AbstractPlugin
     implements SuccessInterface, Comparable<AbstractPlugin>, Serializable
 {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     public static final String PROP_NAME = "name";
 
@@ -58,6 +59,8 @@ public abstract class AbstractPlugin
 
     public static final String PROP_PLUGINFUNCTIONS = "pluginFunctions";
 
+    public static final String PROP_ICON = "icon";
+
     final private PluginOptionContainer options;
 
     final transient private Set<PluginObserver> observers;
@@ -67,6 +70,8 @@ public abstract class AbstractPlugin
     private String name = "Default Abstract Plugin Name";
 
     private String description = "";
+
+    private ImageIcon icon = null;
 
     private String[] category = new String[] { "Uncategorized" };
 
@@ -93,6 +98,28 @@ public abstract class AbstractPlugin
         options = new PluginOptionContainer( this );
         observers = new HashSet<PluginObserver>();
         LOG = Logger.getLogger( getClass() );
+    }
+
+    /**
+     * Get the value of icon, or null if no Icon is used
+     * 
+     * @return the value of icon
+     */
+    public ImageIcon getIcon()
+    {
+        return icon;
+    }
+
+    /**
+     * Set the value of icon. To disable Icon, set icon to null
+     * 
+     * @param icon new value of icon
+     */
+    public void setIcon( ImageIcon icon )
+    {
+        ImageIcon oldIcon = this.icon;
+        this.icon = icon;
+        firePropertyChange( PROP_ICON, oldIcon, icon );
     }
 
     /**
@@ -223,7 +250,7 @@ public abstract class AbstractPlugin
      * 
      * @return currently reached number of points
      */
-    final public int getCurrentPoints()
+    public final int getCurrentPoints()
     {
         return this.currentPoints;
     }
@@ -233,7 +260,7 @@ public abstract class AbstractPlugin
      * 
      * @param currentPoints
      */
-    final protected void setCurrentPoints( final int currentPoints )
+    protected final void setCurrentPoints( final int currentPoints )
     {
         if ( currentPoints <= getMaxPoints() )
         {
@@ -257,7 +284,7 @@ public abstract class AbstractPlugin
      * 
      * @return the state
      */
-    final public PluginState getState()
+    public final PluginState getState()
     {
         return state;
     }
@@ -325,7 +352,7 @@ public abstract class AbstractPlugin
      * 
      * @param content
      */
-    final protected void info( final String content )
+    protected final void info( final String content )
     {
         result( ResultLevel.Info, content );
     }
@@ -335,7 +362,7 @@ public abstract class AbstractPlugin
      * 
      * @param content
      */
-    final protected void trace( final String content )
+    protected final void trace( final String content )
     {
         result( ResultLevel.Trace, content );
     }
@@ -395,7 +422,7 @@ public abstract class AbstractPlugin
      * 
      * @return boolean finished
      */
-    final public boolean isStopped()
+    public final boolean isStopped()
     {
         return ( state == PluginState.Stopped );
     }
@@ -405,7 +432,7 @@ public abstract class AbstractPlugin
      * 
      * @return wasSuccessfull() or false, if plugin not ready
      */
-    final public boolean startAttack()
+    public final boolean startAttack()
     {
         Logger log = Logger.getLogger( getClass() );
         RequestResponsePair original = TestSuite.getInstance().getCurrentRequest();
@@ -455,7 +482,7 @@ public abstract class AbstractPlugin
      * This method will be called to abort the attack It sets the plugin state to "Aborting" so use the isAborting()
      * method in your code.
      */
-    final public void abortAttack()
+    public final void abortAttack()
     {
         setState( PluginState.Aborting );
     }
@@ -463,7 +490,7 @@ public abstract class AbstractPlugin
     /**
      * Sets the plugin state to "Stopped"; Afterwards, stopHook() is called.
      */
-    final public void stopAttack()
+    public final void stopAttack()
     {
         stopHook();
         setState( PluginState.Stopped );
@@ -531,12 +558,12 @@ public abstract class AbstractPlugin
         fireIndexedPropertyChange( PROP_PLUGINFUNCTIONS, index, oldPluginFunctions, newPluginFunctions );
     }
 
-    final public void addPluginObserver( final PluginObserver o )
+    public final void addPluginObserver( final PluginObserver o )
     {
         observers.add( o );
     }
 
-    final public void removePluginObserver( final PluginObserver o )
+    public final void removePluginObserver( final PluginObserver o )
     {
         observers.remove( o );
     }
