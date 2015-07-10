@@ -78,7 +78,7 @@ public class OptionsTesterPlugin
     @Override
     public String getDescription()
     {
-        return "Description Test";
+        return "<html><p>Description <i>Test</i></p></html>";
     }
 
     @Override

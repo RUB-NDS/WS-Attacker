@@ -76,12 +76,12 @@ public class XMLEncryptionAttack
     private static final String NAME = "XML Encryption Attack";
 
     private static final String DESCRIPTION =
-        "Contains adaptive chosen ciphertext attacks on XML Encryption. "
-            + "\n\nCurrently supported techniques:"
-            + "\n  (1) Attack on CBC Ciphertexts ."
-            + "\n  (2) Attack on RSA-PKCS#1 Ciphertexts using direct error messages ."
-            + "\n  (3) Attack on RSA-PKCS#1 Ciphertexts using a CBC weakness."
-            + "\n\nTo overcome XML Signature protection, XML Signature and XML Encryption Wrapping attacks are implemented.";
+        "<html><p>Contains adaptive chosen ciphertext attacks on XML Encryption. "
+            + "Currently supported techniques:</p><ul>" + "<li>Attack on CBC Ciphertexts.</li>"
+            + "<li>Attack on RSA-PKCS#1 Ciphertexts using direct error messages.</li>"
+            + "<li>Attack on RSA-PKCS#1 Ciphertexts using a CBC weakness.</li>"
+            + "</ul><p>To overcome XML Signature protection, XML Signature and "
+            + "XML Encryption Wrapping attacks are implemented.</p></html>";
 
     private static final String AUTHOR = "Dennis Kupser";
 

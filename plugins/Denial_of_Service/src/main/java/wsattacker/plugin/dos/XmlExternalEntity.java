@@ -58,20 +58,17 @@ public class XmlExternalEntity
     public void initData()
     {
         setName( "XML External Entity Attack" );
-        setDescription( "This attack checks whether or not a Web service is vulnerable to the \"XML External Entity\" attack.\n"
-            + "A vulnerable Web service runs out of resources when trying to resolve an external entity.\n"
-            + "Examples of external entities are:"
-            + "- Large files from external servers. This will use up the bandwidth."
-            + "- Local files e.g. /dev/random/ on a Linux machine"
-            + "The external entity is defined in the Document Type Definition (DTD)\n"
-            + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
-            + "\n\n"
-            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-            + "with an attribute that uses the entity that points to the external resource.\n"
-            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-            + "\n\n"
-            + "The default value for the external source paramter is /dev/null/ and will only work on Linux bases Web services."
-            + "\n\n" );
+        setDescription( "<html><p>This attack checks whether or not a Web service is vulnerable to the \"XML External Entity\" attack.</p>"
+            + "<p>A vulnerable Web service runs out of resources when trying to resolve an external entity."
+            + "Examples of external entities are:<ul>"
+            + "<li>Large files from external servers. This will use up the bandwidth.</li>"
+            + "<li>Local files e.g. /dev/random/ on a Linux machine</li></ul></p>"
+            + "<p>The external entity is defined in the Document Type Definition (DTD)."
+            + "A detailed description of the attack can be found on <a href=\"http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion\">http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion</a>.</p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below "
+            + "with an attribute that uses the entity that points to the external resource.</p>"
+            + "<p>The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message</p>"
+            + "<p>The default value for the external source paramter is /dev/null/ and will only work on Linux bases Web services.</p></html>" );
         setCountermeasures( "In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
             + "Apache Axis2 1.5.2 is e.g. known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore" );
     }

@@ -70,15 +70,14 @@ public class XmlElementCount
     public void initData()
     {
         setName( "XML Element Count Attack" );
-        setDescription( "This attack checks wheter or not a Web service is vulnerable to the \"XML Element Count Attack\".\n"
-            + "A vulnerable server will run out of memory when parsing an XML document \n"
-            + "with a high element count\n"
-            + "\n\n"
-            + "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below \n"
-            + "with the defined number of elements.\n"
-            + "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
-            + "All inserted elements have the same name as defined in parameter 8.1. \n"
-            + "All inserted elements are children of the same element." + "\n\n" );
+        setDescription( "<html><p>This attack checks wheter or not a Web service is vulnerable to the \"XML Element Count Attack\"</p>"
+            + "<p>A vulnerable server will run out of memory when parsing an XML document "
+            + "with a high element count</p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below "
+            + "with the defined number of elements.</p>"
+            + "<p>The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
+            + "All inserted elements have the same name as defined in parameter 8.1. "
+            + "All inserted elements are children of the same element</p></html>" );
         setCountermeasures( "In order to counter the attack limit the number of elements in an XML document.\n This can be achived using XML schema validation." );
     }
 

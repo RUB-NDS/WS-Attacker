@@ -54,9 +54,9 @@ public class WsAddressingSpoofing
     private static final String NAME = "WS-Addressing Spoofing";
 
     private static final String DESCRIPTION =
-        "This attack plugin checks if the server is vulnerable to WS-Addressing Spoofing.\n"
-            + "It will generate requests which try to invoke the server to send a message to your local server.\n"
-            + "This can be very dangerous.";
+        "<html><p>This attack plugin checks if the server is vulnerable to WS-Addressing Spoofing.</p>"
+            + "<p>It will generate requests which try to invoke the server to send a message to your local server. "
+            + "This can be very dangerous.</p></html>";
 
     private static final String[] CATEGORY = new String[] { "Spoofing Attacks" };
 

@@ -74,19 +74,21 @@ public class CoerciveParsing
     public void initData()
     {
         setName( "Coercive Parsing" );
-        setDescription( "This attack plugin checks if the server is vulnerable to a \"Coercive Parsing Attack\".\n"
-            + "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below \n"
-            + "with the defined number of nested elements.\n"
+        setDescription( "<html><p>This attack plugin checks if the server is vulnerable to a \"Coercive Parsing Attack\".</p><p>"
+            + "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below "
+            + "with the defined number of nested elements. "
             + "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
-            + "The number of nested elements is defined in \"Param 8 - number elements\".\n"
-            + "The element name of the nested elements is defined in \"Param 9 - element name\" "
-            + "I.e. if you choose \"X\" as an element name, each element has a size of 7 bytes.\n"
-            + "This would result in the following filesizes:\n" + "~ 150000 Tags result in a 1 mb file\n"
-            + "~  75000 Tags result in a 0.5 mb file \n" + "~  15000 Tags result in a 0.1 mb file\n"
-            + "~   7500 Tags result in a 0.05 mb file" + "\n\n" );
+            + "The number of nested elements is defined in \"Param 8 - number elements\". "
+            + "The element name of the nested elements is defined in \"Param 9 - element name\", "
+            + "i.e. if you choose \"X\" as an element name, each element has a size of 7 bytes."
+            + "This would result in the following filesizes:\n"
+            + "~ 150000 Tags result in a 1 mb file <ul>"
+            + "<li>~  75000 Tags result in a 0.5 mb file </li>"
+            + "<li>~  15000 Tags result in a 0.1 mb file</li>"
+            + "<li>~   7500 Tags result in a 0.05 mb file" + "</li></ul></p></html>" );
         setCountermeasures( "The \"Coercive Parsing\" attack can be fully stopped by using strict schema validation. "
             + "Each WSDL should contain a detailed description of the used elements, attributes, and data types. "
-            + "For more information see: http://clawslab.nds.rub.de/wiki/index.php/Coercive_Parsing" );
+            + "More Information: http://clawslab.nds.rub.de/wiki/index.php/Coercive_Parsing" );
     }
 
     @Override

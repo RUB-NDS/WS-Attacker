@@ -61,13 +61,12 @@ public class XmlAttributeCount
     public void initData()
     {
         setName( "XML Attribute Count Attack" );
-        setDescription( "This attack checks wheter or not a Web service is vulnerable to the \"XML Attribute Count Attack\".\n"
-            + "A vulnerable server will run out of memory when parsing an XML document \n"
-            + "with a high attribute count for a single element\n"
-            + "\n\n"
-            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-            + "with the defined number of unique attributes.\n"
-            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message" + "\n\n" );
+        setDescription( "<html><p>This attack checks wheter or not a Web service is vulnerable to the \"XML Attribute Count Attack\"</p>"
+            + "<p>A vulnerable server will run out of memory when parsing an XML document "
+            + "with a high attribute count for a single element</p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below "
+            + "with the defined number of unique attributes.</p>"
+            + "<p>The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message.</p></html>" );
         setCountermeasures( "In order to counter the attack limit the number of attributes of an element.\n This can be achived using XML schema validation." );
     }
 

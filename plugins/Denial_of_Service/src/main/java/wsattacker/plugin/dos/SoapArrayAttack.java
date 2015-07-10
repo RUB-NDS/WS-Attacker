@@ -61,13 +61,13 @@ public class SoapArrayAttack
     public void initData()
     {
         setName( "SOAP Array Attack" );
-        setDescription( "This attack checks whether or not a Web service is vulnerable to the \"Soap Array\" attack. "
-            + "In order for this attack to work the attacked Web service has to excpect a SOAP array.\n"
-            + "Otherwise any SOAP array will be ignored and the attack won't work.\n"
-            + "A detailed description of the attack can be found \n"
-            + "at WS-Attacks.org: http://clawslab.nds.rub.de/wiki/index.php/Soap_Array_Attack" + "\n\n"
-            + "The attack algorithm will automatically search for any SOAP array and will \n"
-            + "change the array size to the value defined in parameter 8." + "\n\n" );
+        setDescription( "<html><p>This attack checks whether or not a Web service is vulnerable to the \"Soap Array\" attack. "
+            + "In order for this attack to work the attacked Web service has to excpect a SOAP array. "
+            + "Otherwise any SOAP array will be ignored and the attack won't work.</p>"
+            + "<p>A detailed description of the attack can be found "
+            + "on <a href=\"http://clawslab.nds.rub.de/wiki/index.php/Soap_Array_Attack\">http://clawslab.nds.rub.de/wiki/index.php/Soap_Array_Attack</a></p>"
+            + "<p>The attack algorithm will automatically search for any SOAP array and will "
+            + "change the array size to the value defined in parameter 8.</p></html>" );
         setCountermeasures( "In order to counter the attack, strict schema validation has to be performed that limits the array size. "
             + "See http://clawslab.nds.rub.de/wiki/index.php/Soap_Array_Attack for more detailed countermeasures." );
     }

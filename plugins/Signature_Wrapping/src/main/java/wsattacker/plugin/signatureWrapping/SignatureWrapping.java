@@ -114,20 +114,20 @@ public class SignatureWrapping
         setCategory( CATEGORY );
         setVersion( VERSION );
         StringBuilder description = new StringBuilder();
-        description.append( "Tries several XML Signature Wrapping techniques to invoke a Service with unsigned content." );
-        description.append( "\n\nCurrently supported techniques:" );
-        description.append( "\n  (1) Attack ID References." );
-        description.append( "\n  (2) Abuse descendant* Axis, e.g. double-slash in XPath." );
-        description.append( "\n  (3) Abuse attribute expressions in XPaths." );
-        description.append( "\n  (4) Try namespace-injection attack to attack prefixes in XPaths." );
-        // description.append("\n\nThe Attack can use XML Schema files to reduces the number of tries (and so speed up the attack) by creating only Schema-Valid attack requests.");
-        // description.append("\n\nIf some payload is marked as a timestamp, it will be updated and wrapped automatically.");
-        // description.append("\n\nNote: In some cases, it makes sense to change the payload to a different operation.");
-        // description.append("\nYou can also change the SoapActionHeader if you like.");
-        description.append( "\n\n"
-            + "At least one signed part needs some valid XML payload, otherwise the plugin is *not configured*." );
-        // description.append("\n\nBy default, the attack is successfull if the response is not a SOAP Error.");
-        // description.append("\nTo change this, a search string can be specified to ignore responses without this string.");
+        description.append( "<html><p>Tries several XML Signature Wrapping techniques to invoke a Service with unsigned content.</p>" );
+        description.append( "<p>Currently supported techniques:</p><ul>" );
+        description.append( "<li>Attack ID References.</li>" );
+        description.append( "<li>Abuse descendant* Axis, e.g. double-slash in XPath.</li>" );
+        description.append( "<li>Abuse attribute expressions in XPaths.</li>" );
+        description.append( "<li>Try namespace-injection attack to attack prefixes in XPaths.</li>" );
+        // description.append("The Attack can use XML Schema files to reduces the number of tries (and so speed up the attack) by creating only Schema-Valid attack requests.");
+        // description.append("If some payload is marked as a timestamp, it will be updated and wrapped automatically.");
+        // description.append("Note: In some cases, it makes sense to change the payload to a different operation.");
+        // description.append("You can also change the SoapActionHeader if you like.");
+        description.append( "</ul><p>"
+            + "At least one signed part needs some valid XML payload, otherwise the plugin is <i>not configured</i>.</p></html>" );
+        // description.append("By default, the attack is successfull if the response is not a SOAP Error.");
+        // description.append("To change this, a search string can be specified to ignore responses without this string.");
         setDescription( description.toString() );
     }
 

@@ -64,10 +64,10 @@ public class SoapActionSpoofing
     private static final String NAME = "SOAPAction Spoofing";
 
     private static final String DESCRIPTION =
-        "This attack plugin checks if the server is vulnerable to SOAPAction Spoofing.\n"
-            + "In automatic mode, all SOAPAction Headers, which are present in the WSDL, are used.\n"
-            + "Manual mode can be used to use only a specific operation, \n"
-            + "e.g. a public operation which does not damage the server.";
+        "<html><p>This attack plugin checks if the server is vulnerable to SOAPAction Spoofing.</p>"
+            + "<p>In automatic mode, all SOAPAction Headers, which are present in the WSDL, are used.</p>"
+            + "<p>Manual mode can be used to use only a specific operation,"
+            + "e.g. a public operation which does not damage the server.</p></html>";
 
     private static final String AUTHOR = "Christian Mainka";
 

@@ -62,21 +62,19 @@ public class XmlEntityExpansion
     public void initData()
     {
         setName( "XML Entity Expansion (recursive)" );
-        setDescription( "This attack checks whether or not a Web service is vulnerable to the \"XML Entity Expansion\" attack.\n"
-            + "A vulnerable Web service runs out of resources when trying to resolve a large amount of recursively defined entities.\n"
-            + "The entities are defined in the Document Type Definition (DTD)\n"
-            + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion"
-            + "\n\n"
-            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-            + "with an attribute that uses an entity that will start the recursive process.\n"
-            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message"
-            + "\n\n"
-            + "The number of entitites defines the exponent that is used for calculating the number of resulting XML entities. "
-            + "The base is 2.\n"
-            + "- Input 10 will result in  2^10 = 1024 entities."
-            + "- Input 15 will result in  2^10 = 32768 entities."
-            + "- Input 20 will result in  2^10 = 1048576 entities."
-            + "- Input 25 will result in  2^10 = 33554432 entities." + "\n\n" );
+        setDescription( "<html><p>This attack checks whether or not a Web service is vulnerable to the \"XML Entity Expansion\" attack.</p>"
+            + "<p>A vulnerable Web service runs out of resources when trying to resolve a large amount of recursively defined entities."
+            + "The entities are defined in the Document Type Definition (DTD). "
+            + "A detailed description of the attack can be found on <a href=\"http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion\">http://clawslab.nds.rub.de/wiki/index.php/XML_Remote_Entity_Expansion</a></p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below "
+            + "with an attribute that uses an entity that will start the recursive process. "
+            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message.</p>"
+            + "<p>The number of entitites defines the exponent that is used for calculating the number of resulting XML entities. "
+            + "The base is 2.<ul>"
+            + "<li>Input 10 will result in  2^10 = 1024 entities.</li>"
+            + "<li>Input 15 will result in  2^10 = 32768 entities.</li>"
+            + "<li>Input 20 will result in  2^10 = 1048576 entities.</li>"
+            + "<li>Input 25 will result in  2^10 = 33554432 entities</li></ul></p></html>" );
         setCountermeasures( "In order to counter the attack, the DTD-processing (Document Type Definitions) feature has to be disabled completly.\n"
             + "Apache Axis2 1.5.2 is known to be vulnerable to this attack. Current versions of Apache Axis2 are not vulnerable anymore" );
     }

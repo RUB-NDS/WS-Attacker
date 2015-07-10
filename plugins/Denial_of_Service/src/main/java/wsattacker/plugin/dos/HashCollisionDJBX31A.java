@@ -72,14 +72,14 @@ public class HashCollisionDJBX31A
     public void initData()
     {
         setName( "DJBX31A Hash Collision Attack" );
-        setDescription( "This attack checks wheter or not a Web service is vulnerable to a \n"
-            + "Hash Collision Attack for a DJBX31A hash algorithm."
-            + "The attack exhausts the resources of the server by constantly creating collisions \n"
-            + "in the hash map algorithm that is used to process the XML document.\n"
-            + "The original advisory can be found here: http://www.nruns.com/_downloads/advisory28122011.pdf \n\n"
-            + "The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below \n"
-            + "with the defined number of colliding attributes or XML namespaces.\n"
-            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message" + "\n\n" );
+        setDescription( "<html><p>This attack checks wheter or not a Web service is vulnerable to a "
+            + "Hash Collision Attack for a DJBX31A hash algorithm.</p><p>"
+            + "The attack exhausts the resources of the server by constantly creating collisions "
+            + "in the hash map algorithm that is used to process the XML document.</p>"
+            + "<p>See the original advisory: <a href=\"http://www.nruns.com/_downloads/advisory28122011.pdf\">http://www.nruns.com/_downloads/advisory28122011.pdf</a>.</p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADATTR$$ in the SOAP message below "
+            + "with the defined number of colliding attributes or XML namespaces. "
+            + "The placeholder $$PAYLOADATTR$$ can be set to any other position in the SOAP message</p></html>" );
         setCountermeasures( "In order to fix the root of the problem the implementation of the "
             + "hash mapping algorithm has to be made cryptographically stronger.\n"
             + "However this is usually beyond the scope of the tester."

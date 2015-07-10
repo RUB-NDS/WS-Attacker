@@ -121,22 +121,20 @@ public class XmlOverlongNames
     public void initData()
     {
         setName( "XML Overlong Names Attack" );
-        setDescription( "This attack checks whether or not a Web service is vulnerable to the \"XML Overlong Names\" attack. "
-            + "A vulnerable Web service will run out of resources when trying to parse an XML message with overlong names.\n"
-            + "A detailed description of the attack can be found here: http://clawslab.nds.rub.de/wiki/index.php/XML_MegaTags"
-            + "\n\n"
-            + "The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below \n"
-            + "with the payload defined in parameter 8-10.\n"
-            + "The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message"
-            + "\n\n"
-            + "The following parameters can be used to insert overlong names:\n"
-            + "- Param 8.1: Only if enabled,length of an overlong element name in kb\n"
-            + "- Param 9.1: Only if enabled, length of an overlong attribute name in kb\n"
-            + "- Param 10.1: Only if enabled, length of overlong attribute content in kb\n"
-            + "\n\n"
-            + "The attack parameters 8, 9 and 10 are independent of each other. \n"
-            + "Each subattack will be inserted in a seperate element.\n"
-            + "A change in one parameter has no effect on the other." + "\n\n" );
+        setDescription( "<html><p>This attack checks whether or not a Web service is vulnerable to the \"XML Overlong Names\" attack.</p>"
+            + "<p>A vulnerable Web service will run out of resources when trying to parse an XML message with overlong names.</p>"
+            + "<p>A detailed description of the attack can be found on <a href=\"http://clawslab.nds.rub.de/wiki/index.php/XML_MegaTags\">http://clawslab.nds.rub.de/wiki/index.php/XML_MegaTags</a>./p>"
+            + "<p>The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below "
+            + "with the payload defined in parameter 8-10.</p>"
+            + "<p>The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message</p>"
+            + "<p>The following parameters can be used to insert overlong names:</p><ul>"
+            + "<li>Param 8.1: Only if enabled,length of an overlong element name in kb</li>"
+            + "<li>Param 9.1: Only if enabled, length of an overlong attribute name in kb</li>"
+            + "<li>Param 10.1: Only if enabled, length of overlong attribute content in kb</li>"
+            + "</ul>"
+            + "<p>The attack parameters 8, 9 and 10 are independent of each other. "
+            + "Each subattack will be inserted in a seperate element. "
+            + "A change in one parameter has no effect on the other.</p></html>" );
         setCountermeasures( "In order to counter the attack, strict XML schema validation should be performed to catch these oversized nodes and values." );
     }
 
