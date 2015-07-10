@@ -1,4 +1,15 @@
 ===============
+10. July 2015
+===============
+
+New Intelligent Denial-of-Service Plugin (by Christian Altmeier):
+    - Fully automatic detection of DoS Weaknesses
+    - Detects Thresholds
+    - Improved time measurement ("last byte sent" till "first byte received")
+Framework Changes
+    - Support for plugin icons
+
+===============
 12. May 2015
 ===============
 
