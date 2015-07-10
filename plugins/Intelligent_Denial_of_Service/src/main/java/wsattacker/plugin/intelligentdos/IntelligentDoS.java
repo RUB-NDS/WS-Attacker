@@ -18,9 +18,11 @@
  */
 package wsattacker.plugin.intelligentdos;
 
+import java.net.URL;
 import static wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin.MESSAGE;
 
 import java.util.List;
+import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -63,27 +65,29 @@ public class IntelligentDoS
 
     private static final String NAME = "Adaptive Intelligent Denial-of-Service";
 
+    private static final URL logoPath = IntelligentDoS.class.getResource( "/images/logo_red.png" );
+
     private static final String DESCRIPTION =
-        "The Adaptive Intelligent Denial-of-Service (AdIDoS) attack is a composite of various "
-            + "DoS attacks. With these attack a given Web service can be fully-automatically testes for DoS weaknesses."
-            + "The following DoS attacks can be chosen and configured individually:\n"
-            + " - CoerciveParsing\n"
-            + " - XML Element Count\n"
-            + " - XML Attribute Count\n"
-            + " - XML Entity Expansion\n"
-            + " - XML External Entity\n"
-            + " - Hash Collision\n"
-            + " - XML Overlong Names\n"
-            + "The common parameters adjust the agressivnes by which the Web service is tested.\n"
-            + "The selected attacks are performed fully-automatically, whereby the attack vectors are adaptively adjusted.\n"
+        "<html><p>The Adaptive Intelligent Denial-of-Service (AdIDoS) attack is a composite of various "
+            + "DoS attacks. With these attack a given Web service can be fully-automatically testes for DoS weaknesses. "
+            + "The following DoS attacks can be chosen and configured individually:</p><ul>"
+            + "<li>CoerciveParsing</li>"
+            + "<li>XML Element Count</li>"
+            + "<li>XML Attribute Count</li>"
+            + "<li>XML Entity Expansion</li>"
+            + "<li>XML External Entity</li>"
+            + "<li>Hash Collision</li>"
+            + "<li>XML Overlong Names</li>"
+            + "</ul><p>The common parameters adjust the agressivnes by which the Web service is tested."
+            + "The selected attacks are performed fully-automatically, whereby the attack vectors are adaptively adjusted. "
             + "The Intelligent Denial-of-Service attack replaces the string $$PAYLOADELEMENT$$ and $$PAYLOADATTR$$ in the SOAP message below "
-            + "successively with the attack payload.\n"
-            + "The placeholders $$PAYLOADELEMENT$$ and $$PAYLOADATTR$$ can be set to any other position in the SOAP message."
-            + "\n\n";
+            + "successively with the attack payload. "
+            + "The placeholders $$PAYLOADELEMENT$$ and $$PAYLOADATTR$$ can be set to any other position in the SOAP message.</p>"
+            + "</html>";
 
     private static final String AUTHOR = "Christian Altmeier";
 
-    private static final String VERSION = "1.0 / 2013-12-31";
+    private static final String VERSION = "1.0 / 2015-07-10";
 
     private static final String[] CATEGORY = new String[] { "Denial of Service" };
 
@@ -111,6 +115,8 @@ public class IntelligentDoS
         setAuthor( AUTHOR );
         setVersion( VERSION );
         setCategory( CATEGORY );
+        final ImageIcon icon = new ImageIcon( logoPath );
+        setIcon( icon );
 
         setState( PluginState.Ready );
 
