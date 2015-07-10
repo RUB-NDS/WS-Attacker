@@ -10,7 +10,7 @@
     <parent>
         <groupId>wsattacker.basis</groupId>
         <artifactId>wsattacker-basis</artifactId>
-        <version>1.7</version>
+        <version>1.8-SNAPSHOT</version>
     </parent>
 
     <modules>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>wsattacker.framework</groupId>
             <artifactId>wsattacker-framework</artifactId>
-            <version>1.7</version>
+            <version>1.8-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>
