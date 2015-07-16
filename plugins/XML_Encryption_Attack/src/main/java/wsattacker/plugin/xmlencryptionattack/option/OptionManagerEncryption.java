@@ -29,7 +29,7 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadExcepti
 import wsattacker.library.xmlencryptionattack.attackengine.AttackConfig;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1AttackConfig;
 import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
-import static wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory.PKCS1Strategy.CBC_WEAK;
+import static wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory.PKCS1Strategy.DIRECT;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectionManager;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.FactoryFilter;
@@ -146,7 +146,7 @@ public final class OptionManagerEncryption
         m_AttackCfg.setStringCmpThresHold( AttackConfig.DEFAULT_STRING_CMP_THRESHOLD );
         m_AttackCfg.setStringCmpWrappThreshold( AttackConfig.DEFAULT_STRING_CMP_WRAP_ERROR_THRESHOLD );
         m_AttackCfg.getPKCS1AttackCfg().setServerRSAPubKey( null );
-        m_AttackCfg.getPKCS1AttackCfg().setPKCS1Strategy( CBC_WEAK );
+        m_AttackCfg.getPKCS1AttackCfg().setPKCS1Strategy( DIRECT );
 
     }
 

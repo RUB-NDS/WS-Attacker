@@ -30,7 +30,7 @@ public final class PKCS1AttackConfig
 {
     private RSAPublicKey m_ServerRSAPubKey = null;
 
-    private PKCS1StrategyFactory.PKCS1Strategy m_PKCS1Strategy = PKCS1Strategy.CBC_WEAK;
+    private PKCS1StrategyFactory.PKCS1Strategy m_PKCS1Strategy = PKCS1Strategy.DIRECT;
 
     public PKCS1AttackConfig()
     {
