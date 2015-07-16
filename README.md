@@ -36,7 +36,7 @@ Afterwards, you are able to go to the runnable directory and execute WS-Attacker
 
 ```bash
 $ cd runnable
-$ java -jar WS-Attacker-1.6-SNAPSHOT.jar
+$ java -jar WS-Attacker-1.7.jar
 ```
 
 
