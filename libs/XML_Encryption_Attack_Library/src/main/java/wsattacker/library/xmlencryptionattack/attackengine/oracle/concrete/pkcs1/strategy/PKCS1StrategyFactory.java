@@ -28,7 +28,7 @@ public class PKCS1StrategyFactory
 {
     public enum PKCS1Strategy
     {
-        CBC_WEAK, NO_KEYREF
+        DIRECT, CBC_WEAK, NO_KEYREF
     };
 
     private PKCS1StrategyFactory()
@@ -40,6 +40,8 @@ public class PKCS1StrategyFactory
     {
         switch ( strategyType )
         {
+            case DIRECT:
+                return new DirectStrategy( oracle );
             case CBC_WEAK:
                 return new CBCStrategy( oracle );
             case NO_KEYREF:

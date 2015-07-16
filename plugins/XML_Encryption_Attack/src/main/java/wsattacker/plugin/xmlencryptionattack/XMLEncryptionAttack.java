@@ -341,13 +341,13 @@ public class XMLEncryptionAttack
         }
         catch ( CryptoAttackException ex )
         {
-            LOG.error( ex );
+            LOG.error( ex.getLocalizedMessage(), ex );
             info( "Error: Attack has not successfully executed:\n" + ex.toString() );
             setCurrentPoints( 0 );
         }
         catch ( Exception ex )
         {
-            LOG.error( ex );
+            LOG.error( ex.getLocalizedMessage(), ex );
             info( "Error: Attack has not successfully executed:\n" + ex.toString() );
             setCurrentPoints( 0 );
         }
