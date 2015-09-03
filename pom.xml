@@ -44,7 +44,7 @@
     <repositories>
         <repository>
             <id>libs</id>
-            <url>https://repo.nds.rub.de:8443/repository/libs/</url>
+            <url>https://repo.nds.rub.de/repository/libs/</url>
         </repository>
     </repositories>
 
