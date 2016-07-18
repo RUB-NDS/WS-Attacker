@@ -59,7 +59,7 @@ public class Compression
         // Custom Initilisation
         usedPayloadChar = new OptionSimpleVarchar( "Character to use for xml padding", " ", 1 );
         lengthOfPayload =
-            new OptionLimitedInteger( "Size of blank space payload in MB", 100, "Length of overlong element name", 2,
+            new OptionLimitedInteger( "Size of character payload in MB", 100, 2,
                                       4000 );
 
         getPluginOptions().add( lengthOfPayload );
@@ -91,7 +91,7 @@ public class Compression
             + "<p>The attack algorithm replaces the string $$PAYLOADELEMENT$$ in the SOAP message below "
             + "with the amount of MB of Characters defined in 8 and 9.</p>"
             + "<p>The placeholder $$PAYLOADELEMENT$$ can be set to any other position in the SOAP message</p>" );
-        setCountermeasures( "In order to counter the attack, either compression has to be turned of completely or some limits on the final size or compression ratio have to be set." );
+        setCountermeasures( "In order to counter the attack, either request compression has to be turned of completely or some limits on the final size or compression ratio have to be set." );
     }
 
     @Override
