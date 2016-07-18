@@ -197,9 +197,12 @@ public class RequestSenderImpl
      */
     private String sendRequestHttpClient( RequestObject requestObject )
     {
-
+	    
         // get Post Request
         HttpPost post = this.createHttpPostMethod( requestObject );
+		
+		// set afterReceive to default value to handle missing responses
+		afterReceive = 0;
 
         // Get HTTP client and execute request
         try
@@ -255,8 +258,8 @@ public class RequestSenderImpl
             httpClient.getParams().setParameter( "http.connection-manager.max-total", new Integer( 3000 ) );
             // > params.setDefaultMaxConnectionsPerHost(3000);
             // > params.setMaxTotalConnections(3000);
-
-            beforeSend = System.nanoTime();
+			
+            beforeSend = System.nanoTime();			
 
             HttpResponse response = httpClient.execute( post );
             StringWriter writer = new StringWriter();
@@ -272,6 +275,7 @@ public class RequestSenderImpl
             // Logger.getLogger(RequestSender.class.getName()).log(Level.SEVERE,
             // null, ex);
             System.out.println( "--RequestSender - IO Exception: " + ex.getMessage() );
+
             // ex.printStackTrace();
         }
         catch ( Exception e )
@@ -288,8 +292,15 @@ public class RequestSenderImpl
             {
                 responseString = "";
             }
-        }
 
+			// Set afterReceive to beforeSend if afterReceive is 0 so that there 
+			// is no huge negative response time when the web service doesn't answer
+			if (afterReceive == 0)
+			{
+				afterReceive = beforeSend;
+			}
+        }
+		
         return responseString;
     }
 
