@@ -81,6 +81,7 @@ public class Http4RequestSenderImpl
     {
         String strUrl = requestObject.getEndpoint();
         String strXml = requestObject.getXmlMessage();
+        byte[] compressedXml = requestObject.getCompressedXML();
 
         StringBuffer result = new StringBuffer();
         try
@@ -97,16 +98,33 @@ public class Http4RequestSenderImpl
             HttpPost post = new HttpPost( strUrl );
             setHeader( requestObject, post );
 
-            ByteArrayEntity entity = new ByteArrayEntity( strXml.getBytes( "UTF-8" ) )
+            ByteArrayEntity entity;
+            if ( compressedXml != null )
             {
-                @Override
-                public void writeTo( OutputStream outstream )
-                    throws IOException
+                entity = new ByteArrayEntity( compressedXml )
                 {
-                    super.writeTo( outstream );
-                    sendLastByte = System.nanoTime();
-                }
-            };
+                    @Override
+                    public void writeTo( OutputStream outstream )
+                        throws IOException
+                    {
+                        super.writeTo( outstream );
+                        sendLastByte = System.nanoTime();
+                    }
+                };
+            }
+            else
+            {
+                entity = new ByteArrayEntity( strXml.getBytes( "UTF-8" ) )
+                {
+                    @Override
+                    public void writeTo( OutputStream outstream )
+                        throws IOException
+                    {
+                        super.writeTo( outstream );
+                        sendLastByte = System.nanoTime();
+                    }
+                };
+            }
 
             post.setEntity( entity );
             HttpResponse response = client.execute( post );
