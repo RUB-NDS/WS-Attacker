@@ -53,7 +53,7 @@ public class OptionManager
 
     private final OptionSoapAction optionSoapAction;
 
-    private final OptionSimpleBoolean optionMustContainString, optionNoSchema, abortOnFirstSuccess;
+    private final OptionSimpleBoolean optionMustContainString, optionUseSchema, abortOnFirstSuccess;
 
     private final OptionSimpleVarchar optionTheContainedString;
 
@@ -118,12 +118,12 @@ public class OptionManager
         this.abortOnFirstSuccess =
             new OptionSimpleBoolean( "Abort?", true, "Abort after first successful attack message." );
         this.optionTheContainedString = new OptionSimpleVarchar( "Contains", "Search for this String...", 200 );
-        this.optionNoSchema = new OptionSimpleBoolean( "Schema?", false, "Turn on, to not use any XML Schema." );
+        this.optionUseSchema = new OptionSimpleBoolean( "Schema?", true, "Use XML Schema." );
         this.optionPayloadList = new ArrayList<OptionPayload>();
         this.optionView = new OptionViewButton();
         optionMustContainString.addPropertyChangeListener( AbstractOptionBoolean.PROP_ON, this );
         optionSchemaFiles.addPropertyChangeListener( AbstractOptionMultiFiles.PROP_FILES, this );
-        optionNoSchema.addPropertyChangeListener( AbstractOptionBoolean.PROP_ON, this );
+        optionUseSchema.addPropertyChangeListener( AbstractOptionBoolean.PROP_ON, this );
     }
 
     private Logger log()
@@ -215,8 +215,8 @@ public class OptionManager
             newOptions.add( 0, optionSoapAction );
             log().info( "Adding abortOnFirstSuccess" );
             newOptions.add( 1, abortOnFirstSuccess );
-            log().info( "Adding optionNoSchema" );
-            newOptions.add( 2, optionNoSchema );
+            log().info( "Adding optionUseSchema" );
+            newOptions.add( 2, optionUseSchema );
             log().info( "Adding optionSchemaFiles" );
             newOptions.add( 3, optionSchemaFiles );
             log().info( "Adding optionMustContainString" );
@@ -333,10 +333,10 @@ public class OptionManager
         {
             plugin.setUsedSchemaFiles( optionSchemaFiles.getFiles() );
         }
-        else if ( pce.getSource() == optionNoSchema )
+        else if ( pce.getSource() == optionUseSchema )
         {
             log().info( "Remove Schema Files Option" );
-            if ( optionNoSchema.isOn() && container.contains( optionSchemaFiles ) )
+            if ( !optionUseSchema.isOn() && container.contains( optionSchemaFiles ) )
             {
                 container.remove( optionSchemaFiles );
                 plugin.setSchemaAnalyzerDepdingOnOption();
@@ -344,7 +344,7 @@ public class OptionManager
             else if ( !container.contains( optionSchemaFiles ) )
             {
                 log().info( "Add Schema Files Option" );
-                container.add( 1 + container.indexOf( optionNoSchema ), optionSchemaFiles );
+                container.add( 1 + container.indexOf( optionUseSchema ), optionSchemaFiles );
             }
         }
         getPlugin().checkState();
@@ -365,9 +365,9 @@ public class OptionManager
         return optionMustContainString;
     }
 
-    public OptionSimpleBoolean getOptionNoSchema()
+    public OptionSimpleBoolean getOptionUseSchema()
     {
-        return optionNoSchema;
+        return optionUseSchema;
     }
 
     public OptionSimpleBoolean getAbortOnFirstSuccess()

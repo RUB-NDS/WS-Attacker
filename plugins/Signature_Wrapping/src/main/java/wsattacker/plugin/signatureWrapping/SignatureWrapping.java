@@ -152,7 +152,7 @@ public class SignatureWrapping
 
     public void setSchemaAnalyzerDepdingOnOption()
     {
-        if ( optionManager.getOptionNoSchema().isOn() )
+        if ( !optionManager.getOptionUseSchema().isOn() )
         {
             usedSchemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.NULL );
         }
