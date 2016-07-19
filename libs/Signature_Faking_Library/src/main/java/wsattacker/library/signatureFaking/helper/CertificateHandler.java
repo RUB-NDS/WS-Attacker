@@ -112,8 +112,17 @@ public class CertificateHandler
 
             info.set( X509CertInfo.VALIDITY, interval );
             info.set( X509CertInfo.SERIAL_NUMBER, new CertificateSerialNumber( sn ) );
-            info.set( X509CertInfo.SUBJECT, new CertificateSubjectName( owner ) );
-            info.set( X509CertInfo.ISSUER, new CertificateIssuerName( issuer ) );
+            // API Change in Java7 vs Java8
+            try
+            {
+                info.set( X509CertInfo.SUBJECT, new CertificateSubjectName( owner ) );
+                info.set( X509CertInfo.ISSUER, new CertificateIssuerName( issuer ) );
+            }
+            catch ( Exception e )
+            {
+                info.set( X509CertInfo.SUBJECT, owner );
+                info.set( X509CertInfo.ISSUER, issuer );
+            }
             info.set( X509CertInfo.KEY, new CertificateX509Key( fakedKeyPair.getPublic() ) );
 
             info.set( X509CertInfo.VERSION, new CertificateVersion( CertificateVersion.V3 ) );
