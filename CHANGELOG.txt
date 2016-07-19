@@ -1,3 +1,6 @@
+New Compression DoS Attack based on In the Compression Hornet’s Nest: A Security Study of Data Compression in Network Services"
+    - Thanks to RemiMHFU for pulling
+
 ===============
 10. July 2015
 ===============
