@@ -413,7 +413,7 @@ public class XMLEncryptionAttack
 
     public void setSchemaAnalyzerDepdingOnOption()
     {
-        if ( m_OptionManager.getOptionNoSchema().isOn() )
+        if ( !m_OptionManager.getOptionUseSchema().isOn() )
         {
             m_UsedSchemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.NULL );
         }

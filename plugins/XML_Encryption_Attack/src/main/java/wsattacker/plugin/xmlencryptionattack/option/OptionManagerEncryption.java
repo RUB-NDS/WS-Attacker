@@ -67,7 +67,7 @@ public final class OptionManagerEncryption
 
     private final OptionSoapAction m_OptionSoapAction;
 
-    private final OptionSimpleBoolean m_OptionNoSchema;
+    private final OptionSimpleBoolean m_OptionUseSchema;
 
     private final OptionSimpleMultiFiles m_OptionSchemaFiles;
 
@@ -124,7 +124,7 @@ public final class OptionManagerEncryption
         this.m_OptionSchemaFiles =
             new OptionSimpleMultiFiles( "Used\nSchema\nfiles",
                                         "Set the Schema Files.\nSoap11, Soap12, WSA, WSSE, WSU, DS and XPathFilter2\nare included by default." );
-        this.m_OptionNoSchema = new OptionSimpleBoolean( "Schema?", false, "Turn on, to not use any XML Schema." );
+        this.m_OptionUseSchema = new OptionSimpleBoolean( "Schema?", true, "Use XML Schema." );
         this.m_OptionPayloadList = new ArrayList<AbstractEncryptionElement>();
         this.m_OptionServerResponse = null;
         PKCS1AttackConfig pKCS1AttackCFG = new PKCS1AttackConfig();
@@ -300,7 +300,7 @@ public final class OptionManagerEncryption
             log().info( "Adding OptionSoapAction" );
             newOptions.add( 0, m_OptionSoapAction );
             log().info( "Adding OptionNoSchema" );
-            newOptions.add( 1, m_OptionNoSchema );
+            newOptions.add(1, m_OptionUseSchema );
             log().info( "Adding OptionSchemaFiles" );
             newOptions.add( 2, m_OptionSchemaFiles );
             if ( m_OptionPayloadList.size() > 0 )
@@ -320,7 +320,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     * 
+     *
      * @param needle
      * @return
      */
@@ -350,7 +350,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     * 
+     *
      * @param needle
      * @return
      */
@@ -400,10 +400,10 @@ public final class OptionManagerEncryption
             m_Plugin.setUsedSchemaFiles( m_OptionSchemaFiles.getFiles() );
 
         }
-        else if ( pce.getSource() == m_OptionNoSchema )
+        else if ( pce.getSource() == m_OptionUseSchema )
         {
             log().info( "Remove Schema Files Option" );
-            if ( m_OptionNoSchema.isOn() && container.contains( m_OptionSchemaFiles ) )
+            if ( !m_OptionUseSchema.isOn() && container.contains( m_OptionSchemaFiles ) )
             {
                 container.remove( m_OptionSchemaFiles );
                 m_Plugin.setSchemaAnalyzerDepdingOnOption();
@@ -411,7 +411,7 @@ public final class OptionManagerEncryption
             else if ( !container.contains( m_OptionSchemaFiles ) )
             {
                 log().info( "Add Schema Files Option" );
-                container.add( 1 + container.indexOf( m_OptionNoSchema ), m_OptionSchemaFiles );
+                container.add(1 + container.indexOf(m_OptionUseSchema ), m_OptionSchemaFiles );
             }
         }
         getPlugin().checkState();
@@ -427,9 +427,9 @@ public final class OptionManagerEncryption
         return m_OptionSchemaFiles;
     }
 
-    public OptionSimpleBoolean getOptionNoSchema()
+    public OptionSimpleBoolean getOptionUseSchema()
     {
-        return m_OptionNoSchema;
+        return m_OptionUseSchema;
     }
 
     private DetectionManager handleDetection( Document attackDoc )
