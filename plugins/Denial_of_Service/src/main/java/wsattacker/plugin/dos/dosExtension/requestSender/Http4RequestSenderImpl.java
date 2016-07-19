@@ -158,10 +158,6 @@ public class Http4RequestSenderImpl
             e.printStackTrace();
         }
 
-        // if (!result.toString().contains("tema tis rolod muspi meroL")) {
-        // System.out.println(result);
-        // }
-
         return result.toString();
     }
 
