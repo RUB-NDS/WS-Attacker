@@ -40,7 +40,7 @@ public class Http4RequestSenderImpl
     implements RequestSender
 {
 
-    private static final Integer TIMEOUT = new Integer( 120000 );
+    private static final Integer TIMEOUT = 120000;
 
     private final AttackModel model;
 
