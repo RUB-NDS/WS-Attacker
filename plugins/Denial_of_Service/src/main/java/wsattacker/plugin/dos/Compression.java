@@ -118,11 +118,11 @@ public class Compression
         }
         catch ( UnsupportedEncodingException e )
         {
-	    log().warn(e);
+            log().warn( e );
         }
         catch ( IOException e )
         {
-            log().warn(e);
+            log().warn( e );
         }
 
         // get HeaderFields from original request, if required add custom
