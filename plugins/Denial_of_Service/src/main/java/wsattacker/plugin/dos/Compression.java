@@ -58,9 +58,7 @@ public class Compression
         initData();
         // Custom Initilisation
         usedPayloadChar = new OptionSimpleVarchar( "Character to use for xml padding", " ", 1 );
-        lengthOfPayload =
-            new OptionLimitedInteger( "Size of character payload in MB", 100, 2,
-                                      4000 );
+        lengthOfPayload = new OptionLimitedInteger( "Size of character payload in MB", 100, 2, 4000 );
 
         getPluginOptions().add( lengthOfPayload );
         getPluginOptions().add( usedPayloadChar );
@@ -120,13 +118,11 @@ public class Compression
         }
         catch ( UnsupportedEncodingException e )
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+	    log().warn(e);
         }
         catch ( IOException e )
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log().warn(e);
         }
 
         // get HeaderFields from original request, if required add custom
