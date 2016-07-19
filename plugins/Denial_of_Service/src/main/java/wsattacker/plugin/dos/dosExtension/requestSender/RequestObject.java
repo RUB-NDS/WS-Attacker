@@ -38,6 +38,8 @@ public class RequestObject
 
     private Map<String, String> httpHeaderMap;
 
+    private byte[] compressedXML = null;
+
     public RequestObject()
     {
     }
@@ -45,6 +47,14 @@ public class RequestObject
     public RequestObject( String xmlMessage, String endpoint, Map<String, String> httpHeaderMap )
     {
         this.xmlMessage = xmlMessage;
+        this.endpoint = endpoint;
+        this.httpHeaderMap = httpHeaderMap;
+        // this.setHeaderContentLength();
+    }
+
+    public RequestObject( byte[] compressedXML, String endpoint, Map<String, String> httpHeaderMap )
+    {
+        this.setCompressedXML( compressedXML );
         this.endpoint = endpoint;
         this.httpHeaderMap = httpHeaderMap;
         // this.setHeaderContentLength();
@@ -107,6 +117,16 @@ public class RequestObject
         // this.setHeaderContentLength();
     }
 
+    public byte[] getCompressedXML()
+    {
+        return compressedXML;
+    }
+
+    public void setCompressedXML( byte[] compressedXML2 )
+    {
+        this.compressedXML = compressedXML2;
+    }
+
     public String getEndpoint()
     {
         return endpoint;
@@ -130,6 +150,14 @@ public class RequestObject
 
     public int getXmlMessageLength()
     {
-        return this.xmlMessage.length();
+        if ( compressedXML != null )
+        {
+            return compressedXML.length;
+        }
+        else
+        {
+            return this.xmlMessage.length();
+
+        }
     }
 }

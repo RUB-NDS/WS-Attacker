@@ -8,3 +8,4 @@ wsattacker.plugin.dos.SoapArrayAttack
 wsattacker.plugin.dos.XmlOverlongNames
 wsattacker.plugin.dos.XmlAttributeCount
 wsattacker.plugin.dos.XmlElementCount
+wsattacker.plugin.dos.Compression

@@ -40,6 +40,8 @@ import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.AbstractHttpEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
@@ -133,6 +135,7 @@ public class RequestSenderImpl
         Map<String, String> httpHeaderMap = requestObject.getHttpHeaderMap();
         String strUrl = requestObject.getEndpoint();
         String strXml = requestObject.getXmlMessage();
+        byte[] compressedXml = requestObject.getCompressedXML();
 
         RequestSenderImpl.disableExtensiveLogging();
 
@@ -141,16 +144,22 @@ public class RequestSenderImpl
         {
             // Prepare HTTP post
             post = new HttpPost( strUrl );
-
+            AbstractHttpEntity entity = null;
             // set Request content
-            StringEntity entity = null;
-            try
+            if ( compressedXml != null )
             {
-                entity = new StringEntity( strXml, "text/xml; charset=UTF-8", null );
+                entity = new ByteArrayEntity( compressedXml );
             }
-            catch ( UnsupportedEncodingException ex )
+            else
             {
-                Logger.getLogger( RequestSenderImpl.class.getName() ).log( Level.SEVERE, null, ex );
+                try
+                {
+                    entity = new StringEntity( strXml, "text/xml; charset=UTF-8", null );
+                }
+                catch ( UnsupportedEncodingException ex )
+                {
+                    Logger.getLogger( RequestSenderImpl.class.getName() ).log( Level.SEVERE, null, ex );
+                }
             }
 
             // setRequestHeader (if already existent -> will be overwritten!)
@@ -191,6 +200,9 @@ public class RequestSenderImpl
 
         // get Post Request
         HttpPost post = this.createHttpPostMethod( requestObject );
+
+        // set afterReceive to default value to handle missing responses
+        afterReceive = 0;
 
         // Get HTTP client and execute request
         try
@@ -263,6 +275,7 @@ public class RequestSenderImpl
             // Logger.getLogger(RequestSender.class.getName()).log(Level.SEVERE,
             // null, ex);
             System.out.println( "--RequestSender - IO Exception: " + ex.getMessage() );
+
             // ex.printStackTrace();
         }
         catch ( Exception e )
@@ -278,6 +291,13 @@ public class RequestSenderImpl
             if ( responseString == null )
             {
                 responseString = "";
+            }
+
+            // Set afterReceive to beforeSend if afterReceive is 0 so that there
+            // is no huge negative response time when the web service doesn't answer
+            if ( afterReceive == 0 )
+            {
+                afterReceive = beforeSend;
             }
         }
 

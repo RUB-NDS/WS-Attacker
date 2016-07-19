@@ -40,7 +40,7 @@ public class Http4RequestSenderImpl
     implements RequestSender
 {
 
-    private static final Integer TIMEOUT = new Integer( 120000 );
+    private static final Integer TIMEOUT = 120000;
 
     private final AttackModel model;
 
@@ -81,8 +81,9 @@ public class Http4RequestSenderImpl
     {
         String strUrl = requestObject.getEndpoint();
         String strXml = requestObject.getXmlMessage();
+        byte[] compressedXml = requestObject.getCompressedXML();
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         try
         {
             HttpClient client = new DefaultHttpClient();
@@ -97,16 +98,33 @@ public class Http4RequestSenderImpl
             HttpPost post = new HttpPost( strUrl );
             setHeader( requestObject, post );
 
-            ByteArrayEntity entity = new ByteArrayEntity( strXml.getBytes( "UTF-8" ) )
+            ByteArrayEntity entity;
+            if ( compressedXml != null )
             {
-                @Override
-                public void writeTo( OutputStream outstream )
-                    throws IOException
+                entity = new ByteArrayEntity( compressedXml )
                 {
-                    super.writeTo( outstream );
-                    sendLastByte = System.nanoTime();
-                }
-            };
+                    @Override
+                    public void writeTo( OutputStream outstream )
+                        throws IOException
+                    {
+                        super.writeTo( outstream );
+                        sendLastByte = System.nanoTime();
+                    }
+                };
+            }
+            else
+            {
+                entity = new ByteArrayEntity( strXml.getBytes( "UTF-8" ) )
+                {
+                    @Override
+                    public void writeTo( OutputStream outstream )
+                        throws IOException
+                    {
+                        super.writeTo( outstream );
+                        sendLastByte = System.nanoTime();
+                    }
+                };
+            }
 
             post.setEntity( entity );
             HttpResponse response = client.execute( post );
@@ -139,10 +157,6 @@ public class Http4RequestSenderImpl
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // if (!result.toString().contains("tema tis rolod muspi meroL")) {
-        // System.out.println(result);
-        // }
 
         return result.toString();
     }
