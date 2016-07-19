@@ -83,7 +83,7 @@ public class Http4RequestSenderImpl
         String strXml = requestObject.getXmlMessage();
         byte[] compressedXml = requestObject.getCompressedXML();
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         try
         {
             HttpClient client = new DefaultHttpClient();
