@@ -74,6 +74,7 @@
                                 <overWriteSnapshots>false</overWriteSnapshots>
                                 <overWriteIfNewer>true</overWriteIfNewer>
                                 <excludeArtifactIds>wsattacker-framework</excludeArtifactIds>
+                                <includeScope>runtime</includeScope>
                             </configuration>
                         </execution>
                     </executions>
