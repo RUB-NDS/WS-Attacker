@@ -127,7 +127,6 @@ public class OptionsTesterPlugin
     {
         if ( OptionSimpleChoice.PROP_SELECTEDASSTRING.equals( pce.getPropertyName() ) )
         {
-            System.out.println( "### propertyChangeEvent" );
             String value = choice.getValueAsString();
             theChoice.setValue( value != null ? value : "null" );
         }

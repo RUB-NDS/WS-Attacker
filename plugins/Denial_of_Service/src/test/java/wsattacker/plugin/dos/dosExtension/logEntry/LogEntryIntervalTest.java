@@ -37,7 +37,6 @@ public class LogEntryIntervalTest
     @Test
     public void testGetIntervalNumber()
     {
-        System.out.println( "getIntervalNumber" );
         LogEntryInterval instance = new LogEntryInterval();
         int expResult = -1;
         int result = instance.getIntervalNumber();
@@ -50,7 +49,6 @@ public class LogEntryIntervalTest
     @Test
     public void testSetIntervalNumber()
     {
-        System.out.println( "setIntervalNumber" );
         int intervalNumber = 0;
         LogEntryInterval instance = new LogEntryInterval();
         instance.setIntervalNumber( intervalNumber );
@@ -62,7 +60,6 @@ public class LogEntryIntervalTest
     @Test
     public void testGetNumberRequests()
     {
-        System.out.println( "getNumberRequests" );
         LogEntryInterval instance = new LogEntryInterval();
         int expResult = 0;
         int result = instance.getNumberRequests();
@@ -75,7 +72,6 @@ public class LogEntryIntervalTest
     @Test
     public void testIncNumberRequests()
     {
-        System.out.println( "incNumberRequests" );
         LogEntryInterval instance = new LogEntryInterval();
         int expResult = instance.getNumberRequests() + 1;
         instance.incNumberRequests();
@@ -89,7 +85,6 @@ public class LogEntryIntervalTest
     @Test
     public void testSetNumberRequests()
     {
-        System.out.println( "setNumberRequests" );
         int numberRequests = 0;
         LogEntryInterval instance = new LogEntryInterval();
         instance.setNumberRequests( numberRequests );
@@ -101,7 +96,6 @@ public class LogEntryIntervalTest
     @Test
     public void testGetMeanResponseTime()
     {
-        System.out.println( "getMeanResponseTime" );
         LogEntryInterval instance = new LogEntryInterval();
         float expResult = 0.0F;
         float result = instance.getMeanResponseTime();
@@ -114,7 +108,6 @@ public class LogEntryIntervalTest
     @Test
     public void testSetMeanResponseTime()
     {
-        System.out.println( "setMeanResponseTime" );
         float meanResponseTime = 0.0F;
         LogEntryInterval instance = new LogEntryInterval();
         instance.setMeanResponseTime( meanResponseTime );

@@ -40,7 +40,6 @@ public class XmlElementCountTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start XmlElementCountTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new XmlElementCount();
     }

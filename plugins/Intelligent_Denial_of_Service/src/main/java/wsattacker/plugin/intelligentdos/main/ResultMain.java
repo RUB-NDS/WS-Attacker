@@ -40,7 +40,6 @@ public class ResultMain
     {
         if ( args.length == 0 || StringUtils.isEmpty( args[0] ) )
         {
-            System.out.println( "please specify where the saved results are!" );
             System.exit( -1 );
         }
 

@@ -115,7 +115,6 @@ public class OptionViewButtonGUI
                 @Override
                 public void actionPerformed( ActionEvent evt )
                 {
-                    System.out.println( "viewButton.actionPerformed, event=" + evt );
                     getViewDialog().setVisible( true );
                 }
             } );
@@ -222,7 +221,6 @@ public class OptionViewButtonGUI
                         }
                         catch ( Exception e )
                         {
-                            System.err.println( e.getMessage() );
                         }
                     }
                 } );
@@ -247,7 +245,6 @@ public class OptionViewButtonGUI
                         }
                         catch ( Exception e )
                         {
-                            System.err.println( e.getMessage() );
                         }
                     }
                 } );
@@ -389,7 +386,6 @@ public class OptionViewButtonGUI
                 @Override
                 public void actionPerformed( ActionEvent evt )
                 {
-                    System.out.println( "closeButton.actionPerformed, event=" + evt );
                     getViewDialog().dispose();
                 }
             } );

@@ -35,7 +35,6 @@ public class CollisionDJBXMain
     {
         if ( args.length != 2 )
         {
-            System.out.println( "call: CollisionDJBX <numberOfCollisions> <absoluteFilePath>" );
             System.exit( -1 );
         }
 
@@ -47,7 +46,6 @@ public class CollisionDJBXMain
         }
         catch ( NumberFormatException e )
         {
-            System.out.println( "<numberOfCollisions> was not an integer!" );
             System.exit( -1 );
         }
 
@@ -67,7 +65,6 @@ public class CollisionDJBXMain
         }
         catch ( IOException e )
         {
-            System.out.println( "error while writing file: " + e.toString() );
         }
         finally
         {

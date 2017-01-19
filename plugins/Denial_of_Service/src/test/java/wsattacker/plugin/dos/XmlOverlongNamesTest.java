@@ -40,7 +40,6 @@ public class XmlOverlongNamesTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start XmlOverlongNamesTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new XmlOverlongNames();
     }

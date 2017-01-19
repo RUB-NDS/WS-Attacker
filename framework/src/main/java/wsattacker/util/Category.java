@@ -258,12 +258,9 @@ public class Category<Key extends Comparable<Key>, Leaf extends Comparable<Leaf>
         }
         String padding = new String( chars );
 
-        System.out.format( "%s    `-- %s (S:%d|L:%d)\n", padding, getName(), getSubCategorys().size(),
-                           getLeafs().size() );
         ++indent;
         for ( Leaf leaf : getLeafs() )
         {
-            System.out.println( padding + "        `-- (+) " + leaf );
         }
         for ( Category<Key, Leaf> category : getSubCategorys() )
         {

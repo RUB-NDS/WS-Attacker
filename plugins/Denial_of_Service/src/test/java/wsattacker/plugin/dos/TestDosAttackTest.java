@@ -40,7 +40,6 @@ public class TestDosAttackTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start TestDosAttack" );
         t = new GenericDosPluginTest();
         attackPlugin = new DosAttackTemplate();
     }

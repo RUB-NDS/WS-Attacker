@@ -41,7 +41,6 @@ public class HashDosDJBX33ATest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start HashDosDJBX33A" );
         t = new GenericDosPluginTest();
         attackPlugin = new HashCollisionDJBX33A();
     }

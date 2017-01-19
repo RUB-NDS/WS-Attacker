@@ -118,12 +118,12 @@ public class SoapUiRequestSender
         catch ( Request.SubmitException e )
         {
             // SubmitException
-            System.out.println( "Request.SubmitException\n" + e.getMessage() );
+
         }
         catch ( Exception e )
         {
             // Request timed out!?
-            System.out.println( "Request timed out!\n" + e.getMessage() );
+
         }
         finally
         {

@@ -32,7 +32,6 @@ public class OpenURI
         if ( !Desktop.isDesktopSupported() )
         {
 
-            System.err.println( "Desktop is not supported (fatal)" );
             System.exit( 1 );
         }
 
@@ -41,20 +40,16 @@ public class OpenURI
         if ( !desktop.isSupported( Desktop.Action.BROWSE ) )
         {
 
-            System.err.println( "Desktop doesn't support the browse action (fatal)" );
             System.exit( 1 );
         }
 
         try
         {
-            System.out.println( System.getProperty( "user.dir" ) );
             URI uri = report.toURI();
             desktop.browse( uri );
         }
         catch ( Exception e )
         {
-
-            System.err.println( e.getMessage() );
         }
     }
 }

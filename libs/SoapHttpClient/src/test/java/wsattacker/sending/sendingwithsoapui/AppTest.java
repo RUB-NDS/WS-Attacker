@@ -107,7 +107,6 @@ public class AppTest
         final String body = request.getRequestContent();
         final SoapHttpClient h = SoapHttpClientFactory.createSoapHttpClient( request );
         final SoapResponse response = h.sendSoap( body );
-        System.out.println( response.getBody() );
     }
 
     @Test
@@ -121,11 +120,9 @@ public class AppTest
         long start = System.nanoTime();
         for ( int i = 0; i < max; i++ )
         {
-            System.out.println( i );
             h.sendSoap( body );
         }
         h.shutDownConnectionManager();
-        System.out.println( "ended in: " + ( System.nanoTime() - start ) );
     }
 
     @Test
@@ -136,10 +133,8 @@ public class AppTest
         final String body = request.getRequestContent();
         final SoapHttpClient h = SoapHttpClientFactory.createSoapHttpClient( request );
         SoapResponse response = h.sendSoap( body );
-        System.out.println( response.getBody() );
         for ( int i = 0; 80000 > i; i++ )
         {
-            System.out.println( i );
             h.sendSoap( body );
         }
     }

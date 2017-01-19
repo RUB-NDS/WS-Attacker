@@ -47,7 +47,6 @@ public class OptionSimpleTextTest
             @Override
             public void propertyChange( PropertyChangeEvent pce )
             {
-                System.out.println( "PropertyChange detected: " + pce.getPropertyName() );
             }
         } );
         option.setName( "New TestName" );

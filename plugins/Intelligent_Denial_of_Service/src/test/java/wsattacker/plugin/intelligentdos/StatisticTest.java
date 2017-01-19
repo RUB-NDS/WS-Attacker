@@ -64,7 +64,6 @@ public class StatisticTest
         System.out.println( "utr1 <> utr3" );
         statistics( utr1, utr3 );
         System.out.println();
-        System.out.println( "utr2 <> utr3" );
         statistics( utr2, utr3 );
     }
 
@@ -92,6 +91,7 @@ public class StatisticTest
         // p-value = 0.3002
         TDistribution tDistribution = new TDistribution( degreesOfFreedom );
         double pValue = tDistribution.cumulativeProbability( t );
+        // t = -0.5331, df = 18, p-value = 0.3002
 
         // t = -0.5331, df = 18, p-value = 0.3002
         System.out.print( "t = " + df.format( t ) );
@@ -103,7 +103,6 @@ public class StatisticTest
 
         // Calculate 95% confidence interval
         double ci = calcMeanCI( statisticsY, 0.95 );
-        System.out.println( String.format( "Confidence inteval 95%%: %f", ci ) );
     }
 
     private static double calcMeanCI( SummaryStatistics stats, double level )
@@ -119,6 +118,5 @@ public class StatisticTest
     private static void standardDeviation( SummaryStatistics statisticsWithDrug, SummaryStatistics statisticsPlacebo )
     {
         System.out.println( "standardDeviation: " + statisticsWithDrug.getStandardDeviation() );
-        System.out.println( "standardDeviation: " + statisticsPlacebo.getStandardDeviation() );
     }
 }

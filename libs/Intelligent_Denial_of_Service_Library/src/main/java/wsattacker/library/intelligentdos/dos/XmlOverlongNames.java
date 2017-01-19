@@ -497,7 +497,6 @@ public class XmlOverlongNames
 
     public static void main( String[] args )
     {
-        System.out.println( "<attackElement =\"test\">value</attackElement>".length() );
     }
 
 }

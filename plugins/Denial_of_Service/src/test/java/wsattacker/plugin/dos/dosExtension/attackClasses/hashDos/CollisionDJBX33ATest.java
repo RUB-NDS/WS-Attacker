@@ -49,7 +49,6 @@ public class CollisionDJBX33ATest
     @Test
     public void testGetHash()
     {
-        System.out.println( "Test getHash-DJBX33A" );
         String s = "AzC8";
         CollisionDJBX33A instance = new CollisionDJBX33A();
         int expResult = 2088944635;
@@ -61,9 +60,8 @@ public class CollisionDJBX33ATest
     public void testCollisionsFail()
     {
         CollisionDJBX33A instance = new CollisionDJBX33A();
-
         // Alle 4 erzeugen anderes Ergebnis, es gilt Ez <> FY
-        System.out.println( "test collision Fail-DJBX33A" );
+
         int t1 = instance.getHash( "AB" );
         int t2 = instance.getHash( "Cd" );
         int t3 = instance.getHash( "ABAB" );
@@ -86,7 +84,6 @@ public class CollisionDJBX33ATest
     {
         CollisionDJBX33A instance = new CollisionDJBX33A();
 
-        System.out.println( "test collision OK-DJBX33A" );
         int t1 = instance.getHash( "Az" );
         int t2 = instance.getHash( "C8" );
         int t3 = instance.getHash( "AzAz" );
@@ -115,7 +112,6 @@ public class CollisionDJBX33ATest
         StringBuilder sb = new StringBuilder();
         CollisionDJBX33A instance = new CollisionDJBX33A();
         instance.genNCollisions( numberAttributes, sb, false );
-        System.out.println( "GenColl:" + sb.toString() );
         // We got here so no everthing OK
         if ( sb.toString().length() > 0 )
         {
@@ -139,7 +135,6 @@ public class CollisionDJBX33ATest
         CollisionDJBX33A instance = new CollisionDJBX33A();
         String expResult = "C8C8";
         String result = instance.getCollisionString( i, n );
-        System.out.println( "GenColl:" + result );
         assertEquals( expResult, result );
     }
 

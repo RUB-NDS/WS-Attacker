@@ -964,7 +964,6 @@ public class AttackModel
             }
             else
             {
-                System.out.println( "No number incremented" );
             }
             this.fireModelChanged();
         }
@@ -1044,8 +1043,6 @@ public class AttackModel
         // get Coefficient of variation
         this.networkTestResult = ( standarddeviationResult / meanResult );
         this.networkTestResult = Math.round( networkTestResult * 100.0 ) / 100.0;
-        System.out.println( "--------------------Ergebnis NETWORK:" + standarddeviationResult + " - " + meanResult
-            + " - " + ( standarddeviationResult / meanResult ) );
 
         // get Result String
         if ( this.networkTestResult < 0.5 )
@@ -1079,7 +1076,6 @@ public class AttackModel
             if ( j >= toSkip )
             {
                 statistics.addValue( currentLogEntry.getDuration() );
-                System.out.println( "----add:" + ( j - toSkip ) + " - " + currentLogEntry.getDuration() );
             }
             j++;
         }

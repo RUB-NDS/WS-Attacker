@@ -66,7 +66,6 @@ public class FindIVMethodSimpleTest
         assertTrue( "The decrypted message was " + new String( dec ) + " and must be " + "equal to " + TEST_STRING,
                     Arrays.equals( dec, original ) );
 
-        System.out.println( "Datapower oracle" );
         oracle.setOracleType( FindIVMethodProperties.Type.IBM_DATAPOWER );
         fim = new FindIVMethodSimple( oracle, iv, c1, true );
         dec = fim.executeAttack();
@@ -95,7 +94,6 @@ public class FindIVMethodSimpleTest
         assertTrue( "The decrypted message was " + new String( dec ) + " and must be " + "equal to " + TEST_XML_STRING,
                     Arrays.equals( dec, original ) );
 
-        System.out.println( "Datapower oracle" );
         oracle.setOracleType( FindIVMethodProperties.Type.IBM_DATAPOWER );
         fim = new FindIVMethodSimple( oracle, iv, c1, false );
         dec = fim.executeAttack();

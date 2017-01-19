@@ -64,7 +64,6 @@ public class TestSoapUtilities
                                                                                  // ">"
                                                                                  // char
         SOAPMessage soap = stringToSoap( msg );
-        System.out.println( soapToString( soap.getSOAPPart().getEnvelope() ) );
     }
 
     @Test

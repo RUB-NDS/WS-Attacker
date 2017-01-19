@@ -112,7 +112,6 @@ public class SoapTestRequest
         String fullFilePath;
         String property = "java.io.tmpdir";
         String tempDir = System.getProperty( property );
-        System.out.println( "OS current temporary directory is " + tempDir );
 
         // make Folders
         File resultDir = new File( tempDir + "/wsattackerdos" );

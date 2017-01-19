@@ -172,13 +172,11 @@ public class AttackManagerTest
     public void testExecuteAttack()
     {
         String tempScore = createSimStringStrategy( DICE_COEFF ).getShortDescriptionString();
-        System.out.println( tempScore );
         /*
          * AttackManager instance = null; byte[] expResult = null; byte[] result = instance.executeAttack();
          * assertArrayEquals(expResult, result); // TODO review the generated test code and remove the default call to
          * fail. //fail("The test case is a prototype.");
-         */
-    }
+         */    }
 
     @Test
     public void testAttackOnEncKeyWithSignedEncData()

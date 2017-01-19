@@ -286,14 +286,13 @@ public class RequestSenderImpl
         {
             // Logger.getLogger(RequestSender.class.getName()).log(Level.SEVERE,
             // null, ex);
-            System.out.println( "--RequestSender - IO Exception: " + ex.getMessage() );
-
             // ex.printStackTrace();
+            
         }
         catch ( Exception e )
         {
             // Request timed out!?
-            System.out.println( "--RequestSender - unexpected Exception: " + e.getMessage() );
+
         }
         finally
         {

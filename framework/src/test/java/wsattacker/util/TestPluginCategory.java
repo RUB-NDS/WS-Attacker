@@ -31,18 +31,6 @@ public class TestPluginCategory
 {
     private static Category<String, AbstractPlugin> root, c1, c2, c3, c4, child, subchild;
 
-    public void printCategory( Category<String, AbstractPlugin> category, String msg )
-    {
-        System.out.println( msg );
-        category.print();
-        System.out.println( "============================================================================" );
-    }
-
-    public void printRoot( String msg )
-    {
-        printCategory( root, msg );
-    }
-
     @Before
     public void setUp()
         throws Exception
@@ -166,7 +154,6 @@ public class TestPluginCategory
 
         // add c1 to root
         root.addCategory( c1 );
-        printRoot( "Root + c1" );
         testOneCategory( root, "Root", 1, 0 );
         testAllSubs( root, "A" );
 
@@ -176,7 +163,6 @@ public class TestPluginCategory
 
         // add c2 to root
         root.addCategory( c2 );
-        printRoot( "Root + c1 + c2" );
         testOneCategory( root, "Root", 2, 0 );
         testAllSubs( root, "A", "B" );
 
@@ -192,7 +178,6 @@ public class TestPluginCategory
 
         // now composition: "add" c3 to root
         root.addCategory( c3 );
-        printRoot( "Root + c1 + c2 + c3" );
         // test root, should not be changed
         testOneCategory( root, "Root", 2, 0 );
         testAllSubs( root, "A", "B" );
@@ -209,7 +194,6 @@ public class TestPluginCategory
 
         // this should do nothing
         root.composeCategory( root );
-        printRoot( "Root²" );
         testOneCategory( root, "Root", 2, 0 );
         testAllSubs( root, "A", "B" );
 
@@ -225,7 +209,6 @@ public class TestPluginCategory
 
         // add categories with sub categories
         root.addCategory( c4 );
-        printRoot( "add categories with sub categories" );
         testOneCategory( root, "Root", 2, 0 );
 
         child = root.getSubCategorys().get( 0 );
@@ -333,8 +316,6 @@ public class TestPluginCategory
         c1.addCategory( c2 );
         root.addCategory( c1 );
 
-        printRoot( "testGetSubCategory()" );
-
         child = root.getSubCategory( "A" );
         assertTrue( child != null );
         testOneCategory( child, "A", 1, 2 );
@@ -349,22 +330,18 @@ public class TestPluginCategory
     {
         root = new PluginCategory( "root" );
         root.createPath( new String[] { "11", "22", "33", "44" } );
-        printRoot( "Path 1" );
         testPath( root, "11", "22", "33", "44" );
 
         root.createPath( new String[] { "11", "22", "33", "45" } );
-        printRoot( "Path 2" );
         testPath( root, "11", "22", "33", "44" );
         testPath( root, "11", "22", "33", "45" );
 
         root.createPath( "12" );
-        printRoot( "Path 3" );
         testPath( root, "12" );
         testPath( root, "11", "22", "33", "44" );
         testPath( root, "11", "22", "33", "45" );
 
         root.createPath( new String[] { "11", "22", "34", "45" } );
-        printRoot( "Path 4" );
         testPath( root, "11", "22", "33", "44" );
         testPath( root, "11", "22", "33", "45" );
         testPath( root, "11", "22", "34", "45" );

@@ -54,7 +54,6 @@ public class SignatureFakingOracleTest
         // for (String c : contents) {
         SignatureFakingOracle sfo = new SignatureFakingOracle( contents[0] );
         sfo.fakeSignatures();
-        System.out.println( sfo.getDocument() );
         // }
     }
 }

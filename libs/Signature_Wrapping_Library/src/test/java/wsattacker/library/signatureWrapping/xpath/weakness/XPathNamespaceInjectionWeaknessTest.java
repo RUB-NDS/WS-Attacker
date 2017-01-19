@@ -88,7 +88,6 @@ public class XPathNamespaceInjectionWeaknessTest
         assertEquals( "Original document must be unchanged", docBefore, docAfter );
 
         String xml = DomUtilities.domToString( attackDocument, true );
-        System.out.println( xml );
 
         bodyChilds =
             DomUtilities.getAllChildElements( DomUtilities.findCorrespondingElement( attackDocument, soap.getBody() ) );

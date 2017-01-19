@@ -86,7 +86,6 @@ public class CBCAttackerTest
     public void testSimpleString()
         throws Exception
     {
-        System.out.println( "Execute a complete attack with a simple string" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] original = TEST_STRING.getBytes();
         byte[] encryptedData = oracle.encryptTestData( original );
@@ -105,7 +104,6 @@ public class CBCAttackerTest
     public void testXML()
         throws Exception
     {
-        System.out.println( "Execute a complete attack with a simple xml string" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] original = TEST_XML_STRING.getBytes();
         byte[] encryptedData = oracle.encryptTestData( original );
@@ -124,7 +122,6 @@ public class CBCAttackerTest
     public void testLongXML()
         throws Exception
     {
-        System.out.println( "Execute a complete attack with a long xml simple string" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] original = TEST_LONG_XML_STRING.getBytes();
         byte[] encryptedData = oracle.encryptTestData( original );

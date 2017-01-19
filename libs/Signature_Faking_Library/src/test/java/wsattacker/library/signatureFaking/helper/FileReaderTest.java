@@ -44,7 +44,6 @@ public class FileReaderTest
     {
         PropertyConfigurator.configure( LOG_FILE );
         String[] contents = FileReader.readFileContents( DIR );
-        System.out.println( contents.length );
 
         assertTrue( contents.length == 2 );
     }

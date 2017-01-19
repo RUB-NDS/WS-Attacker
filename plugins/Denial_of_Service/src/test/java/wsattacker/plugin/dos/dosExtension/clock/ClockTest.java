@@ -42,7 +42,6 @@ public class ClockTest
     @Test
     public void testUpdate()
     {
-        System.out.println( "update" );
         String str1 = instance.update();
         try
         {
@@ -70,7 +69,6 @@ public class ClockTest
     @Test
     public void testReset()
     {
-        System.out.println( "reset" );
 
         try
         {

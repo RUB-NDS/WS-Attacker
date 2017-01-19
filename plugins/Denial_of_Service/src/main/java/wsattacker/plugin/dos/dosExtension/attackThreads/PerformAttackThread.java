@@ -140,9 +140,8 @@ public class PerformAttackThread
             }
             catch ( InterruptedException e )
             {
-                // TODO [CHAL 2013-12-31] Remove System.out!
-                System.out.println( "interrupt in Sleep1" );
-                Thread.currentThread().interrupt();
+// TODO [CHAL 2013-12-31] Remove System.out!
+                                Thread.currentThread().interrupt();
                 throw e;
             }
         }

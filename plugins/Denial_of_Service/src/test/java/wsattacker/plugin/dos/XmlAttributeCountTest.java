@@ -40,7 +40,6 @@ public class XmlAttributeCountTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start XmlAttributeCountTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new XmlAttributeCount();
     }

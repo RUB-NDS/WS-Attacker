@@ -55,6 +55,5 @@ public class RedrawChartRunnable
         resultGenerator.getJChartPanel().setChart( chart );
         resultGenerator.getJChartPanel().repaint();
         // model.getAttackResultJFrame().repaint();
-        System.out.println( "updated Model + Chart-GUI" );
     }
 }

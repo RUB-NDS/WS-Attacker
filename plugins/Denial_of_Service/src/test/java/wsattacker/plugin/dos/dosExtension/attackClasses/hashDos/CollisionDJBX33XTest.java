@@ -59,7 +59,6 @@ public class CollisionDJBX33XTest
     @Test
     public void TestPrecomputedFileExists()
     {
-        System.out.println( "Test PrecomputedFileExists-DJBX33X" );
         java.net.URL txtFile = getClass().getResource( "/DJBX33XCollisions/DJBX33XCollisions.txt" );
         if ( txtFile != null )
         {
@@ -77,7 +76,6 @@ public class CollisionDJBX33XTest
     @Test
     public void testGetHash()
     {
-        System.out.println( "Test getHash-DJBX33X" );
         String s = "QCMWaIOvpl";
         CollisionDJBX33X instance = new CollisionDJBX33X();
         int expResult = 0;
@@ -90,7 +88,6 @@ public class CollisionDJBX33XTest
     {
         CollisionDJBX33X instance = new CollisionDJBX33X();
 
-        System.out.println( "Test collision Mismatch-DJBX33X" );
         int t1 = instance.getHash( "QCMWaIOvpl" );
         int t2 = instance.getHash( "QCMWalOwQl" );
 
@@ -109,7 +106,6 @@ public class CollisionDJBX33XTest
     {
         CollisionDJBX33X instance = new CollisionDJBX33X();
 
-        System.out.println( "Test collision OK-DJBX33X" );
         int t1 = instance.getHash( "QCMWaIOvpl" );
         int t2 = instance.getHash( "QCMWaIOwQl" );
 
@@ -134,7 +130,6 @@ public class CollisionDJBX33XTest
         StringBuilder sb = new StringBuilder();
         CollisionDJBX33X instance = new CollisionDJBX33X();
         instance.genNCollisions( numberAttributes, sb, false );
-        System.out.println( " - Payload:" + sb.toString() );
         // We got here so no everthing OK
         if ( sb.toString().length() > 0 )
         {
@@ -159,7 +154,6 @@ public class CollisionDJBX33XTest
         CollisionDJBX33X instance = new CollisionDJBX33X();
         int result = instance.hashForth( "QCMWaIO" );
         assertEquals( 998537770, result );
-        System.out.println( " - HashForth QCMWaIO = " + ( instance.hashForth( "QCMWaIO" ) ) );
     }
 
     /**
@@ -179,7 +173,6 @@ public class CollisionDJBX33XTest
         assertEquals( 998537770, result1 );
         assertEquals( 998537770, result2 );
         System.out.println( " - Hashback vpl = " + ( instance.hashBack( "vpl", 0 ) ) );
-        System.out.println( " - Hashback wQl = " + ( instance.hashBack( "wQl", 0 ) ) );
     }
 
     /**
@@ -188,7 +181,6 @@ public class CollisionDJBX33XTest
     @Test
     public void testCompare2CollisionString()
     {
-        System.out.println( "Test getCollisionString-DJBX33X" );
         CollisionDJBX33X instance = new CollisionDJBX33X();
         String preGeneratedCollisionString1 = "QCMWaIOvpl";
         String preGeneratedCollisionString2 = "QCMWaIOvpl";
@@ -202,7 +194,6 @@ public class CollisionDJBX33XTest
     @Test
     public void testReadRandomStringForCollision()
     {
-        System.out.println( "Test ReadRandomStringForCollision-DJBX33X" );
         int numberRows = 0;
         String randomString = "";
         CollisionDJBX33X instance = new CollisionDJBX33X();
@@ -230,8 +221,6 @@ public class CollisionDJBX33XTest
             String preGeneratedCollisionString = randomString;
             int hashForthResult = instance.hashForth( preGeneratedCollisionString.substring( 0, 7 ) );
             int hashBackResult = instance.hashBack( preGeneratedCollisionString.substring( 7, 10 ), 0 );
-            System.out.println( " - " + preGeneratedCollisionString.substring( 7, 10 ) + " -- "
-                + preGeneratedCollisionString.substring( 0, 7 ) );
             assertEquals( hashBackResult, hashForthResult );
         }
         catch ( IOException ex )

@@ -150,7 +150,6 @@ public class CoerciveParsingTest
         DoSAttack minimal = coerciveParsing.minimal();
         String tamperedRequest = minimal.getTamperedRequest( xml, payloadPosition );
 
-        System.out.println( tamperedRequest );
         assertThat( tamperedRequest, containsString( "><x><x></x></x><" ) );
     }
 

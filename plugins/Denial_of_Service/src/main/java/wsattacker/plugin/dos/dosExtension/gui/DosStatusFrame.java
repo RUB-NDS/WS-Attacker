@@ -122,7 +122,6 @@ public class DosStatusFrame
         }
         else
         {
-            System.err.println( "Couldn't find file: " + "/IMG/attack.png" );
         }
 
         jButtonClose.setText( "Close" );

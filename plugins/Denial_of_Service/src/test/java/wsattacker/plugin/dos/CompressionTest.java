@@ -40,7 +40,6 @@ public class CompressionTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start CompressionTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new Compression();
     }

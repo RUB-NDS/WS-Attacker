@@ -51,7 +51,6 @@ public class FindIVMethodTest
     public void testSimpleString()
         throws Exception
     {
-        System.out.println( "Execute Attack in the findIV Method" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] original = TEST_STRING.getBytes();
         byte[] encryptedData = oracle.encryptTestData( original );
@@ -72,7 +71,6 @@ public class FindIVMethodTest
     public void testXMLString()
         throws Exception
     {
-        System.out.println( "Execute Attack in the findIV Method" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] original = TEST_XML_STRING.getBytes();
         byte[] encryptedData = oracle.encryptTestData( original );

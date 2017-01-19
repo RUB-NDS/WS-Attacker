@@ -49,7 +49,6 @@ public class CollisionDJBX31ATest
     @Test
     public void testGetHash()
     {
-        System.out.println( "Test getHash-DJBX31A" );
         String s = "EzFY";
         CollisionDJBX31A instance = new CollisionDJBX31A();
         int expResult = 2175080;
@@ -61,9 +60,8 @@ public class CollisionDJBX31ATest
     public void testCollisionsFail()
     {
         CollisionDJBX31A instance = new CollisionDJBX31A();
-
         // Alle 4 erzeugen anderes Ergebnis, es gilt Ez <> FY
-        System.out.println( "Test collision Fail-DJBX31A" );
+
         int t1 = instance.getHash( "Ez" );
         int t2 = instance.getHash( "Fy" );
         int t3 = instance.getHash( "EzEz" );
@@ -86,7 +84,6 @@ public class CollisionDJBX31ATest
     {
         CollisionDJBX31A instance = new CollisionDJBX31A();
 
-        System.out.println( "Test collision OK-DJBX31A" );
         int t1 = instance.getHash( "tttt" );
         int t2 = instance.getHash( "ttuU" );
         int t3 = instance.getHash( "ttv6" );
@@ -113,7 +110,6 @@ public class CollisionDJBX31ATest
     @Test
     public void testGenNCollisions()
     {
-        System.out.println( "Test genNCollisions-DJBX31A" );
         int numberAttributes = 32;
         StringBuilder sb = new StringBuilder();
         CollisionDJBX31A instance = new CollisionDJBX31A();
@@ -136,7 +132,6 @@ public class CollisionDJBX31ATest
     @Test
     public void testGetCollisionString()
     {
-        System.out.println( "Test getCollisionString-DJBX31A" );
         int i = 9 - 1;
         int n = 2;
         CollisionDJBX31A instance = new CollisionDJBX31A();

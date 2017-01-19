@@ -78,7 +78,6 @@ public class PKCS1VectorGeneratorTest
     public void testGeneratePkcs1VectorsWithoutEncryptedData()
         throws Exception
     {
-        System.out.println( "generatePkcs1VectorsWithoutEncryptedData" );
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance( "RSA" );
         keyGen.initialize( 1024 );
         KeyPair keyPair = keyGen.genKeyPair();

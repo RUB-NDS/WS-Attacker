@@ -277,7 +277,6 @@ public class IntelligentDoSLibraryImplTest
                     }
                 }
 
-                System.out.println( output( DomUtilities.stringToDom( content ) ) );
             }
         }
         assertThat( impl.hasFurtherAttack(), is( false ) );
@@ -308,7 +307,6 @@ public class IntelligentDoSLibraryImplTest
             if ( currentParams != attackModel.getDoSAttack().getCurrentParams() )
             {
                 currentParams = attackModel.getDoSAttack().getCurrentParams();
-                System.out.println( "number of tags: " + attackModel.getDoSAttack().getCurrentParams() );
 
                 payloadPosition = null;
             }
@@ -316,7 +314,6 @@ public class IntelligentDoSLibraryImplTest
             if ( requestType != attackModel.getRequestType() )
             {
                 requestType = attackModel.getRequestType();
-                System.out.println( "\t" + attackModel.getRequestType() );
             }
 
             StringBuilder builder = new StringBuilder();
@@ -326,13 +323,11 @@ public class IntelligentDoSLibraryImplTest
                 if ( payloadPosition != attackModel.getPayloadPosition() )
                 {
                     payloadPosition = attackModel.getPayloadPosition();
-                    System.out.println( "\t\t" + attackModel.getPayloadPosition() );
                 }
 
                 if ( !position.equals( attackModel.getPosition() ) )
                 {
                     position = attackModel.getPosition();
-                    System.out.println( "\t\t\t" + position.toString() );
                 }
 
                 builder.append( "\t\t" );
@@ -340,7 +335,6 @@ public class IntelligentDoSLibraryImplTest
 
             builder.append( attackModel.getMilliesBetweenRequests() ).append( " - " ).append( attackModel.getNumberOfThreads() ).append( " - " ).append( attackModel.getNumberOfRequests() );
 
-            System.out.println( builder );
 
             impl.update( attackModel );
         }
@@ -366,7 +360,6 @@ public class IntelligentDoSLibraryImplTest
                 String post = removePlaceholder( domToString.substring( matcher.end(), domToString.length() ) );
 
                 String s = pre + matcher.group() + post;
-                System.out.println( s );
             }
         }
     }

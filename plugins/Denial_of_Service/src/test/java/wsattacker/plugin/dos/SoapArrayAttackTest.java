@@ -40,7 +40,6 @@ public class SoapArrayAttackTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start SoapArrayAttackTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new SoapArrayAttack();
     }

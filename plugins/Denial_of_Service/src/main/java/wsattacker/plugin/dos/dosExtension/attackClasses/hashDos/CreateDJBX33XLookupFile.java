@@ -34,8 +34,6 @@ public class CreateDJBX33XLookupFile
         System.out.println( collision.getHash( "uUuU" ) );
         System.out.println( collision.getHash( "uUtt" ) );
         System.out.println( collision.getHash( "ttuU" ) );
-        System.out.println( collision.getHash( "tttt" ) );
-
         // CollisionDJBX33X collision = new CollisionDJBX33X();
         // collision.generateCollionsMeetInTheMiddle(1000000);
     }

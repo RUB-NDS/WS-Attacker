@@ -55,7 +55,6 @@ public class FileReader
             catch ( Exception e )
             {
                 e.printStackTrace();
-                System.err.println( "Could not read: " + cur.toString() );
                 continue;
             }
         }

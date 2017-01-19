@@ -33,7 +33,6 @@ public class UpdateClockRunnableTest
     @Test
     public void testRun()
     {
-        System.out.println( "run" );
         assertTrue( "Not yet implemented", true );
     }
 }

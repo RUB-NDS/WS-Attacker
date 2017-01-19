@@ -146,7 +146,6 @@ public class AvoidingManagerTest
         for ( int i = 0; max > i; i++ )
         {
             possAvoidedDoc = encSigWrappOracle.getPossibility( i );
-            System.out.println( domToString( possAvoidedDoc ) );
         }
 
         /*

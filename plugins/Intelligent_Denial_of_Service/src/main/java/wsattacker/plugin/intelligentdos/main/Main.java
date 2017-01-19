@@ -90,7 +90,6 @@ public class Main
         initLoggers();
 
         long start = System.currentTimeMillis();
-        System.out.println( "stat at " + new java.util.Date() );
 
         try
         {
@@ -110,22 +109,18 @@ public class Main
             intelligentDoSLibraryImpl.initialize();
 
             IntelligentDoSWorker doSWorker = new IntelligentDoSWorker( intelligentDoSLibraryImpl );
-            doSWorker.addListener( new AttackModelChangeListener()
+            doSWorker.addListener(new AttackModelChangeListener()
             {
                 private int count = 0;
 
                 @Override
                 public void attackModelChanged( AttackModel attackModel )
                 {
-                    System.out.println( ++count + "\t: " + attackModel );
-
                 }
             } );
             doSWorker.startAttack( original );
 
             long stop = System.currentTimeMillis();
-            System.out.println( "count: " + doSWorker.getCount() + " at " + new java.util.Date() + " -> "
-                + ( stop - start ) );
         }
         catch ( RuntimeException e )
         {
@@ -158,7 +153,7 @@ public class Main
             if ( line.hasOption( "url" ) )
             {
                 // initialise the member variable
-                System.out.println( line.getOptionValue( "url" ) );
+
             }
 
             // automatically generate the help statement
@@ -168,7 +163,6 @@ public class Main
         }
         catch ( ParseException exp )
         {
-            System.out.println( "Unexpected exception:" + exp.getMessage() );
         }
 
         // System.exit( 0 );

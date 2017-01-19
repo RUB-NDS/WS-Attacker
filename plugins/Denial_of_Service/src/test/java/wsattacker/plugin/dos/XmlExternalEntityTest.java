@@ -40,7 +40,6 @@ public class XmlExternalEntityTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start XmlExternalEntityTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new XmlExternalEntity();
     }

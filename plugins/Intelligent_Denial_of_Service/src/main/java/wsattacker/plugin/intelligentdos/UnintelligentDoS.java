@@ -269,7 +269,6 @@ public class UnintelligentDoS
         // max 90.000.000
         for ( int i = 0; i < options.length; i++ )
         {
-            System.out.println( options[i].getName() );
             testPrefix = abc[i];
             uses[i].setOn( true ); // activate
 
@@ -286,7 +285,6 @@ public class UnintelligentDoS
         }
 
         IterateModel iterModel = IterateModel.custom().startAt( 75000 ).stopAt( 5775000 ).setIncrement( 75000 ).build();
-        System.out.println( StringUtils.join( text, " | " ) );
         testPrefix = StringUtils.join( abc, "_" );
         startIteration( iterModel, xmlOverlongNames, options );
     }
@@ -308,7 +306,6 @@ public class UnintelligentDoS
                 aoi.setValue( value );
             }
 
-            System.out.println( "Start " + s + " with " + value + " at " + new java.util.Date() );
 
             successful = perform( dosPlugin, abstractOptionInteger );
 
@@ -500,7 +497,6 @@ public class UnintelligentDoS
             }
             builder.append( option.getValueAsString() );
         }
-        System.out.println( "was successfull with " + builder.toString() );
     }
 
     private List<LogEntryRequest> performUntampered( AbstractDosPlugin dosPlugin, AbstractOption... attackSpecificParam )
@@ -664,7 +660,6 @@ public class UnintelligentDoS
         // CurrentRequest original = new CurrentRequest();
         UnintelligentDoS doS = new UnintelligentDoS();
         doS.attackImplementationHook( original );
-        System.out.println( "count: " + doS.count );
 
         System.exit( 0 );
     }

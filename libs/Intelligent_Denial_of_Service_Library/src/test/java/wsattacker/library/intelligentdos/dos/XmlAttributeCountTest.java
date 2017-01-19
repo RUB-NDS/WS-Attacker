@@ -247,7 +247,6 @@ public class XmlAttributeCountTest
 
         DoSAttack minimal = xmlAttributeCount.minimal();
         String tamperedRequest = minimal.getTamperedRequest( xml, payloadPosition );
-        System.out.println( tamperedRequest );
 
         assertThat( tamperedRequest, containsString( "><attackElement a0=\"0\" a1=\"1\" /><" ) );
     }

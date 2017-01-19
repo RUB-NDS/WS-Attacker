@@ -40,7 +40,6 @@ public class CoerciveParsingTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start CoerciveParsingTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new CoerciveParsing();
     }

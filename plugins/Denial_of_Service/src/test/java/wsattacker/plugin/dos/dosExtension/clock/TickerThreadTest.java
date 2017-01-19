@@ -34,7 +34,6 @@ public class TickerThreadTest
     @Test
     public void testRun()
     {
-        System.out.println( "run" );
         AttackModel model = new AttackModel();
         TickerThread instance = new TickerThread( model );
         assertNotNull( "New Clock Thread should be created and running", instance );

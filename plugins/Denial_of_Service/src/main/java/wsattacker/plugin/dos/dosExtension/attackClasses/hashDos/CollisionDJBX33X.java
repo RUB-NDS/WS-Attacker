@@ -116,8 +116,9 @@ public class CollisionDJBX33X
             br.close();
         }
         catch ( Exception e )
-        {// Catch exception if any
-            System.err.println( "Error: " + e.getMessage() );
+        {
+            // Catch exception if any
+            // Catch exception if any
         }
     }
 
@@ -201,7 +202,6 @@ public class CollisionDJBX33X
         {
             rest = divisor % 62;
             divisor = divisor / 62;
-            System.out.println( rest );
             output[count] = (byte) ABC.charAt( rest );
             count -= 1;
         }
@@ -298,7 +298,6 @@ public class CollisionDJBX33X
                         }
                         else
                         {
-                            System.out.println( "Already found Collision: " + s7Prefix + s3SuffixMatch );
                         }
                     }
                     else
@@ -311,7 +310,6 @@ public class CollisionDJBX33X
             }
 
             out.close();
-            System.out.println( "numberOfFoundCollisions: " + numberOfFoundCollisions );
         }
         catch ( IOException e )
         {

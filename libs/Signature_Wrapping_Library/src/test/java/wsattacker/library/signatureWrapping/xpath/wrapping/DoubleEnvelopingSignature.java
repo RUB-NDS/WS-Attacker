@@ -119,7 +119,6 @@ public class DoubleEnvelopingSignature
         int max = wrappingOracle.maxPossibilities();
         assertTrue( max > 0 );
 
-        System.out.println( "#POS = " + max );
         // for(int i=0; i<max; ++i) {
         // try {
         // System.out.println(String.format("Trying %6d of %d", i, max));

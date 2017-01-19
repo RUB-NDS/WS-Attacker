@@ -69,7 +69,6 @@ public class DOSPostAnalyzeFunction
         {
             if ( dosResultFrame == null )
             {
-                System.err.println( "no ResultJFrame set..." );
             }
             return dosResultFrame;
         }

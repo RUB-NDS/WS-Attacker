@@ -107,7 +107,6 @@ public class BleichenbacherAttackerTest
         throws Exception
     {
 
-        System.out.println( "Bleichenbacher Attack test with a constant message" );
 
         // create an oracle and encrypt the message
 
@@ -142,7 +141,6 @@ public class BleichenbacherAttackerTest
         TestPKCS1PlaintextOracle oracle = new TestPKCS1PlaintextOracle( pubKey );
 
         int blockSize = pubKey.getModulus().bitLength() / 8;
-        System.out.println( blockSize );
         byte[] dummyKey = new byte[blockSize];
         Random r = new Random();
         r.nextBytes( dummyKey );

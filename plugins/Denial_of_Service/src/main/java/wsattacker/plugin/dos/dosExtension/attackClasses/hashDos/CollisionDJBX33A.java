@@ -84,13 +84,12 @@ public class CollisionDJBX33A
             endTime = System.nanoTime();
             final long duration = endTime - startTime;
             double d = duration / 1000000000.0;
-            System.out.println( "Runtime using DJBX33A creating n=" + numberAttributes + " collisions: " + d
-                + "seconds" );
 
         }
         catch ( Exception e )
-        {// Catch exception if any
-            System.err.println( "Error: " + e.getMessage() );
+        {
+            // Catch exception if any
+            // Catch exception if any
         }
     }
 

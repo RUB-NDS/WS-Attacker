@@ -39,7 +39,6 @@ public class Zip
     {
         try
         {
-            System.out.println( "Start generating zipfile" );
 
             // get a list of files from current directory
             File f = new File( inPath ); // "."

@@ -42,7 +42,6 @@ public class FindByteMethodTest
     public void testExecuteAttack()
         throws Exception
     {
-        System.out.println( "Execute Attack in the findByte Method" );
         TestCBCOracle oracle = new TestCBCOracle();
         byte[] encryptedData = oracle.encryptTestData( "abc".getBytes() );
         byte[] iv = Arrays.copyOf( encryptedData, 16 );

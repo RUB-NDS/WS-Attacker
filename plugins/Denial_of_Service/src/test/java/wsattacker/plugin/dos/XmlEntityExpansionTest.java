@@ -40,7 +40,6 @@ public class XmlEntityExpansionTest
     @BeforeClass
     public static void setUpClass()
     {
-        System.out.println( "Start XmlEntityExpansionTest" );
         t = new GenericDosPluginTest();
         attackPlugin = new XmlEntityExpansion();
     }

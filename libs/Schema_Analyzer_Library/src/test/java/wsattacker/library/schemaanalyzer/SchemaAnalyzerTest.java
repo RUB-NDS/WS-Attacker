@@ -167,7 +167,6 @@ public class SchemaAnalyzerTest
     public void testFindExpansionPoint_Soap11()
         throws Exception
     {
-        System.out.println( "findExpansionPoint" );
 
         // SoapTestDocument soap = new SoapTestDocument(URI_NS_SOAP_1_1);
         // Element fromHere = soap.getEnvelope();
@@ -202,7 +201,6 @@ public class SchemaAnalyzerTest
     public void testFindExpansionPoint_Soap12()
         throws Exception
     {
-        System.out.println( "findExpansionPoint" );
 
         // SoapTestDocument soap = new SoapTestDocument(URI_NS_SOAP_1_1);
         // Element fromHere = soap.getEnvelope();
@@ -346,7 +344,6 @@ public class SchemaAnalyzerTest
     public void testFindPossibleChildElements_Element()
         throws Exception
     {
-        System.out.println( "findPossibleChildElements: Envelope 11 (Element)" );
         Document doc = DomUtilities.readDocument( SOAP11_PATH_TO_EXPANDED_XML );
         Element envelope = doc.getDocumentElement();
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -368,7 +365,6 @@ public class SchemaAnalyzerTest
     public void testFindPossibleChildElements_Envelope11()
         throws Exception
     {
-        System.out.println( "findPossibleChildElements: Envlope 11 (String, String)" );
         String namespaceURI = URI_NS_SOAP_1_1;
         String localName = "Envelope";
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -387,7 +383,6 @@ public class SchemaAnalyzerTest
     public void testFindPossibleChildElements_SAML20()
         throws Exception
     {
-        System.out.println( "findPossibleChildElements: SAML 20" );
         String namespaceURI = URI_NS_SAML20P;
         String localName = "Response";
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -409,7 +404,6 @@ public class SchemaAnalyzerTest
     public void testFindComplexTypeInSchema()
         throws Exception
     {
-        System.out.println( "findComplexTypeInSchema: Response" );
         String namespaceURI = URI_NS_SAML20P;
         String elementTypeLocalName = "ResponseType";
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -429,7 +423,6 @@ public class SchemaAnalyzerTest
     public void testFindElementInSchema()
         throws Exception
     {
-        System.out.println( "findElementInSchema: Response" );
         String namespaceURI = URI_NS_SAML20P;
         String localName = "Response";
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -452,7 +445,6 @@ public class SchemaAnalyzerTest
     public void testDereferenceElement()
         throws Exception
     {
-        System.out.println( "dereferenceElement" );
         Element referringElement =
             (Element) DomUtilities.evaluateXPath( DOC_SAML20P, "//*[local-name()='element' and @ref='saml:Assertion']" ).get( 0 );
         SchemaAnalyzerImpl instance = new SchemaAnalyzerImpl();
@@ -471,7 +463,6 @@ public class SchemaAnalyzerTest
     public void testFindComplexTypeForElement()
         throws Exception
     {
-        System.out.println( "findComplexTypeForElement" );
         Element elementSchema =
             (Element) DomUtilities.evaluateXPath( DOC_SAML20P,
                                                   "/*[local-name()='schema']/*[local-name()='element' and @name='Response']" ).get( 0 );
@@ -491,7 +482,6 @@ public class SchemaAnalyzerTest
     public void testGetTargetNamespace()
         throws Exception
     {
-        System.out.println( "getTargetNamespace" );
         Element x =
             (Element) DomUtilities.evaluateXPath( DOC_SAML20P,
                                                   "/*[local-name()='schema']/*[local-name()='element' and @name='Response']" ).get( 0 );

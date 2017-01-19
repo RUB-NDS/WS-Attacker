@@ -224,7 +224,6 @@ public class CollisionDJBX
 
         Set<String> resultSet = createCollisions( numberCollisions, postfix, lookupMapHashBack );
 
-        System.out.println( "numberOfFoundCollisions: " + resultSet.size() );
 
         return resultSet;
     }

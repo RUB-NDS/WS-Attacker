@@ -143,7 +143,6 @@ public class XmlMessageSigner
             List<? extends Node> nl1 = DomUtilities.evaluateXPath(doc, "//*[local-name()=\"" + signatureParent + "\"]");
             List<? extends Node> nl2 = DomUtilities.evaluateXPath(doc, "//*[local-name()=\"" + signatureSibling + "\"]");
             System.out.println(nl1.get(0));
-            System.out.println(nl2.get(0));
             dsc.setParent(nl1.get(0));
             dsc.setNextSibling(nl2.get(0));
 
@@ -190,7 +189,6 @@ public class XmlMessageSigner
 
             // Validate the XMLSignature.
             boolean coreValidity = signature.validate( valContext );
-            System.out.println( "Signature " + i + "validity: " + coreValidity );
             if ( coreValidity == false )
             {
                 valid = false;

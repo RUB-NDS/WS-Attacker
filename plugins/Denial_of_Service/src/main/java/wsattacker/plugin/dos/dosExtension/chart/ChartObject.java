@@ -336,7 +336,6 @@ public class ChartObject
         }
         else
         {
-            System.out.println( "Invalid type" );
         }
 
         Date currentDate;

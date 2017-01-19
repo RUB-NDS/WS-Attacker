@@ -41,7 +41,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetTsSend()
     {
-        System.out.println( "getTsSend" );
         long expResult = 100;
         long result = instance.getTsSend();
         assertEquals( expResult, result );
@@ -53,7 +52,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetTsSend()
     {
-        System.out.println( "setTsSend" );
         long tsSend = 100L;
         instance.setTsSend( tsSend );
     }
@@ -64,7 +62,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetTsReceived()
     {
-        System.out.println( "getTsReceived" );
         long expResult = 200L;
         long result = instance.getTsReceived();
         assertEquals( expResult, result );
@@ -76,7 +73,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetTsReceived()
     {
-        System.out.println( "setTsReceived" );
         long tsReceived = 200L;
         instance.setTsReceived( tsReceived );
     }
@@ -87,7 +83,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetDuration()
     {
-        System.out.println( "getDuration" );
         long expResult = 100L;
         long result = instance.getDuration();
         assertEquals( expResult, result );
@@ -99,7 +94,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetDuration()
     {
-        System.out.println( "setDuration" );
         long duration = 100L;
         instance.setDuration( duration );
     }
@@ -110,7 +104,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetThreadNumber()
     {
-        System.out.println( "getThreadNumber" );
         int expResult = 10;
         int result = instance.getThreadNumber();
         assertEquals( expResult, result );
@@ -122,7 +115,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetThreadNumber()
     {
-        System.out.println( "setThreadNumber" );
         int threadNumber = 10;
         instance.setThreadNumber( threadNumber );
     }
@@ -133,7 +125,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetFaultFlag()
     {
-        System.out.println( "getFaultFlag" );
         boolean expResult = false;
         boolean result = instance.getFaultFlag();
         assertEquals( expResult, result );
@@ -142,7 +133,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetErrorFlag()
     {
-        System.out.println( "getErrorFlag" );
         boolean expResult = false;
         boolean result = instance.getErrorFlag();
         assertEquals( expResult, result );
@@ -154,7 +144,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetFaultFlag()
     {
-        System.out.println( "setFaultFlag" );
         boolean faultFlag = false;
         instance.setFaultFlag( faultFlag );
     }
@@ -165,7 +154,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetResponseString()
     {
-        System.out.println( "getResponseString" );
         String expResult = "test";
         String result = instance.getResponseString();
         assertEquals( expResult, result );
@@ -177,7 +165,6 @@ public class LogEntryRequestTest
     @Test
     public void testGetResponseStringCsv()
     {
-        System.out.println( "getResponseStringCsv" );
         String expResult = "test";
         String result = instance.getResponseStringCsv();
         assertEquals( expResult, result );
@@ -189,7 +176,6 @@ public class LogEntryRequestTest
     @Test
     public void testSetResponseString()
     {
-        System.out.println( "setResponseString" );
         String responseString = "test";
         instance.setResponseString( responseString );
     }
