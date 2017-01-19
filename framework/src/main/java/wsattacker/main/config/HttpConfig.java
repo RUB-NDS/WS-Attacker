@@ -37,7 +37,7 @@ public class HttpConfig
 
     public String getProxyHost()
     {
-        return SoapUI.getSettings().getString(ProxySettings.HOST, "");
+        return SoapUI.getSettings().getString( ProxySettings.HOST, "" );
     }
 
     public void setProxyHost( String httpProxyHost )
@@ -55,7 +55,7 @@ public class HttpConfig
         {
             System.setProperty( "http.proxyHost", httpProxyHost );
             System.setProperty( "https.proxyHost", httpProxyHost );
-            settings.setString(ProxySettings.HOST, httpProxyHost );
+            settings.setString( ProxySettings.HOST, httpProxyHost );
             ProxyUtils.setProxyEnabled( true );
         }
         ProxyUtils.setGlobalProxy( settings );
@@ -64,7 +64,7 @@ public class HttpConfig
 
     public String getProxyPort()
     {
-        return SoapUI.getSettings().getString(ProxySettings.PORT, "");
+        return SoapUI.getSettings().getString( ProxySettings.PORT, "" );
     }
 
     public void setProxyPort( String httpProxyPort )

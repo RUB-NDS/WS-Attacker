@@ -32,11 +32,13 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import org.apache.http.HttpHost;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
@@ -47,6 +49,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import wsattacker.library.intelligentdos.common.RequestObject;
+import wsattacker.main.Preferences;
+import wsattacker.main.config.HttpConfig;
 
 public class Http4RequestSenderImpl
 {
@@ -188,6 +192,13 @@ public class Http4RequestSenderImpl
         params.setParameter( "http.connection.timeout", timeout );
         params.setParameter( "http.connection-manager.max-per-host", 3000 );
         params.setParameter( "http.connection-manager.max-total", 3000 );
+
+        final HttpConfig httpConfig = Preferences.getInstance().getHttpConfig();
+        if ( !httpConfig.getProxyHost().isEmpty() && !httpConfig.getProxyPort().isEmpty() )
+        {
+            HttpHost proxy = new HttpHost( httpConfig.getProxyHost(), Integer.parseInt( httpConfig.getProxyPort() ) );
+            params.setParameter( ConnRoutePNames.DEFAULT_PROXY, proxy );
+        }
 
         HttpConnectionParams.setConnectionTimeout( params, timeout );
         HttpConnectionParams.setSoTimeout( params, timeout );

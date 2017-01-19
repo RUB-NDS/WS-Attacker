@@ -39,7 +39,8 @@ public class Configuration
      */
     @SuppressWarnings( "unchecked" )
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         preferences = wsattacker.main.Preferences.getInstance();
@@ -49,67 +50,70 @@ public class Configuration
         httpProxyPortLabel = new javax.swing.JLabel();
         httpProxyPortValue = new javax.swing.JTextField();
 
-        setName("Configuration"); // NOI18N
+        setName( "Configuration" ); // NOI18N
 
-        soapHttpClientConfigurationLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        soapHttpClientConfigurationLabel.setText("SOAP HTTP Client Configuration");
+        soapHttpClientConfigurationLabel.setFont( new java.awt.Font( "Dialog", 1, 14 ) ); // NOI18N
+        soapHttpClientConfigurationLabel.setText( "SOAP HTTP Client Configuration" );
 
-        httpProxyHostLabel.setText("Proxy Host");
+        httpProxyHostLabel.setText( "Proxy Host" );
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, preferences, org.jdesktop.beansbinding.ELProperty.create("${httpConfig.proxyHost}"), httpProxyHostValue, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
+        org.jdesktop.beansbinding.Binding binding =
+            org.jdesktop.beansbinding.Bindings.createAutoBinding( org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+                                                                  preferences,
+                                                                  org.jdesktop.beansbinding.ELProperty.create( "${httpConfig.proxyHost}" ),
+                                                                  httpProxyHostValue,
+                                                                  org.jdesktop.beansbinding.BeanProperty.create( "text" ) );
+        bindingGroup.addBinding( binding );
 
-        httpProxyPortLabel.setText("Proxy Port");
+        httpProxyPortLabel.setText( "Proxy Port" );
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, preferences, org.jdesktop.beansbinding.ELProperty.create("${httpConfig.proxyPort}"), httpProxyPortValue, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
+        binding =
+            org.jdesktop.beansbinding.Bindings.createAutoBinding( org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+                                                                  preferences,
+                                                                  org.jdesktop.beansbinding.ELProperty.create( "${httpConfig.proxyPort}" ),
+                                                                  httpProxyPortValue,
+                                                                  org.jdesktop.beansbinding.BeanProperty.create( "text" ) );
+        bindingGroup.addBinding( binding );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(httpProxyPortLabel)
-                            .addComponent(httpProxyHostLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(httpProxyHostValue, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(httpProxyPortValue, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(soapHttpClientConfigurationLabel)))
-                .addContainerGap(121, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(soapHttpClientConfigurationLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(httpProxyHostLabel)
-                    .addComponent(httpProxyHostValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(httpProxyPortLabel)
-                    .addComponent(httpProxyPortValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(317, Short.MAX_VALUE))
-        );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
+        this.setLayout( layout );
+        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createSequentialGroup().addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createSequentialGroup().addGap( 20,
+                                                                                                                                                                                                                                                                                       20,
+                                                                                                                                                                                                                                                                                       20 ).addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( httpProxyPortLabel ).addComponent( httpProxyHostLabel ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( httpProxyHostValue,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            171,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent( httpProxyPortValue,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   171,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   javax.swing.GroupLayout.PREFERRED_SIZE ) ) ).addGroup( layout.createSequentialGroup().addGap( 12,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 12,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 12 ).addComponent( soapHttpClientConfigurationLabel ) ) ).addContainerGap( 121,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Short.MAX_VALUE ) ) );
+        layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup( layout.createSequentialGroup().addContainerGap().addComponent( soapHttpClientConfigurationLabel ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( httpProxyHostLabel ).addComponent( httpProxyHostValue,
+                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                               javax.swing.GroupLayout.PREFERRED_SIZE ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( httpProxyPortLabel ).addComponent( httpProxyPortValue,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    javax.swing.GroupLayout.PREFERRED_SIZE ) ).addContainerGap( 317,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Short.MAX_VALUE ) ) );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel httpProxyHostLabel;
+
     private javax.swing.JTextField httpProxyHostValue;
+
     private javax.swing.JLabel httpProxyPortLabel;
+
     private javax.swing.JTextField httpProxyPortValue;
+
     private wsattacker.main.Preferences preferences;
+
     private javax.swing.JLabel soapHttpClientConfigurationLabel;
+
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

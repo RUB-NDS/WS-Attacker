@@ -80,8 +80,8 @@ public class SoapHttpClient
 
     private void setConfigProxy()
     {
-        final String[] protocols = { "http", "https" };
-        for ( String protocol : protocols )
+        final String protocol = post.getURI().getScheme();
+        if ( "http".equals( protocol ) || "https".equals( protocol ) )
         {
             final String httpProxyHost = System.getProperty( protocol + ".proxyHost" );
             final String proxyPortAsString = System.getProperty( protocol + ".proxyPort" );

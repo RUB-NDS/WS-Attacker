@@ -33,6 +33,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import wsattacker.main.Preferences;
+import wsattacker.main.config.HttpConfig;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
@@ -89,9 +91,11 @@ public class Http4RequestSenderImpl
             HttpClient client = new DefaultHttpClient();
             setParamsToClient( client );
 
-            if ( useProxy )
+            final HttpConfig httpConfig = Preferences.getInstance().getHttpConfig();
+            if ( !httpConfig.getProxyHost().isEmpty() && !httpConfig.getProxyPort().isEmpty() )
             {
-                HttpHost proxy = new HttpHost( "sbrproxy1.eur.ad.sag", 3103 );
+                HttpHost proxy =
+                    new HttpHost( httpConfig.getProxyHost(), Integer.parseInt( httpConfig.getProxyPort() ) );
                 client.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxy );
             }
 

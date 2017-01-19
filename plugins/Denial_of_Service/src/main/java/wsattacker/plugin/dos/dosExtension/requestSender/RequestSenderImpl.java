@@ -33,10 +33,12 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
@@ -45,6 +47,8 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
+import wsattacker.main.Preferences;
+import wsattacker.main.config.HttpConfig;
 
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
@@ -258,6 +262,14 @@ public class RequestSenderImpl
             httpClient.getParams().setParameter( "http.connection-manager.max-total", new Integer( 3000 ) );
             // > params.setDefaultMaxConnectionsPerHost(3000);
             // > params.setMaxTotalConnections(3000);
+
+            final HttpConfig httpConfig = Preferences.getInstance().getHttpConfig();
+            if ( !httpConfig.getProxyHost().isEmpty() && !httpConfig.getProxyPort().isEmpty() )
+            {
+                HttpHost proxy =
+                    new HttpHost( httpConfig.getProxyHost(), Integer.parseInt( httpConfig.getProxyPort() ) );
+                httpClient.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxy );
+            }
 
             beforeSend = System.nanoTime();
 
