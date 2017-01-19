@@ -93,8 +93,7 @@ public class CollisionDJBX31A
             endTime = System.nanoTime();
             final long duration = endTime - startTime;
             double d = duration / 1000000000.0;
-            logger.log( Level.FINE, "Runtime using DJBX31A creating n=" + numberAttributes + " collisions: " + d
-                + "seconds" );
+            logger.log(Level.FINE, "Runtime using DJBX31A creating n={0} collisions: {1}seconds", new Object[]{numberAttributes, d});
 
         }
         catch ( Exception e )
