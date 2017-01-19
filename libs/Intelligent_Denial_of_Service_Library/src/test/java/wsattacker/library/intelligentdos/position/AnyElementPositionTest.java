@@ -18,6 +18,7 @@
  */
 package wsattacker.library.intelligentdos.position;
 
+import javax.xml.XMLConstants;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -86,6 +87,7 @@ public class AnyElementPositionTest
         throws ParserConfigurationException
     {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         // root elements
         Document doc = docBuilder.newDocument();

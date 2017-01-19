@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.xml.XMLConstants;
 import javax.xml.crypto.AlgorithmMethod;
 import javax.xml.crypto.KeySelector;
 import javax.xml.crypto.KeySelectorException;
@@ -126,6 +127,7 @@ public class XmlMessageSigner
 
             // Instantiate the document to be signed.
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             dbf.setNamespaceAware(true);
             Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(message.getBytes()));
 

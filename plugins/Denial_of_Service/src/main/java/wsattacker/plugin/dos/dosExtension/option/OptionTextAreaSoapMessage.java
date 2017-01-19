@@ -24,6 +24,7 @@ import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.main.composition.plugin.option.AbstractOptionString;
 import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
 import wsattacker.main.composition.testsuite.CurrentRequestObserver;
@@ -200,7 +201,7 @@ public class OptionTextAreaSoapMessage
         }
 
         // replace valid placeholder Nodes with placeholder strings
-        preSoapMessage = SoapUtilities.domToString( doc );
+        preSoapMessage = DomUtilities.domToString( doc );
         preSoapMessage = preSoapMessage.replace( "PAYLOAD=\"PAYLOAD\"", "$$PAYLOADATTR$$" );
         preSoapMessage = preSoapMessage.replace( "<PAYLOADELEMENT/>", "$$PAYLOADELEMENT$$" );
 

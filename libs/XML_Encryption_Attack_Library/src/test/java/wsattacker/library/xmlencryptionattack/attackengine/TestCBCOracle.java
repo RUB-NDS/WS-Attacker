@@ -24,6 +24,7 @@ import java.util.Random;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.log4j.Logger;
@@ -132,6 +133,7 @@ public class TestCBCOracle
 
             // Get the DOM Builder Factory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
 
             // Get the DOM Builder
             DocumentBuilder builder = factory.newDocumentBuilder();

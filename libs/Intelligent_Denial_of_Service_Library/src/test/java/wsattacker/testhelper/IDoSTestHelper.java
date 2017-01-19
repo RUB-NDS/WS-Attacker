@@ -23,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.StringReader;
+import javax.xml.XMLConstants;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,6 +57,7 @@ public class IDoSTestHelper
         throws ParserConfigurationException, SAXException, IOException
     {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
         InputSource is = new InputSource( new StringReader( template ) );
@@ -68,6 +70,7 @@ public class IDoSTestHelper
         throws ParserConfigurationException
     {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
         InputSource is = new InputSource( new StringReader( template ) );

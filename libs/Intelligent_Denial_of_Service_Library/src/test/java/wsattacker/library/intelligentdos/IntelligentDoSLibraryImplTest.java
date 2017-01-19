@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.XMLConstants;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -379,7 +380,9 @@ public class IntelligentDoSLibraryImplTest
     private String output( Document toAnalyze )
         throws TransformerException
     {
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        final TransformerFactory tf = TransformerFactory.newInstance();
+        tf.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+        Transformer transformer = tf.newTransformer();
         transformer.setOutputProperty( OutputKeys.INDENT, "yes" );
         transformer.setOutputProperty( "{http://xml.apache.org/xslt}indent-amount", "2" );
         // initialize StreamResult with File object to save to file
