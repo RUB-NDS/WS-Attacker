@@ -69,11 +69,11 @@ public class GuiController
         this.pluginManager = PluginManager.getInstance();
         reloadPlugins();
 
-        // create a new test suite
-        this.testSuite = TestSuite.getInstance();
-
         // preferences
         this.prefs = Preferences.getInstance();
+
+        // create a new test suite
+        this.testSuite = TestSuite.getInstance();
 
         // no thread
         this.runThread = new Thread();
