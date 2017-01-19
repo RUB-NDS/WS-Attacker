@@ -25,7 +25,7 @@
     <parent>
         <groupId>wsattacker.plugin</groupId>
         <artifactId>wsattacker-plugins</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
     </parent>
 
     <dependencies>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>wsattacker.framework</groupId>
             <artifactId>wsattacker-framework</artifactId>
-            <version>1.8-SNAPSHOT</version>
+            <version>1.8</version>
             <exclusions>
                 <exclusion>
                     <groupId>wsattacker.library</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>SoapHttpClient</artifactId>
-            <version>1.8-SNAPSHOT</version>
+            <version>1.8</version>
         </dependency>
     </dependencies>
 
