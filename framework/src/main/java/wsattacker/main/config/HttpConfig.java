@@ -43,7 +43,7 @@ public class HttpConfig
     public void setHttpProxyHost( String httpProxyHost )
     {
         String oldHttpProxyHost = getHttpProxyHost();
-        System.setProperty( "http.proxyHost", httpProxyHost );
+        setProperty("http.proxyHost", httpProxyHost );
         firePropertyChange( PROP_HTTPPROXYHOST, oldHttpProxyHost, httpProxyHost );
     }
 
@@ -55,7 +55,7 @@ public class HttpConfig
     public void setHttpProxyPort( String httpProxyPort )
     {
         String oldHttpProxyPort = getHttpProxyPort();
-        System.setProperty( "http.proxyPort", httpProxyPort );
+        setProperty( "http.proxyPort", httpProxyPort );
         firePropertyChange( PROP_HTTPPROXYPORT, oldHttpProxyPort, httpProxyPort );
     }
 
@@ -67,7 +67,7 @@ public class HttpConfig
     public void setHttpsProxyHost( String httpsProxyHost )
     {
         String oldHttpsProxyHost = getHttpsProxyHost();
-        System.setProperty( "https.proxyHost", httpsProxyHost );
+        setProperty( "https.proxyHost", httpsProxyHost );
         firePropertyChange( PROP_HTTPSPROXYHOST, oldHttpsProxyHost, httpsProxyHost );
     }
 
@@ -79,8 +79,16 @@ public class HttpConfig
     public void setHttpsProxyPort( String httpsProxyPort )
     {
         String oldHttpsProxyPort = getHttpsProxyPort();
-        System.setProperty( "https.proxyPort", httpsProxyPort );
+        setProperty( "https.proxyPort", httpsProxyPort );
         firePropertyChange( PROP_HTTPSPROXYPORT, oldHttpsProxyPort, httpsProxyPort );
+    }
+
+    private void setProperty(String name, String value) {
+        if (value == null || value.isEmpty()) {
+            System.clearProperty(name);
+        } else {
+            System.setProperty( name, value );
+        }
     }
 
 }
