@@ -230,7 +230,6 @@ public class AxisAnalyserTest
         assertNotNull( ax.getAxisName() );
         assertEquals( "child", ax.getAxisName().toFullString() );
         assertNotNull( ax.getNodeType() );
-        ;
         assertEquals( new NodeType( "*" ), ax.getNodeType().getNodeType() );
         assertEquals( "node", ax.getNodeType().getNodeTypeName() );
         assertEquals( "", ax.getNodeType().getNodeTypeArguments() );

@@ -308,7 +308,6 @@ public class XmlAttributeCount
         super.initialize();
 
         numberOfAttributes.reset();
-        ;
         namesIterator = Arrays.asList( names ).iterator();
     }
 

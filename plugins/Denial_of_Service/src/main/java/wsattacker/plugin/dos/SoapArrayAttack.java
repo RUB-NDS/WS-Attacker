@@ -118,7 +118,6 @@ public class SoapArrayAttack
 
             // get last part of message and remove previous array length
             String lastPart = stringSOAPMessage.substring( lengthFirstpart, stringSOAPMessage.length() );
-            ;
             String regex2 = "^[0-9]*\\x5D";
             Pattern p2 = Pattern.compile( regex2 );
             Matcher m2 = p2.matcher( lastPart );

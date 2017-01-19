@@ -396,7 +396,6 @@ public class WsAddressingSpoofing
             + XmlUtils.prettyPrintXml( attackRequest.getRequestContent() ) );
 
         WsdlSubmit<WsdlRequest> submit = null;
-        ;
         try
         {
             submit = attackRequest.submit( new WsdlSubmitContext( attackRequest ), true );

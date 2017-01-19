@@ -166,11 +166,9 @@ public class Http4RequestSenderImpl
         }
         catch ( RuntimeException e )
         {
-            ;
         }
         catch ( Exception e )
         {
-            ;
         }
 
         return null;
