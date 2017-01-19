@@ -25,19 +25,19 @@
     <parent>
         <groupId>wsattacker.plugin</groupId>
         <artifactId>wsattacker-plugins</artifactId>
-        <version>1.8</version>
+        <version>1.9-SNAPSHOT</version>
     </parent>
 
     <dependencies>
     	<dependency>
             <groupId>wsattacker.plugin</groupId>
             <artifactId>Denial_of_Service</artifactId>
-            <version>1.8</version>
+            <version>1.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>wsattacker.library</groupId>
             <artifactId>Intelligent_Denial_of_Service_Library</artifactId>
-            <version>1.8</version>
+            <version>1.9-SNAPSHOT</version>
         </dependency>
         
         <dependency>

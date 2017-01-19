@@ -26,25 +26,25 @@
 	<parent>
 		<groupId>wsattacker.library</groupId>
 		<artifactId>wsattacker-libraries</artifactId>
-		<version>1.8</version>
+		<version>1.9-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
                 <dependency>
                     <groupId>wsattacker.plugin</groupId>
                     <artifactId>Denial_of_Service</artifactId>
-                    <version>1.8</version>
+                    <version>1.9-SNAPSHOT</version>
                     <scope>provided</scope>
                 </dependency>
 		<dependency>
 			<groupId>wsattacker.library</groupId>
 			<artifactId>XML_Utilities_Library</artifactId>
-			<version>1.8</version>
+			<version>1.9-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>wsattacker.library</groupId>
 			<artifactId>Schema_Analyzer_Library</artifactId>
-			<version>1.8</version>
+			<version>1.9-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
