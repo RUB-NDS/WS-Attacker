@@ -300,7 +300,7 @@ public final class OptionManagerEncryption
             log().info( "Adding OptionSoapAction" );
             newOptions.add( 0, m_OptionSoapAction );
             log().info( "Adding OptionNoSchema" );
-            newOptions.add(1, m_OptionUseSchema );
+            newOptions.add( 1, m_OptionUseSchema );
             log().info( "Adding OptionSchemaFiles" );
             newOptions.add( 2, m_OptionSchemaFiles );
             if ( m_OptionPayloadList.size() > 0 )
@@ -320,7 +320,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     *
+     * 
      * @param needle
      * @return
      */
@@ -350,7 +350,7 @@ public final class OptionManagerEncryption
      * This function is only needed due to a GUI Bug in WS-Attacker which does not allow to put an AbstractOption at a
      * specific position. With this function, you can pop AbstractOptions up to one specific one, than add the needed
      * Options, and afterwards re-add the popped one putOptions.
-     *
+     * 
      * @param needle
      * @return
      */
@@ -411,7 +411,7 @@ public final class OptionManagerEncryption
             else if ( !container.contains( m_OptionSchemaFiles ) )
             {
                 log().info( "Add Schema Files Option" );
-                container.add(1 + container.indexOf(m_OptionUseSchema ), m_OptionSchemaFiles );
+                container.add( 1 + container.indexOf( m_OptionUseSchema ), m_OptionSchemaFiles );
             }
         }
         getPlugin().checkState();
