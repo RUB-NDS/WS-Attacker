@@ -18,6 +18,10 @@
  */
 package wsattacker.main.config;
 
+import com.eviware.soapui.SoapUI;
+import com.eviware.soapui.impl.wsdl.support.http.ProxyUtils;
+import com.eviware.soapui.model.settings.Settings;
+import com.eviware.soapui.settings.ProxySettings;
 import org.jdesktop.beans.AbstractBean;
 
 /**
@@ -43,7 +47,7 @@ public class HttpConfig
     public void setHttpProxyHost( String httpProxyHost )
     {
         String oldHttpProxyHost = getHttpProxyHost();
-        setProperty("http.proxyHost", httpProxyHost );
+        setProxyProperty("http.proxyHost", httpProxyHost );
         firePropertyChange( PROP_HTTPPROXYHOST, oldHttpProxyHost, httpProxyHost );
     }
 
@@ -55,7 +59,7 @@ public class HttpConfig
     public void setHttpProxyPort( String httpProxyPort )
     {
         String oldHttpProxyPort = getHttpProxyPort();
-        setProperty( "http.proxyPort", httpProxyPort );
+        setProxyProperty( "http.proxyPort", httpProxyPort );
         firePropertyChange( PROP_HTTPPROXYPORT, oldHttpProxyPort, httpProxyPort );
     }
 
@@ -67,7 +71,7 @@ public class HttpConfig
     public void setHttpsProxyHost( String httpsProxyHost )
     {
         String oldHttpsProxyHost = getHttpsProxyHost();
-        setProperty( "https.proxyHost", httpsProxyHost );
+        setProxyProperty( "https.proxyHost", httpsProxyHost );
         firePropertyChange( PROP_HTTPSPROXYHOST, oldHttpsProxyHost, httpsProxyHost );
     }
 
@@ -79,16 +83,34 @@ public class HttpConfig
     public void setHttpsProxyPort( String httpsProxyPort )
     {
         String oldHttpsProxyPort = getHttpsProxyPort();
-        setProperty( "https.proxyPort", httpsProxyPort );
+        setProxyProperty( "https.proxyPort", httpsProxyPort );
         firePropertyChange( PROP_HTTPSPROXYPORT, oldHttpsProxyPort, httpsProxyPort );
     }
 
-    private void setProperty(String name, String value) {
+    private void setProxyProperty(String name, String value) {
+        final Settings settings = SoapUI.getSettings();
         if (value == null || value.isEmpty()) {
             System.clearProperty(name);
+            settings.setBoolean(ProxySettings.ENABLE_PROXY, false);
+            ProxyUtils.setProxyEnabled(false);
         } else {
             System.setProperty( name, value );
+            
+            settings.setBoolean(ProxySettings.ENABLE_PROXY, true);
+            switch(name) {
+                case "http.proxyHost":
+                case "https.proxyHost":
+                    settings.setString(ProxySettings.HOST, value);
+                    break;
+                case "http.proxyPort":
+                case "https.proxyPort":
+                    settings.setLong(ProxySettings.PORT, Long.parseLong(value));
+                    break;
+                    
+            }
+            ProxyUtils.setProxyEnabled(true);
         }
+        ProxyUtils.setGlobalProxy(settings);
     }
 
 }
