@@ -20,8 +20,6 @@ package wsattacker.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,26 +27,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.Node;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class SoapUtilities
 {
@@ -118,7 +105,7 @@ public class SoapUtilities
     public static String soapToString( SOAPElement element )
     {
         // use the dom hepler function
-        return domToString( element.getOwnerDocument() );
+        return DomUtilities.domToString( element.getOwnerDocument() );
     }
 
     /**
@@ -132,77 +119,7 @@ public class SoapUtilities
     public static Document stringToDom( String xmlString )
         throws SAXException
     {
-        return stringToDom( xmlString, false );
-    }
-
-    /**
-     * Converts a String to a DOM. Sometimes, you might prefer DOM to SOAPElement.
-     * 
-     * @param xmlString
-     * @param useNamespaces : Should the returned Document contain namespace prefixes?
-     * @return
-     * @throws SAXException
-     */
-    public static Document stringToDom( String xmlString, boolean useNamespaces )
-        throws SAXException
-    {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware( useNamespaces );
-        StringReader reader = new StringReader( xmlString );
-        InputSource input = new InputSource( reader );
-        DocumentBuilder builder;
-        try
-        {
-            builder = factory.newDocumentBuilder();
-        }
-        catch ( ParserConfigurationException e )
-        {
-            log.fatal( "### Error - this should never happen: " + e.getMessage() );
-            return null;
-        }
-        Document dom;
-        try
-        {
-            dom = builder.parse( input );
-        }
-        catch ( IOException e )
-        {
-            log.fatal( "### Error - this should never happen: " + e.getMessage() );
-            return null;
-        }
-        return dom;
-    }
-
-    /**
-     * Converts a DOM to a String
-     * 
-     * @param domDoc
-     * @return
-     */
-    public static String domToString( Document domDoc )
-    {
-        StringWriter output = new StringWriter();
-        Transformer transformer = null;
-        try
-        {
-            transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty( OutputKeys.OMIT_XML_DECLARATION, "yes" );
-            transformer.transform( new DOMSource( domDoc ), new StreamResult( output ) );
-        }
-        catch ( TransformerConfigurationException e )
-        {
-            log.fatal( "### Error - Misconfigured Transformer Configuration, this should never happen: "
-                + e.getMessage() );
-        }
-        catch ( TransformerFactoryConfigurationError e )
-        {
-            log.fatal( "### Error - Misconfigured Transformer Factory, this should never happen: " + e.getMessage() );
-        }
-        catch ( TransformerException e )
-        {
-            log.fatal( "### Error - Illegal Input, this should never happen: " + e.getMessage() );
-        }
-        return output.toString();
+        return DomUtilities.stringToDom( xmlString, false );
     }
 
     /**

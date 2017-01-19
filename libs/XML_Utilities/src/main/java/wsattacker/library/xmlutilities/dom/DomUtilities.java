@@ -457,9 +457,17 @@ public final class DomUtilities
     public static Document stringToDom( String xmlString )
         throws SAXException
     {
+        return stringToDom( xmlString, true );
+    }
+
+    // *****************************************************************
+    // String/DOM Conversation
+    public static Document stringToDom( String xmlString, boolean namespaceAwareness )
+        throws SAXException
+    {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
-        factory.setNamespaceAware( true );
+        factory.setNamespaceAware( namespaceAwareness );
         try
         {
             factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );

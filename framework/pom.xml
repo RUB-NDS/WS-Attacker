@@ -90,6 +90,11 @@
             <artifactId>SoapHttpClient</artifactId>
             <version>1.8-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>wsattacker.library</groupId>
+            <artifactId>XML_Utilities_Library</artifactId>
+            <version>1.8-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
