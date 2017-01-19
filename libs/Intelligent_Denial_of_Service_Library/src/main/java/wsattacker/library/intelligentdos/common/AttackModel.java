@@ -18,17 +18,15 @@
  */
 package wsattacker.library.intelligentdos.common;
 
+import com.google.common.collect.ImmutableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;
 import wsattacker.library.intelligentdos.position.Position;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * @author Christian Altmeier

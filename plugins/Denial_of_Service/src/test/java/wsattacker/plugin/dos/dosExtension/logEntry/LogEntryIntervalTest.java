@@ -18,8 +18,8 @@
  */
 package wsattacker.plugin.dos.dosExtension.logEntry;
 
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * @author ianyo

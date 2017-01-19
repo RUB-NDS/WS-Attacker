@@ -24,7 +24,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -34,9 +33,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.commons.lang3.StringUtils;
-
 import wsattacker.library.intelligentdos.helper.CommonParamItem;
 import wsattacker.plugin.intelligentdos.ui.helper.CommonParamTableModel;
 import wsattacker.plugin.intelligentdos.ui.helper.JTextFieldInteger;

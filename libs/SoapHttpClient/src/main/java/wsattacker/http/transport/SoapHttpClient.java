@@ -20,7 +20,6 @@ package wsattacker.http.transport;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
-import com.eviware.soapui.impl.wsdl.support.http.HttpClientSupport;
 import com.eviware.soapui.support.types.StringToStringsMap;
 import java.io.*;
 import java.util.*;

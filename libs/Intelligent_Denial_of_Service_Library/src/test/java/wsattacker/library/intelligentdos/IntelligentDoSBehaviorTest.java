@@ -18,20 +18,18 @@
  */
 package wsattacker.library.intelligentdos;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 import wsattacker.library.intelligentdos.common.Threshold;
 import wsattacker.library.intelligentdos.dos.CoerciveParsing;
@@ -59,8 +57,6 @@ import wsattacker.testhelper.MetricOracle;
 import wsattacker.testhelper.MetricOracleImpl.MetricOracleBuilder;
 import wsattacker.testhelper.RecordedMetricOracle;
 import wsattacker.testhelper.SABuilder;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

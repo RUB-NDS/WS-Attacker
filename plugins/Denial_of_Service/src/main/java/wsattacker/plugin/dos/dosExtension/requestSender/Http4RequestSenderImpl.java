@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -35,7 +34,6 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import wsattacker.main.Preferences;
 import wsattacker.main.config.HttpConfig;
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 public class Http4RequestSenderImpl

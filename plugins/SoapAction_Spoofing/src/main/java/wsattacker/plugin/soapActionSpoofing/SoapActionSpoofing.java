@@ -49,8 +49,8 @@ import wsattacker.main.composition.testsuite.RequestResponsePair;
 import wsattacker.main.plugin.PluginState;
 import wsattacker.main.plugin.option.OptionSimpleBoolean;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;
-import wsattacker.main.testsuite.TestSuite;
 import wsattacker.main.plugin.option.OptionSoapAction;
+import wsattacker.main.testsuite.TestSuite;
 import wsattacker.util.SoapUtilities;
 import wsattacker.util.SortedUniqueList;
 

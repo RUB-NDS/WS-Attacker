@@ -26,16 +26,15 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import wsattacker.library.xmlencryptionattack.encryptedelements.CipherValueElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
-import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElementTest;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.URI_NS_ENC;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 

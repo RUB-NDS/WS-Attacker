@@ -27,12 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;

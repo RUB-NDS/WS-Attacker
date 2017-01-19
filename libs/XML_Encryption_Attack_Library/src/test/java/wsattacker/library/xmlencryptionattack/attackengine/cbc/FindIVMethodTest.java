@@ -18,11 +18,11 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.cbc;
 
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethod;
 import java.util.Arrays;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import wsattacker.library.xmlencryptionattack.attackengine.TestCBCOracle;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethod;
 
 /**
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de

@@ -18,7 +18,6 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.cbc;
 
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCVectorGenerator;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,6 +25,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCVectorGenerator;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.util.CryptoConstants;
 

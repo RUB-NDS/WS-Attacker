@@ -33,19 +33,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerImpl;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerImpl;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 public class WrappingOracleTest
 {

@@ -18,13 +18,12 @@
  */
 package wsattacker.plugin.dos.dosExtension.requestSender;
 
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
-
 import com.eviware.soapui.impl.wsdl.WsdlOperation;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.impl.wsdl.WsdlSubmit;
 import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
 import com.eviware.soapui.model.iface.Request;
+import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
  * @author chal

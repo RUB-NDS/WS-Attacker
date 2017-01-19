@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.threads;
 
 import java.awt.EventQueue;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestObject;

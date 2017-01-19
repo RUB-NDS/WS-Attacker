@@ -18,8 +18,6 @@
  */
 package wsattacker.plugin.xmlencryptionattack;
 
-import wsattacker.library.xmlencryptionattack.attackengine.AttackManager;
-import wsattacker.library.xmlencryptionattack.avoidingengine.AvoidingManager;
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -27,34 +25,31 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.xmlencryptionattack.attackengine.AttackConfig;
+import wsattacker.library.xmlencryptionattack.attackengine.AttackManager;
 import wsattacker.library.xmlencryptionattack.attackengine.CryptoAttackException;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
-import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
-import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;
-import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AbstractDetectionInfo;
-import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import wsattacker.main.composition.plugin.AbstractPlugin;
-import wsattacker.main.composition.testsuite.RequestResponsePair;
-import wsattacker.main.plugin.PluginState;
-import wsattacker.main.testsuite.TestSuite;
-import org.xml.sax.SAXException;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
 import wsattacker.library.xmlencryptionattack.attackengine.Utility;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.error.OracleErrorBehaviour;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.cbc.CBCOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.PKCS1Oracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.AbstractPKCS1Strategy;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory;
+import wsattacker.library.xmlencryptionattack.avoidingengine.AvoidingManager;
+import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.FactoryFilter;
+import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.concrete.AvoidedDocErrorFilter;
+import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AbstractDetectionInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AvoidedDocErrorInfo;
+import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackProperties;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;
 import wsattacker.library.xmlencryptionattack.util.HelperFunctions;
@@ -64,7 +59,12 @@ import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode.NO_WRAP;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.XMLEncryptionAttackMode;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.XMLEncryptionAttackMode.PKCS1_ATTACK;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import wsattacker.main.composition.plugin.AbstractPlugin;
+import wsattacker.main.composition.testsuite.RequestResponsePair;
+import wsattacker.main.plugin.PluginState;
+import wsattacker.main.testsuite.TestSuite;
 import wsattacker.plugin.xmlencryptionattack.option.OptionManagerEncryption;
 
 public class XMLEncryptionAttack

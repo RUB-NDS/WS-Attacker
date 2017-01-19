@@ -18,14 +18,11 @@
  */
 package wsattacker.library.intelligentdos.position;
 
+import java.util.NoSuchElementException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-
-import java.util.NoSuchElementException;
-
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 
 /**

@@ -18,16 +18,13 @@
  */
 package wsattacker.library.intelligentdos.common;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
-
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 
 /**

@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.signatureWrapping.option;
 
-import wsattacker.plugin.signatureWrapping.gui.OptionPayloadGUI_NB;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.apache.log4j.Logger;
@@ -27,6 +26,7 @@ import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.main.composition.plugin.option.AbstractOption;
+import wsattacker.plugin.signatureWrapping.gui.OptionPayloadGUI_NB;
 
 /**
  * The OptionPayload class hold gives a connection between the signed element and the payload element.

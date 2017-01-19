@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
@@ -36,7 +35,6 @@ import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestType;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;

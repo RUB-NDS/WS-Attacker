@@ -19,7 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.logEntry;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
 /**

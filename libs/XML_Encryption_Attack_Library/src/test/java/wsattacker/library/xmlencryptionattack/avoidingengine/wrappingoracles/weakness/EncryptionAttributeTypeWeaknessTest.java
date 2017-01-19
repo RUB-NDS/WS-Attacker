@@ -21,15 +21,14 @@ package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.we
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -38,7 +37,6 @@ import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
-import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.WrapModeEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectionManager;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.FactoryFilter;
@@ -51,7 +49,6 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenc
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.ENC_TYPE_CONTENT;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.ENC_TYPE_ELEMENT;
-import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.URI_NS_ENC;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
 

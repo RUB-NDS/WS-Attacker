@@ -32,10 +32,10 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessExcept
 import wsattacker.library.xmlencryptionattack.attackengine.AttackConfig;
 import wsattacker.library.xmlencryptionattack.attackengine.CryptoAttackException;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCVectorGenerator;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1VectorGenerator;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory.PKCS1Strategy;
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1VectorGenerator;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.EncryptedKeyRefWeakness;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;

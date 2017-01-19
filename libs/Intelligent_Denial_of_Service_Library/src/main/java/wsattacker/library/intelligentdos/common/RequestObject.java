@@ -18,12 +18,11 @@
  */
 package wsattacker.library.intelligentdos.common;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.support.types.StringToStringsMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.support.types.StringToStringsMap;
 
 public class RequestObject
 {

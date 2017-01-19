@@ -18,11 +18,9 @@
  */
 package wsattacker.library.intelligentdos.hashdos;
 
+import java.util.Set;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-
-import java.util.Set;
-
 import org.junit.Test;
 
 /**

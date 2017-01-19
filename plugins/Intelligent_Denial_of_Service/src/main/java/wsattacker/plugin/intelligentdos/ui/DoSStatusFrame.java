@@ -20,9 +20,7 @@ package wsattacker.plugin.intelligentdos.ui;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.JProgressBar;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.plugin.intelligentdos.listener.AttackModelChangeListener;
 import wsattacker.plugin.intelligentdos.ui.helper.FormatHelper;

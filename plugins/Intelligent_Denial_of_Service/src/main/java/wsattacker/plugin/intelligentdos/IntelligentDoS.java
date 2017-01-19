@@ -19,14 +19,10 @@
 package wsattacker.plugin.intelligentdos;
 
 import java.net.URL;
-import static wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin.MESSAGE;
-
 import java.util.List;
 import javax.swing.ImageIcon;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.IntelligentDoSLibrary;
 import wsattacker.library.intelligentdos.IntelligentDoSLibraryImpl;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
@@ -43,6 +39,7 @@ import wsattacker.main.composition.plugin.PluginObserver;
 import wsattacker.main.composition.testsuite.RequestResponsePair;
 import wsattacker.main.plugin.PluginState;
 import wsattacker.main.plugin.option.OptionSimpleBoolean;
+import static wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin.MESSAGE;
 import wsattacker.plugin.intelligentdos.listener.PersistAttackListener;
 import wsattacker.plugin.intelligentdos.option.ConfigureAttacksOption;
 import wsattacker.plugin.intelligentdos.option.SchemaAnalyzerOption;

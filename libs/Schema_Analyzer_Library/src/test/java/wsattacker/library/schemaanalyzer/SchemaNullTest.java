@@ -25,8 +25,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.schemaanalyzer.TestfilePath.*;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class SchemaNullTest
 {

@@ -18,13 +18,12 @@
  */
 package wsattacker.plugin.dos.dosExtension.requestSender;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.support.types.StringToStringsMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.support.types.StringToStringsMap;
 
 /**
  * RequestObjects are used to send requests via various constructors can be used to build the RequestObject

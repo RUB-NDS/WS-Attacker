@@ -18,10 +18,11 @@
  */
 package wsattacker.plugin.dos.dosExtension.abstractPlugin;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.support.types.StringToStringsMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
@@ -35,9 +36,6 @@ import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage.PayloadPosition;
 import wsattacker.plugin.dos.dosExtension.requestSender.RequestObject;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.support.types.StringToStringsMap;
 
 /**
  * Abstract Plugin for DOS-Attacks!

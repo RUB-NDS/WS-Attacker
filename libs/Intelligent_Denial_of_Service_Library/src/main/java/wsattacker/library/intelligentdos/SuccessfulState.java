@@ -18,20 +18,16 @@
  */
 package wsattacker.library.intelligentdos;
 
-import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
+import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 import wsattacker.library.intelligentdos.success.Efficiency;
 import wsattacker.library.intelligentdos.success.SuccessDecider;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

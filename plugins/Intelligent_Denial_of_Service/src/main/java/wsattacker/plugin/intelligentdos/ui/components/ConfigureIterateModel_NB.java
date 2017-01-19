@@ -20,10 +20,8 @@ package wsattacker.plugin.intelligentdos.ui.components;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-
 import wsattacker.library.intelligentdos.helper.IterateModel.IterateStrategie;
 import wsattacker.plugin.intelligentdos.ui.helper.JTextFieldInteger;
 

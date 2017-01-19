@@ -18,22 +18,19 @@
  */
 package wsattacker.library.intelligentdos.position;
 
+import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.schemaanalyzer.AnyElementProperties;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
-
-import com.google.common.collect.Maps;
 
 /**
  * @author Christian Altmeier

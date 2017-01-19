@@ -33,17 +33,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
 import wsattacker.library.signatureWrapping.util.Signer;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.ReferringElementInterface;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
@@ -51,6 +48,9 @@ import wsattacker.library.signatureWrapping.xpath.parts.Step;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 public class XPathDescendantWeaknessTest
 {

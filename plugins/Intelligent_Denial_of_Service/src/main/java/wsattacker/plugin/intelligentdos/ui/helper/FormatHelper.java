@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.ui.helper;
 
 import java.util.List;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.common.RequestType;

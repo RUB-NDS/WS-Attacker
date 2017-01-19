@@ -19,10 +19,9 @@
 package wsattacker.plugin.dos;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-
 import java.util.HashMap;
 import java.util.Map;
+import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 
 /**

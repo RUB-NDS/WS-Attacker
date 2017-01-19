@@ -49,7 +49,6 @@ import wsattacker.library.xmlencryptionattack.detectionengine.filter.base.Abstra
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.concrete.AvoidedDocErrorFilter;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AbstractDetectionInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.EncryptionInfo;
-import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AvoidedDocErrorInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.SignatureInfo;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.CipherValueElement;
@@ -57,8 +56,6 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackPro
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenceElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;
-import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.ENC_TYPE_CONTENT;
-import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.ENC_TYPE_ELEMENT;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.URI_NS_ENC;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;

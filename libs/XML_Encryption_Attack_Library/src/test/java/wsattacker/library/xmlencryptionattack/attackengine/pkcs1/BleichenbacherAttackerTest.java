@@ -20,10 +20,8 @@ package wsattacker.library.xmlencryptionattack.attackengine.pkcs1;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -31,7 +29,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Random;
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.BleichenbacherAttacker;
 import javax.crypto.Cipher;
 import org.apache.log4j.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -46,7 +43,7 @@ import org.junit.Test;
 import wsattacker.library.xmlencryptionattack.attackengine.TestPKCS1Oracle;
 import wsattacker.library.xmlencryptionattack.attackengine.TestPKCS1PlaintextOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.Utility;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.PKCS1OracleRequest;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.BleichenbacherAttacker;
 
 /**
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de

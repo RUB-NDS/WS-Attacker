@@ -19,7 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.gui;
 
 import javax.swing.ImageIcon;
-
 import wsattacker.plugin.dos.dosExtension.mvc.controller.AbortController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.CloseAttackUnfinishedController;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.FinalizeController;

@@ -18,7 +18,6 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.cbc;
 
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCAttacker;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -28,6 +27,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import wsattacker.library.xmlencryptionattack.attackengine.TestCBCOracle;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCAttacker;
 
 /**
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de

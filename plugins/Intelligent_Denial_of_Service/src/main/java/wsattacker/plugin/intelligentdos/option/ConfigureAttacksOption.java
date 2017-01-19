@@ -20,7 +20,6 @@ package wsattacker.plugin.intelligentdos.option;
 
 import java.util.Arrays;
 import java.util.List;
-
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;

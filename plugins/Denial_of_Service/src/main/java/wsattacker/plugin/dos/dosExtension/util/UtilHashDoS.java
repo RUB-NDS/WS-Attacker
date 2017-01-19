@@ -20,7 +20,6 @@ package wsattacker.plugin.dos.dosExtension.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-
 import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionInterface;
 
 /**

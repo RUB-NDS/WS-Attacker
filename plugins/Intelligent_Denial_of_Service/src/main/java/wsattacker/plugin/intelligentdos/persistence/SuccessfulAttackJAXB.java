@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.persistence;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;

@@ -18,12 +18,11 @@
  */
 package wsattacker.plugin.dos;
 
+import java.util.HashMap;
+import java.util.Map;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.plugin.option.OptionLimitedInteger;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-
-import java.util.HashMap;
-import java.util.Map;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 
 public class XmlAttributeCount

@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -54,6 +53,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
+import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 
 public final class DomUtilities
 {

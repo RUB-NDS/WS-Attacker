@@ -19,7 +19,6 @@
 package wsattacker.library.schemaanalyzer;
 
 import org.w3c.dom.Element;
-
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**

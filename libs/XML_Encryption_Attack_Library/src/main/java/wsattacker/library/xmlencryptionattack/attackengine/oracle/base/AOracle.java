@@ -18,19 +18,18 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.base;
 
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
-import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
 import java.security.interfaces.RSAPublicKey;
 import org.w3c.dom.Document;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.TimestampInfo;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.timestampelement.TimestampBase;
-import wsattacker.library.xmlencryptionattack.timestampelement.TimestampElement;
 import wsattacker.library.xmlencryptionattack.util.CryptoConstants;
 import wsattacker.library.xmlencryptionattack.util.CryptoConstants.Algorithm;
+import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
 
 /**
  * Oracle used to attack a Web Service The oracle is used as follows: First, the attacker sends different requests to

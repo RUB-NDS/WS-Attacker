@@ -19,7 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.mvc;
 
 import javax.swing.SwingUtilities;
-
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 import wsattacker.plugin.dos.dosExtension.function.postanalyze.DOSPostAnalyzeFunction;
 import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;

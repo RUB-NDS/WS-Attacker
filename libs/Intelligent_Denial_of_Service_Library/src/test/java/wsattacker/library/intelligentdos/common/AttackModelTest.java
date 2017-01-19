@@ -18,19 +18,16 @@
  */
 package wsattacker.library.intelligentdos.common;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import org.junit.Test;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;

@@ -23,12 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.dos.CoerciveParsing;
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 import wsattacker.library.intelligentdos.dos.HashCollision;

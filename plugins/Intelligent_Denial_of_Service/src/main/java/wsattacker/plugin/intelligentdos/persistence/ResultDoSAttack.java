@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.persistence;
 
 import java.util.List;
-
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 

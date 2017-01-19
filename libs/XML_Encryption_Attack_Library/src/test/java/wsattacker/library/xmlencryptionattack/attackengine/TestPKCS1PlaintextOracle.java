@@ -18,16 +18,8 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine;
 
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Random;
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import org.apache.log4j.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;

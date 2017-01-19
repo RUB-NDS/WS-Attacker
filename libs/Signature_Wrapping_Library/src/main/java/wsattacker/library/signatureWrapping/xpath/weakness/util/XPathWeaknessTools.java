@@ -29,9 +29,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
 
 /**

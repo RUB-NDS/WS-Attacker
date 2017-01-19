@@ -20,9 +20,7 @@ package wsattacker.plugin.dos.dosExtension.attackThreads;
 
 import java.awt.EventQueue;
 import java.util.EmptyStackException;
-
 import org.apache.commons.lang3.StringUtils;
-
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;

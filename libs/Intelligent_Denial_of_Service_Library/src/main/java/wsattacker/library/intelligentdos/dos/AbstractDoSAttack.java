@@ -19,7 +19,6 @@
 package wsattacker.library.intelligentdos.dos;
 
 import java.util.Arrays;
-
 import org.apache.log4j.Logger;
 
 /**

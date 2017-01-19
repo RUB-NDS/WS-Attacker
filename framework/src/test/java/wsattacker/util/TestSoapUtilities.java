@@ -33,7 +33,6 @@ import static wsattacker.util.SoapUtilities.allNamespaces;
 import static wsattacker.util.SoapUtilities.getParents;
 import static wsattacker.util.SoapUtilities.getSoapChilds;
 import static wsattacker.util.SoapUtilities.inputNeeded;
-import static wsattacker.util.SoapUtilities.soapToString;
 import static wsattacker.util.SoapUtilities.stringToSoap;
 
 public class TestSoapUtilities

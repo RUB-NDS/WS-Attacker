@@ -23,11 +23,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
-
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
@@ -40,7 +38,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.gui.util.XmlTextPane;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;

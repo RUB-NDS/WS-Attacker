@@ -23,10 +23,8 @@ import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import wsattacker.library.intelligentdos.dos.XmlOverlongNames;
 import wsattacker.library.intelligentdos.helper.IterateModel;
 import wsattacker.plugin.intelligentdos.ui.components.ConfigureIterateModel_NB;

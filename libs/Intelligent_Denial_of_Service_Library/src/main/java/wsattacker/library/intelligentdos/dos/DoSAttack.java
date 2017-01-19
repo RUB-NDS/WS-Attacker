@@ -19,13 +19,10 @@
 package wsattacker.library.intelligentdos.dos;
 
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlEnum;
-
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 

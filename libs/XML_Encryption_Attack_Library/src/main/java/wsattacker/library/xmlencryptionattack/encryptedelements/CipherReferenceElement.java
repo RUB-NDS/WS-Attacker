@@ -19,8 +19,8 @@
 
 package wsattacker.library.xmlencryptionattack.encryptedelements;
 
-import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.DEFAULT_IDX;
 import org.w3c.dom.Element;
+import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.DEFAULT_IDX;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**

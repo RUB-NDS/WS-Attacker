@@ -24,14 +24,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.util.signature.XPathElement;
 import wsattacker.library.signatureWrapping.xpath.interfaces.XPathWeaknessInterface;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 /**
  * NamespaceInection attack.

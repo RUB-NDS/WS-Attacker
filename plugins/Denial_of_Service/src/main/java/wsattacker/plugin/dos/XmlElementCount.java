@@ -20,7 +20,6 @@ package wsattacker.plugin.dos;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.plugin.option.OptionLimitedInteger;
 import wsattacker.main.plugin.option.OptionSimpleVarchar;

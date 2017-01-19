@@ -18,7 +18,6 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.pkcs1;
 
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1VectorGenerator;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PublicKey;
@@ -35,6 +34,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import wsattacker.library.xmlencryptionattack.attackengine.Utility;
+import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1VectorGenerator;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.util.CryptoConstants;
 import wsattacker.library.xmlencryptionattack.util.CryptoConstants.Algorithm;

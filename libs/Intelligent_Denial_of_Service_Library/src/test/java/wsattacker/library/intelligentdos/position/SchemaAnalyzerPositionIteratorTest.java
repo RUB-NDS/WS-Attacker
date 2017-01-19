@@ -23,9 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;

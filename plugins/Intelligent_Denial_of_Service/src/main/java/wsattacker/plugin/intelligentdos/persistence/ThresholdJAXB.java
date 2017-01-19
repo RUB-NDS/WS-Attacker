@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.persistence;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
 import wsattacker.library.intelligentdos.common.Threshold;
 
 /**

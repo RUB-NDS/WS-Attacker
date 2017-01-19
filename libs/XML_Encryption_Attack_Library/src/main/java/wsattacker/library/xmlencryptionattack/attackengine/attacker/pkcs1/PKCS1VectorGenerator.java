@@ -32,10 +32,10 @@ import javax.crypto.NoSuchPaddingException;
 import org.apache.log4j.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import wsattacker.library.xmlencryptionattack.attackengine.CryptoAttackException;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
-import wsattacker.library.xmlencryptionattack.util.CryptoConstants;
 import wsattacker.library.xmlencryptionattack.attackengine.Utility;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.PKCS1OracleRequest;
+import wsattacker.library.xmlencryptionattack.util.CryptoConstants;
 
 /**
  * @author Juraj Somorovsky - juraj.somorovsky@rub.de

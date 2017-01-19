@@ -22,7 +22,6 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import wsattacker.library.xmlencryptionattack.attackengine.TestCBCOracle;
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCAttacker;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethodProperties;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethodSimple;
 

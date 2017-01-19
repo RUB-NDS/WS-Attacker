@@ -18,16 +18,16 @@
  */
 package wsattacker.plugin.dos.dosExtension.mvc.model;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
-
 import wsattacker.main.plugin.PluginOptionContainer;
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
@@ -40,9 +40,6 @@ import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryInterval;
 import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryRequest;
 import wsattacker.plugin.dos.dosExtension.mvc.view.AttackListener;
 import wsattacker.plugin.dos.dosExtension.requestSender.RequestObject;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
 
 /**
  * JAVA MVC Model: - used for managing data of attack and keeping state! - data externaly modified only via controller!

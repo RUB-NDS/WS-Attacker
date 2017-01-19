@@ -22,7 +22,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import java.util.List;
-
 import wsattacker.library.intelligentdos.dos.XmlAttributeCount;
 import wsattacker.library.intelligentdos.helper.IterateModel;
 

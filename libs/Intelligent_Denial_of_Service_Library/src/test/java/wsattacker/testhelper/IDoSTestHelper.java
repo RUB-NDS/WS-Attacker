@@ -18,23 +18,19 @@
  */
 package wsattacker.testhelper;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.io.IOException;
 import java.io.StringReader;
 import javax.xml.XMLConstants;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.IntelligentDoSLibrary;
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.RequestType;

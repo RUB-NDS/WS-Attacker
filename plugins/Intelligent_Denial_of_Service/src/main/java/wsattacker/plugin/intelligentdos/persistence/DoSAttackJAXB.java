@@ -18,14 +18,11 @@
  */
 package wsattacker.plugin.intelligentdos.persistence;
 
+import com.google.common.collect.Lists;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
-
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.dos.DoSAttack;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

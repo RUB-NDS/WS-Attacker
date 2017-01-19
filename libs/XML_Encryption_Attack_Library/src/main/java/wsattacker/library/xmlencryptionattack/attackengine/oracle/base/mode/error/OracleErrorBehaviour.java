@@ -18,14 +18,13 @@
  */
 package wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.error;
 
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.OracleResponseCollector;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
-
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.OracleResponseCollector;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 
 /**

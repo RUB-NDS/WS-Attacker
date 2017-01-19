@@ -21,10 +21,8 @@ package wsattacker.plugin.intelligentdos.ui.helper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
-
 import wsattacker.library.intelligentdos.helper.CommonParamItem;
 
 /**

@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.postanalyze;
 
 import java.awt.Window;
-
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.plugin.intelligentdos.ui.dialog.Result_NB;
 import wsattacker.plugin.intelligentdos.worker.IntelligentDoSWorker;

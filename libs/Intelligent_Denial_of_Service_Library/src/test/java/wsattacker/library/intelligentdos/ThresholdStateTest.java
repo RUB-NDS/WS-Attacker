@@ -18,13 +18,11 @@
  */
 package wsattacker.library.intelligentdos;
 
+import org.junit.Test;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestType;

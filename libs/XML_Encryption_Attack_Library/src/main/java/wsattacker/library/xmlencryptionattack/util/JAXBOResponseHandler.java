@@ -19,17 +19,15 @@
 
 package wsattacker.library.xmlencryptionattack.util;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.OracleResponseCollector;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 
 /**
  * @author Dennis

@@ -18,17 +18,14 @@
  */
 package wsattacker.library.intelligentdos.hashdos;
 
+import com.google.common.collect.Sets;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
-
 import org.apache.commons.lang3.RandomStringUtils;
-
 import wsattacker.plugin.dos.dosExtension.attackClasses.hashDos.CollisionInterface;
-
-import com.google.common.collect.Sets;
 
 /**
  * @author Christian Altmeier

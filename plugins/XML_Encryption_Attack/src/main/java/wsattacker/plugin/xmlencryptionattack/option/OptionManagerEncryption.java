@@ -28,7 +28,6 @@ import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.xmlencryptionattack.attackengine.AttackConfig;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1AttackConfig;
-import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
 import static wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory.PKCS1Strategy.DIRECT;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectionManager;
@@ -43,6 +42,7 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackPro
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenceElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;
+import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.OracleMode;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.XMLEncryptionAttackMode;

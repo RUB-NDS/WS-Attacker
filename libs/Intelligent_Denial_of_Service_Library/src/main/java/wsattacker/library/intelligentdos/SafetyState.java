@@ -18,10 +18,10 @@
  */
 package wsattacker.library.intelligentdos;
 
-import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestType;
+import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
 import wsattacker.library.intelligentdos.success.SuccessDecider;
 
 /**

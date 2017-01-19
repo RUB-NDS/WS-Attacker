@@ -18,9 +18,20 @@
  */
 package wsattacker.plugin.intelligentdos.main;
 
+import com.eviware.soapui.DefaultSoapUICore;
+import com.eviware.soapui.impl.WsdlInterfaceFactory;
+import com.eviware.soapui.impl.wsdl.WsdlInterface;
+import com.eviware.soapui.impl.wsdl.WsdlOperation;
+import com.eviware.soapui.impl.wsdl.WsdlProject;
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.WsdlSubmit;
+import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
+import com.eviware.soapui.model.iface.Request.SubmitException;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.support.SoapUIException;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -35,7 +46,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.xmlbeans.XmlException;
-
 import wsattacker.gui.component.log.GuiAppender;
 import wsattacker.library.intelligentdos.IntelligentDoSLibraryImpl;
 import wsattacker.library.intelligentdos.common.AttackModel;
@@ -49,19 +59,6 @@ import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.main.testsuite.CurrentRequest;
 import wsattacker.plugin.intelligentdos.listener.AttackModelChangeListener;
 import wsattacker.plugin.intelligentdos.worker.IntelligentDoSWorker;
-
-import com.eviware.soapui.DefaultSoapUICore;
-import com.eviware.soapui.impl.WsdlInterfaceFactory;
-import com.eviware.soapui.impl.wsdl.WsdlInterface;
-import com.eviware.soapui.impl.wsdl.WsdlOperation;
-import com.eviware.soapui.impl.wsdl.WsdlProject;
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
-import com.eviware.soapui.model.iface.Request.SubmitException;
-import com.eviware.soapui.model.iface.Response;
-import com.eviware.soapui.support.SoapUIException;
 
 public class Main
 {

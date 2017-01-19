@@ -18,23 +18,20 @@
  */
 package wsattacker.library.intelligentdos;
 
-import static wsattacker.library.intelligentdos.common.RequestType.TAMPERED;
-import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.SynchronizedDescriptiveStatistics;
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestType;
+import static wsattacker.library.intelligentdos.common.RequestType.TAMPERED;
+import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 import wsattacker.library.intelligentdos.common.Threshold;
 import wsattacker.library.intelligentdos.dos.CoerciveParsing;

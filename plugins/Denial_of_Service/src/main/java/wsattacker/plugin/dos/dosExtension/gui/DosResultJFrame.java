@@ -23,13 +23,10 @@
 package wsattacker.plugin.dos.dosExtension.gui;
 
 import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-
 import wsattacker.plugin.dos.dosExtension.attackRunnables.RedrawChartRunnable;
 import wsattacker.plugin.dos.dosExtension.chart.ChartObject;
 import wsattacker.plugin.dos.dosExtension.mvc.controller.CloseAttackFinishedController;

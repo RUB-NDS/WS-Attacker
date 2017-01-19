@@ -18,7 +18,6 @@
  */
 package wsattacker.plugin.signatureWrapping;
 
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapUtils;
 import com.eviware.soapui.impl.wsdl.support.soap.SoapVersion;
 import java.io.*;
@@ -31,8 +30,8 @@ import org.xml.sax.SAXException;
 import wsattacker.http.transport.SoapHttpClient;
 import wsattacker.http.transport.SoapHttpClientFactory;
 import wsattacker.http.transport.SoapResponse;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;

@@ -27,14 +27,14 @@ import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
 import wsattacker.library.signatureWrapping.util.signature.ReferenceElement;
 import wsattacker.library.signatureWrapping.util.signature.XPathElement;
 import wsattacker.library.signatureWrapping.xpath.analysis.XPathAnalyser;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
 
 /**
  * High Level Algorithm for creating XSW Messages. The WrappingOracle takes an signed input message, a SignatureManager

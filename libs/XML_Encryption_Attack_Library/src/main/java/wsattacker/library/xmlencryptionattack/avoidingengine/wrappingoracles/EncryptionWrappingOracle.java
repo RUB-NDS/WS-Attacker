@@ -18,7 +18,6 @@
  */
 package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles;
 
-import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.EncryptionSchemaWeakness;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -29,6 +28,7 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessExcept
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.util.WrapOracleHelper;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.AbstractEncryptionWeakness;
+import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.EncryptionSchemaWeakness;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.FactoryWeakness;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.WeaknessType;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;

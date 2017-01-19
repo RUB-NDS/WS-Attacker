@@ -18,11 +18,8 @@
  */
 package wsattacker.http.transport;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Ignore;
-import wsattacker.http.transport.SoapHttpClient;
-import wsattacker.http.transport.SoapHttpClientFactory;
+import org.junit.Test;
 
 /**
  * @author dev

@@ -27,11 +27,9 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -49,7 +47,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import wsattacker.main.Preferences;
 import wsattacker.main.config.HttpConfig;
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**

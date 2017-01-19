@@ -24,16 +24,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.util.exception.InvalidPayloadException;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
-import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AvoidedDocErrorInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.TimestampInfo;
 import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackProperties;
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
+import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 /**

@@ -18,8 +18,8 @@
  */
 package wsattacker.library.xmlencryptionattack.detectionengine.filter.info;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;

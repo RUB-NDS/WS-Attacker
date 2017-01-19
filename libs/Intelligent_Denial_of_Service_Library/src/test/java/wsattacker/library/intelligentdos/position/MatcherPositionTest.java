@@ -20,9 +20,7 @@ package wsattacker.library.intelligentdos.position;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.position.MatcherPositionIterator.Finding;
 

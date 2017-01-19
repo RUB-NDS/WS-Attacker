@@ -19,9 +19,7 @@
 package wsattacker.plugin.dos.dosExtension.mvc.model;
 
 import java.util.List;
-
 import org.apache.commons.math3.stat.descriptive.rank.Median;
-
 import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryRequest;
 
 public class AttackRoundtrip

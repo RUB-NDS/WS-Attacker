@@ -21,11 +21,9 @@ package wsattacker.plugin.signatureWrapping.option;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.xmlutilities.dom.DomUtilities;

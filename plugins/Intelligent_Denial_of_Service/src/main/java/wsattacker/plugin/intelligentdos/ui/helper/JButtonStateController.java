@@ -21,7 +21,6 @@ package wsattacker.plugin.intelligentdos.ui.helper;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JButton;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

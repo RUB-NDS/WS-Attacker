@@ -19,7 +19,6 @@
 package wsattacker.library.intelligentdos.common;
 
 import java.util.List;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 
 /**

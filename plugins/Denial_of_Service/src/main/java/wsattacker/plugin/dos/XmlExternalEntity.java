@@ -18,11 +18,10 @@
  */
 package wsattacker.plugin.dos;
 
-import wsattacker.main.plugin.option.OptionSimpleVarchar;
-import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-
 import java.util.HashMap;
 import java.util.Map;
+import wsattacker.main.plugin.option.OptionSimpleVarchar;
+import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 
 public class XmlExternalEntity

@@ -18,15 +18,13 @@
  */
 package wsattacker.library.intelligentdos.common;
 
+import com.google.common.collect.Lists;
 import java.util.List;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack;
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;
 import wsattacker.library.intelligentdos.position.Position;
 import wsattacker.library.intelligentdos.success.Efficiency;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

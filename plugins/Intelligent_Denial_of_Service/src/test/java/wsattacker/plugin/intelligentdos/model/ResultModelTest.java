@@ -18,22 +18,18 @@
  */
 package wsattacker.plugin.intelligentdos.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.common.Threshold;
 import wsattacker.plugin.intelligentdos.persistence.ResultDoSAttack;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

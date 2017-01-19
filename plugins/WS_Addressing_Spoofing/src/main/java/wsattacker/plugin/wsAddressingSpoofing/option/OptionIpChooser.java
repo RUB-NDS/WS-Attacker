@@ -23,13 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
-
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
 import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
 import wsattacker.main.plugin.option.OptionSimpleChoice;

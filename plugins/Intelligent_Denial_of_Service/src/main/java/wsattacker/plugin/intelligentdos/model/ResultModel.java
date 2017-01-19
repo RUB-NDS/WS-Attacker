@@ -18,6 +18,7 @@
  */
 package wsattacker.plugin.intelligentdos.model;
 
+import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,15 +32,12 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
-
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 import wsattacker.library.intelligentdos.common.Threshold;
@@ -48,8 +46,6 @@ import wsattacker.library.intelligentdos.success.SimpleSuccessDecider;
 import wsattacker.library.intelligentdos.success.SuccessDecider;
 import wsattacker.plugin.intelligentdos.persistence.AttackMetaDataJAXB;
 import wsattacker.plugin.intelligentdos.persistence.SuccessfulAttackJAXB;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Christian Altmeier

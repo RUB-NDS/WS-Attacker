@@ -21,11 +21,9 @@ package wsattacker.library.intelligentdos;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.RequestType;
 import wsattacker.library.intelligentdos.dos.DoSAttack;

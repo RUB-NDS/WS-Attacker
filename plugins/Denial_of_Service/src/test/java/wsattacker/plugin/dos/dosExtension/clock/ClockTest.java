@@ -20,8 +20,8 @@ package wsattacker.plugin.dos.dosExtension.clock;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * @author Andreas Falkenberg

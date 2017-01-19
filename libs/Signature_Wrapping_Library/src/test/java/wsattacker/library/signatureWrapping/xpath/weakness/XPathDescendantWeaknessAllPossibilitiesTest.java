@@ -29,15 +29,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
-import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
+import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
 
 public class XPathDescendantWeaknessAllPossibilitiesTest
     extends XPathDescendantWeakness

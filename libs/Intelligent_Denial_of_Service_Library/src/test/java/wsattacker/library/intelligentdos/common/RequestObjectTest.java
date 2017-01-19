@@ -18,22 +18,19 @@
  */
 package wsattacker.library.intelligentdos.common;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import com.eviware.soapui.support.types.StringToStringsMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Christian Altmeier

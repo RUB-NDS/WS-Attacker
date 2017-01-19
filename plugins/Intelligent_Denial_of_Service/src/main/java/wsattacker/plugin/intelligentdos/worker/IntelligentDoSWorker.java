@@ -18,15 +18,16 @@
  */
 package wsattacker.plugin.intelligentdos.worker;
 
+import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
+import com.eviware.soapui.support.types.StringToStringsMap;
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.IntelligentDoSLibrary;
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
@@ -38,10 +39,6 @@ import wsattacker.plugin.intelligentdos.listener.RecentTestProbeListener;
 import wsattacker.plugin.intelligentdos.model.ResultModel;
 import wsattacker.plugin.intelligentdos.threads.ExecuteRequestsThread;
 import wsattacker.plugin.intelligentdos.threads.TestProbeThread;
-
-import com.eviware.soapui.impl.wsdl.submit.transports.http.WsdlResponse;
-import com.eviware.soapui.support.types.StringToStringsMap;
-import com.google.common.collect.Lists;
 
 public class IntelligentDoSWorker
     implements RecentTestProbeListener

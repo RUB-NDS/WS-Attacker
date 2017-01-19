@@ -18,6 +18,8 @@
  */
 package wsattacker.library.intelligentdos.position;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +27,8 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * @author Christian Altmeier

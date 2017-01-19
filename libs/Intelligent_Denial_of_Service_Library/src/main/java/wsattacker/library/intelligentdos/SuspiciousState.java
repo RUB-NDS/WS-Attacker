@@ -20,7 +20,6 @@ package wsattacker.library.intelligentdos;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.success.SuccessDecider;

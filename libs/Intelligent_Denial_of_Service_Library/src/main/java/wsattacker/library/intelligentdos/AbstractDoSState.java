@@ -18,11 +18,9 @@
  */
 package wsattacker.library.intelligentdos;
 
-import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
-
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
+import static wsattacker.library.intelligentdos.common.RequestType.UNTAMPERED;
 import wsattacker.library.intelligentdos.helper.CommonParamItem;
 
 /**

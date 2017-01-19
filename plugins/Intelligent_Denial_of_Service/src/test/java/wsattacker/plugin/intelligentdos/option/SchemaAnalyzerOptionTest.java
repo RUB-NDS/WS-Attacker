@@ -18,13 +18,10 @@
  */
 package wsattacker.plugin.intelligentdos.option;
 
+import java.beans.PropertyChangeEvent;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import java.beans.PropertyChangeEvent;
-
 import org.junit.Test;
-
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.main.testsuite.CurrentRequest;

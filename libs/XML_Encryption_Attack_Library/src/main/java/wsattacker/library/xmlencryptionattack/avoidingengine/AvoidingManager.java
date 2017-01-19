@@ -36,9 +36,8 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessExcept
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
-import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory;
-import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncryptionWrappingOracle;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncSigWrappingOracle;
+import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncryptionWrappingOracle;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.WrappingOracleIF;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.FactoryWeakness;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.WeaknessType;
@@ -55,11 +54,12 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackPro
 import wsattacker.library.xmlencryptionattack.timestampelement.TimestampBase;
 import wsattacker.library.xmlencryptionattack.timestampelement.TimestampElement;
 import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
+import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.NO_CURR_WRAP_IDX;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode;
+import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode.NO_WRAP;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
-import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode.NO_WRAP;
 
 public class AvoidingManager
 {

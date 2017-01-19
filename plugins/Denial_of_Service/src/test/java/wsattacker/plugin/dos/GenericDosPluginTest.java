@@ -19,16 +19,12 @@
 package wsattacker.plugin.dos;
 
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
-
 import org.junit.After;
 import org.junit.AfterClass;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
-
 import wsattacker.main.plugin.PluginOptionContainer;
 import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 import wsattacker.plugin.dos.dosExtension.util.RequestResponsePairTest;

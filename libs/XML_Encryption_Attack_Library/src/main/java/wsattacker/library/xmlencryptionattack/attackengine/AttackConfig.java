@@ -20,13 +20,13 @@
 package wsattacker.library.xmlencryptionattack.attackengine;
 
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1AttackConfig;
-import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
+import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
+import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.CryptoTechnique;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.OracleMode;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.XMLEncryptionAttackMode;
-import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.CryptoTechnique;
 
 /**
  * @author Dennis

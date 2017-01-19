@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos.option;
 
 import org.apache.commons.lang3.StringUtils;
-
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.plugin.intelligentdos.ui.option.PerformPersistOptionGUI_NB;

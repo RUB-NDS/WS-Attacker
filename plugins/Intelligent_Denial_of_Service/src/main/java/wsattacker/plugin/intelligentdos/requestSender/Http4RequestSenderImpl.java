@@ -27,13 +27,11 @@ import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Map;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import org.apache.http.HttpHost;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -47,7 +45,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-
 import wsattacker.library.intelligentdos.common.RequestObject;
 import wsattacker.main.Preferences;
 import wsattacker.main.config.HttpConfig;

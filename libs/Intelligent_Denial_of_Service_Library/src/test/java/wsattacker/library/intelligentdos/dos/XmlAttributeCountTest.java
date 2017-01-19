@@ -18,15 +18,12 @@
  */
 package wsattacker.library.intelligentdos.dos;
 
+import javax.xml.parsers.ParserConfigurationException;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.IterateModel;
 import wsattacker.testhelper.IDoSTestHelper;

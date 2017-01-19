@@ -19,7 +19,6 @@
 
 package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles;
 
-import java.util.List;
 import org.w3c.dom.Document;
 import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessException;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.AbstractEncryptionWeakness;

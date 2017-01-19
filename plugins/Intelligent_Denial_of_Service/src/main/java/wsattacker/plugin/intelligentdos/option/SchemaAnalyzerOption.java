@@ -18,17 +18,16 @@
  */
 package wsattacker.plugin.intelligentdos.option;
 
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.schemaanalyzer.AnyElementProperties;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
@@ -36,8 +35,6 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.main.composition.plugin.option.AbstractOptionString;
 import wsattacker.main.testsuite.CurrentRequest;
 import wsattacker.main.testsuite.TestSuite;
-
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
 
 /**
  * @author Christian Altmeier

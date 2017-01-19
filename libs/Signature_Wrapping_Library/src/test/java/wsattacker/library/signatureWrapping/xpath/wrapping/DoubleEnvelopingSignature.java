@@ -30,14 +30,13 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.KeyInfoForTesting;
+import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.library.xmlutilities.namespace.NamespaceConstants;
-import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
-import wsattacker.library.signatureWrapping.xpath.weakness.util.WeaknessLog;
 
 /**
  * @author christian

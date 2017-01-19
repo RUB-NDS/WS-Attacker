@@ -19,7 +19,6 @@
 package wsattacker.library.intelligentdos.position;
 
 import java.util.regex.Pattern;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.position.MatcherPositionIterator.Finding;
 

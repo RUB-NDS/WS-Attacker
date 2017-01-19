@@ -19,7 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.mvc.view;
 
 import javax.swing.JProgressBar;
-
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**

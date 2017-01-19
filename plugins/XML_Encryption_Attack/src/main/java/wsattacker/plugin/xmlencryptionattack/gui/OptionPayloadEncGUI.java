@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import wsattacker.gui.component.pluginconfiguration.composition.OptionGUI;
 import wsattacker.library.xmlencryptionattack.attackengine.AttackConfig;
-import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.PKCS1StrategyFactory.PKCS1Strategy;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractRefElement;
@@ -33,6 +32,7 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackPro
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenceElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKeyElement;
+import wsattacker.library.xmlencryptionattack.util.SimStringStrategyFactory.SimStringStrategy;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.OracleMode;
 import wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.WrappingAttackMode.ENCRYPTION;

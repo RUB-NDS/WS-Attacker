@@ -20,12 +20,10 @@ package wsattacker.plugin.intelligentdos.ui.renderer;
 
 import java.awt.Component;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;
 
 /**

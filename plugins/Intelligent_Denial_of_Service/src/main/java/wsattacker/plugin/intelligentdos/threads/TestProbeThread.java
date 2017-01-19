@@ -18,14 +18,12 @@
  */
 package wsattacker.plugin.intelligentdos.threads;
 
+import com.google.common.collect.Lists;
 import java.util.List;
-
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.RequestObject;
 import wsattacker.plugin.intelligentdos.listener.RecentTestProbeListener;
 import wsattacker.plugin.intelligentdos.requestSender.Http4RequestSenderImpl;
-
-import com.google.common.collect.Lists;
 
 public class TestProbeThread
     extends Thread

@@ -19,9 +19,7 @@
 package wsattacker.plugin.dos.dosExtension.function.postanalyze;
 
 import java.awt.Window;
-
 import javax.swing.JDialog;
-
 import wsattacker.main.composition.plugin.PluginFunctionInterface;
 import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;

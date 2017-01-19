@@ -21,15 +21,15 @@ package wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs
 
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.pkcs1.PKCS1AttackConfig;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
-import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.mode.AbstractOracleBehaviour;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.concrete.pkcs1.strategy.AbstractPKCS1Strategy;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.AvoidedDocErrorInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.TimestampInfo;
+import wsattacker.library.xmlencryptionattack.util.ServerSendCommandIF;
 
 /**
  * @author Dennis

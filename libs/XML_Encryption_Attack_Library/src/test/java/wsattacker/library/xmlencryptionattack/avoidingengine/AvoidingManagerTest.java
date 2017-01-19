@@ -40,6 +40,7 @@ import wsattacker.library.signatureWrapping.util.exception.InvalidWeaknessExcept
 import static wsattacker.library.signatureWrapping.util.signature.ReferenceElement.LOG;
 import wsattacker.library.signatureWrapping.xpath.wrapping.WrappingOracle;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncSigWrappingOracle;
+import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncryptionWrappingOracle;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectFilterEnum;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.DetectionManager;
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.FactoryFilter;
@@ -47,12 +48,10 @@ import wsattacker.library.xmlencryptionattack.detectionengine.detectionmanager.P
 import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.DetectionReport;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.EncryptionInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.SignatureInfo;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.EncryptionWrappingOracle;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackProperties;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenceElement;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 
 public class AvoidingManagerTest
 {

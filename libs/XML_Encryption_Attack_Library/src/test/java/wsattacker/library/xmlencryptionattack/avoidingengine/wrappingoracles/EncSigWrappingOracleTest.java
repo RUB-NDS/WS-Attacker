@@ -19,24 +19,19 @@
 
 package wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.xml.namespace.QName;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.schemaanalyzer.SchemaAnalyzer;
+import wsattacker.library.schemaanalyzer.SchemaAnalyzerFactory;
 import wsattacker.library.signatureWrapping.option.Payload;
 import wsattacker.library.signatureWrapping.util.signature.SignatureManager;
 import wsattacker.library.xmlencryptionattack.avoidingengine.wrappingoracles.weakness.EncryptedKeyRefWeakness;
@@ -50,7 +45,6 @@ import wsattacker.library.xmlencryptionattack.detectionengine.detectionstreams.D
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.EncryptionInfo;
 import wsattacker.library.xmlencryptionattack.detectionengine.filter.info.SignatureInfo;
 import wsattacker.library.xmlencryptionattack.encryptedelements.AbstractEncryptionElement;
-import wsattacker.library.xmlencryptionattack.encryptedelements.CipherValueElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.ElementAttackProperties;
 import wsattacker.library.xmlencryptionattack.encryptedelements.data.EncryptedDataElement;
 import wsattacker.library.xmlencryptionattack.encryptedelements.key.DataReferenceElement;
@@ -58,7 +52,6 @@ import wsattacker.library.xmlencryptionattack.encryptedelements.key.EncryptedKey
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.URI_NS_ENC;
 import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_DS;
 
 public class EncSigWrappingOracleTest
 {

@@ -20,7 +20,6 @@ package wsattacker.library.xmlencryptionattack.attackengine;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCAttacker;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethodProperties;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;

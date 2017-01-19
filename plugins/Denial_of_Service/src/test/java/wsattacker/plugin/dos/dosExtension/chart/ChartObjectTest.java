@@ -19,8 +19,8 @@
 package wsattacker.plugin.dos.dosExtension.chart;
 
 import org.jfree.chart.JFreeChart;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**

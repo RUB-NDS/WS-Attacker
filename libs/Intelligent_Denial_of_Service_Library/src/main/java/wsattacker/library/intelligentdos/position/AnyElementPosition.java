@@ -21,7 +21,6 @@ package wsattacker.library.intelligentdos.position;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.schemaanalyzer.AnyElementProperties;
 import wsattacker.library.xmlutilities.dom.DomUtilities;

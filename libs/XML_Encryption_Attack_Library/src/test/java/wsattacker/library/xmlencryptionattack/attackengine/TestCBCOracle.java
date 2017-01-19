@@ -29,7 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
-import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.CBCAttacker;
 import wsattacker.library.xmlencryptionattack.attackengine.attacker.cbc.FindIVMethodProperties;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;

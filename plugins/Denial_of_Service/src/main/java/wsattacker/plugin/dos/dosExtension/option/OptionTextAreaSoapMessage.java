@@ -18,8 +18,6 @@
  */
 package wsattacker.plugin.dos.dosExtension.option;
 
-import wsattacker.main.testsuite.TestSuite;
-
 import com.eviware.soapui.impl.wsdl.WsdlRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +26,7 @@ import wsattacker.library.xmlutilities.dom.DomUtilities;
 import wsattacker.main.composition.plugin.option.AbstractOptionString;
 import wsattacker.main.composition.testsuite.CurrentRequestContentChangeObserver;
 import wsattacker.main.composition.testsuite.CurrentRequestObserver;
+import wsattacker.main.testsuite.TestSuite;
 import wsattacker.plugin.dos.dosExtension.util.UtilDos;
 import wsattacker.util.SoapUtilities;
 

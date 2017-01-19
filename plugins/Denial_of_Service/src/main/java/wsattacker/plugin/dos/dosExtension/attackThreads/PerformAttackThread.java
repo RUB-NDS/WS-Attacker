@@ -19,9 +19,6 @@
 package wsattacker.plugin.dos.dosExtension.attackThreads;
 
 import java.awt.EventQueue;
-
-import org.apache.log4j.Logger;
-
 import wsattacker.main.plugin.result.Result;
 import wsattacker.main.plugin.result.ResultEntry;
 import wsattacker.main.plugin.result.ResultLevel;

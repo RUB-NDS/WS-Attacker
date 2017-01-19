@@ -19,7 +19,6 @@
 package wsattacker.library.intelligentdos;
 
 import java.util.List;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.Metric;
 import wsattacker.library.intelligentdos.common.SuccessfulAttack;

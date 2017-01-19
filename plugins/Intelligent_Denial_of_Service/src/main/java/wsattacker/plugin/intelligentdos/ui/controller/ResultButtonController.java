@@ -20,7 +20,6 @@ package wsattacker.plugin.intelligentdos.ui.controller;
 
 import java.io.File;
 import java.io.IOException;
-
 import wsattacker.plugin.intelligentdos.model.ResultModel;
 
 /**

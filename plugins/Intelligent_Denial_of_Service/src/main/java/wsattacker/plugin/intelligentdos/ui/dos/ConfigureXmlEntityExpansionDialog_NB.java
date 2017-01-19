@@ -20,7 +20,6 @@ package wsattacker.plugin.intelligentdos.ui.dos;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import wsattacker.library.intelligentdos.dos.XmlEntityExpansion;
 import wsattacker.library.intelligentdos.helper.IterateModel;
 

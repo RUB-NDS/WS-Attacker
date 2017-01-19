@@ -24,10 +24,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-
-import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryInterval;
-import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickMarkPosition;
@@ -52,6 +48,8 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
+import wsattacker.plugin.dos.dosExtension.logEntry.LogEntryInterval;
+import wsattacker.plugin.dos.dosExtension.mvc.model.AttackModel;
 
 /**
  * Overlaid XY plot with dual range axes.

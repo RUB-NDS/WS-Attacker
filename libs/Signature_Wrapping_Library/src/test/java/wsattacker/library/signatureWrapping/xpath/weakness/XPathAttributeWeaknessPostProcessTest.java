@@ -35,12 +35,12 @@ import org.w3c.dom.Element;
 import wsattacker.library.signatureWrapping.option.PayloadElement;
 import wsattacker.library.signatureWrapping.option.SignedElement;
 import wsattacker.library.signatureWrapping.util.SoapTestDocument;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
-import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 import wsattacker.library.signatureWrapping.xpath.parts.AbsoluteLocationPath;
 import wsattacker.library.signatureWrapping.xpath.parts.Step;
 import static wsattacker.library.signatureWrapping.xpath.weakness.util.XPathWeaknessTools.isAncestorOf;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
+import static wsattacker.library.xmlutilities.dom.DomUtilities.domToString;
+import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_WSU;
 
 public class XPathAttributeWeaknessPostProcessTest
 {

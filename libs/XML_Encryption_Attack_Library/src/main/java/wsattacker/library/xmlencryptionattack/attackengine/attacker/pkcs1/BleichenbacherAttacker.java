@@ -27,8 +27,8 @@ import wsattacker.library.xmlencryptionattack.attackengine.Utility;
 import wsattacker.library.xmlencryptionattack.attackengine.attackbase.CCAAttack;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.AOracle;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.OracleRequest;
-import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.request.PKCS1OracleRequest;
+import wsattacker.library.xmlencryptionattack.attackengine.oracle.base.response.OracleResponse;
 import static wsattacker.library.xmlencryptionattack.util.XMLEncryptionConstants.CryptoTechnique.ASYMMETRIC;
 
 /**

@@ -18,18 +18,14 @@
  */
 package wsattacker.library.intelligentdos.dos;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.ParserConfigurationException;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
-
 import wsattacker.library.intelligentdos.common.DoSParam;
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.library.intelligentdos.helper.IterateModel;

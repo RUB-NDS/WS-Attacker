@@ -18,14 +18,6 @@
  */
 package wsattacker.plugin.dos;
 
-import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
-import wsattacker.main.composition.plugin.option.AbstractOptionString;
-import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
-import wsattacker.main.plugin.option.OptionLimitedInteger;
-import wsattacker.main.plugin.option.OptionSimpleBoolean;
-import wsattacker.main.plugin.option.OptionSimpleVarchar;
-import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -33,7 +25,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
-
+import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
+import wsattacker.main.composition.plugin.option.AbstractOptionVarchar;
+import wsattacker.main.plugin.option.OptionLimitedInteger;
+import wsattacker.main.plugin.option.OptionSimpleVarchar;
+import wsattacker.plugin.dos.dosExtension.abstractPlugin.AbstractDosPlugin;
 import wsattacker.plugin.dos.dosExtension.option.OptionTextAreaSoapMessage;
 import wsattacker.plugin.dos.dosExtension.requestSender.RequestObject;
 

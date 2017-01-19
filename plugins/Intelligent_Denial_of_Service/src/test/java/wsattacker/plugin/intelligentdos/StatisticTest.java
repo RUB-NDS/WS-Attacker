@@ -19,7 +19,6 @@
 package wsattacker.plugin.intelligentdos;
 
 import java.text.DecimalFormat;
-
 import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.stat.inference.TestUtils;

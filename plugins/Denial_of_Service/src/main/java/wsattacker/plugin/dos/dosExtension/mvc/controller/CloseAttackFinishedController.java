@@ -20,7 +20,6 @@ package wsattacker.plugin.dos.dosExtension.mvc.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import wsattacker.plugin.dos.dosExtension.gui.DosResultJFrame;
 
 /**

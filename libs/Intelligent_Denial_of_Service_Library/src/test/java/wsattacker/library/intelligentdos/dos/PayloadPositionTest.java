@@ -18,20 +18,16 @@
  */
 package wsattacker.library.intelligentdos.dos;
 
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import wsattacker.library.intelligentdos.dos.DoSAttack.PayloadPosition;
 import wsattacker.testhelper.IDoSTestHelper;
 

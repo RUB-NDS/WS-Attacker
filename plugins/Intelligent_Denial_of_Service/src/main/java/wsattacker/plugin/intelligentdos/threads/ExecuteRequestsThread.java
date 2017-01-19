@@ -20,9 +20,7 @@ package wsattacker.plugin.intelligentdos.threads;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import wsattacker.library.intelligentdos.common.AttackModel;
 import wsattacker.library.intelligentdos.common.RequestObject;
 

@@ -19,9 +19,7 @@
 package wsattacker.library.xmlutilities.namespace;
 
 import java.util.*;
-
 import javax.xml.namespace.NamespaceContext;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

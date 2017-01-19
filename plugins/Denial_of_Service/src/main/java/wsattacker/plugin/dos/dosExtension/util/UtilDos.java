@@ -21,7 +21,6 @@ package wsattacker.plugin.dos.dosExtension.util;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
@@ -29,10 +28,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
 import wsattacker.plugin.dos.CoerciveParsing;
 import wsattacker.util.SoapUtilities;
 

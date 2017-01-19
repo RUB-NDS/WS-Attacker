@@ -29,6 +29,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import static wsattacker.library.schemaanalyzer.TestfilePath.*;
+import wsattacker.library.xmlutilities.dom.DomUtilities;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_SAMLP;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_SOAP_1_1;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.PREFIX_NS_SOAP_1_2;
@@ -37,8 +39,6 @@ import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_N
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SAML20P;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SOAP_1_1;
 import static wsattacker.library.xmlutilities.namespace.NamespaceConstants.URI_NS_SOAP_1_2;
-import wsattacker.library.xmlutilities.dom.DomUtilities;
-import static wsattacker.library.schemaanalyzer.TestfilePath.*;
 
 /**
  * @author christian
