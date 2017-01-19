@@ -1,5 +1,13 @@
+================
+19. January 2017
+================
+
 New Compression DoS Attack based on In the Compression Hornet’s Nest: A Security Study of Data Compression in Network Services"
     - Thanks to RemiMHFU for pulling
+Bugfix for XXE
+   - Thanks to putsi
+Proxy fixes
+   - Should now work with Burp Suite with all plugins
 
 ===============
 10. July 2015
