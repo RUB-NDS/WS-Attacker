@@ -18,11 +18,20 @@
  */
 package wsattacker.library.xmlutilities.dom;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import wsattacker.library.xmlutilities.namespace.NamespaceResolver;
-import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -428,6 +437,7 @@ public final class DomUtilities
         try
         {
             TransformerFactory tf = TransformerFactory.newInstance();
+            tf.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
             Transformer trans = tf.newTransformer();
             if ( prettyPrint )
             {
@@ -448,12 +458,11 @@ public final class DomUtilities
         throws SAXException
     {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware( true );
-        StringReader reader = new StringReader( xmlString );
-        InputSource input = new InputSource( reader );
         DocumentBuilder builder = null;
+        factory.setNamespaceAware( true );
         try
         {
+            factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
             builder = factory.newDocumentBuilder();
         }
         catch ( ParserConfigurationException e )
@@ -462,6 +471,8 @@ public final class DomUtilities
                                              String.format( "%s.stringToDom() could not instantiate DocumentBuilderFactory. This should never happen",
                                                             DomUtilities.class.getName() ), e );
         }
+        StringReader reader = new StringReader( xmlString );
+        InputSource input = new InputSource( reader );
         Document dom;
         try
         {
