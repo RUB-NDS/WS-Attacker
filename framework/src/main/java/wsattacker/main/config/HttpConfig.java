@@ -31,86 +31,62 @@ public class HttpConfig
     extends AbstractBean
 {
 
-    public static final String PROP_HTTPPROXYHOST = "httpProxyHost";
+    public static final String PROP_PROXYHOST = "ProxyHost";
 
-    public static final String PROP_HTTPPROXYPORT = "httpProxyPort";
+    public static final String PROP_PROXYPORT = "ProxyPort";
 
-    public static final String PROP_HTTPSPROXYHOST = "httpsProxyHost";
-
-    public static final String PROP_HTTPSPROXYPORT = "httpsProxyPort";
-
-    public String getHttpProxyHost()
+    public String getProxyHost()
     {
-        return System.getProperty( "http.proxyHost" );
+        return SoapUI.getSettings().getString(ProxySettings.HOST, "");
     }
 
-    public void setHttpProxyHost( String httpProxyHost )
+    public void setProxyHost( String httpProxyHost )
     {
-        String oldHttpProxyHost = getHttpProxyHost();
-        setProxyProperty("http.proxyHost", httpProxyHost );
-        firePropertyChange( PROP_HTTPPROXYHOST, oldHttpProxyHost, httpProxyHost );
-    }
-
-    public String getHttpProxyPort()
-    {
-        return System.getProperty( "http.proxyPort" );
-    }
-
-    public void setHttpProxyPort( String httpProxyPort )
-    {
-        String oldHttpProxyPort = getHttpProxyPort();
-        setProxyProperty( "http.proxyPort", httpProxyPort );
-        firePropertyChange( PROP_HTTPPROXYPORT, oldHttpProxyPort, httpProxyPort );
-    }
-
-    public String getHttpsProxyHost()
-    {
-        return System.getProperty( "https.proxyHost" );
-    }
-
-    public void setHttpsProxyHost( String httpsProxyHost )
-    {
-        String oldHttpsProxyHost = getHttpsProxyHost();
-        setProxyProperty( "https.proxyHost", httpsProxyHost );
-        firePropertyChange( PROP_HTTPSPROXYHOST, oldHttpsProxyHost, httpsProxyHost );
-    }
-
-    public String getHttpsProxyPort()
-    {
-        return System.getProperty( "https.proxyPort" );
-    }
-
-    public void setHttpsProxyPort( String httpsProxyPort )
-    {
-        String oldHttpsProxyPort = getHttpsProxyPort();
-        setProxyProperty( "https.proxyPort", httpsProxyPort );
-        firePropertyChange( PROP_HTTPSPROXYPORT, oldHttpsProxyPort, httpsProxyPort );
-    }
-
-    private void setProxyProperty(String name, String value) {
+        String oldHttpProxyHost = getProxyHost();
         final Settings settings = SoapUI.getSettings();
-        if (value == null || value.isEmpty()) {
-            System.clearProperty(name);
-            settings.setBoolean(ProxySettings.ENABLE_PROXY, false);
-            ProxyUtils.setProxyEnabled(false);
-        } else {
-            System.setProperty( name, value );
-            
-            settings.setBoolean(ProxySettings.ENABLE_PROXY, true);
-            switch(name) {
-                case "http.proxyHost":
-                case "https.proxyHost":
-                    settings.setString(ProxySettings.HOST, value);
-                    break;
-                case "http.proxyPort":
-                case "https.proxyPort":
-                    settings.setLong(ProxySettings.PORT, Long.parseLong(value));
-                    break;
-                    
-            }
-            ProxyUtils.setProxyEnabled(true);
+        if ( httpProxyHost == null || httpProxyHost.isEmpty() )
+        {
+            System.clearProperty( "http.proxyHost" );
+            System.clearProperty( "https.proxyHost" );
+            settings.setBoolean( ProxySettings.ENABLE_PROXY, false );
+            ProxyUtils.setProxyEnabled( false );
         }
-        ProxyUtils.setGlobalProxy(settings);
+        else
+        {
+            System.setProperty( "http.proxyHost", httpProxyHost );
+            System.setProperty( "https.proxyHost", httpProxyHost );
+            settings.setString(ProxySettings.HOST, httpProxyHost );
+            ProxyUtils.setProxyEnabled( true );
+        }
+        ProxyUtils.setGlobalProxy( settings );
+        firePropertyChange( PROP_PROXYHOST, oldHttpProxyHost, httpProxyHost );
+    }
+
+    public String getProxyPort()
+    {
+        return SoapUI.getSettings().getString(ProxySettings.PORT, "");
+    }
+
+    public void setProxyPort( String httpProxyPort )
+    {
+        String oldHttpProxyPort = getProxyPort();
+        final Settings settings = SoapUI.getSettings();
+        if ( httpProxyPort == null || httpProxyPort.isEmpty() )
+        {
+            System.clearProperty( "http.proxyPort" );
+            System.clearProperty( "https.proxyPort" );
+            settings.setBoolean( ProxySettings.ENABLE_PROXY, false );
+            ProxyUtils.setProxyEnabled( false );
+        }
+        else
+        {
+            System.setProperty( "http.proxyPort", httpProxyPort );
+            System.setProperty( "https.proxyPort", httpProxyPort );
+            settings.setLong( ProxySettings.PORT, Long.parseLong( httpProxyPort ) );
+            ProxyUtils.setProxyEnabled( true );
+        }
+        ProxyUtils.setGlobalProxy( settings );
+        firePropertyChange( PROP_PROXYPORT, oldHttpProxyPort, httpProxyPort );
     }
 
 }
