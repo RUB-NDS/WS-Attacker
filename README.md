@@ -1,4 +1,8 @@
-# WS-Attacker [![Build Status](https://travis-ci.org/RUB-NDS/WS-Attacker.svg?branch=master)](https://travis-ci.org/RUB-NDS/WS-Attacker)
+# WS-Attacker
+[![release](https://img.shields.io/badge/Release-v1.8-blue.svg)](https://github.com/RUB-NDS/WS-Attacker/releases)
+![licence](https://img.shields.io/badge/License-GPLv2-brightgreen.svg)[
+![travis](https://travis-ci.org/RUB-NDS/WS-Attacker.svg?branch=master)](https://travis-ci.org/RUB-NDS/WS-Attacker)
+
 WS-Attacker is a modular framework for web services penetration testing. It is developed by the Chair of Network and Data Security, Ruhr University Bochum (http://nds.rub.de/ ) and the Hackmanit GmbH (http://hackmanit.de/ ).
 
 The basic idea behind WS-Attacker is to provide a functionality to load WSDL files and send SOAP messages to the Web Service endpoints (which is executed using the underlying SoapUI framework). This functionality can be extended using various plugins and libraries to build specific Web Services attacks. You can find more information on the WS-Attacker architecture and its extensibility in our paper: Penetration Testing Tool for Web Services Security (https://www.nds.rub.de/research/publications/ws-attacker-paper/)
@@ -36,7 +40,7 @@ Afterwards, you are able to go to the runnable directory and execute WS-Attacker
 
 ```bash
 $ cd runnable
-$ java -jar WS-Attacker-1.8-SNAPSHOT.jar
+$ java -jar WS-Attacker-1.9-SNAPSHOT.jar
 ```
 
 
