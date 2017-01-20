@@ -104,7 +104,6 @@ public class BleichenbacherAttackerTest
         throws Exception
     {
 
-
         // create an oracle and encrypt the message
 
         TestPKCS1Oracle oracle = new TestPKCS1Oracle();
