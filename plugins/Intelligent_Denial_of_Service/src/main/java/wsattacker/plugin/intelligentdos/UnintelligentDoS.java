@@ -289,8 +289,6 @@ public class UnintelligentDoS
     private void startIteration( IterateModel iterModel, AbstractDosPlugin dosPlugin,
                                  AbstractOptionInteger... abstractOptionInteger )
     {
-        String className = dosPlugin.getClass().getName();
-        String s = className.substring( className.lastIndexOf( '.' ) + 1 );
 
         boolean successful = false;
         int unsuccessfulCount = 0;
