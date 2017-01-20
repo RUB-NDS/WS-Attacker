@@ -221,7 +221,6 @@ public class CollisionDJBX
 
         Set<String> resultSet = createCollisions( numberCollisions, postfix, lookupMapHashBack );
 
-
         return resultSet;
     }
 

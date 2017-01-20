@@ -48,8 +48,8 @@ public class AttackMVC
             }
             catch ( InterruptedException e )
             {
-// TODO [CHAL 2014-01-02] Use Logger instead of System.out ...
-                                return attackModel;
+                // TODO [CHAL 2014-01-02] Use Logger instead of System.out ...
+                return attackModel;
             }
         }
 

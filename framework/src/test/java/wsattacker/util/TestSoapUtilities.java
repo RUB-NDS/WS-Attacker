@@ -58,11 +58,12 @@ public class TestSoapUtilities
     public void testStringToSoapBadFormated()
         throws Exception
     {
-        String msg = new String( MESSAGE ).substring( 0, MESSAGE.length() - 1 ); // delete
+        String msg = new String( MESSAGE ).substring( 0, MESSAGE.length() - 2 ); // delete
                                                                                  // last
-                                                                                 // ">"
+                                                                                 // "e>"
                                                                                  // char
         SOAPMessage soap = stringToSoap( msg );
+        soap.getSOAPBody().getLocalName(); // Should raise an exception
     }
 
     @Test
@@ -125,7 +126,6 @@ public class TestSoapUtilities
     {
         String msg = new String( MESSAGE );
         SOAPMessage soap = stringToSoap( msg );
-        Logger.getLogger( SoapUtilities.class ).setLevel( Level.ALL );
         List<SOAPElement> inputNeeded = inputNeeded( soap.getSOAPPart().getEnvelope() );
 
         // expected elements

@@ -331,7 +331,6 @@ public class IntelligentDoSLibraryImplTest
 
             builder.append( attackModel.getMilliesBetweenRequests() ).append( " - " ).append( attackModel.getNumberOfThreads() ).append( " - " ).append( attackModel.getNumberOfRequests() );
 
-
             impl.update( attackModel );
         }
     }

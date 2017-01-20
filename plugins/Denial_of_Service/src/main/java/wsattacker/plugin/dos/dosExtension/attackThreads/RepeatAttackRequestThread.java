@@ -79,13 +79,13 @@ public class RepeatAttackRequestThread
                 }
                 catch ( InterruptedException e )
                 {
-// Fall MainThread interrupt in SleepPhase kommt wird diese
+                    // Fall MainThread interrupt in SleepPhase kommt wird diese
                     // Exception gelöst
                     // ABER danach exception Flag wieder auf Null gesetzt, daher
                     // hier nochmal neu interupten!
                     // Siehe:
                     // http://openbook.galileodesign.de/javainsel5/javainsel09_003.htm#t2t35
-                                        this.interrupt();
+                    this.interrupt();
                 }
             }
             else

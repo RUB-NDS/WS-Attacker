@@ -84,21 +84,11 @@ public class EncryptionWrappingOracleTest
         m_PipeLine = new Pipeline();
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.ENCRYPTIONFILTER ) );
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.SIGNATUREFILTER ) );
-        Logger.getLogger( EncryptedKeyRefWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionAttributeIdWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionSchemaWeakness.class ).setLevel( Level.OFF );
     }
 
     @BeforeClass
     public static void setUpClass()
     {
-        // log = Logger.getLogger(EncryptionWrappingOracle.class);
-        // Logger.getLogger("wsattacker.plugin.signaturewrapping.util.signature").setLevel(Level.WARN);
-        // Logger.getLogger("wsattacker.plugin.signaturewrapping.test.util").setLevel(Level.WARN);
-        // Logger.getLogger(DomUtilities.class).setLevel(Level.WARN);
-        // ogger.getLogger(EncryptionWrappingOracle.class).setLevel(Level.WARN);
-        // Logger.getLogger("wsattacker.plugin.signatureWrapping.schema.SchemaAnalyser").setLevel(Level.ALL);
-
         // Load Schema Files
         m_SchemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );
     }

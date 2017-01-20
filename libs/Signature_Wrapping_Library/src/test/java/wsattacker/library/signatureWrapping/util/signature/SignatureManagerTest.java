@@ -43,7 +43,6 @@ public class SignatureManagerTest
     public static void setUpBeforeClass()
         throws Exception
     {
-        Logger.getLogger( "wsattacker.plugin.signatureWrapping" ).setLevel( Level.ALL );
     }
 
     @AfterClass

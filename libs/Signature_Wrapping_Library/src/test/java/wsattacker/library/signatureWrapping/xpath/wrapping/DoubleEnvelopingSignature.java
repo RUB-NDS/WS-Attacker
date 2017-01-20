@@ -61,12 +61,6 @@ public class DoubleEnvelopingSignature
         PropertyConfigurator.configure( "logging.properties" );
         // Logger
         log = org.apache.log4j.Logger.getLogger( DoubleEnvelopingSignature.class );
-        // log.setLevel(org.apache.log4j.Level.INFO);
-        // org.apache.log4j.Logger.getLogger("wsattacker.plugin.signaturewrapping.util.signature").setLevel(org.apache.log4j.Level.WARN);
-        // org.apache.log4j.Logger.getLogger("wsattacker.plugin.signaturewrapping.test.util").setLevel(org.apache.log4j.Level.WARN);
-        // org.apache.log4j.Logger.getLogger(DomUtilities.class).setLevel(org.apache.log4j.Level.WARN);
-        // org.apache.log4j.Logger.getLogger(WrappingOracle.class).setLevel(org.apache.log4j.Level.WARN);
-        // org.apache.log4j.Logger.getLogger("wsattacker.plugin.signatureWrapping.schema.SchemaAnalyser").setLevel(org.apache.log4j.Level.ALL);
         kift = new KeyInfoForTesting();
         ks = KeyStore.getInstance( "JKS" );
         FileInputStream keyfileInputStream;

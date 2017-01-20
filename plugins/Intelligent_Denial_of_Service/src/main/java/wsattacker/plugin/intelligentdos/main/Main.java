@@ -106,7 +106,7 @@ public class Main
             intelligentDoSLibraryImpl.initialize();
 
             IntelligentDoSWorker doSWorker = new IntelligentDoSWorker( intelligentDoSLibraryImpl );
-            doSWorker.addListener(new AttackModelChangeListener()
+            doSWorker.addListener( new AttackModelChangeListener()
             {
                 private int count = 0;
 
@@ -242,16 +242,14 @@ public class Main
         PatternLayout layout = new PatternLayout( "%d{ABSOLUTE} %-5p [%c{1}] %m%n" );
         LOG.addAppender( new ConsoleAppender( layout ) );
         LOG.addAppender( new GuiAppender() );
-        Logger.getLogger( "wstester.util" ).setLevel( Level.INFO );
-        Logger.getLogger( "wstester.main.PluginCollection" ).setLevel( Level.INFO );
 
         // soapui logger
-        Logger.getLogger( "com.eviware.soapui" ).setLevel( Level.OFF );
-        Logger.getLogger( DefaultSoapUICore.class ).setLevel( Level.OFF );
-        Logger.getLogger( "com.eviware.soapui.impl" ).setLevel( Level.OFF );
+        // Logger.getLogger( "com.eviware.soapui" ).setLevel( Level.OFF );
+        // Logger.getLogger( DefaultSoapUICore.class ).setLevel( Level.OFF );
+        // Logger.getLogger( "com.eviware.soapui.impl" ).setLevel( Level.OFF );
 
         LOG = Logger.getLogger( Main.class );
-        LOG.setLevel( Level.INFO );
+        // LOG.setLevel( Level.INFO );
     }
 
 }

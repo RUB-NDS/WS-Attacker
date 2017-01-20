@@ -87,7 +87,6 @@ public class PrefixRewriterTest
         untouchedList.add( payload );
         PrefixRewriter.rewritePrefix( saml.getDocumentElement(), "samlp", "xyz", untouchedList );
 
-
         String payloadString = DomUtilities.domToString( payload, true );
         assertFalse( payloadString.contains( "<xyz:" ) );
         assertTrue( payloadString.contains( "<samlp:" ) );

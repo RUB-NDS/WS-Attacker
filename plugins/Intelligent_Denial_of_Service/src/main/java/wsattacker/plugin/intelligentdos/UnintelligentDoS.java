@@ -303,7 +303,6 @@ public class UnintelligentDoS
                 aoi.setValue( value );
             }
 
-
             successful = perform( dosPlugin, abstractOptionInteger );
 
             if ( !successful && ++unsuccessfulCount % 4 == 0 )

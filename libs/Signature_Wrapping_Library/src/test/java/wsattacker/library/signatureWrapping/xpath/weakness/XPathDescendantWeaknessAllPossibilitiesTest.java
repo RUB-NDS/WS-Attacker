@@ -97,7 +97,6 @@ public class XPathDescendantWeaknessAllPossibilitiesTest
     public void setUp()
         throws Exception
     {
-        Logger.getLogger( getClass() ).setLevel( Level.OFF );
     }
 
     @After
@@ -142,7 +141,6 @@ public class XPathDescendantWeaknessAllPossibilitiesTest
         finally
         {
             Logger log = Logger.getLogger( getClass() );
-            log.setLevel( Level.INFO );
             StringBuffer buf = new StringBuffer();
             buf.append( "All Calls:\n" );
             for ( int i = 0; i < callList.size(); ++i )

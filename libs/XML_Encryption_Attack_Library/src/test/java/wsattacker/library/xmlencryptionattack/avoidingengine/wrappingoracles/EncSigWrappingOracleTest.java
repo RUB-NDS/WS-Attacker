@@ -75,9 +75,6 @@ public class EncSigWrappingOracleTest
         m_PipeLine = new Pipeline();
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.ENCRYPTIONFILTER ) );
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.SIGNATUREFILTER ) );
-        Logger.getLogger( EncryptedKeyRefWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionAttributeIdWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionSchemaWeakness.class ).setLevel( Level.OFF );
         // Load Schema Files
         m_SchemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );
     }
@@ -93,7 +90,6 @@ public class EncSigWrappingOracleTest
     public void setUp()
         throws Exception
     {
-        // log.setLevel(Level.OFF);
     }
 
     @After

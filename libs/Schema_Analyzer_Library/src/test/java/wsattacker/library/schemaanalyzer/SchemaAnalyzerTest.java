@@ -294,7 +294,6 @@ public class SchemaAnalyzerTest
 
         Element signature = DomUtilities.getFirstChildElementByNames( envelope, "Header", "Security", "Signature" );
 
-        // log.setLevel(Level.ALL);
         filterList = new ArrayList<QName>();
         sa.setFilterList( filterList );
         filterList.add( new QName( URI_NS_DS, "SignedInfo" ) );

@@ -86,9 +86,6 @@ public class AttackManagerTest
         m_PipeLine = new Pipeline();
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.ENCRYPTIONFILTER ) );
         m_PipeLine.addFilerToPipline( FactoryFilter.createFilter( DetectFilterEnum.SIGNATUREFILTER ) );
-        Logger.getLogger( EncryptedKeyRefWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionAttributeIdWeakness.class ).setLevel( Level.OFF );
-        Logger.getLogger( EncryptionSchemaWeakness.class ).setLevel( Level.OFF );
         m_SchemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );
     }
 

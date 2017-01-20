@@ -61,14 +61,6 @@ public class WrappingOracleTest
         schemaAnalyser = new SchemaAnalyzerImpl();
         // Logger
         log = Logger.getLogger( WrappingOracle.class );
-        Logger.getLogger( "wsattacker.plugin.signaturewrapping.util.signature" ).setLevel( Level.WARN );
-        Logger.getLogger( "wsattacker.plugin.signaturewrapping.test.util" ).setLevel( Level.WARN );
-        Logger.getLogger( DomUtilities.class ).setLevel( Level.WARN );
-        Logger.getLogger( WrappingOracle.class ).setLevel( Level.WARN );
-        // Logger.getLogger("wsattacker.plugin.signaturewrapping.util.wrapping").setLevel(Level.TRACE);
-
-        // LOG.setLevel(Level.ALL);
-        Logger.getLogger( "wsattacker.plugin.signatureWrapping.schema.SchemaAnalyser" ).setLevel( Level.ALL );
 
         // Load Schema Files
         schemaAnalyser = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );
@@ -84,7 +76,6 @@ public class WrappingOracleTest
     public void setUp()
         throws Exception
     {
-        log.setLevel( Level.OFF );
     }
 
     @After

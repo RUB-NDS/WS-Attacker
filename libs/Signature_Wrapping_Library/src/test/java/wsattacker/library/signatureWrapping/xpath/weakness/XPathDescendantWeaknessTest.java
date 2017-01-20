@@ -57,23 +57,6 @@ public class XPathDescendantWeaknessTest
 
     private static Logger log = Logger.getLogger( XPathDescendantWeaknessTest.class );
 
-    private static void logClass( Level level )
-    {
-
-        Logger.getLogger( XPathDescendantWeakness.class ).setLevel( level );
-    }
-
-    private static void logTestClass( Level level )
-    {
-        log.setLevel( level );
-    }
-
-    private static void log( Level level )
-    {
-        logTestClass( level );
-        logClass( level );
-    }
-
     @BeforeClass
     public static void setUpBeforeClass()
         throws Exception
@@ -90,7 +73,6 @@ public class XPathDescendantWeaknessTest
     public void setUp()
         throws Exception
     {
-        log( Level.OFF );
     }
 
     @After
@@ -526,7 +508,6 @@ public class XPathDescendantWeaknessTest
     public void xpathDescendantWeaknessReferenceIdEquivalentTest()
         throws Exception
     {
-        log( Level.ALL );
         SoapTestDocument soap = new SoapTestDocument();
 
         SchemaAnalyzer sa = SchemaAnalyzerFactory.getInstance( SchemaAnalyzerFactory.WEBSERVICE );

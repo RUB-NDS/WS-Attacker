@@ -51,8 +51,6 @@ public class XPathAttributeWeaknessPostProcessTest
     public static void setUpBeforeClass()
         throws Exception
     {
-        Logger.getLogger( XPathAttributeWeaknessPostProcess.class ).setLevel( Level.INFO );
-        log.setLevel( Level.TRACE );
     }
 
     @AfterClass
