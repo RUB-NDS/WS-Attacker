@@ -34,6 +34,10 @@
             <id>smartbear-sweden-plugin-repository</id>
             <url>http://www.soapui.org/repository/maven2/</url>
         </repository>
+        <repository>
+            <id>libs</id>
+            <url>https://repo.nds.rub.de/repository/libs/</url>
+        </repository>
         <!-- This is no longer needed, using 
             https://repo.nds.rub.de:8443/archiva/repository/libs/
             instead
