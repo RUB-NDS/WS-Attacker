@@ -31,3 +31,6 @@
 [submodule "plugins/Signature_Wrapping"]
 	path = plugins/Signature_Wrapping
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Signature_Wrapping.git
+[submodule "plugins/SoapAction_Spoofing"]
+	path = plugins/SoapAction_Spoofing
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_SoapAction_Spoofing.git
