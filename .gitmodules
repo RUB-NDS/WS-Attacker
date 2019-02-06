@@ -37,3 +37,6 @@
 [submodule "plugins/XML_Encryption_Attack"]
 	path = plugins/XML_Encryption_Attack
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_XML_Encryption_Attack.git
+[submodule "libs/XML_Utilities"]
+	path = libs/XML_Utilities
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML_Utilities.git
