@@ -4,3 +4,6 @@
 [submodule "libs/Intelligent_Denial_of_Service_Library"]
 	path = libs/Intelligent_Denial_of_Service_Library
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_Intelligent_Denial_of_Service_Library.git
+[submodule "libs/Schema_Analyzer_Library"]
+	path = libs/Schema_Analyzer_Library
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_Schema_Analyzer_Library.git
