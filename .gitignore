@@ -31,3 +31,4 @@ runnable/plugins/*jar
 *.swp
 target/
 framework/wsattacker_config.xml
+.DS_Store
