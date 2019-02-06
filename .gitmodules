@@ -19,3 +19,6 @@
 [submodule "libs/XML_Encryption_Attack_Library"]
 	path = libs/XML_Encryption_Attack_Library
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML_Encryption_Attack_Library.git
+[submodule "plugins/Denial_of_Service"]
+	path = plugins/Denial_of_Service
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Denial_of_Service.git

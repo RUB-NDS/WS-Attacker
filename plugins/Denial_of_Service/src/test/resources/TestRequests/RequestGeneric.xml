@@ -1,9 +1,0 @@
-<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sam="http://sample02.policy.samples.rampart.apache.org">
-   <soap:Header/>
-   <soap:Body>
-      <sam:echo>
-         <!--Optional:-->
-         <sam:args0>?</sam:args0>
-      </sam:echo>
-   </soap:Body>
-</soap:Envelope>
