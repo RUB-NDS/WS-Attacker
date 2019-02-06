@@ -34,3 +34,6 @@
 [submodule "plugins/SoapAction_Spoofing"]
 	path = plugins/SoapAction_Spoofing
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_SoapAction_Spoofing.git
+[submodule "plugins/WS_Addressing_Spoofing"]
+	path = plugins/WS_Addressing_Spoofing
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_WS_Addressing_Spoofing.git
