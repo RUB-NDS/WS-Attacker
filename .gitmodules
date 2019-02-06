@@ -16,3 +16,6 @@
 [submodule "libs/SoapHttpClient"]
 	path = libs/SoapHttpClient
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_SoapHttpClient.git
+[submodule "libs/XML_Encryption_Attack_Library"]
+	path = libs/XML_Encryption_Attack_Library
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML_Encryption_Attack_Library.git
