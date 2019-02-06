@@ -1,0 +1,3 @@
+[submodule "libs/XML-Utilities"]
+	path = libs/XML-Utilities
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML-Utilities.git
