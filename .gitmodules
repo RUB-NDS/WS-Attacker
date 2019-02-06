@@ -25,3 +25,6 @@
 [submodule "plugins/Intelligent_Denial_of_Service"]
 	path = plugins/Intelligent_Denial_of_Service
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Intelligent_Denial_of_Service.git
+[submodule "plugins/OptionsTesterPlugin"]
+	path = plugins/OptionsTesterPlugin
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_OptionsTesterPlugin.git
