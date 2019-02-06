@@ -7,3 +7,6 @@
 [submodule "libs/Schema_Analyzer_Library"]
 	path = libs/Schema_Analyzer_Library
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_Schema_Analyzer_Library.git
+[submodule "libs/Signature_Faking_Library"]
+	path = libs/Signature_Faking_Library
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Faking_Library.git
