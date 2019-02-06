@@ -13,3 +13,6 @@
 [submodule "libs/Signature_Wrapping_Library"]
 	path = libs/Signature_Wrapping_Library
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Wrapping_Library.git
+[submodule "libs/SoapHttpClient"]
+	path = libs/SoapHttpClient
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_SoapHttpClient.git
