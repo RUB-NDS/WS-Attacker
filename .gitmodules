@@ -37,3 +37,6 @@
 [submodule "plugins/WS_Addressing_Spoofing"]
 	path = plugins/WS_Addressing_Spoofing
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_WS_Addressing_Spoofing.git
+[submodule "plugins/XML_Encryption_Attack"]
+	path = plugins/XML_Encryption_Attack
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_XML_Encryption_Attack.git
