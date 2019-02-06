@@ -28,3 +28,6 @@
 [submodule "plugins/OptionsTesterPlugin"]
 	path = plugins/OptionsTesterPlugin
 	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_OptionsTesterPlugin.git
+[submodule "plugins/Signature_Wrapping"]
+	path = plugins/Signature_Wrapping
+	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Signature_Wrapping.git
