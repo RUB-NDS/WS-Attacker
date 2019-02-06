@@ -10,3 +10,6 @@
 [submodule "libs/Signature_Faking_Library"]
 	path = libs/Signature_Faking_Library
 	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Faking_Library.git
+[submodule "libs/Signature_Wrapping_Library"]
+	path = libs/Signature_Wrapping_Library
+	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Wrapping_Library.git
