@@ -59,7 +59,7 @@
         <dependency>
             <groupId>com.smartbear.soapui</groupId>
             <artifactId>soapui-maven-plugin</artifactId>
-            <version>5.1.3</version>
+            <version>5.5.0</version>
             <exclusions>
                 <!-- 
                     We do not use javafx because so that we can compile with
