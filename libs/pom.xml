@@ -22,47 +22,4 @@
         <module>XML_Encryption_Attack_Library</module>
         <module>SoapHttpClient</module>
     </modules>
-
-    <build>
-        <!--
-        Inlcude the Service Loader META-INF file so that
-        the plugin manager can find the plugin
-        -->
-        <pluginManagement>
-            <plugins>
-                <!--
-                Placing the JAR in the lib folder
-                -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <outputDirectory>${highest-basedir}/runnable/lib/</outputDirectory>
-                    </configuration>
-                </plugin>
-                <!--
-                    Copy required libraries to lib folder
-                -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>copy-dependencies</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${highest-basedir}/runnable/lib</outputDirectory>
-                                <overWriteReleases>false</overWriteReleases>
-                                <overWriteSnapshots>false</overWriteSnapshots>
-                                <overWriteIfNewer>true</overWriteIfNewer>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>
