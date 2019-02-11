@@ -1,42 +1,42 @@
 [submodule "libs/Intelligent_Denial_of_Service_Library"]
 	path = libs/Intelligent_Denial_of_Service_Library
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_Intelligent_Denial_of_Service_Library.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_Intelligent_Denial_of_Service_Library.git
 [submodule "libs/Schema_Analyzer_Library"]
 	path = libs/Schema_Analyzer_Library
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_Schema_Analyzer_Library.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_Schema_Analyzer_Library.git
 [submodule "libs/Signature_Faking_Library"]
 	path = libs/Signature_Faking_Library
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Faking_Library.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_Signature_Faking_Library.git
 [submodule "libs/Signature_Wrapping_Library"]
 	path = libs/Signature_Wrapping_Library
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_Signature_Wrapping_Library.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_Signature_Wrapping_Library.git
 [submodule "libs/SoapHttpClient"]
 	path = libs/SoapHttpClient
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_SoapHttpClient.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_SoapHttpClient.git
 [submodule "libs/XML_Encryption_Attack_Library"]
 	path = libs/XML_Encryption_Attack_Library
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML_Encryption_Attack_Library.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_XML_Encryption_Attack_Library.git
 [submodule "plugins/Denial_of_Service"]
 	path = plugins/Denial_of_Service
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Denial_of_Service.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_Denial_of_Service.git
 [submodule "plugins/Intelligent_Denial_of_Service"]
 	path = plugins/Intelligent_Denial_of_Service
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Intelligent_Denial_of_Service.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_Intelligent_Denial_of_Service.git
 [submodule "plugins/OptionsTesterPlugin"]
 	path = plugins/OptionsTesterPlugin
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_OptionsTesterPlugin.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_OptionsTesterPlugin.git
 [submodule "plugins/Signature_Wrapping"]
 	path = plugins/Signature_Wrapping
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_Signature_Wrapping.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_Signature_Wrapping.git
 [submodule "plugins/SoapAction_Spoofing"]
 	path = plugins/SoapAction_Spoofing
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_SoapAction_Spoofing.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_SoapAction_Spoofing.git
 [submodule "plugins/WS_Addressing_Spoofing"]
 	path = plugins/WS_Addressing_Spoofing
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_WS_Addressing_Spoofing.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_WS_Addressing_Spoofing.git
 [submodule "plugins/XML_Encryption_Attack"]
 	path = plugins/XML_Encryption_Attack
-	url = git://github.com/RUB-NDS/WS-Attacker-Plugin_XML_Encryption_Attack.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Plugin_XML_Encryption_Attack.git
 [submodule "libs/XML_Utilities"]
 	path = libs/XML_Utilities
-	url = git://github.com/RUB-NDS/WS-Attacker-Library_XML_Utilities.git
+	url = git@github.com:RUB-NDS/WS-Attacker-Library_XML_Utilities.git
