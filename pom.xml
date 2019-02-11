@@ -8,11 +8,7 @@
     <artifactId>wsattacker-basis</artifactId>
     <version>1.9-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <url>http://sourceforge.net/projects/ws-attacker/</url>
-    <ciManagement>
-        <system>hudson</system>
-        <url>http://127.0.0.1:53080/job/WS-Attacker/</url>
-    </ciManagement>
+    <url>https://github.com/RUB-NDS/WS-Attacker</url>
     <modules>
         <module>framework</module>
         <module>plugins</module>
@@ -69,14 +65,14 @@
         <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
-            <version>3.3.1</version>
+            <version>4.0.2</version>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13-beta-2</version>
             <!--<scope>test</scope>-->
         </dependency>
         <dependency>

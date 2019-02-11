@@ -16,10 +16,10 @@ In the current version, WS-Attacker supports the following attacks:
 - XML Encryption attacks: see this blogpost (http://web-in-security.blogspot.de/2015/05/how-to-attack-xml-encryption-in-ibm.html) for a general overview on the attacks and on further references to the scientific papers
 
 ## Obtaining Runnable File
-The first option to obtain a WS-Attacker jar file is from the sourceforge website: http://sourceforge.net/projects/ws-attacker/files/
+The first option to obtain a WS-Attacker jar file is from the github website: http://sourceforge.net/projects/ws-attacker/
 
 The second option is to build it directly from the Github sources. For this purpose, you need:
-- Java 7 or higher
+- Java 8
 - maven
 - git
 
@@ -47,7 +47,7 @@ $ java -jar WS-Attacker-1.9-SNAPSHOT.jar
 ## WS-Attacker Usage
 
 You can find the latest documentation on XML Signature Wrapping and DoS attacks here:
-http://sourceforge.net/projects/ws-attacker/files/WS-Attacker%201.3/Documentation-v1.3.pdf/download
+http://sourceforge.net/projects/ws-attacker/
 
 The documentation on XML Encryption attacks is currently under development, but you can find a lot of information on the XML Encryption plugin and on starting XML Encryption attacks here:
 http://web-in-security.blogspot.de/2015/05/how-to-attack-xml-encryption-in-ibm.html
