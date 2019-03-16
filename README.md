@@ -2,6 +2,7 @@
 [![release](https://img.shields.io/badge/Release-v1.8-blue.svg)](https://github.com/RUB-NDS/WS-Attacker/releases)
 ![licence](https://img.shields.io/badge/License-GPLv2-brightgreen.svg)[
 ![travis](https://travis-ci.org/RUB-NDS/WS-Attacker.svg?branch=master)](https://travis-ci.org/RUB-NDS/WS-Attacker)
+[![Rawsec's CyberSecurity Inventory](https://inventory.rawsec.ml/img/badges/Rawsec-inventoried-FF5050_flat.svg)](https://inventory.rawsec.ml/tools.html#WS-Attacker)
 
 WS-Attacker is a modular framework for web services penetration testing. It is developed by the Chair of Network and Data Security, Ruhr University Bochum (http://nds.rub.de/ ) and the Hackmanit GmbH (http://hackmanit.de/ ).
 
