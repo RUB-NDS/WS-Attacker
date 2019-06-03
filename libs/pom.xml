@@ -4,6 +4,7 @@
 
     <name>WS-Attacker-Libraries</name>
     <groupId>wsattacker.library</groupId>
+    <version>1.9-SNAPSHOT</version>
     <artifactId>wsattacker-libraries</artifactId>
     <packaging>pom</packaging>
 
