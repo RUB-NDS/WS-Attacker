@@ -19,10 +19,11 @@ In the current version, WS-Attacker supports the following attacks:
 The first option to obtain a WS-Attacker jar file is from the sourceforge website: https://sourceforge.net/projects/ws-attacker/files/
 
 The second option is to build it directly from the Github sources. For this purpose, you need:
-- Java 7 or higher
-- Java 11+ requires an updated POM due to removed javax.xml.bind package
+- Java 7 or 8
 - maven
 - git
+
+Hint: With Java 9+ it will not work at runtime due to removed class loader URLClassLoader()
 
 You procede as follows. You first need to clone WS-Attacker sources (you can of course also download a ZIP file):
 
@@ -37,14 +38,15 @@ $ cd WS-Attacker
 $ mvn clean package -DskipTests
 ```
 
-Afterwards, you are able to go to the runnable directory and execute WS-Attacker (with Java 7 - 10):
+Afterwards, you are able to go to the runnable directory and execute WS-Attacker (with Java 7 or 8):
 
 ```bash
 $ cd runnable
 $ java -jar WS-Attacker-1.9-SNAPSHOT.jar
 ```
-In Java 11+ add missing JARs to class path, otherwise you will get `java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException`
 
+Hint: With Java 9+ the plugins are not loaded anymore due to removed class loader URLClassLoader()<br>
+With Java 11+ it would not start due to removed Java EE modules (JAX-WS, JAXB, ...)
 
 ## WS-Attacker Usage
 
