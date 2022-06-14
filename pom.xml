@@ -40,13 +40,6 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
-    
-    <repositories>
-        <repository>
-            <id>libs</id>
-            <url>https://repo.nds.rub.de/repository/libs/</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
