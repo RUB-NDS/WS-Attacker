@@ -6,18 +6,13 @@
     <artifactId>XML_Encryption_Attack_Library</artifactId>
     <name>WS-Attacker-Library_XML_Encryption_Attack</name>
     <inceptionYear>2013</inceptionYear>
-    
-        <!-- This is no longer needed, using 
-            https://repo.nds.rub.de:8443/archiva/repository/libs/
-            instead
-        -->
-<!--    <repositories> 
+
+    <repositories>
         <repository>
-            <id>IESL Releases</id>
-            <name>IESL Repo</name>
-            <url>https://dev-iesl.cs.umass.edu/nexus/content/groups/public</url>
+            <id>external-libs</id>
+            <url>file://${project.basedir}/external-libs</url>
         </repository>
-    </repositories> -->
+    </repositories>
 
     <developers>
         <developer>
