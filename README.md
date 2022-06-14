@@ -19,7 +19,7 @@ In the current version, WS-Attacker supports the following attacks:
 The first option to obtain a WS-Attacker jar file is from the sourceforge website: https://sourceforge.net/projects/ws-attacker/files/
 
 The second option is to build it directly from the Github sources. For this purpose, you need:
-- Java 7 or higher
+- Java 7 or 8
 - maven
 - git
 
