@@ -23,6 +23,8 @@ The second option is to build it directly from the Github sources. For this purp
 - maven
 - git
 
+Hint: With Java 9+ it will not work at runtime due to removed class loader URLClassLoader()
+
 You procede as follows. You first need to clone WS-Attacker sources (you can of course also download a ZIP file):
 
 ```bash
@@ -36,15 +38,28 @@ $ cd WS-Attacker
 $ mvn clean package -DskipTests
 ```
 
-Afterwards, you are able to go to the runnable directory and execute WS-Attacker:
+Afterwards, you are able to go to the runnable directory and execute WS-Attacker (with Java 7 or 8):
 
 ```bash
 $ cd runnable
 $ java -jar WS-Attacker-1.9-SNAPSHOT.jar
 ```
 
+Hint: With Java 9+ the plugins are not loaded anymore due to removed class loader URLClassLoader()<br>
+With Java 11+ it would not start due to removed Java EE modules (JAX-WS, JAXB, ...)
 
 ## WS-Attacker Usage
+
+If WSDL web services discovery is not possible (e.g. due to hardening) but you have the WSDL file locally (and the corresponding XSD file), you can import them as follows.<br>
+On Windows copy all to `C:/Users/User/workspace/`
+
+Now in the tab "WSDL Loader" enter `file:///C:/Users/User/workspace/Service.wsdl` and press the Load button
+
+Hint: Check the WSDL file for an XSD import if they are relative or directly loaded.<br>
+Change:<br>
+`<xsd:import namespace="https://....." schemaLocation="https://domain/path/ServiceTypes.xsd" />`
+into locally import, relative to the WSDL location:<br>
+`<xsd:import namespace="https://....." schemaLocation="ServiceTypes.xsd" />`
 
 You can find the latest documentation on XML Signature Wrapping and DoS attacks here:
 https://sourceforge.net/projects/ws-attacker/files/WS-Attacker%201.3/Documentation-v1.3.pdf/download
